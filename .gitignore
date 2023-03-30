@@ -1,0 +1,6 @@
+# Ver este link: https://help.github.com/articles/ignoring-files/ para más información
+# sobre ignorar archivos o directorios.
+
+# Dependencias ignoradas.
+node_modules
+.env
