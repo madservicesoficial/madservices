@@ -1,0 +1,59 @@
+//-- Contenido de la Sección Registrarse como Empresa del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+    title='MAD Services'
+
+block body
+    div.fondoRegistrarseEmpresa
+        div.registrarse
+            h1='Darse de alta como Empresa:'
+            img.madservicestipologo(src='/images/madforcompanies.png' alt='madforcompaniesLOGO')
+            form.formRegistro(method="post")
+                label='Nombre de la Empresa: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeEmpresa(type='text' placeholder='Introduce el nombre de la Empresa....')
+                br
+                br
+                label='Tipo de empresa: '
+                    span.tipoEmpresa
+                        input(type='radio' name='tipoEmpresa' value='PYME')
+                        label='PYME'
+                        input.separacionMujer(type='radio' name='tipoEmpresa' value='Multinacional')
+                        label.separacionMujer='Multinacional'
+                        input.separacionOtro(type='radio' name='tipoEmpresa' value='StartUp' checked)
+                        label.separacionOtro='StartUp'
+                br
+                br
+                label='Código CIF/NIF: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeCIF(type='text' placeholder='Introduce el Código CIF/NIF....')
+                br
+                br
+                label='E-mail: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeEmail(type='email' placeholder='Introduce un correo electrónico válido....')
+                br
+                br
+                label='Nueva contraseña: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopePassword(type='password' placeholder='Introduce una contraseña válida....'
+                            pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
+                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                br
+                br
+                label='Confirmación de la contraseña: '
+                    span
+                    input.anchoCamposRegistro(type='password' placeholder='Introduce una contraseña válida....'
+                            pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
+                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                br
+                br
+            button.btnDarseAlta(type='submit')
+                a(href='/')='Darse de alta'
+            button.btnTransparente
+                a(href='/')
+                    img.iconoInicio(src='/icons/home.png' alt='home')
+            button.btnTransparente
+                a(href='/registrarse')
+                    img.iconoAtras(src='/icons/back.png' alt='back')

@@ -1,8 +1,374 @@
+/* Configuración del diseño CSS para el Cuerpo del Comercio Electrónico MAD Services. */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  background-color: black;
+  padding: 0;
+  margin: 0;
 }
-
+/* Configuración del diseño CSS para invisibilizar los enlaces en botones y ponerlos de color negro.
+E invisibilizar los enlaces sin botones y ponerlos en blanco. */
 a {
-  color: #00B7FF;
+  color: black;
+  text-decoration: none;
+}
+.enlaceNoBoton {
+  color: white;
+}
+/* Configuración del diseño CSS de la Página de Error por inexistencia del recurso accedido. */
+.Error {
+  color: red;
+  text-align: center;
+  padding-top: 100px;
+}
+#mensaje {
+  color: white;
+}
+/* Configuración del diseño CSS para todos los botones con enlace. */
+button {
+  text-align: center;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  border-style: hidden;
+}
+/* Configuración del diseño CSS para todos los botones transparentes. */
+.btnTransparente {
+  background-color: transparent;
+}
+/* Configuración del diseño CSS para la Cabecera del Comercio Electrónico MAD Services. */
+#LogoMADservices {
+  width: 170px;
+  height: 150px;
+  position: relative;
+  left: 250px;
+}
+.btnesInicio {
+  font-size: large;
+  width: 140px;
+  height: 40px;
+  padding: 10px;
+  position: relative;
+  left: 450px;
+  top: -60px;
+}
+#btnRegistrarse {
+  position: relative;
+  left: 550px;
+}
+.mundo {
+  width: 50px;
+  height: 50px;
+  color: white;
+  background-color: black;
+  position: relative;
+  top: -40px;
+  left: 850px;
+}
+.selectLang {
+  width: 100px;
+  height: 40px;
+  color: white;
+  background-color: black;
+  position: relative;
+  top: -60px;
+  left: 860px;
+}
+/* Configuración del diseño CSS del Cuerpo del Inicio del Comercio Electrónico MAD Services. */
+.gifms {
+  width: 100%;
+  height: 100%;
+}
+#botonCategorias {
+  position: relative;
+  top: -650px;
+  left: 650px;
+  background-color: silver;
+  font-size: xx-large;
+  padding: 15px;
+}
+/* Configuración del diseño CSS del Pie de Página del Comercio Electrónico MAD Services. */
+.opciones {
+  color: white;
+  font-size: medium;
+  position: relative;
+  top: -40px;
+  left: 550px;
+  margin-bottom: 100px;
+}
+.opcionesDer {
+  text-align: left;
+}
+.opcionesIzq {
+  text-align: right;
+}
+#instagram {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 10px;
+}
+#twitter {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  left: 60px;
+  top: -23px;
+}
+#socialMedia {
+  position: relative;
+  left: 80px;
+}
+/* Configuración CSS de la Pantalla Opción como Cliente o Empresa tanto para Iniciar Sesión como para Registrarse */
+.pantallaOpcion {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tituloOpcion {
+  font-size: xx-large;
+  text-align: center;
+  color: white;
+  word-spacing: 8px;
+}
+.btnEleccion{
+  width: 155px;
+  height: 60px;
+  position: relative;
+  top: 20px;
+}
+#btnCliente {
+  position: relative;
+  font-size: 30px;
+  left: -120px;
+}
+#btnEmpresa {
+  position: relative;
+  font-size: 28px;
+  top: -40px;
+  left: 120px;
+}
+/* Configuración CSS del Login del Comercio Electrónico MAD Services. */
+.etiquetaLogin {
+  text-align: center;
+  position: relative;
+  top: 50px;
+}
+#Cliente {
+  color: rgb(17, 126, 200);
+}
+#Empresa {
+  color: orange;
+}
+.login {
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  background: silver;
+  justify-content: center;
+  place-items: center;
+  overflow: hidden;
+  position: relative;
+  top: 110px;
+  left: 560px;
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  border-color: burlywood;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+.tituloLogin {
+  font-size: xx-large;
+  font-weight: bold;
+  position: relative;
+  right: 90px;
+  bottom: 10px;
+  text-align: center;
+  width: 500px;
+}
+.madservicesLOGO {
+  width: 65px;
+  height: 65px;
+  margin: auto;
+  border-radius: 10%;
+  box-sizing: border-box;
+  box-shadow: 7px 7px 10px silver, -7px -7px 10px white;
+  position: relative;
+  bottom: 10px;
+}
+.entradas {
+  caret-color: red;
+  text-align: left;
+  display: block;
+  width: 100%;
+  padding: 0;
+  outline: none;
+  border: none;
+  position: relative;
+  top: 10px;
+}
+#rellenoLogin {
+  border-radius: 30px;
+  height: 25px;
+  padding-left: 20px;
+}
+#btnAcceso {
+  width: 70px;
+  height: 35px;
+  position: relative;
+  left: 180px;
+  top: 20px;
+}
+#iconHome {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 35px;
+  right: 5px;
+}
+#iconBack {
+  width: 47px;
+  height: 47px;
+  position: relative;
+  top: 40px;
+  right: 195px;
+}
+/* Configuración CSS del Registro Cliente del Comercio Electrónico MAD Services. */
+.fondoRegistrarseCliente {
+  background-image: url(../gifs/gifClienteRegistrarse.gif);
+}
+.genero {
+  position: relative;
+  left: 250px;
+}
+.separacionMujer {
+  position: relative;
+  left: 25px;
+}
+.separacionOtro {
+  position: relative;
+  left: 50px;
+}
+#distanciaTopeNombre {
+  position: relative;
+  left: 190px;
+}
+#distanciaTopeApellidos {
+  position: relative;
+  left: 180px;
+}
+#distanciaTopeDireccion {
+  position: relative;
+  left: 177px;
+}
+#distanciaTopePoblacion {
+  position: relative;
+  left: 172px;
+}
+#distanciaTopeRegion {
+  position: relative;
+  left: 195px;
+}
+#distanciaTopePais {
+  position: relative;
+  left: 218px;
+}
+#distanciaTopeCP {
+  position: relative;
+  left: 100px;
+}
+/* Configuraciones CSS del Registro Cliente o Empresa comunes. */
+.registrarse {
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  background: silver;
+  justify-content: center;
+  place-items: center;
+  overflow-x: hidden;
+  width: 50%;
+  height: 100%;
+  border-color: burlywood;
+  padding: 40px;
+  padding-bottom: 120px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+.madservicestipologo {
+  width: 80px;
+  height: 80px;
+}
+.formRegistro {
+  position: relative;
+  top: 60px;
+  text-align: left;
+}
+.anchoCamposRegistro {
+  width: 370px;
+  margin-left: 10px;
+  border-radius: 30px;
+  height: 25px;
+  padding-left: 20px;
+}
+#distanciaTopeEmail {
+  position: relative;
+  left: 202px;
+}
+#distanciaTopePassword {
+  position: relative;
+  left: 105px;
+}
+.btnesPantallaRegistro {
+  width: 50px;
+  height: 50px;
+}
+.btnDarseAlta {
+  width: 120px;
+  height: 40px;
+  position: relative;
+  top: 70px;
+  left: 295px;
+  padding: 10px;
+}
+.iconoInicio {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  top: 90px;
+  right: 60px;
+}
+.iconoAtras {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  top: 90px;
+  right: 410px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+::-webkit-scrollbar {
+  display: none;
+}
+/* Configuración CSS del Registro Empresa del Comercio Electrónico MAD Services. */
+.fondoRegistrarseEmpresa {
+  background-image: url(../gifs/gifEmpresaRegistrarse.gif);
+}
+.tipoEmpresa {
+  position: relative;
+  left: 160px;
+}
+#distanciaTopeEmpresa {
+  position: relative;
+  left: 75px;
+}
+#distanciaTopeCIF {
+  position: relative;
+  left: 135px;
 }

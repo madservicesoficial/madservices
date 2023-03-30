@@ -1,0 +1,24 @@
+//-- Contenido de la Sección Iniciar Sesión como Empresa del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+    title='MAD Services'
+
+block body
+    h1.etiquetaLogin#Empresa='Empresa'
+    div.login
+        h1.tituloLogin='INICIAR SESIÓN:'
+        img.madservicesLOGO(src='/images/madforcompanies.png' alt='madforcompanies')
+        label.entradas(for="inputEmail")='Correo Electrónico:'
+        input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....' required autofocus)
+        label.entradas(for="inputPassword")='Contraseña:'
+        input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....' pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
+            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números" required)
+        button#btnAcceso(type='submit')
+            a(href='/:id')='Acceder'
+        button.btnTransparente
+            a(href='/')
+                img#iconHome(src='/icons/home.png' alt='home')
+        button.btnTransparente
+            a(href='/login')
+                img#iconBack(src='/icons/back.png' alt='back')

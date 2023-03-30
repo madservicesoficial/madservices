@@ -1,0 +1,13 @@
+//-- Contenido de la Sección Iniciar Sesión como Cliente o como Empresa del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+    title='MAD Services'
+
+block body
+    div.pantallaOpcion
+        h1.tituloOpcion='INICIAR SESIÓN COMO:'
+        button.btnEleccion#btnCliente
+            a(href='/login/cliente' method='POST')='Cliente'
+        button.btnEleccion#btnEmpresa
+            a(href='/login/empresa' method='POST')='Empresa'

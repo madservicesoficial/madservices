@@ -1,0 +1,84 @@
+//-- Contenido de la Sección Registrarse como Cliente del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+    title='MAD Services'
+
+block body
+    div.fondoRegistrarseCliente
+        div.registrarse
+            h1='Darse de alta como Cliente:'
+            img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
+            form.formRegistro(method='POST' action='/registrarse/cliente')
+                label='Nombre: '
+                    span
+                        input.anchoCamposRegistro#distanciaTopeNombre(type='text' name='nombre' placeholder='Escribe tu nombre....' required)
+                br
+                br
+                label='Apellidos: '
+                    span
+                        input.anchoCamposRegistro#distanciaTopeApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                br
+                br
+                label='Género: '
+                    span.genero
+                        input(type='radio' name='genero' value='Hombre')
+                        label='Hombre'
+                        input.separacionMujer(type='radio' name='genero' value='Mujer')
+                        label.separacionMujer='Mujer'
+                        input.separacionOtro(type='radio' name='genero' value='Otro' checked)
+                        label.separacionOtro='Otro'
+                br
+                br
+                label='E-mail: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                br
+                br
+                label='Nueva contraseña: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopePassword(type='password' name='password' placeholder='Introduce una contraseña válida....'
+                            pattern="[0-9]|[A-Z]|[a-z]|[%.-_$]" minlength='15'
+                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                br
+                br
+                label='Confirmación de la contraseña: '
+                    span
+                    input.anchoCamposRegistro#newpassword(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....'
+                            pattern="[0-9]|[A-Z]|[a-z]|[%.-_$]" minlength='15'
+                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                br
+                br
+                label='Dirección: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                br
+                br
+                label='Población: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopePoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                br
+                br
+                label='Región: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeRegion(type='text' name='region' placeholder='Introduce una región válida....')
+                br
+                br
+                label='País: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopePais(type='text' name='pais' placeholder='Introduce un país válido....')
+                br
+                br
+                label='Código Postal - CP: '
+                    span
+                    input.anchoCamposRegistro#distanciaTopeCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                br
+                br
+            button.btnDarseAlta#altaCliente(type='submit')
+                a(href='/')='Darse de alta'
+            button.btnTransparente 
+                a(href='/')
+                    img.iconoInicio(src='/icons/home.png' alt='home')
+            button.btnTransparente 
+                a(href='/registrarse')
+                    img.iconoAtras(src='/icons/back.png' alt='back')
