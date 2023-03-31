@@ -8,6 +8,8 @@
 var controladorErrores = require('http-errors');
 //-- Importamos la Tecnología Express para crear el servidor de MAD Services basado en Express.
 var servidor = require('express');
+//-- Importamos la Tecnología para validar datos enviados por el cliente.
+const { body, validationResult } = require("express-validator");
 //-- Importamos la Tecnología que enrruta todas las rutas de MAD Services.
 var path = require('path');
 //-- Importamos la Tecnología basada en un middleware que analiza el encabezado Cookie y, rellena req.cookies 

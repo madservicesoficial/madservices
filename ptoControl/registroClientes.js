@@ -10,8 +10,9 @@ const registroClientes = {}
 
 registroClientes.clienteRegistrarse = async (req, res) => {
     
+    console.log('Registro');
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
-    const {email, password, confirmPassword, nombre, apellidos, direccion, poblacion, region, pais, cp, genero} = req.body; 
+    const {email, password, confirmPassword, nombre, apellidos, direccion, poblacion, region, pais, cp, genero} = req.body;
     //-- Comprobamos que ningún campo está vacío.
     if(email === "" || password === "" || confirmPassword === "" || nombre === "" || apellidos === "" || direccion === ""
     || poblacion === "" || region === "" || pais === "" || cp === "" || genero === '') return res.status(401).send('Campos vacíos');

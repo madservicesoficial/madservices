@@ -74,11 +74,10 @@ block body
                     input.anchoCamposRegistro#distanciaTopeCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
                 br
                 br
-            button.btnDarseAlta#altaCliente(type='submit')
-                a(href='/')='Darse de alta'
-            button.btnTransparente 
-                a(href='/')
+                button.btnDarseAlta#altaCliente(type='submit')='Darse de alta'
+            form(method='GET' action='/')
+                button.btnTransparente 
                     img.iconoInicio(src='/icons/home.png' alt='home')
-            button.btnTransparente 
-                a(href='/registrarse')
+            form(method='GET' action='/registrarse')
+                button.btnTransparente 
                     img.iconoAtras(src='/icons/back.png' alt='back')

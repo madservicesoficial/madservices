@@ -1,0 +1,55 @@
+//-- Contenido de la Sección Contacto del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title='MAD Services'
+
+block body
+  div.cabeceraContacto
+    form(method='GET' action='/')
+      button#btnTransparenteMAD 
+        img#logoMADenContacto(src='/images/madservices.png' alt='madservices')
+    form(method='GET' action='/login')
+      button#btnMADenContactologin='Iniciar Sesión'
+    form(method='GET' action='/registrarse')
+      button#btnMADenContactoregistro='Registrarse'
+    select#eligeIdiomas(name="Idiomas")
+      option(value="value1" selected)='Español'
+      option(value="value2")='Inglés'
+  div.cuerpoContacto
+    div
+      h2='Para más información....'
+      p='Escríbenos al email:' 
+        span='info.madservices@gmail.com'
+    div
+      img(src='/images/contacto.png' alt='contacto')
+  div.pieContacto
+    table.opciones
+      tr
+        th.opcionesDer 
+        th.opcionesIzq
+      tr
+        th.opcionesDer
+          a.enlaceNoBoton='Contacto'
+        th.opcionesIzq#socialMedia='Nuestras RR.SS:'
+      tr 
+        th.opcionesDer
+          a.enlaceNoBoton='Sobre MAD Services'
+        th.opcionesIzq
+          a(href='https://www.instagram.com/madservicesoficial/')
+            img#instagram(src='images/instagram.png' alt='instagram')
+      tr 
+        th.opcionesDer
+          a.enlaceNoBoton='Trabaja con nosotros'
+        th.opcionesIzq
+          a(href='https://twitter.com/madservicestick')
+            img#twitter(src='images/twitter.png' alt='twitter')
+      tr 
+        th.opcionesDer
+        th.opcionesIzq
+      tr 
+        th.opcionesDer
+        th.opcionesIzq
+      tr 
+        th.opcionesDer
+        th.opcionesIzq

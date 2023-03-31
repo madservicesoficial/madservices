@@ -18,19 +18,19 @@ rutasMain.get('/registrarse', (req, res) => {
   res.render('paginas/registrarse');
 });
 
-//-- Ruta a la Sección de Iniciar Sesión como Cliente.
-rutasMain.get('/login/cliente', (req, res) => {
-  res.render('paginas/clienteLogin');
+//-- Ruta a la Sección de Contacto.
+rutasMain.get('/contacto', (req, res) => {
+  res.render('paginas/contacto');
 });
 
-//-- Ruta a la Sección de Iniciar Sesión como Empresa.
-rutasMain.get('/login/empresa', (req, res) => {
-  res.render('paginas/empresaLogin');
+//-- Ruta a la Sección de Trabaja con Nosotros.
+rutasMain.get('/empleo', (req, res) => {
+  res.render('paginas/empleo');
 });
 
-//-- Ruta a la Sección de Registrarse como Empresa.
-rutasMain.get('/registrarse/empresa', (req, res) => {
-  res.render('paginas/empresaRegistrarse');
+//-- Ruta a la Sección de Sobre MAD Services.
+rutasMain.get('/conoceMADs', (req, res) => {
+  res.render('paginas/conoceMADs');
 });
 
 //-- Exportamos las rutas con método GET.
