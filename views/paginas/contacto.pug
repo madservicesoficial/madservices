@@ -5,17 +5,20 @@ block title
   title='MAD Services'
 
 block body
-  div.cabeceraContacto
-    form(method='GET' action='/')
-      button#btnTransparenteMAD 
+  header
+    div.logoCabeceraContacto
+      form(method='GET' action='/')
         img#logoMADenContacto(src='/images/madservices.png' alt='madservices')
-    form(method='GET' action='/login')
-      button#btnMADenContactologin='Iniciar Sesión'
-    form(method='GET' action='/registrarse')
-      button#btnMADenContactoregistro='Registrarse'
-    select#eligeIdiomas(name="Idiomas")
-      option(value="value1" selected)='Español'
-      option(value="value2")='Inglés'
+    div.btnCabeceraContacto
+    nav.navCabeceraContacto
+      form(method='GET' action='/login')
+        button#btnMADenContactologin='Iniciar Sesión'
+      form(method='GET' action='/registrarse')
+        button#btnMADenContactoregistro='Registrarse'
+    div.idiomasCabeceraContacto
+      select#eligeIdiomas(name="Idiomas")
+        option(value="value1" selected)='Español'
+        option(value="value2")='Inglés'
   div.cuerpoContacto
     div
       h2='Para más información....'

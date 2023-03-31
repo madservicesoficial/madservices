@@ -369,21 +369,29 @@ input[type=number]::-webkit-outer-spin-button {
 /*######################################## SECCIÓN CONTACTO ########################################*/
 /*##################################################################################################*/
 /* CABECERA => */
-.cabeceraContacto {
+header {
   width: 100%;
   height: 25%;
-  display: flex;
-  justify-content: center;
 }
-#btnTransparenteMAD {
-  background-color: transparent;
-  width: 180px;
-  height: 180px;
+.logoCabeceraContacto {
+  float: left;
+  width: 30%;
+}
+.btnCabeceraContacto {
+  float: center;
+  width: 40%;
+}
+.idiomasCabeceraContacto {
+  float: right;
+  width: 30%;
 }
 #logoMADenContacto {
   width: 180px;
   height: 180px;
-  float: left;
+}
+#eligeIdiomas {
+  width: 60px;
+  height: 20px;
 }
 /* CUERPO => */
 .cuerpoContacto {
