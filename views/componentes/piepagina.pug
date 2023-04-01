@@ -1,0 +1,17 @@
+//-- Contenido del Componente Pie de Página del Comercio Electrónico MAD Services.
+div.piePagina
+    ul.organizacionPiePagina
+        li
+            form(method='GET' action='/contacto')
+                button.botonesPiePagina#btnContacto='Contacto'
+        li 
+            form(method='GET' action='/conoceMADs')
+                button.botonesPiePagina#btnConoce='Sobre MAD Services'
+        li
+            form(method='GET' action='/empleo')
+                button.botonesPiePagina#btnEmpleo='Trabaja con nosotros'
+        li.textoRedesSociales='Nuestras RR.SS: '
+            a(href='https://www.instagram.com/madservicesoficial/' target="_blank")
+                img.redesSociales(src='images/instagram.png' alt='instagram')
+            a(href='https://twitter.com/madservicestick' target="_blank")
+                img.redesSociales(src='images/twitter.png' alt='twitter')

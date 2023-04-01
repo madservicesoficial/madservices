@@ -9,20 +9,25 @@ body {
   background-color: black;
   padding: 0;
   margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
 }
 /*##################################################################################################*/
 /*################################# PÁGINA POR RECURSO INEXISTENTE #################################*/
 /*##################################################################################################*/
 .Error {
-  color: red;
   text-align: center;
   padding-top: 100px;
+}
+#estatus {
+  color: red;
 }
 #mensaje {
   color: white;
 }
 /*##################################################################################################*/
-/*############################### CONFIGURACIÓN GENERAL PARA BOTONES ###############################*/
+/*####################################### BOTONES Y ENTRADAS #######################################*/
 /*##################################################################################################*/
 button {
   text-align: center;
@@ -30,91 +35,127 @@ button {
   color: black;
   border-radius: 10px;
   border-style: hidden;
-}
-/* Configuración del diseño CSS para la Cabecera del Comercio Electrónico MAD Services. */
-#LogoMADservices {
-  width: 170px;
-  height: 150px;
-  position: relative;
-  left: 250px;
-}
-.btnesInicio {
-  font-size: large;
   width: 140px;
-  height: 40px;
-  padding: 10px;
-  position: relative;
-  left: 450px;
-  top: -60px;
+  height: 25px;
+  font-size: large;
+  cursor: pointer;
+}
+button[type=submit] {
+  width: 80px;
+}
+input {
+  text-align: left;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  border-style: hidden;
+  height: 25px;
+  padding-left: 10px;
+}
+input[type=search] {
+  margin: 5px;
+  width: 190px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0;
+}
+/*##################################################################################################*/
+/*############################# ORGANIZACIÓN CABECERA Y PIE DE PÁGINA ##############################*/
+/*##################################################################################################*/
+ul {
+  margin-right: 20px;
+  color: white;
+}
+ul li {
+  display: inline-block;
+  line-height: 80px;
+  margin: -40px 50px;
+}
+/*##################################################################################################*/
+/*############################################ CABECERA ############################################*/
+/*##################################################################################################*/
+.cabecera {
+  background: black;
+  width: 100%;
+  height: 15%;
+}
+.organizacionCabecera {
+  float: right;
+}
+.btnMADServices {
+  background-color: transparent;
+  width: 120px;
+  margin-left: 100px;
+}
+.logoMADServices {
+  width: 120px;
+  height: 97px;
 }
 #btnRegistrarse {
-  position: relative;
-  left: 550px;
+  width: 125px;
 }
-.mundo {
-  width: 50px;
-  height: 50px;
-  color: white;
-  background-color: black;
+#iconoWorld {
+  width: 40px;
+  height: 40px;
   position: relative;
-  top: -40px;
-  left: 850px;
+  top: 15px;
+  right: 5px;
 }
-.selectLang {
-  width: 100px;
+.eligeIdiomas {
+  width: 80px;
   height: 40px;
   color: white;
   background-color: black;
-  position: relative;
-  top: -60px;
-  left: 860px;
 }
-/* Configuración del diseño CSS del Cuerpo del Inicio del Comercio Electrónico MAD Services. */
-.gifms {
+/*##################################################################################################*/
+/*######################################### PIE DE PÁGINA ##########################################*/
+/*##################################################################################################*/
+.piePagina {
+  background: black;
   width: 100%;
-  height: 100%;
+  height: 5%;
 }
-#botonCategorias {
-  position: relative;
-  top: -650px;
-  left: 650px;
-  background-color: silver;
-  font-size: xx-large;
-  padding: 15px;
+.organizacionPiePagina {
+  float: center;
+  margin-left: 200px;
+  margin-top: 30px;
 }
-/* Configuración del diseño CSS del Pie de Página del Comercio Electrónico MAD Services. */
-.opciones {
+.botonesPiePagina {
+  background-color: transparent;
+  text-align: center;
   color: white;
-  font-size: medium;
-  position: relative;
-  top: -40px;
-  left: 550px;
-  margin-bottom: 100px;
 }
-.opcionesDer {
-  text-align: left;
+#btnContacto {
+  width: 85px;
 }
-.opcionesIzq {
-  text-align: right;
+#btnConoce {
+  width: 180px;
 }
-#instagram {
+#btnEmpleo {
+  width: 190px;
+}
+.textoRedesSociales {
+  font-size: large;
+}
+.redesSociales{
   width: 30px;
   height: 30px;
-  position: relative;
-  top: 10px;
+  margin-top: 30px;
 }
-#twitter {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  left: 60px;
-  top: -23px;
+/*##################################################################################################*/
+/*############################################# INICIO #############################################*/
+/*##################################################################################################*/
+.inicio {
+  background: white;
+  width: 100%;
+  height: 80%;
+  background-image: url(../gifs/portadaMADservices.gif);
 }
-#socialMedia {
-  position: relative;
-  left: 80px;
-}
-/* Configuración CSS de la Pantalla Opción como Cliente o Empresa tanto para Iniciar Sesión como para Registrarse */
+/*##################################################################################################*/
+/*######################################## PANTALLA OPCIÓN #########################################*/
+/*##################################################################################################*/
 .pantallaOpcion {
   min-height: 100vh;
   display: flex;
@@ -145,7 +186,9 @@ button {
   top: -40px;
   left: 120px;
 }
-/* Configuración CSS del Login del Comercio Electrónico MAD Services. */
+/*##################################################################################################*/
+/*############################### INICIAR SESIÓN: EMPRESA O CLIENTE ################################*/
+/*##################################################################################################*/
 .etiquetaLogin {
   text-align: center;
   position: relative;
@@ -231,7 +274,9 @@ button {
   top: 40px;
   right: 195px;
 }
-/* Configuración CSS del Registro Cliente del Comercio Electrónico MAD Services. */
+/*##################################################################################################*/
+/*###################################### REGISTRARSE: CLIENTE ######################################*/
+/*##################################################################################################*/
 .fondoRegistrarseCliente {
   background-image: url(../gifs/gifClienteRegistrarse.gif);
 }
@@ -275,7 +320,9 @@ button {
   position: relative;
   left: 100px;
 }
-/* Configuraciones CSS del Registro Cliente o Empresa comunes. */
+/*##################################################################################################*/
+/*###################################### REGISTRARSE: GENERAL ######################################*/
+/*##################################################################################################*/
 .registrarse {
   box-sizing: border-box;
   align-items: center;
@@ -341,15 +388,12 @@ button {
   top: 90px;
   right: 410px;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
 ::-webkit-scrollbar {
   display: none;
 }
-/* Configuración CSS del Registro Empresa del Comercio Electrónico MAD Services. */
+/*##################################################################################################*/
+/*###################################### REGISTRARSE: EMPRESA ######################################*/
+/*##################################################################################################*/
 .fondoRegistrarseEmpresa {
   background-image: url(../gifs/gifEmpresaRegistrarse.gif);
 }
@@ -368,125 +412,51 @@ input[type=number]::-webkit-outer-spin-button {
 /*##################################################################################################*/
 /*######################################## SECCIÓN CONTACTO ########################################*/
 /*##################################################################################################*/
-/* CABECERA => */
-header {
+.contacto {
+  background: white;
   width: 100%;
-  height: 25%;
-}
-.logoCabeceraContacto {
-  float: left;
-  width: 30%;
-}
-.btnCabeceraContacto {
-  float: center;
-  width: 40%;
-}
-.idiomasCabeceraContacto {
-  float: right;
-  width: 30%;
-}
-#logoMADenContacto {
-  width: 180px;
-  height: 180px;
-}
-#eligeIdiomas {
-  width: 60px;
-  height: 20px;
-}
-/* CUERPO => */
-.cuerpoContacto {
+  height: 420vh;
   background-image: url(../images/fondoContacto.png);
-  width: 100%;
-  height: 100vh;
-}
-/* PIE => */
-.pieContacto {
-  width: 100%;
-  height: 25%;
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN CONOCE MAD SERVICES ###################################*/
 /*##################################################################################################*/
-.fondoAbout {
-  background-image: url(../images/DuranteElCamino.png);
-  display:block;
-  width: 1550px;
-  height: 900px;
-}
-.textoAbout {
-  position: relative;
-  top: -20px;
-  text-align: left;
-  width: 1250px;
-  height: 80px;
-  margin-left: 15px;
-}
-#titleAbout {
-  text-align: center;
-  position: relative;
-  left: -230px;
-  top: 20px;
-  size: xx-large;
+.conoceMADs {
+  background: white;
+  width: 100%;
+  height: 420vh;
+  background-image: url();
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN TRABAJA CON NOSOTROS ##################################*/
 /*##################################################################################################*/
-.fondoEmpleo {
-  background-image: url(../images/fondo_empleo.jpg);
-  display:block;
-  width: 1550px;
-  height: 900px;
+.empleo {
+  background: white;
+  width: 100%;
+  height: 420vh;
+  background-color: silver;
+}
+.elementosEmpleo {
+  padding-top: 80px;
 }
 .tituloEmpleo {
-  text-align: center;
-  position: relative;
-  top: 50px;
-  font-size: xx-large;
-}
-.formEmpleo {
-  flex-direction: column;
-  justify-content: left;
-  align-items: left;
-  text-align: left;
-  position: relative;
-  top: 90px;
-  left: 200px;
-}
-#nombreCV {
-  text-align: left;
-  width: 308px;
-}
-#apellidosCV {
-  text-align: left;
-  width: 300px;
-}
-#emailCV {
-  text-align: left;
-  width: 325px;
-}
-#birthdayCV {
-  width: 217px;
-  text-align: center;
-}
-.espaciadoCV {
-  margin: 20px;
-}
-.argumentacionCV {
-  position: relative;
-  left: 550px;
-  top: -197px;
-}
-#asuntoCV {
-  width: 600px;
-}
-#cartaPresentacion {
-  resize: both;
-  overflow: hidden;
-}
-#elboton {
-  text-decoration: none;
   color: black;
-  font-size: medium;
+  text-align: center;
+  position: relative;
+  bottom: 930px;
+  left: 100px;
 }
+.datosEmpleo {
+  text-align: left;
+  position: relative;
+  bottom: 900px;
+  left: 800px;
+}
+.imagenEmpleo {
+  width: 700px;
+  position: relative;
+  right: 80px;
+}
+/*##################################################################################################*/
 /*##################################################################################################*/
 /*##################################################################################################*/

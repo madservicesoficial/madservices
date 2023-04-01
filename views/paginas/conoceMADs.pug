@@ -2,50 +2,9 @@
 extends ../base.pug
 
 block title
-  title='MAD Services'
+  title='MAD Services: Conócenos'
 
 block body
-    a(href='/')
-        img#LogoMADservices(src='/images/madservices.png' alt='madservices')
-    button.btnesInicio
-        a(href='/login')='Iniciar Sesión'
-    button.btnesInicio#btnRegistrarse
-        a(href='/registrarse')='Registrarse'
-    select.selectLang(name="Idiomas")
-        option(value="value1" selected)='Español'
-        option(value="value2")='Inglés'
-    p.fondoAbout
-        h2.textoAbout#titleAbout='Conócenos...'
-        p.textoAbout(src='texts/conoceMADs.txt' alt='conoceMADs')
-    br
-    br
-    br
-    table.opciones
-        tr
-            th.opcionesDer 
-            th.opcionesIzq
-        tr
-            th.opcionesDer
-                a.enlaceNoBoton='Contacto'
-            th.opcionesIzq#socialMedia='Nuestras RR.SS:'
-        tr 
-            th.opcionesDer
-                a.enlaceNoBoton='Sobre MAD Services'
-            th.opcionesIzq
-                a(href='https://www.instagram.com/madservicesoficial/')
-                    img#instagram(src='images/instagram.png' alt='instagram')
-        tr 
-            th.opcionesDer
-                a.enlaceNoBoton='Trabaja con nosotros'
-            th.opcionesIzq
-                a(href='https://twitter.com/madservicestick')
-                    img#twitter(src='images/twitter.png' alt='twitter')
-        tr 
-            th.opcionesDer
-            th.opcionesIzq
-        tr 
-            th.opcionesDer
-            th.opcionesIzq
-        tr 
-            th.opcionesDer
-            th.opcionesIzq
+    include ../componentes/cabecera.pug
+    div.conoceMADs
+    include ../componentes/piepagina.pug
