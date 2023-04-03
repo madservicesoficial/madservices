@@ -1,21 +1,10 @@
-Te preguntarás, ¿cómo surgió MAD Enterprise? Pues llegó un día que un alumno del Grado en Ingeniería de Sistemas Audiovisuales y Multimedia
-de la Escuela Técnica Superior de Ingeniería de Telecomunicación de la Universidad Rey Juan Carlos, tenía que hacer su TFG para finalizar la
-Licenciatura. Al principio, no sabía que hacer, pero un día leyó en un sitio web de informática de prestigio, que los Comercios Electrónicos
-como Amazon, guardaban todos los datos de sus usuarios en la base de datos del servidor, es decir, hay en ellos una falta de privacidad.
-Entonces, dicho alumno, cansado de ello, decidió desarrollar un Comercio Eléctrónico, donde el usuario sí tuviera privacidad sobre sus datos.
-Para ello, el procedimiento sobre la privacidad que se llevó a cabo fue, que todos los datos que el usuario pudiera meter (salvo usuario y
-contraseña necesarios para iniciar sesión) se guardaran en la base de datos del cliente y, no en la del servidor como hacen la mayoría de los
-Comercios Electrónicos "mainstream". Aparte de la privacidad, otro de los motivos por el que decidió crear MAD Enterprise fue, para dar un
-enfoque más futurible a los Comercios Electrónicos, poniendo especial énfasis en el diseño en 3D (por medio de la Tecnología A-Frame), para
-que los iconos y todos los productos a la venta del Comercio Electrónico se vieran en 3D y, el usuario tuviera una sensación de más realidad
-cuando estuviera comprando (hacerle ver como si estuviera en una tienda física de un Centro Comercial o tienda de barrio). Por lo tanto, con
-la idea y el proyecto en mente, se puso a ello, desarrollando un esquema teórico primero y luego, desarrollándolo de forma práctica. Por otro
-lado, hay que decir que fue un proyecto con mucha investigación, sobre la Tecnología A-Frame, sobre la Tecnología mySQL y phpMyAdmin para el
-desarrollo de la base de datos, sobre la Tecnología NodeJS para el desarrollo del BackEnd y, sobre la Tecnología ReactJS para el desarrollo
-del FrontEnd. También la edición de fotos con Adobe Photoshop y GIFs.
+Todo comenzó con una idea para TFG (Trabajo de Fin de Grado) del dueño y fundador de MAD Services: Alejandro Fernández Pérez.
 
-Desde MAD Enterprise, si tenéis inseguridad a la hora de desarrollar un proyecto profesional, o no sabéis como hacerlo y por eso, os echáis
-para atrás, os decimos que no tengáis miedo al fracaso por el que dirán. Lo que sí que debería ser negativo y de fracaso, es no haber
-intentado desarrollarlo y, haber "tirado la toalla", sólo por ese miedo "ficticio" a ello.
-                    
-Así qué, ya sabes, lucha por tus objetivos profesionales y personales y, no dejes que guíen tu vida, ya qué el dueño de ella, ¡ERES TÚ!
+La idea del Proyecto era, formar el E-commerce de los E-Commerce, un Centro Comercial online, que englobase a todas las Empresas
+del mercado (o las que quieran) y, para que al cliente le resultase infinítamente más fácil encontrar y descubrir nuevas marcas y
+empresas.
+
+Al principio, MAD Services sería en 2D con productos en 3D y en su segunda versión, MAD Services pasaría a ser en VR (Virtual Reality),
+gracias a la Tecnología A-Frame.
+
+A continuación, podéis seguir informándoos sobre MAD Services, en el desplegable de GitHub de abajo.

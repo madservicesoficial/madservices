@@ -5,6 +5,10 @@ block title
   title='MAD Services: Conócenos'
 
 block body
-    include ../componentes/cabecera.pug
-    div.conoceMADs
-    include ../componentes/piepagina.pug
+  include ../componentes/cabecera.pug
+  div.conoceMADs
+    div.cuadroConoce
+      h1='Hablemos de MAD Services....'
+      img.logoConoce(src='/images/conocenos.png' alt='conocenos')
+      object.intro(type="text/plain" data="/texts/conoceMADs.txt" width="900" height="250")
+  include ../componentes/piepagina.pug

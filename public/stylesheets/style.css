@@ -3,7 +3,6 @@
 /*##################################################################################################*/
 body {
   width: 100%;
-  height: 100%;
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
   background-color: black;
@@ -62,36 +61,32 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 /*##################################################################################################*/
-/*############################# ORGANIZACIÓN CABECERA Y PIE DE PÁGINA ##############################*/
-/*##################################################################################################*/
-ul {
-  margin-right: 20px;
-  color: white;
-}
-ul li {
-  display: inline-block;
-  line-height: 80px;
-  margin: -40px 50px;
-}
-/*##################################################################################################*/
 /*############################################ CABECERA ############################################*/
 /*##################################################################################################*/
-.cabecera {
+header {
   background: black;
+  color: white;
   width: 100%;
-  height: 15%;
-}
-.organizacionCabecera {
-  float: right;
+  height: 7em;
 }
 .btnMADServices {
   background-color: transparent;
   width: 120px;
+  height: 97px;
   margin-left: 100px;
 }
 .logoMADServices {
   width: 120px;
   height: 97px;
+}
+.organizacionCabecera {
+  display: inline-block;
+  margin-left: 120px;
+  position: relative;
+  bottom: 90px;
+}
+#buscarCabecera {
+  margin-left: 400px;
 }
 #btnRegistrarse {
   width: 125px;
@@ -112,15 +107,17 @@ ul li {
 /*##################################################################################################*/
 /*######################################### PIE DE PÁGINA ##########################################*/
 /*##################################################################################################*/
-.piePagina {
+footer {
   background: black;
+  color: white;
   width: 100%;
-  height: 5%;
 }
 .organizacionPiePagina {
-  float: center;
-  margin-left: 200px;
-  margin-top: 30px;
+  display: inline-block;
+  font-size: large;
+}
+#exceptoCopyright {
+  margin-left: 130px;
 }
 .botonesPiePagina {
   background-color: transparent;
@@ -136,21 +133,16 @@ ul li {
 #btnEmpleo {
   width: 190px;
 }
-.textoRedesSociales {
-  font-size: large;
-}
 .redesSociales{
-  width: 30px;
-  height: 30px;
-  margin-top: 30px;
+  width: 20px;
+  height: 20px;
 }
 /*##################################################################################################*/
 /*############################################# INICIO #############################################*/
 /*##################################################################################################*/
 .inicio {
-  background: white;
   width: 100%;
-  height: 80%;
+  min-height: 100vh;
   background-image: url(../gifs/portadaMADservices.gif);
 }
 /*##################################################################################################*/
@@ -413,49 +405,172 @@ ul li {
 /*######################################## SECCIÓN CONTACTO ########################################*/
 /*##################################################################################################*/
 .contacto {
-  background: white;
   width: 100%;
-  height: 420vh;
+  min-height: 100vh;
   background-image: url(../images/fondoContacto.png);
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN CONOCE MAD SERVICES ###################################*/
 /*##################################################################################################*/
 .conoceMADs {
-  background: white;
   width: 100%;
-  height: 420vh;
-  background-image: url();
+  min-height: 130vh;
+  background-color: silver;
+}
+.cuadroConoce {
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  background: black;
+  color: white;
+  justify-content: center;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  top: 110px;
+  left: 240px;
+  width: 1000px;
+  height: 700px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+.logoConoce {
+  width: 120px;
+  height: 120px;
+  float: center;
+  margin-bottom: 20px;
+}
+.intro {
+  margin: 0 auto;
+  display: flex;
+  text-align: justify;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN TRABAJA CON NOSOTROS ##################################*/
 /*##################################################################################################*/
 .empleo {
-  background: white;
   width: 100%;
-  height: 420vh;
+  min-height: 130vh;
   background-color: silver;
 }
-.elementosEmpleo {
-  padding-top: 80px;
-}
-.tituloEmpleo {
-  color: black;
+.cuadroEmpleo {
+  box-sizing: border-box;
+  align-items: center;
   text-align: center;
+  background: black;
+  color: white;
+  justify-content: center;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: relative;
-  bottom: 930px;
-  left: 100px;
+  top: 110px;
+  left: 240px;
+  width: 1000px;
+  height: 700px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+.logoEmpleo {
+  width: 120px;
+  height: 120px;
+  float: center;
+  margin-bottom: 40px;
 }
 .datosEmpleo {
-  text-align: left;
-  position: relative;
-  bottom: 900px;
-  left: 800px;
+  margin: 0 auto;
+  display: flex;
+  text-align: justify;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.imagenEmpleo {
-  width: 700px;
-  position: relative;
-  right: 80px;
+.cajaRellenoCV {
+  width: 500px;
+  margin-left: 5px;
+}
+#nombreCV {
+  margin-left: 10px;
+}
+#emailCV {
+  margin-left: 30px;
+}
+#tabulacionNacimiento {
+  margin-right: 215px;
+}
+#nacimientoCV {
+  width: 200px;
+}
+#tabulacionCV {
+  margin-right: 100px;
+}
+#archivoCV {
+  width: 350px;
+}
+#tabulacionFicheros {
+  margin-right: 100px;
+}
+#otrosFicheros {
+  width: 330px;
+}
+#tabulacionPerfil {
+  margin-right: 380px;
+}
+#especializacionCV {
+  text-align: left;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  border-style: hidden;
+  height: 25px;
+  padding-left: 10px;
+  width: 150px;
+}
+#tabulacionPEmpleo {
+  margin-right: 10px;
+}
+#empleoP {
+  width: 490px;
+}
+#tabulacionREmpleo {
+  margin-right: 10px;
+}
+#empleoR {
+  width: 510px;
+}
+#tabulacionPaisEmpleo {
+  margin-right: 10px;
+}
+#empleoPais {
+  width: 530px;
+}
+#tabulacionMEmpleo {
+  margin-right: 10px;
+}
+#empleoM {
+  width: 530px;
+}
+#tabulacionAEmpleo {
+  margin-right: 10px;
+}
+#empleoA {
+  width: 520px;
+}
+textarea {
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#enviarCV {
+  margin-top: 20px;
 }
 /*##################################################################################################*/
 /*##################################################################################################*/

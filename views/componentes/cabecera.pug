@@ -1,19 +1,19 @@
 //-- Contenido del Componente Cabecera sin Inicio de Sesión del Comercio Electrónico MAD Services.
-div.cabecera
+header
   form(method='GET' action='/')
     button.btnMADServices
       img.logoMADServices(src='/images/madservices.png' alt='madservices')
-  ul.organizacionCabecera
-    li
+  ul
+    li.organizacionCabecera#buscarCabecera
       input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
       button(type='submit')='Buscar'
-    li
+    li.organizacionCabecera
       form(method='GET' action='/login')
         button='Iniciar Sesión'
-    li
+    li.organizacionCabecera
       form(method='GET' action='/registrarse')
         button#btnRegistrarse='Registrarse'
-    li
+    li.organizacionCabecera
       img#iconoWorld(src='/icons/world.png' alt='world')
       select.eligeIdiomas(name="Idiomas")
         option(value="value1" selected)='Español'
