@@ -2,12 +2,12 @@
 extends ../base.pug
 
 block title
-    title='MAD Services'
+    title='MAD Services: Iniciar Sesión como Empresa'
 
 block body
     h1.etiquetaLogin#Empresa='Empresa'
     div.login
-        h1.tituloLogin='INICIAR SESIÓN:'
+        h1='INICIAR SESIÓN:'
         img.madservicesLOGO(src='/images/madforcompanies.png' alt='madforcompanies')
         label.entradas(for="inputEmail")='Correo Electrónico:'
         input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....' required autofocus)

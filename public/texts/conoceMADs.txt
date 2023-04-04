@@ -1,10 +1,10 @@
 Todo comenzó con una idea para TFG (Trabajo de Fin de Grado) del dueño y fundador de MAD Services: Alejandro Fernández Pérez.
 
-La idea del Proyecto era, formar el E-commerce de los E-Commerce, un Centro Comercial online, que englobase a todas las Empresas
-del mercado (o las que quieran) y, para que al cliente le resultase infinítamente más fácil encontrar y descubrir nuevas marcas y
-empresas.
+La idea del Proyecto era, formar el E-commerce de los E-Commerce, un Centro Comercial online, que englobase a todas las
+Empresas del mercado (o las que quieran) y, para que al cliente le resultase infinítamente más fácil encontrar y descubrir
+nuevas marcas y empresas.
 
-Al principio, MAD Services sería en 2D con productos en 3D y en su segunda versión, MAD Services pasaría a ser en VR (Virtual Reality),
-gracias a la Tecnología A-Frame.
+Al principio, MAD Services sería en 2D con productos en 3D y en su segunda versión, MAD Services pasaría a ser en VR
+(Virtual Reality), gracias a la Tecnología A-Frame.
 
-A continuación, podéis seguir informándoos sobre MAD Services, en el desplegable de GitHub de abajo.
+A continuación, podéis seguir informándoos sobre MAD Services, en el link a su Wiki en GitHub:

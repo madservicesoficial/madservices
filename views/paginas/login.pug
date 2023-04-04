@@ -2,12 +2,15 @@
 extends ../base.pug
 
 block title
-    title='MAD Services'
+    title='MAD Services: Elección de Inicio de Sesión'
 
 block body
     div.pantallaOpcion
         h1.tituloOpcion='INICIAR SESIÓN COMO:'
-        button.btnEleccion#btnCliente
-            a(href='/login/cliente' method='POST')='Cliente'
-        button.btnEleccion#btnEmpresa
-            a(href='/login/empresa' method='POST')='Empresa'
+        ul
+            li.botonesEnLinea
+                form(method='GET' action='/login/cliente')
+                    button.btnEleccion#btnCliente='Cliente'
+            li.botonesEnLinea
+                form(method='GET' action='/login/empresa')
+                    button.btnEleccion#btnEmpresa='Empresa'

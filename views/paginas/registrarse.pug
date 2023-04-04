@@ -2,12 +2,15 @@
 extends ../base.pug
 
 block title
-    title='MAD Services'
+    title='MAD Services: Elección de Registro'
 
 block body
     div.pantallaOpcion
         h1.tituloOpcion='REGISTRARSE COMO:'
-        button.btnEleccion#btnCliente
-            a(href='/registrarse/cliente')='Cliente'
-        button.btnEleccion#btnEmpresa
-            a(href='/registrarse/empresa')='Empresa'
+        ul
+            li.botonesEnLinea
+                form(method='GET' action='/registrarse/cliente')
+                    button.btnEleccion#btnCliente='Cliente'
+            li.botonesEnLinea
+                form(method='GET' action='/registrarse/empresa')
+                    button.btnEleccion#btnEmpresa='Empresa'

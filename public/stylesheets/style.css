@@ -138,6 +138,29 @@ footer {
   height: 20px;
 }
 /*##################################################################################################*/
+/*############################ CUADRO DEL CONTACTO, CONÓCENOS Y EMPLEO #############################*/
+/*##################################################################################################*/
+.cuadro {
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  background: black;
+  color: white;
+  justify-content: center;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  top: 110px;
+  left: 240px;
+  width: 1000px;
+  height: 700px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+/*##################################################################################################*/
 /*############################################# INICIO #############################################*/
 /*##################################################################################################*/
 .inicio {
@@ -161,30 +184,30 @@ footer {
   color: white;
   word-spacing: 8px;
 }
+.botonesEnLinea {
+  display: inline;
+}
 .btnEleccion{
   width: 155px;
   height: 60px;
-  position: relative;
-  top: 20px;
+  font-size: 30px;
 }
 #btnCliente {
   position: relative;
-  font-size: 30px;
-  left: -120px;
+  right: 133px;
 }
 #btnEmpresa {
   position: relative;
-  font-size: 28px;
-  top: -40px;
-  left: 120px;
+  left: 97px;
+  bottom: 76px;
 }
 /*##################################################################################################*/
 /*############################### INICIAR SESIÓN: EMPRESA O CLIENTE ################################*/
 /*##################################################################################################*/
 .etiquetaLogin {
   text-align: center;
-  position: relative;
-  top: 50px;
+  margin-top: 20px;
+  margin-right: 40px;
 }
 #Cliente {
   color: rgb(17, 126, 200);
@@ -204,30 +227,19 @@ footer {
   top: 110px;
   left: 560px;
   width: 400px;
-  height: 400px;
+  height: 450px;
   border-radius: 20px;
   border-color: burlywood;
   padding: 40px;
   box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
 }
-.tituloLogin {
-  font-size: xx-large;
-  font-weight: bold;
-  position: relative;
-  right: 90px;
-  bottom: 10px;
-  text-align: center;
-  width: 500px;
-}
 .madservicesLOGO {
-  width: 65px;
-  height: 65px;
+  width: 80px;
+  height: 80px;
   margin: auto;
   border-radius: 10%;
   box-sizing: border-box;
   box-shadow: 7px 7px 10px silver, -7px -7px 10px white;
-  position: relative;
-  bottom: 10px;
 }
 .entradas {
   caret-color: red;
@@ -238,7 +250,7 @@ footer {
   outline: none;
   border: none;
   position: relative;
-  top: 10px;
+  top: 20px;
 }
 #rellenoLogin {
   border-radius: 30px;
@@ -246,25 +258,38 @@ footer {
   padding-left: 20px;
 }
 #btnAcceso {
-  width: 70px;
+  width: 90px;
   height: 35px;
   position: relative;
-  left: 180px;
-  top: 20px;
+  top: 90px;
+  left: 110px;
 }
 #iconHome {
-  width: 40px;
-  height: 40px;
+  width: 47px;
+  height: 47px;
   position: relative;
-  top: 35px;
   right: 5px;
+}
+#btnHome {
+  width: 47px;
+  height: 47px;
+  position: relative;
+  top: 30px;
+  right: 10px;
+  background: transparent;
 }
 #iconBack {
   width: 47px;
   height: 47px;
   position: relative;
-  top: 40px;
-  right: 195px;
+  right: 135px;
+  bottom: 30px;
+}
+#btnBack {
+  width: 47px;
+  height: 47px;
+  position: relative;
+  right: 135px;
 }
 /*##################################################################################################*/
 /*###################################### REGISTRARSE: CLIENTE ######################################*/
@@ -406,8 +431,21 @@ footer {
 /*##################################################################################################*/
 .contacto {
   width: 100%;
-  min-height: 100vh;
-  background-image: url(../images/fondoContacto.png);
+  min-height: 130vh;
+  background-color: silver;
+}
+.logoContacto {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 50px;
+}
+.emailsContacto {
+  justify-content: left;
+  font-size: large;
+}
+.separacionContacto {
+  margin-left: 10px;
+  letter-spacing: 4px;
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN CONOCE MAD SERVICES ###################################*/
@@ -417,26 +455,6 @@ footer {
   min-height: 130vh;
   background-color: silver;
 }
-.cuadroConoce {
-  box-sizing: border-box;
-  align-items: center;
-  text-align: center;
-  background: black;
-  color: white;
-  justify-content: center;
-  place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-  top: 110px;
-  left: 240px;
-  width: 1000px;
-  height: 700px;
-  border-radius: 20px;
-  border-color: goldenrod;
-  padding: 40px;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
-}
 .logoConoce {
   width: 120px;
   height: 120px;
@@ -444,12 +462,13 @@ footer {
   margin-bottom: 20px;
 }
 .intro {
-  margin: 0 auto;
-  display: flex;
-  text-align: justify;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.imagenConoce {
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
 }
 /*##################################################################################################*/
 /*################################## SECCIÓN TRABAJA CON NOSOTROS ##################################*/
@@ -458,26 +477,6 @@ footer {
   width: 100%;
   min-height: 130vh;
   background-color: silver;
-}
-.cuadroEmpleo {
-  box-sizing: border-box;
-  align-items: center;
-  text-align: center;
-  background: black;
-  color: white;
-  justify-content: center;
-  place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-  top: 110px;
-  left: 240px;
-  width: 1000px;
-  height: 700px;
-  border-radius: 20px;
-  border-color: goldenrod;
-  padding: 40px;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
 }
 .logoEmpleo {
   width: 120px;
