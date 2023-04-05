@@ -1,0 +1,12 @@
+//-- Contenido del Inicio Autenticado del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title='MAD Services: Miembro Autenticado'
+
+block body
+  include ../componentes/cabeceraAuth.pug
+  div.inicio
+    form(method='GET' action='/categorias')
+      button.btnCategorias='Categorias'
+  include ../componentes/piepagina.pug

@@ -583,5 +583,45 @@ textarea {
   margin-top: 20px;
 }
 /*##################################################################################################*/
+/*####################################### SECCIÓN CATEGORIAS #######################################*/
 /*##################################################################################################*/
-/*##################################################################################################*/
+.categoriasSeccion {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+}
+.categoria {
+  display: inline-block;
+  cursor: pointer;
+  font-size: xx-large;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: black;
+  color: white;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 500px;
+  height: 300px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+#Consolas {
+  position: relative;
+  top: 100px;
+  left: 100px;
+}
+#Libros {
+  position: relative;
+  top: 100px;
+  left: 400px;
+}
+#Videojuegos {
+  position: relative;
+  top: 500px;
+  right: 500px;
+}

@@ -28,7 +28,7 @@ const consultaCorreoEdb = async (madservicesdb, data, res) => {
     let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?) as emailExists';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    await madservicesdb.getConnection( (error, madservicesdb) => {
+    madservicesdb.getConnection( (error, madservicesdb) => {
         if(error) {
             throw error;
         }else {
@@ -38,7 +38,7 @@ const consultaCorreoEdb = async (madservicesdb, data, res) => {
                     throw error;
                 }else {
                     if(result[0].emailExists == 1) {
-                        res.status(401).send("Correo ya en uso");
+                        res.status(401).render('paginas/clienteRegistrarse').end("Correo ya en uso");
                     }
                 }
             });

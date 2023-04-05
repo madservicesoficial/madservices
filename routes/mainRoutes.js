@@ -33,5 +33,10 @@ rutasMain.get('/conoceMADs', (req, res) => {
   res.render('paginas/conoceMADs');
 });
 
+//-- Ruta a la Sección de Categorias de MAD Services.
+rutasMain.get('/categorias', (req,res) => {
+  res.render('paginas/categorias');
+});
+
 //-- Exportamos las rutas con método GET.
 module.exports = rutasMain;
