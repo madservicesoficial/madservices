@@ -24,6 +24,12 @@ var analizadorFavicon = require('serve-favicon');
 //-- Importamos la Tecnología basada en un middleware que analiza los cuerpos de solicitud entrantes,
 //-- antes de sus controladores y, está disponible bajo el objeto req.body.
 var analizadorBody = require('body-parser');
+//-- Importamos la Tecnología de Protección de Cabeceras HTTP.
+var protectorCabeceras = require('helmet');
+//-- Importamos la Tecnología de Control de Acceso HTTP que intercambia Recursos de Origen Cruzado (Crossed Origin ResourceS - CORS),
+//-- para utilizar cabeceras HTTP adicionales y, para permitir que un agente de usuario obtenga permiso para acceder a recursos
+//-- seleccionados desde un servidor en un origen distinto al que pertenece.
+var controlAccesoHTTP = require('cors');
 //-- Importamos las rutas de MAD Services.
 var rutasMain = require('./routes/mainRoutes.js');
 var rutasFormulario = require('./routes//formularioRoutes.js');
@@ -41,7 +47,11 @@ var madservices = servidor();
 //-- 3. Los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
 //-- coincida con la opción de tipo (para el Body y para la Tecnología Express en general).                    
 //-- 4. Las Cookies que se encuentran en la conexión.                                                          
-//-- 5. El favicon servido implícito predeterminado de MAD Services por parte del servidor.                    
+//-- 5. El favicon servido implícito predeterminado de MAD Services por parte del servidor.
+//-- 6. Las cabeceras HTTP de cada conexión.
+//-- 7. El Control de Acceso HTTP de cada conexión.
+//-- 8. La Protección de Cabeceras HTTP.
+//-- 9. La función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.                                                        
 madservices.use(analizadorSolicitudes('dev'));                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
@@ -49,6 +59,19 @@ madservices.use(analizadorCookies());
 madservices.use(analizadorBody.json());
 madservices.use(analizadorBody.urlencoded({ extended: true }));
 madservices.use(analizadorFavicon(path.join(__dirname, 'public', 'favicon.ico')));
+madservices.use((req, res, next) => {
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  //-- Metodos de Solicitud permitidos.
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  // Encabezados permitidos.
+  res.setHeader('Access-Control-Allow-Headers', '*');
+
+  next();
+});
+madservices.use(controlAccesoHTTP());
+madservices.use(protectorCabeceras());
+madservices.disable('x-powered-by');
 //##############################################################################################################//
 
 //##############################################################################################################//

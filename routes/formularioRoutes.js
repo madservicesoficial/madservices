@@ -19,7 +19,7 @@ rutasFormulario.get('/login/empresa', (req, res) => {
 rutasFormulario.get('/registrarse/cliente', (req, res) => {
   res.render('paginas/clienteRegistrarse');
 });
-rutasFormulario.post('/registrarse/cliente', registroClientes.clienteRegistrarse);
+rutasFormulario.post('/', registroClientes.clienteRegistrarse);
 
 //-- Ruta a la Sección de Registrarse como Empresa.
 rutasFormulario.get('/registrarse/empresa', (req, res) => {

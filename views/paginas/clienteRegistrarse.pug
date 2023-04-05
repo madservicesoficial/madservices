@@ -9,75 +9,74 @@ block body
         div.registrarse
             h1='Darse de alta como Cliente:'
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
-            form.formRegistro(method='POST' action='/registrarse/cliente')
+            form.formRegistro(method='POST' action='/')
                 label='Nombre: '
                     span
-                        input.anchoCamposRegistro#distanciaTopeNombre(type='text' name='nombre' placeholder='Escribe tu nombre....' required)
+                        input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')
                 br
                 br
                 label='Apellidos: '
                     span
-                        input.anchoCamposRegistro#distanciaTopeApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                        input.camposRegistro#posicionApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
                 br
                 br
                 label='Género: '
                     span.genero
                         input(type='radio' name='genero' value='Hombre')
                         label='Hombre'
-                        input.separacionMujer(type='radio' name='genero' value='Mujer')
-                        label.separacionMujer='Mujer'
-                        input.separacionOtro(type='radio' name='genero' value='Otro' checked)
-                        label.separacionOtro='Otro'
+                        input(type='radio' name='genero' value='Mujer')
+                        label='Mujer'
+                        input(type='radio' name='genero' value='Otro' checked)
+                        label='Otro'
                 br
                 br
                 label='E-mail: '
                     span
-                    input.anchoCamposRegistro#distanciaTopeEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposRegistro#posicionEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 label='Nueva contraseña: '
                     span
-                    input.anchoCamposRegistro#distanciaTopePassword(type='password' name='password' placeholder='Introduce una contraseña válida....'
-                            pattern="[0-9]|[A-Z]|[a-z]|[%.-_$]" minlength='15'
-                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                    input.camposRegistro#posicionPassword(type='password' name='password' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 label='Confirmación de la contraseña: '
                     span
-                    input.anchoCamposRegistro#newpassword(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....'
-                            pattern="[0-9]|[A-Z]|[a-z]|[%.-_$]" minlength='15'
-                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
                 label='Dirección: '
                     span
-                    input.anchoCamposRegistro#distanciaTopeDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 br
                 br
                 label='Población: '
                     span
-                    input.anchoCamposRegistro#distanciaTopePoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
                 br
                 br
                 label='Región: '
                     span
-                    input.anchoCamposRegistro#distanciaTopeRegion(type='text' name='region' placeholder='Introduce una región válida....')
+                    input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
                 br
                 br
                 label='País: '
                     span
-                    input.anchoCamposRegistro#distanciaTopePais(type='text' name='pais' placeholder='Introduce un país válido....')
+                    input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
                 br
                 br
                 label='Código Postal - CP: '
                     span
-                    input.anchoCamposRegistro#distanciaTopeCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                    input.camposRegistro#posicionCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
                 br
                 br
-                button.btnDarseAlta#altaCliente(type='submit')='Darse de alta'
-            form(method='GET' action='/')
-                button.btnTransparente 
-                    img.iconoInicio(src='/icons/home.png' alt='home')
-            form(method='GET' action='/registrarse')
-                button.btnTransparente 
-                    img.iconoAtras(src='/icons/back.png' alt='back')
+                button.posAlta#btnAlta(type='submit')='Darse de alta'
+            ul 
+                li.botonesSalientes
+                    form(method='GET' action='/')
+                        button#btnAinicio
+                            img.posdeinicio#iconAinicio(src='/icons/home.png' alt='home')
+                li.botonesSalientes
+                    form(method='GET' action='/registrarse')
+                        button.posAtras#btnBack
+                            img.posdeAtras#iconBack(src='/icons/back.png' alt='back')
