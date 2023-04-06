@@ -4,6 +4,8 @@ var servidor = require('express');
 var rutasFormulario = servidor.Router();
 //-- Importamos el Controlador del Registro de los Clientes.
 const registroClientes = require('../ptoControl/registroClientes.js');
+//-- Importamos el Controlador del Registro de las Empresas.
+const registroEmpresas = require('../ptoControl/registroEmpresas.js');
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente.
 rutasFormulario.get('/login/cliente', (req, res) => {

@@ -22,13 +22,13 @@ const registrarClientedb = async (madservicesdb, data) => {
 }
 
 //-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
-const consultaCorreoEdb = async (madservicesdb, data, res) => {
+const consultaEmailClientedb = async (madservicesdb, data, res) => {
 
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?) as emailExists';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    madservicesdb.getConnection( (error, madservicesdb) => {
+    await madservicesdb.getConnection( (error, madservicesdb) => {
         if(error) {
             throw error;
         }else {
@@ -38,7 +38,44 @@ const consultaCorreoEdb = async (madservicesdb, data, res) => {
                     throw error;
                 }else {
                     if(result[0].emailExists == 1) {
-                        res.status(401).render('paginas/clienteRegistrarse').end("Correo ya en uso");
+                        res.render('paginas/clienteRegistrarse', {
+                            alert: true,
+                            alertStatus: 401,
+                            alertMessage: 'Correo ya en uso',
+                            alertIcon: 'warning',
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            });
+        }
+    });
+}
+
+//-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
+const consultaPasswordClientedb = async (madservicesdb, data, res) => {
+
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM empresas WHERE password = ?) as emailExists';
+    //-- Configuración del formato de los datos introducidos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    await madservicesdb.getConnection( (error, madservicesdb) => {
+        if(error) {
+            throw error;
+        }else {
+            //-- Establecer la comunicación para consultar el email en la base de datos.
+            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
+                if(error) {
+                    throw error;
+                }else {
+                    if(result[0].emailExists == 1) {
+                        res.render('paginas/clienteRegistrarse', {
+                            alert: true,
+                            alertStatus: 401,
+                            alertMessage: 'Correo ya en uso',
+                            alertIcon: 'warning',
+                            showConfirmButton: false
+                        });
                     }
                 }
             });
@@ -47,4 +84,4 @@ const consultaCorreoEdb = async (madservicesdb, data, res) => {
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClientedb, consultaCorreoEdb};
+module.exports = {registrarClientedb, consultaEmailClientedb, consultaPasswordClientedb};

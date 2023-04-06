@@ -34,7 +34,7 @@ var protectorCabeceras = require('helmet');
 var controlAccesoHTTP = require('cors');
 //-- Importamos las rutas de MAD Services.
 var rutasMain = require('./routes/mainRoutes.js');
-var rutasFormulario = require('./routes//formularioRoutes.js');
+var rutasFormulario = require('./routes/formularioRoutes.js');
 //##############################################################################################################//
 
 //##############################################################################################################//
