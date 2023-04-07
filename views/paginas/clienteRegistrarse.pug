@@ -10,64 +10,64 @@ block body
             h1='Darse de alta como Cliente:'
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
             form.formRegistro(method='POST' action='/')
-                label(for='nombre')='Nombre: '
+                label='Nombre: '
                     span
-                        input.camposRegistro#posicionNombre(type='text' placeholder='Escribe tu nombre....')
+                        input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')
                 br
                 br
-                label(for='apellidos')='Apellidos: '
+                label='Apellidos: '
                     span
-                        input.camposRegistro#posicionApellidos(type='text' placeholder='Escribe tus dos apellidos....')
+                        input.camposRegistro#posicionApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
                 br
                 br
-                label(for='genero')='Género: '
+                label='Género: '
                     span.genero
-                        input(type='radio' value='Hombre')
+                        input(type='radio' name='genero' value='Hombre')
                         label='Hombre'
-                        input(type='radio' value='Mujer')
+                        input(type='radio' name='genero' value='Mujer')
                         label='Mujer'
-                        input(type='radio' value='Otro' checked)
+                        input(type='radio' name='genero' value='Otro' checked)
                         label='Otro'
                 br
                 br
-                label(for='email')='E-mail: '
+                label='E-mail: '
                     span
-                    input.camposRegistro#posicionEmail(type='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposRegistro#posicionEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
-                label(for='password')='Nueva contraseña: '
+                label='Nueva contraseña: '
                     span
-                    input.camposRegistro#posicionPassword(type='password' placeholder='Introduce una contraseña válida....')
+                    input.camposRegistro#posicionPassword(type='password' name='password' placeholder='Introduce una contraseña válida....')
                 br
                 br
-                label(for='confirmPassword')='Confirmación de la contraseña: '
+                label='Confirmación de la contraseña: '
                     span
-                    input.camposRegistro(type='password' placeholder='Introduce una Contraseña válida....')
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
-                label(for='direccion')='Dirección: '
+                label='Dirección: '
                     span
-                    input.camposRegistro#posicionDireccion(type='text' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 br
                 br
-                label(for='poblacion')='Población: '
+                label='Población: '
                     span
-                    input.camposRegistro#posicionPoblacion(type='text' placeholder='Introduce una población válida....')
+                    input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
                 br
                 br
-                label(for='region')='Región: '
+                label='Región: '
                     span
-                    input.camposRegistro#posicionRegion(type='text' placeholder='Introduce una región válida....')
+                    input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
                 br
                 br
-                label(for='pais')='País: '
+                label='País: '
                     span
-                    input.camposRegistro#posicionPais(type='text' placeholder='Introduce un país válido....')
+                    input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
                 br
                 br
-                label(for='cp')='Código Postal - CP: '
+                label='Código Postal - CP: '
                     span
-                    input.camposRegistro#posicionCP(type='number' placeholder='Introduce un código postal válido....')
+                    input.camposRegistro#posicionCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
                 br
                 br
                 button.posAlta#btnAlta(type='submit')='Darse de alta'

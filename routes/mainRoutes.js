@@ -5,37 +5,37 @@ var rutasMain = servidor.Router();
 
 //-- Ruta al Inicio de MAD Services.
 rutasMain.get('/', (req, res) => {
-  res.render('paginas/inicio');
+  return res.render('paginas/inicio');
 });
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente o como Empresa.
 rutasMain.get('/login', (req, res) => {
-  res.render('paginas/login');
+  return res.render('paginas/login');
 });
 
 //-- Ruta a la Sección de Registrarse como Cliente o como Empresa.
 rutasMain.get('/registrarse', (req, res) => {
-  res.render('paginas/registrarse');
+  return res.render('paginas/registrarse');
 });
 
 //-- Ruta a la Sección de Contacto.
 rutasMain.get('/contacto', (req, res) => {
-  res.render('paginas/contacto');
+  return res.render('paginas/contacto');
 });
 
 //-- Ruta a la Sección de Trabaja con Nosotros.
 rutasMain.get('/empleo', (req, res) => {
-  res.render('paginas/empleo');
+  return res.render('paginas/empleo');
 });
 
 //-- Ruta a la Sección de Sobre MAD Services.
 rutasMain.get('/conoceMADs', (req, res) => {
-  res.render('paginas/conoceMADs');
+  return res.render('paginas/conoceMADs');
 });
 
 //-- Ruta a la Sección de Categorias de MAD Services.
 rutasMain.get('/categorias', (req,res) => {
-  res.render('paginas/categorias');
+  return res.render('paginas/categorias');
 });
 
 //-- Exportamos las rutas con método GET.

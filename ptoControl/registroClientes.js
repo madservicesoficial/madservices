@@ -4,8 +4,8 @@ const madservicesdb = require('../config/database.js');
 const { registrarClientedb, consultaEmailClientedb } = require('../operacionesdb/operacionesClientesdb.js');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
-//-- Importamos la Tecnología para cifrar las contraseñas.
-const { hash } = require('bcrypt');
+//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+const { hash, compare} = require('bcrypt');
 //-- Le añadimos SAL al cifrado de las contraseñas.
 const SALT = 10;
 
@@ -15,21 +15,11 @@ const registroClientes = {}
 registroClientes.clienteRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
-    const email = req.body.email;
-    const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const direccion = req.body.direccion;
-    const poblacion = req.body.poblacion;
-    const region = req.body.region;
-    const pais = req.body.pais;
-    const cp = req.body.cp;
-    const genero = req.body.genero;
+    const { email, password, confirmPassword, nombre, apellidos, direccion, poblacion, region, pais, cp, genero } = req.body;
     //-- Comprobamos que ningún campo está vacío.
     if(email === "" || password === "" || confirmPassword === "" || nombre === "" || apellidos === "" || direccion === "" || poblacion === "" || region === "" || pais === "" || cp === "" || genero === "")
     {
-        res.render('paginas/clienteRegistrarse', {
+        return res.render('paginas/clienteRegistrarse', {
             alert: true,
             alertStatus: 401,
             alertMessage: 'Campos vacíos',
@@ -47,9 +37,10 @@ registroClientes.clienteRegistrarse = async (req, res) => {
     //-- Generación del ID aleatorio.
     const idCliente = generarIDrandom() * 2;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword)
+    const checkPassword = await compare(password, confirmPassword);
+    if(!checkPassword)
     {
-        res.render('paginas/clienteRegistrarse', {
+        return res.render('paginas/clienteRegistrarse', {
             alert: true,
             alertStatus: 401,
             alertMessage: 'Introduce la misma contraseña en ambos campos',

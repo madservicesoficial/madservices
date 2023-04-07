@@ -9,25 +9,25 @@ const registroEmpresas = require('../ptoControl/registroEmpresas.js');
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente.
 rutasFormulario.get('/login/cliente', (req, res) => {
-  res.render('paginas/clienteLogin');
+  return res.render('paginas/clienteLogin');
 });
 rutasFormulario.post('/:id');
 
 //-- Ruta a la Sección de Iniciar Sesión como Empresa.
 rutasFormulario.get('/login/empresa', (req, res) => {
-  res.render('paginas/empresaLogin');
+  return res.render('paginas/empresaLogin');
 });
 rutasFormulario.post('/:id');
 
 //-- Ruta a la Sección de Registrarse como Cliente.
 rutasFormulario.get('/registrarse/cliente', (req, res) => {
-  res.render('paginas/clienteRegistrarse');
+  return res.render('paginas/clienteRegistrarse');
 });
 rutasFormulario.post('/', registroClientes.clienteRegistrarse);
 
 //-- Ruta a la Sección de Registrarse como Empresa.
 rutasFormulario.get('/registrarse/empresa', (req, res) => {
-  res.render('paginas/empresaRegistrarse');
+  return res.render('paginas/empresaRegistrarse');
 });
 rutasFormulario.post('/', registroEmpresas.empresaRegistrarse);
 

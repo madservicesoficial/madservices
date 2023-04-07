@@ -52,11 +52,11 @@ const consultaEmailClientedb = async (madservicesdb, data, res) => {
     });
 }
 
-//-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
-const consultaPasswordClientedb = async (madservicesdb, data, res) => {
+//-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
+const consultaNoEmailClientedb = async (madservicesdb, data, res) => {
 
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM empresas WHERE password = ?) as emailExists';
+    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?) as emailExists';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     await madservicesdb.getConnection( (error, madservicesdb) => {
@@ -68,7 +68,38 @@ const consultaPasswordClientedb = async (madservicesdb, data, res) => {
                 if(error) {
                     throw error;
                 }else {
-                    if(result[0].emailExists == 1) {
+                    if(result[0].emailExists == 0) {
+                        res.render('paginas/clienteRegistrarse', {
+                            alert: true,
+                            alertStatus: 401,
+                            alertMessage: 'No se encuentra el correo electrónico',
+                            alertIcon: 'warning',
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            });
+        }
+    });
+}
+
+//-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
+const consultaPasswordClientedb = async (madservicesdb, data, res) => {
+
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultar = 'SELECT EXISTS(SELECT password FROM clientes WHERE email = ?)';
+    //-- Configuración del formato de los datos introducidos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    await madservicesdb.getConnection( (error, madservicesdb) => {
+        if(error) {
+            throw error;
+        }else {
+            //-- Establecer la comunicación para consultar la password en la base de datos.
+            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
+                if(error) {
+                    throw error;
+                }else {
+                    if(result[0].passwordExists == 1) {
                         res.render('paginas/clienteRegistrarse', {
                             alert: true,
                             alertStatus: 401,
@@ -84,4 +115,4 @@ const consultaPasswordClientedb = async (madservicesdb, data, res) => {
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClientedb, consultaEmailClientedb, consultaPasswordClientedb};
+module.exports = {registrarClientedb, consultaEmailClientedb, consultaNoEmailClientedb, consultaPasswordClientedb};

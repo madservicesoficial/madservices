@@ -15,16 +15,11 @@ const registroEmpresas = {}
 registroEmpresas.empresaRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de las Empresas.
-    const nombre = req.body.nombre;
-    const cif = req.body.cif;
-    const email = req.body.email;
-    const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
-    const tiposoc = req.body.tiposoc;
+    const { nombreEm, cif, email, password, confirmPassword, tiposoc } = req.body;
     //-- Comprobamos que ningún campo está vacío.
-    if(nombre === "" || cif === "" || email === "" || password === "" || confirmPassword === "" || tiposoc === "")
+    if(nombreEm === "" || cif === "" || email === "" || password === "" || confirmPassword === "" || tiposoc === "")
     {
-        res.render('paginas/empresaRegistrarse', {
+        return res.render('paginas/empresaRegistrarse', {
             alert: true,
             alertStatus: 401,
             alertMessage: 'Campos vacíos',
@@ -42,9 +37,10 @@ registroEmpresas.empresaRegistrarse = async (req, res) => {
     //-- Generación del ID aleatorio.
     const idEmpresa = generarIDrandom() * 3;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword)
+    const checkPassword = await compare(password, confirmPassword);
+    if(!checkPassword)
     {
-        res.render('paginas/empresaRegistrarse', {
+        return res.render('paginas/empresaRegistrarse', {
             alert: true,
             alertStatus: 401,
             alertMessage: 'Introduce la misma contraseña en ambos campos',
@@ -58,7 +54,7 @@ registroEmpresas.empresaRegistrarse = async (req, res) => {
     registrarEmpresadb
     (
         madservicesdb, 
-        {idEmpresa: idEmpresa, nombre: nombre, cif: cif, email: email, password: passwordCifrada, tiposoc: tiposoc}
+        {idEmpresa: idEmpresa, nombre: nombreEm, cif: cif, email: email, password: passwordCifrada, tiposoc: tiposoc}
     );
     return res.render('paginas/inicio', {
         alert: true,
