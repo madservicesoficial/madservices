@@ -7,9 +7,9 @@ const registrarEmpresadb = async (madservicesdb, data) => {
 
     //-- Instrucción para registrarse en la base de datos.
     let instruccionRegistrarse = 
-        "INSERT INTO empresas (idEmpresa, nombre, cif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
     //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionRegistrarse = mySQL.format(instruccionRegistrarse, [data.idEmpresa, data.nombre, data.cif, data.email, data.password, data.tiposoc]);
+    let formatoInstruccionRegistrarse = mySQL.format(instruccionRegistrarse, [data.id, data.nombre, data.nif, data.email, data.password, data.tiposoc]);
     //-- Establecer la conexión dinámica.
     await madservicesdb.getConnection(function(error, madservicesdb) {
         if(error) {

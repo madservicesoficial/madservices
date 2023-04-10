@@ -9,7 +9,12 @@ block body
         div.registrarse
             h1='Darse de alta como Empresa:'
             img.madservicestipologo(src='/images/madforcompanies.png' alt='madforcompaniesLOGO')
-            form.formRegistro(method="POST" action='/')
+            //-- Contenido de las alertas.
+            if mensaje
+                p.alerta#noAutorizado=`${mensaje}`
+            if registrado
+                p.alerta#siRegistrado=`${registrado}`
+            form.formRegistro(method="POST" action='/registrarse/empresa')
                 label='Nombre de la Empresa: '
                     span
                     input.camposRegistro#posicionNombreSoc(type='text' name='nombreEm' placeholder='Introduce el nombre de la Empresa....')

@@ -166,11 +166,15 @@ footer {
 /*######################################### CUADRO ALERTAS #########################################*/
 /*##################################################################################################*/
 .alerta {
-  box-sizing: border-box;
-  text-align: center;
   background: white;
-  color: red;
   font-size: large;
+  font-style: bold;
+}
+#noAutorizado {
+  color: red;
+}
+#siRegistrado {
+  color: green;
 }
 /*##################################################################################################*/
 /*############################ CUADRO DEL CONTACTO, CONÓCENOS Y EMPLEO #############################*/

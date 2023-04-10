@@ -3,8 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare } = require('bcrypt');
-//-- Le añadimos SAL al cifrado de las contraseñas.
-const SALT = 10;
 
 //-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
 const registrarClientedb = async (madservicesdb, data) => {
@@ -26,10 +24,10 @@ const registrarClientedb = async (madservicesdb, data) => {
 }
 
 //-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
-const consultaEmailClientedb = async (madservicesdb, data, res) => {
+const consultaEmailClientedb = async (madservicesdb, data, callback) => {
 
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?) as emailExists';
+    let instruccionConsultar = 'SELECT * FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     await madservicesdb.getConnection( (error, madservicesdb) => {
@@ -37,14 +35,9 @@ const consultaEmailClientedb = async (madservicesdb, data, res) => {
             throw error;
         }else {
             //-- Establecer la comunicación para consultar el email en la base de datos.
-            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
-                if(error) {
-                    throw error;
-                }else {
-                    if(result[0].emailExists == 1) {
-                        return res.render('paginas/clienteRegistrarse', {alertStatus: 401, alertMessage: 'Correo ya en uso'});
-                    }
-                }
+            madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
+                if(error) throw error;
+                callback(results.length > 0);
             });
         }
     });
@@ -67,7 +60,7 @@ const consultaNoEmailClientedb = async (madservicesdb, data, res) => {
                     throw error;
                 }else {
                     if(result[0].emailExists == 0) {
-                        return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'No se encuentra el correo electrónico'});
+                        return res.status(401).render('paginas/clienteLogin', {mensaje: 'No se encuentra el correo electrónico'});
                     }
                 }
             });

@@ -15,17 +15,16 @@ const registroEmpresas = {}
 registroEmpresas.empresaRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de las Empresas.
-    const { nombreEm, cif, email, password, confirmPassword, tiposoc } = req.body;
+    const nombreEm = req.body.nombreEm;
+    const cif = req.body.cif;
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const tiposoc = req.body.tiposoc;
     //-- Comprobamos que ningún campo está vacío.
-    if(nombreEm === "" || cif === "" || email === "" || password === "" || confirmPassword === "" || tiposoc === "")
+    if(!nombreEm || !cif || !email || !password || !confirmPassword || !tiposoc)
     {
-        return res.render('paginas/empresaRegistrarse', {
-            alert: true,
-            alertStatus: 401,
-            alertMessage: 'Campos vacíos',
-            alertIcon: 'warning',
-            showConfirmButton: false
-        });
+        return res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Campos vacíos'});
     }
     //-- Consulta del email introducido por si ya existía en la base de datos.
     consultaEmailEmpresadb
@@ -37,16 +36,9 @@ registroEmpresas.empresaRegistrarse = async (req, res) => {
     //-- Generación del ID aleatorio.
     const idEmpresa = generarIDrandom() * 3;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    const checkPassword = await compare(password, confirmPassword);
-    if(!checkPassword)
+    if(password !== confirmPassword)
     {
-        return res.render('paginas/empresaRegistrarse', {
-            alert: true,
-            alertStatus: 401,
-            alertMessage: 'Introduce la misma contraseña en ambos campos',
-            alertIcon: 'warning',
-            showConfirmButton: false
-        });
+        return res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
     const passwordCifrada = await hash(password, SALT);
@@ -54,15 +46,9 @@ registroEmpresas.empresaRegistrarse = async (req, res) => {
     registrarEmpresadb
     (
         madservicesdb, 
-        {idEmpresa: idEmpresa, nombre: nombreEm, cif: cif, email: email, password: passwordCifrada, tiposoc: tiposoc}
+        {id: idEmpresa, nombre: nombreEm, nif: cif, email: email, password: passwordCifrada, tiposoc: tiposoc}
     );
-    return res.render('paginas/inicio', {
-        alert: true,
-        alertStatus: 201,
-        alertMessage: 'Empresa registrada con éxito.\n¡Bienvenido a MAD Services!',
-        alertIcon: 'success',
-        showConfirmButton: false
-    });
+    return res.status(201).render('paginas/inicio', {registrado: 'Empresa registrada con éxito'});
 };
 
 //-- Exportamos la configuración de registro de las Empresas para unificarlo con el resto de rutas.

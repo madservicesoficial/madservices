@@ -15,25 +15,25 @@ const loginEmpresas = require('../ptoControl/loginEmpresas.js');
 rutasFormulario.get('/login/cliente', (req, res) => {
   return res.render('paginas/clienteLogin');
 });
-rutasFormulario.post(loginClientes.clienteLogin);
+rutasFormulario.post('/login/cliente', loginClientes.clienteLogin);
 
 //-- Ruta a la Sección de Iniciar Sesión como Empresa.
 rutasFormulario.get('/login/empresa', (req, res) => {
   return res.render('paginas/empresaLogin');
 });
-rutasFormulario.post(loginEmpresas.empresaLogin);
+rutasFormulario.post('/login/empresa', loginEmpresas.empresaLogin);
 
 //-- Ruta a la Sección de Registrarse como Cliente.
 rutasFormulario.get('/registrarse/cliente', (req, res) => {
   return res.render('paginas/clienteRegistrarse');
 });
-rutasFormulario.post('/', registroClientes.clienteRegistrarse);
+rutasFormulario.post('/registrarse/cliente', registroClientes.clienteRegistrarse);
 
 //-- Ruta a la Sección de Registrarse como Empresa.
 rutasFormulario.get('/registrarse/empresa', (req, res) => {
   return res.render('paginas/empresaRegistrarse');
 });
-rutasFormulario.post('/', registroEmpresas.empresaRegistrarse);
+rutasFormulario.post('/registrarse/empresa', registroEmpresas.empresaRegistrarse);
 
 //-- Cerrar Sesión como Cliente o Empresa.
 rutasFormulario.get('/cerrar-sesion', (req, res) => {

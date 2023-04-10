@@ -72,7 +72,7 @@ madservices.use(analizadorBody.json());
 madservices.use(analizadorBody.urlencoded({ extended: true }));
 madservices.use(analizadorFavicon(path.join(__dirname, 'public', 'favicon.ico')));
 madservices.use((req, res, next) => {
-
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   //-- Metodos de Solicitud permitidos.
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');

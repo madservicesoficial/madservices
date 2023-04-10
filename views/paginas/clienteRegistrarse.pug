@@ -11,8 +11,10 @@ block body
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
             //-- Contenido de las alertas.
             if mensaje
-                p.alerta=`${mensaje}`
-            form.formRegistro(method='POST' action='/')
+                p.alerta#noAutorizado=`${mensaje}`
+            if registrado
+                p.alerta#siRegistrado=`${registrado}`
+            form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
                     span
                         input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')

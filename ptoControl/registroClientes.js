@@ -5,9 +5,7 @@ const { registrarClientedb, consultaEmailClientedb } = require('../operacionesdb
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { hash, compare} = require('bcrypt');
-//-- Le añadimos SAL al cifrado de las contraseñas.
-const SALT = 10;
+const { hash } = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroClientes = {}
@@ -32,30 +30,33 @@ registroClientes.clienteRegistrarse = async (req, res) => {
         return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
     }
     //-- Consultamos si existe el email del Cliente en la base de datos de MAD Services.
-    consultaEmailClientedb
+    await consultaEmailClientedb
     (
         madservicesdb,
         {email: email},
-        res
+        (existencia) => {
+            if(existencia === true) {
+                return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Correo ya en uso'});
+            }
+        }
     );
     //-- Generación del ID aleatorio.
     const idCliente = generarIDrandom() * 2;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    const checkPassword = await compare(password, confirmPassword);
-    if(!checkPassword)
+    if(password !== confirmPassword)
     {
         return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, SALT);
+    const passwordCifrada = await hash(password, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services.
-    registrarClientedb
+    await registrarClientedb
     (
         madservicesdb, 
         {id: idCliente, email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion,
         poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero}
     );
-    return res.status(201).render('paginas/inicio', {mensaje: 'Cliente registrado con éxito.\n¡Bienvenido a MAD Services!'});
+    return res.status(201).render('paginas/inicio', {registrado: 'Cliente registrado con éxito'});
 };
 
 //-- Exportamos la configuración de registro de los Clientes para unificarlo con el resto de rutas.
