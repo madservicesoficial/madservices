@@ -11,14 +11,21 @@ block body
         img.madservicesLOGO(src='/images/madforcompanies.png' alt='madforcompanies')
         form(method='POST' action='/:id')
             label.entradas#espaciadoEtiqueta(for="inputEmail")='Correo Electrónico:'
-            input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....' required)
+            input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
             label.entradas#espaciadoEtiqueta(for="inputPassword")='Contraseña:'
-            input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....' pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
-                title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números" required)
+            input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
             button#btnAcceso(type='submit')='Acceder'
-        form(method='GET' action='/')
-            button#btnHome
-                img#iconHome(src='/icons/home.png' alt='home')
-        form(method='GET' action='/login')
-            button.posicionBtnBack#btnBack
-                img.posicionIconBack#iconBack(src='/icons/back.png' alt='back')
+        ul.otrosbtnLogin
+            li
+                ul
+                    li.dosbtnLogin
+                        form(method='GET' action='/login')
+                            button.btnBackHome
+                                img.icon(src='/icons/back.png' alt='back')
+                    li.dosbtnLogin
+                        form(method='GET' action='/')
+                            button.btnBackHome#posBtnHome
+                                img.icon(src='/icons/home.png' alt='home')
+            li
+                form(method='GET' action='/registrarse/empresa')
+                    button.btnSinCuenta='¡No tengo cuenta!'

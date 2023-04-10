@@ -15,17 +15,21 @@ const registroClientes = {}
 registroClientes.clienteRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
-    const { email, password, confirmPassword, nombre, apellidos, direccion, poblacion, region, pais, cp, genero } = req.body;
+    const email = req.body.email; 
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const nombre = req.body.nombre;
+    const apellidos = req.body.apellidos;
+    const direccion = req.body.direccion;
+    const poblacion = req.body.poblacion;
+    const region = req.body.region;
+    const pais = req.body.pais;
+    const cp = req.body.cp;
+    const genero = req.body.genero;
     //-- Comprobamos que ningún campo está vacío.
-    if(email === "" || password === "" || confirmPassword === "" || nombre === "" || apellidos === "" || direccion === "" || poblacion === "" || region === "" || pais === "" || cp === "" || genero === "")
+    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion || !region || !pais || !cp || !genero)
     {
-        return res.render('paginas/clienteRegistrarse', {
-            alert: true,
-            alertStatus: 401,
-            alertMessage: 'Campos vacíos',
-            alertIcon: 'warning',
-            showConfirmButton: false
-        });
+        return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
     }
     //-- Consultamos si existe el email del Cliente en la base de datos de MAD Services.
     consultaEmailClientedb
@@ -40,13 +44,7 @@ registroClientes.clienteRegistrarse = async (req, res) => {
     const checkPassword = await compare(password, confirmPassword);
     if(!checkPassword)
     {
-        return res.render('paginas/clienteRegistrarse', {
-            alert: true,
-            alertStatus: 401,
-            alertMessage: 'Introduce la misma contraseña en ambos campos',
-            alertIcon: 'warning',
-            showConfirmButton: false
-        });
+        return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
     const passwordCifrada = await hash(password, SALT);
@@ -57,13 +55,7 @@ registroClientes.clienteRegistrarse = async (req, res) => {
         {id: idCliente, email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion,
         poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero}
     );
-    return res.render('paginas/inicio', {
-        alert: true,
-        alertStatus: 201,
-        alertMessage: 'Cliente registrado con éxito.\n¡Bienvenido a MAD Services!',
-        alertIcon: 'success',
-        showConfirmButton: false
-    });
+    return res.status(201).render('paginas/inicio', {mensaje: 'Cliente registrado con éxito.\n¡Bienvenido a MAD Services!'});
 };
 
 //-- Exportamos la configuración de registro de los Clientes para unificarlo con el resto de rutas.

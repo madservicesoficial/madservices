@@ -52,6 +52,78 @@ const consultaEmailEmpresadb = async (madservicesdb, data, res) => {
     });
 }
 
+//-- Creamos la función para consultar si el email de la Empresa no existe en la base de datos de MAD Services.
+const consultaNoEmailEmpresadb = async (madservicesdb, data, res) => {
+
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM empresas WHERE email = ?) as emailExists';
+    //-- Configuración del formato de los datos introducidos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    await madservicesdb.getConnection( (error, madservicesdb) => {
+        if(error) {
+            throw error;
+        }else {
+            //-- Establecer la comunicación para consultar el email en la base de datos.
+            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
+                if(error) {
+                    throw error;
+                }else {
+                    if(result[0].emailExists == 0) {
+                        return res.render('paginas/empresaLogin', {
+                            alert: true,
+                            alertStatus: 401,
+                            alertMessage: 'No se encuentra el correo electrónico',
+                            alertIcon: 'warning',
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            });
+        }
+    });
+}
+
+//-- Creamos la función para consultar si la Contraseña de la Empresa existe en la base de datos de MAD Services.
+const consultaPasswordEmpresadb = async (madservicesdb, data, res) => {
+
+    //-- Ciframos la contraseña introducida para poder comparar la contraseña de la base de datos cifrada.
+    const passwordIntroducida = data.password;
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultar = 'SELECT EXISTS(SELECT password FROM empresas WHERE email = ?)';
+    //-- Configuración del formato de los datos introducidos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    await madservicesdb.getConnection( (error, madservicesdb) => {
+        if(error) {
+            throw error;
+        }else {
+            //-- Establecer la comunicación para consultar la password en la base de datos.
+            madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
+                if(error) {
+                    throw error;
+                }else {
+                    if(results.length > 0) {
+                        const passwordLeida = results[0].password;
+                        compare(passwordIntroducida, passwordLeida, (error, result) => {
+                            if (error) throw error;
+                            if(result === false)
+                            {
+                                return res.render('paginas/empresaLogin', {
+                                    alert: true,
+                                    alertStatus: 401,
+                                    alertMessage: 'Contraseña incorrecta',
+                                    alertIcon: 'warning',
+                                    showConfirmButton: false
+                                });
+                            }
+                        });
+
+                    }
+                }
+            });
+        }
+    });
+}
+
 //-- Creamos la función para Actualizar los datos de la base de datos de MAD Enterprise.
 const actualizarEmpresadb = async (madservicesdb, data) => {
 
@@ -83,4 +155,4 @@ const darseBajaEmpresadb = async (madservicesdb, data) => {
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarEmpresadb, consultaEmailEmpresadb, actualizarEmpresadb, darseBajaEmpresadb};
+module.exports = {registrarEmpresadb, consultaEmailEmpresadb, consultaNoEmailEmpresadb, consultaPasswordEmpresadb, actualizarEmpresadb, darseBajaEmpresadb};

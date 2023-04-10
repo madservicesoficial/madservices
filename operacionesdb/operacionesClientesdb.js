@@ -1,6 +1,10 @@
 //-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
+//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+const { compare } = require('bcrypt');
+//-- Le añadimos SAL al cifrado de las contraseñas.
+const SALT = 10;
 
 //-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
 const registrarClientedb = async (madservicesdb, data) => {
@@ -38,13 +42,7 @@ const consultaEmailClientedb = async (madservicesdb, data, res) => {
                     throw error;
                 }else {
                     if(result[0].emailExists == 1) {
-                        res.render('paginas/clienteRegistrarse', {
-                            alert: true,
-                            alertStatus: 401,
-                            alertMessage: 'Correo ya en uso',
-                            alertIcon: 'warning',
-                            showConfirmButton: false
-                        });
+                        return res.render('paginas/clienteRegistrarse', {alertStatus: 401, alertMessage: 'Correo ya en uso'});
                     }
                 }
             });
@@ -69,13 +67,7 @@ const consultaNoEmailClientedb = async (madservicesdb, data, res) => {
                     throw error;
                 }else {
                     if(result[0].emailExists == 0) {
-                        res.render('paginas/clienteRegistrarse', {
-                            alert: true,
-                            alertStatus: 401,
-                            alertMessage: 'No se encuentra el correo electrónico',
-                            alertIcon: 'warning',
-                            showConfirmButton: false
-                        });
+                        return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'No se encuentra el correo electrónico'});
                     }
                 }
             });
@@ -86,8 +78,10 @@ const consultaNoEmailClientedb = async (madservicesdb, data, res) => {
 //-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
 const consultaPasswordClientedb = async (madservicesdb, data, res) => {
 
+    //-- Ciframos la contraseña introducida para poder comparar la contraseña de la base de datos cifrada.
+    const passwordIntroducida = data.password;
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT EXISTS(SELECT password FROM clientes WHERE email = ?)';
+    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?)';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     await madservicesdb.getConnection( (error, madservicesdb) => {
@@ -96,18 +90,24 @@ const consultaPasswordClientedb = async (madservicesdb, data, res) => {
         }else {
             //-- Establecer la comunicación para consultar la password en la base de datos.
             madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
-                if(error) {
-                    throw error;
-                }else {
-                    if(result[0].passwordExists == 1) {
-                        res.render('paginas/clienteRegistrarse', {
-                            alert: true,
-                            alertStatus: 401,
-                            alertMessage: 'Correo ya en uso',
-                            alertIcon: 'warning',
-                            showConfirmButton: false
-                        });
-                    }
+                if(error) throw error;
+                if(result.length === 0)
+                {
+                    return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'Contraseña incorrecta'});
+                }
+                else
+                {
+                    const passwordLeida = result[0].password;
+                    compare(passwordIntroducida, passwordLeida, (err, match) => {
+                        if (err) throw err;
+                        //-- Si la contraseña existe, crear la sesión y redireccionar a inicio autenticado.
+                        if (match) {
+                            req.session.id = result[0].id;
+                            res.redirect(`/${id}`);
+                        }else {
+                            return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'Contraseña incorrecta'});
+                        }
+                    });
                 }
             });
         }

@@ -7,16 +7,17 @@ header
     li.organizacionCabecera#buscarCabecera
       input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
       button(type='submit')='Buscar'
-    li.organizacionCabecera
+    li.organizacionCabecera#Auth
       form(method='GET' action='/perfil')
-        button='Mi Perfil'
-    li.organizacionCabecera
+        button.btnAuth='Mi Perfil'
+    li.organizacionCabecera#Auth
       form(method='GET' action='/carrito')
-        button#btnRegistrarse='Carrito'
-    li.organizacionCabecera
+        button.btnAuth='Carrito'
+    li.organizacionCabecera#Auth
       form(method='GET' action='/cerrar-sesion')
-        button#btnRegistrarse
-    li.organizacionCabecera
+        button#btnLogout
+          img#iconoLogout(src='/icons/logout.png' alt='logout')
+    li.organizacionCabecera#AuthIdiomas
       img#iconoWorld(src='/icons/world.png' alt='world')
       select.eligeIdiomas(name="Idiomas")
         option(value="value1" selected)='Español'

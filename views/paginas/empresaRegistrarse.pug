@@ -37,25 +37,25 @@ block body
                 br
                 label='Nueva contraseña: '
                     span
-                    input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....'
-                            pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
-                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                    input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 label='Confirmación de la contraseña: '
                     span
-                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....'
-                            pattern="[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]*"
-                            title="La contraseña debe estar compuesta de mínimo 15 caracteres, letras minúsculas y mayúsculas y, de números." required)
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 button.posAlta#btnAlta(type='submit')='Darse de alta'
             ul 
                 li.botonesSalientes
                     form(method='GET' action='/')
-                        button#btnAinicio
-                            img.posdeinicio#iconAinicio(src='/icons/home.png' alt='home')
+                        button.dosbtnRegistro
+                            img.dosIconosRegistro#posdeinicio(src='/icons/home.png' alt='home')
                 li.botonesSalientes
                     form(method='GET' action='/registrarse')
-                        button.posAtras#btnBack
-                            img.posdeAtras#iconBack(src='/icons/back.png' alt='back')
+                        button.dosbtnRegistro#posAtras
+                            img.dosIconosRegistro#posdeAtras(src='/icons/back.png' alt='back')
+            ul.otrosbtnLogin
+                li 
+                    form(method='GET' action='/login/empresa')
+                        button.btnSinCuenta='¡Ya tengo cuenta!'

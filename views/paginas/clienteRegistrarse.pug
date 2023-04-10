@@ -9,6 +9,9 @@ block body
         div.registrarse
             h1='Darse de alta como Cliente:'
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
+            //-- Contenido de las alertas.
+            if mensaje
+                p.alerta=`${mensaje}`
             form.formRegistro(method='POST' action='/')
                 label='Nombre: '
                     span
@@ -74,9 +77,13 @@ block body
             ul 
                 li.botonesSalientes
                     form(method='GET' action='/')
-                        button#btnAinicio
-                            img.posdeinicio#iconAinicio(src='/icons/home.png' alt='home')
+                        button.dosbtnRegistro
+                            img.dosIconosRegistro#posdeinicio(src='/icons/home.png' alt='home')
                 li.botonesSalientes
                     form(method='GET' action='/registrarse')
-                        button.posAtras#btnBack
-                            img.posdeAtras#iconBack(src='/icons/back.png' alt='back')
+                        button.dosbtnRegistro#posAtras
+                            img.dosIconosRegistro#posdeAtras(src='/icons/back.png' alt='back')
+            ul.otrosbtnLogin
+                li 
+                    form(method='GET' action='/login/cliente')
+                        button.btnSinCuenta='¡Ya tengo cuenta!'

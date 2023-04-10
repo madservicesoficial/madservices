@@ -21,7 +21,7 @@ module.exports.validacionClientes = async (req,res, next) => {
     }
     else
     {
-        res.render('paginas/clienteRegistrarse');
+        res.render('paginas/clienteRegistrarse', {status: 201, mensaje: 'Cliente Registrado'});
     }
 }
 

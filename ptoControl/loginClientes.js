@@ -8,9 +8,8 @@ const loginClientes = {}
 
 loginClientes.clienteLogin = async (req, res) => {
 
-    //-- Obtenemos los campos de entrada del Inicio de Sesión de los Clientes.
-    const email = req.body.email;
-    const password = req.body.password;
+    //-- Introducimos los campos para Iniciar Sesión como Cliente.
+    const { email, password } = req.body;
     //-- Comprobamos que el email introducido existe y se encuentra en la base de datos.
     consultaNoEmailClientedb
     (
@@ -22,9 +21,10 @@ loginClientes.clienteLogin = async (req, res) => {
     consultaPasswordClientedb
     (
         madservicesdb,
-        {email: email},
+        {email: email, password: password},
         res
     )
+    return res.render('paginas/inicioAuth', {alertStatus: 201, alertMessage: '¡Bienvenido a MAD Services!'});
 }
 
 //-- Exportamos la configuración de inicio de sesión de los Clientes para unificarlo con el resto de rutas.

@@ -105,6 +105,31 @@ header {
   background-color: black;
 }
 /*##################################################################################################*/
+/*###################################### CABECERA AUTENTICADA ######################################*/
+/*##################################################################################################*/
+#Auth {
+  margin-left: 80px;
+}
+#AuthIdiomas {
+  margin-left: 170px;
+}
+.btnAuth {
+  width: 90px;
+}
+#btnLogout {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 10px;
+  background-color: transparent;
+}
+#iconoLogout {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  right: 5px;
+}
+/*##################################################################################################*/
 /*######################################### PIE DE PÁGINA ##########################################*/
 /*##################################################################################################*/
 footer {
@@ -136,6 +161,16 @@ footer {
 .redesSociales{
   width: 20px;
   height: 20px;
+}
+/*##################################################################################################*/
+/*######################################### CUADRO ALERTAS #########################################*/
+/*##################################################################################################*/
+.alerta {
+  box-sizing: border-box;
+  text-align: center;
+  background: white;
+  color: red;
+  font-size: large;
 }
 /*##################################################################################################*/
 /*############################ CUADRO DEL CONTACTO, CONÓCENOS Y EMPLEO #############################*/
@@ -274,40 +309,41 @@ footer {
   width: 90px;
   height: 35px;
   position: relative;
-  top: 70px;
+  top: 55px;
   left: 110px;
 }
-#iconHome {
-  width: 40px;
-  height: 40px;
+.otrosbtnLogin {
+  list-style: none;
+}
+.dosbtnLogin {
+  display: inline-block;
+  position: relative;
+  right: 160px;
+}
+.icon {
+  width: 35px;
+  height: 35px;
   position: relative;
   right: 5px;
 }
-#btnHome {
-  width: 40px;
-  height: 40px;
+.btnBackHome {
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+}
+#posBtnHome {
   position: relative;
-  top: 15px;
-  right: 10px;
-  background: transparent;
+  left: 100px;
 }
-.posicionBtnBack {
+.btnSinCuenta {
+  color: black;
+  width: 120px;
+  font-size: small;
   position: relative;
-  right: 133px;
-  bottom: 40px;
-}
-.posicionIconBack {
-  position: relative;
-  right: 5px;
-}
-#iconBack {
-  width: 40px;
-  height: 40px;
-}
-#btnBack {
-  width: 40px;
-  height: 40px;
-  background: transparent;
+  top: 10px;
+  right: 20px;
+  background-color: transparent;
+  text-decoration: underline;
 }
 /*##################################################################################################*/
 /*###################################### REGISTRARSE: CLIENTE ######################################*/
@@ -383,24 +419,24 @@ footer {
   display: inline-block;
   margin-top: 80px;
 }
-#btnAinicio {
+.dosbtnRegistro {
   width: 40px;
   height: 40px;
   background-color: transparent;
 }
-#iconAinicio {
+.dosIconosRegistro {
   width: 40px;
   height: 40px;
 }
-.posdeinicio {
+#posdeinicio {
   position: relative;
   right: 5px;
 }
-.posAtras {
+#posAtras {
   position: relative;
   right: 310px;
 }
-.posdeAtras {
+#posdeAtras {
   position: relative;
   right: 5px;
 }
@@ -471,10 +507,6 @@ footer {
   height: 120px;
   float: center;
   margin-bottom: 20px;
-}
-.intro {
-  justify-content: center;
-  align-items: center;
 }
 .imagenConoce {
   width: 300px;
