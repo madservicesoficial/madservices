@@ -82,11 +82,15 @@ madservices.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
 
   //-- Encabecedados que permites.
+  res.setHeader('Access-Control-Request-Headers', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Expose-Headers', '*');
+  res.setHeader('Access-Control-Allow-Credentials', '*');
+  res.setHeader('Access-Control-Max-Age', '*');
 
   next();
 });
-madservices.use(controlAccesoHTTP);
+madservices.use(controlAccesoHTTP());
 madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
 //##############################################################################################################//

@@ -25,20 +25,27 @@ registroClientes.clienteRegistrarse = async (req, res) => {
     const cp = req.body.cp;
     const genero = req.body.genero;
     //-- Comprobamos que ningún campo está vacío.
-    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion || !region || !pais || !cp || !genero) return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
+    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion || !region || !pais || !cp || !genero) {
+        return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
+    }
     //-- Consultamos si existe el email del Cliente en la base de datos de MAD Services.
     await consultaEmailClientedb
     (
         madservicesdb,
         email,
         (emailExiste) => {
-            if(emailExiste) return res.status(401).render('paginas/clienteRegistrarse', { mensaje: 'Correo ya en uso' });
+            if(emailExiste) {
+                res.status(401).render('paginas/clienteRegistrarse', { mensaje: 'Correo ya en uso' });
+                return res.end();
+            }
         }
     );
     //-- Generación del ID aleatorio.
     const idCliente = generarIDrandom() * 2;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword) return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
+    if(password !== confirmPassword) {
+        return res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
+    }
     //-- Configuramos el sistema para cifrar la contraseña metida.
     const passwordCifrada = await hash(password, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services.
@@ -48,7 +55,9 @@ registroClientes.clienteRegistrarse = async (req, res) => {
         {id: idCliente, email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion,
         poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
         (miembroRegistrado) => {
-            if(miembroRegistrado) return res.status(201).redirect('/');
+            if(miembroRegistrado) {
+                return res.status(201).redirect('/');
+            }
         }
     );
 };
