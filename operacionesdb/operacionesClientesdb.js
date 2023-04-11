@@ -1,8 +1,6 @@
 //-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { compare } = require('bcrypt');
 
 //-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
 const registrarClientedb = async (madservicesdb, data) => {
@@ -24,86 +22,58 @@ const registrarClientedb = async (madservicesdb, data) => {
 }
 
 //-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
-const consultaEmailClientedb = async (madservicesdb, data, callback) => {
+const consultaEmailClientedb = async (madservicesdb, email, callback) => {
 
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT * FROM clientes WHERE email = ?';
+    let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    await madservicesdb.getConnection( (error, madservicesdb) => {
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    //-- Establecer la comunicación para consultar el email en la base de datos.
+    madservicesdb.query(formatoInstruccionConsultar, (error, results, fields) => {
         if(error) {
-            throw error;
-        }else {
-            //-- Establecer la comunicación para consultar el email en la base de datos.
-            madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
-                if(error) throw error;
-                callback(results.length > 0);
-            });
+            return callback(error);
         }
+        const cont = results[0].count;
+        const mensaje = cont > 0;
+        return callback(mensaje);
     });
 }
 
 //-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
-const consultaNoEmailClientedb = async (madservicesdb, data, res) => {
+const consultaNoEmailClientedb = async (madservicesdb, data, callback) => {
 
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?) as emailExists';
+    let instruccionConsultar = 'SELECT email FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     await madservicesdb.getConnection( (error, madservicesdb) => {
-        if(error) {
-            throw error;
-        }else {
-            //-- Establecer la comunicación para consultar el email en la base de datos.
-            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
-                if(error) {
-                    throw error;
-                }else {
-                    if(result[0].emailExists == 0) {
-                        return res.status(401).render('paginas/clienteLogin', {mensaje: 'No se encuentra el correo electrónico'});
-                    }
-                }
-            });
-        }
+        if(error) throw error;
+        //-- Establecer la comunicación para consultar el email en la base de datos.
+        madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
+            if(error) throw error
+            callback(results.length === 0);
+        });
     });
 }
 
 //-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
-const consultaPasswordClientedb = async (madservicesdb, data, res) => {
+const consultaPasswordClientedb = async (madservicesdb, data, callback) => {
 
-    //-- Ciframos la contraseña introducida para poder comparar la contraseña de la base de datos cifrada.
-    const passwordIntroducida = data.password;
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT EXISTS(SELECT * FROM clientes WHERE email = ?)';
+    let instruccionConsultar = 'SELECT password FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     await madservicesdb.getConnection( (error, madservicesdb) => {
-        if(error) {
-            throw error;
-        }else {
-            //-- Establecer la comunicación para consultar la password en la base de datos.
-            madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
-                if(error) throw error;
-                if(result.length === 0)
-                {
-                    return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'Contraseña incorrecta'});
-                }
-                else
-                {
-                    const passwordLeida = result[0].password;
-                    compare(passwordIntroducida, passwordLeida, (err, match) => {
-                        if (err) throw err;
-                        //-- Si la contraseña existe, crear la sesión y redireccionar a inicio autenticado.
-                        if (match) {
-                            req.session.id = result[0].id;
-                            res.redirect(`/${id}`);
-                        }else {
-                            return res.render('paginas/clienteLogin', {alertStatus: 401, alertMessage: 'Contraseña incorrecta'});
-                        }
-                    });
-                }
-            });
-        }
+        if(error) throw error;
+        //-- Establecer la comunicación para consultar la password en la base de datos.
+        madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
+            if(error) throw error;
+            if(result.length === 0) {
+                callback(result.length === 0);
+            }else {
+                callback(result.length === 0);
+            }
+        });
     });
 }
 

@@ -11,8 +11,8 @@ block body
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
             //-- Contenido de las alertas.
             if mensaje
-                p.alerta#noAutorizado=`${mensaje}`
-            if registrado
+                p.alerta#noAutorizado='Correo ya está en uso'
+            else if registrado
                 p.alerta#siRegistrado=`${registrado}`
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
