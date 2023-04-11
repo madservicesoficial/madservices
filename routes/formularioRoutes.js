@@ -25,7 +25,7 @@ rutasFormulario.post('/login/empresa', loginEmpresas.empresaLogin);
 
 //-- Ruta a la Sección de Registrarse como Cliente.
 rutasFormulario.get('/registrarse/cliente', (req, res) => {
-  return res.render('paginas/clienteRegistrarse', { mensaje: false });
+  return res.render('paginas/clienteRegistrarse');
 });
 rutasFormulario.post('/registrarse/cliente', registroClientes.clienteRegistrarse);
 

@@ -3,21 +3,20 @@
 const mysql = require('mysql2');
 
 //-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
-const registrarClientedb = async (madservicesdb, data) => {
+const registrarClientedb = async (madservicesdb, data, callback) => {
 
     //-- Instrucción para registrarse en la base de datos.
     let instruccionRegistrarse = 
         "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [data.id, data.email, data.password, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
-    //-- Establecer la conexión dinámica.
-    await madservicesdb.getConnection(function(error, madservicesdb) {
+    //-- Establecer la comunicación de insertar datos en la base de datos.
+    madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
         if(error) {
-            throw error;
-        }else {
-            //-- Establecer la comunicación de insertar datos en la base de datos.
-            madservicesdb.query(formatoInstruccionRegistrarse);
+            return callback(error);
         }
+        const miembroRegistrado = true;
+        return callback(miembroRegistrado);
     });
 }
 
@@ -29,13 +28,13 @@ const consultaEmailClientedb = async (madservicesdb, email, callback) => {
     //-- Configuración del formato de los datos introducidos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
     //-- Establecer la comunicación para consultar el email en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultar, (error, results, fields) => {
+    madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) {
             return callback(error);
         }
         const cont = results[0].count;
-        const mensaje = cont > 0;
-        return callback(mensaje);
+        const emailExiste = cont > 0;
+        return callback(emailExiste);
     });
 }
 
