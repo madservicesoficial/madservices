@@ -58,12 +58,14 @@ madservices.use(session({
 //-- 2. Los ficheros JSON de la conexión.                                                                      
 //-- 3. Los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
 //-- coincida con la opción de tipo (para el Body y para la Tecnología Express en general).                    
-//-- 4. Las Cookies que se encuentran en la conexión.                                                          
-//-- 5. El favicon servido implícito predeterminado de MAD Services por parte del servidor.
-//-- 6. Las cabeceras HTTP de cada conexión.
-//-- 7. El Control de Acceso HTTP de cada conexión.
-//-- 8. La Protección de Cabeceras HTTP.
-//-- 9. La función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.                                                        
+//-- 4. Las Cookies que se encuentran en la conexión.   
+//-- 5. El Body en formato JSON.
+//-- 6. El Body y su URL codificada.                                                        
+//-- 7. El favicon servido implícito predeterminado de MAD Services por parte del servidor.
+//-- 8. Las cabeceras HTTP de cada conexión.
+//-- 9. El Control de Acceso HTTP de cada conexión.
+//-- 10. La Protección de Cabeceras HTTP.
+//-- 11. La función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.                                                        
 madservices.use(analizadorSolicitudes('dev'));                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
@@ -72,16 +74,19 @@ madservices.use(analizadorBody.json());
 madservices.use(analizadorBody.urlencoded({ extended: true }));
 madservices.use(analizadorFavicon(path.join(__dirname, 'public', 'favicon.ico')));
 madservices.use((req, res, next) => {
-  
+
+  //-- Dominio que tengan acceso.
   res.setHeader('Access-Control-Allow-Origin', '*');
-  //-- Metodos de Solicitud permitidos.
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  // Encabezados permitidos.
+
+  //-- Metodos de solicitud que deseas permitir.
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+  //-- Encabecedados que permites.
   res.setHeader('Access-Control-Allow-Headers', '*');
 
   next();
 });
-madservices.use(controlAccesoHTTP());
+madservices.use(controlAccesoHTTP);
 madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
 //##############################################################################################################//

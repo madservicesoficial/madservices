@@ -12,8 +12,6 @@ block body
             //-- Contenido de las alertas.
             if mensaje
                 p.alerta#noAutorizado=`${mensaje}`
-            else if registrado
-                p.alerta#siRegistrado=`${registrado}`
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
                     span
