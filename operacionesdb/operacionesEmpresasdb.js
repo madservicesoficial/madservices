@@ -1,8 +1,6 @@
 //-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
-//-- Importamos la Tecnología para que al redirigir a otra pagina estática, aparezca un cuadro de alerta.
-const cuadroAlerta = require('sweetalert');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
@@ -27,12 +25,6 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 res.redirect('/');
-                cuadroAlerta({
-                    title: 'Empresa Registrada',
-                    icon: 'success',
-                    timer: 6000,
-                    buttons: true
-                });
             });
         }
     });

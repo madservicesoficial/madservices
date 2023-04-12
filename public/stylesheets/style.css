@@ -169,7 +169,12 @@ footer {
   background: white;
   font-size: large;
   font-style: bold;
+}
+#enRojo {
   color: red;
+}
+#enVerde {
+  color: green;
 }
 /*##################################################################################################*/
 /*############################ CUADRO DEL CONTACTO, CONÓCENOS Y EMPLEO #############################*/

@@ -11,7 +11,7 @@ block body
             img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
             //-- Contenido de las alertas.
             if mensaje
-                p.alerta=`${mensaje}`
+                p.alerta#enRojo=`${mensaje}`
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
                     span

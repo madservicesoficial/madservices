@@ -9,6 +9,9 @@ block body
     div.login
         h1='INICIAR SESIÓN:'
         img.madservicesLOGO(src='/images/madforcompanies.png' alt='madforcompanies')
+        //-- Contenido de las alertas.
+        if mensaje
+            p.alerta#enRojo=`${mensaje}`
         form(method='POST' action='/login/empresa')
             label.entradas#espaciadoEtiqueta(for="inputEmail")='Correo Electrónico:'
             input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')

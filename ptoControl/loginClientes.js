@@ -13,6 +13,11 @@ loginClientes.clienteLogin = (req, res) => {
     //-- Introducimos los campos para Iniciar Sesión como Cliente.
     const email = req.body.email;
     const password = req.body.password;
+    //-- Comprobamos que ningún campo está vacío.
+    if(!email || !password) {
+        res.status(401).render('paginas/clienteLogin', {mensaje: 'Campos vacíos'});
+        return res.end();
+    }
     //-- Comprobamos que el email introducido y la contraseña introducida existen y se encuentran en la base de datos.
     //-- E iniciamos sesión si así es.
     consultaEmailPasswordClientedb

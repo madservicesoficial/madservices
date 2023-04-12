@@ -6,22 +6,16 @@ var rutasFormulario = servidor.Router();
 const registroClientes = require('../ptoControl/registroClientes.js');
 //-- Importamos el Controlador del Registro de las Empresas.
 const registroEmpresas = require('../ptoControl/registroEmpresas.js');
-//-- Importamos el Controlador del Login de los Clientes.
-const loginClientes = require('../ptoControl/loginClientes.js');
-//-- Importamos el Controlador del Login de las Empresas.
-const loginEmpresas = require('../ptoControl/loginEmpresas.js');
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente.
 rutasFormulario.get('/login/cliente', (req, res) => {
   return res.render('paginas/clienteLogin');
 });
-rutasFormulario.post('/login/cliente', loginClientes.clienteLogin);
 
 //-- Ruta a la Sección de Iniciar Sesión como Empresa.
 rutasFormulario.get('/login/empresa', (req, res) => {
   return res.render('paginas/empresaLogin');
 });
-rutasFormulario.post('/login/empresa', loginEmpresas.empresaLogin);
 
 //-- Ruta a la Sección de Registrarse como Cliente.
 rutasFormulario.get('/registrarse/cliente', (req, res) => {
@@ -34,22 +28,6 @@ rutasFormulario.get('/registrarse/empresa', (req, res) => {
   return res.render('paginas/empresaRegistrarse');
 });
 rutasFormulario.post('/registrarse/empresa', registroEmpresas.empresaRegistrarse);
-
-//-- Sesión iniciada y autenticada como Cliente.
-rutasFormulario.get('/:id', (req, res) => {
-
-  if (req.session.loggedin) {
-    res.redirect('/:id', req.session.id);
-  }else {
-    res.redirect('/login/cliente');
-  }
-});
-
-//-- Cerrar Sesión como Cliente o Empresa.
-rutasFormulario.get('/cerrar-sesion', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-});
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasFormulario;

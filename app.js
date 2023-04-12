@@ -32,6 +32,9 @@ var protectorCabeceras = require('helmet');
 //-- para utilizar cabeceras HTTP adicionales y, para permitir que un agente de usuario obtenga permiso para acceder a recursos
 //-- seleccionados desde un servidor en un origen distinto al que pertenece.
 var controlAccesoHTTP = require('cors');
+//-- Importamos la Tecnología para iniciar sesión autenticando + su estrategia.
+const tokenAutenticado = require('passport');
+const estrategiaToken = require('passport-local').Strategy;
 //-- Importamos las rutas de MAD Services.
 var rutasMain = require('./routes/mainRoutes.js');
 var rutasFormulario = require('./routes/formularioRoutes.js');
@@ -53,23 +56,26 @@ madservices.use(session({
 //##############################################################################################################//
 
 //##############################################################################################################//
-//-- MIDDLEWARES O SOFTWARES INTERMEDIOS => Para analizar....                                                            
-//-- 1. Las solicitudes HTTP.                                                                                  
-//-- 2. Los ficheros JSON de la conexión.                                                                      
-//-- 3. Los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
+//-- MIDDLEWARES O SOFTWARES INTERMEDIOS => Para....                                                            
+//-- 1. Analizar y mostrar las solicitudes HTTP.                                                                                  
+//-- 2. Trabajar con los ficheros JSON de la conexión.                                                                      
+//-- 3. Analizar los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
 //-- coincida con la opción de tipo (para el Body y para la Tecnología Express en general).                    
-//-- 4. Las Cookies que se encuentran en la conexión.   
-//-- 5. El Body en formato JSON.
-//-- 6. El Body y su URL codificada.                                                        
-//-- 7. El favicon servido implícito predeterminado de MAD Services por parte del servidor.
-//-- 8. Las cabeceras HTTP de cada conexión.
-//-- 9. El Control de Acceso HTTP de cada conexión.
-//-- 10. La Protección de Cabeceras HTTP.
-//-- 11. La función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.                                                        
+//-- 4. Trabajar con las Cookies que se encuentran en la conexión.   
+//-- 5. Analizar el Body en formato JSON.
+//-- 6. Analizar el Body y su URL codificada.                                                        
+//-- 7. Analizar el favicon servido implícito predeterminado de MAD Services por parte del servidor.
+//-- 8. Analizar las cabeceras HTTP de cada conexión.
+//-- 9. Analizar el Control de Acceso HTTP de cada conexión.
+//-- 10. Configurar la Protección de Cabeceras HTTP.
+//-- 11. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos. 
+//-- 12. Inicializar la autenticación del inicio de sesión.
+//-- 13. Desarrollo de la autenticación del inicio de sesión.
+//-- 14. Desarrollo de la estrategia de la autenticación del inicio de sesión.                                                
 madservices.use(analizadorSolicitudes('dev'));                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
-madservices.use(analizadorCookies());
+madservices.use(analizadorCookies('madserviceskey'));
 madservices.use(analizadorBody.json());
 madservices.use(analizadorBody.urlencoded({ extended: true }));
 madservices.use(analizadorFavicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -93,6 +99,23 @@ madservices.use((req, res, next) => {
 madservices.use(controlAccesoHTTP());
 madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
+madservices.use(tokenAutenticado.initialize());
+madservices.use(tokenAutenticado.session());
+tokenAutenticado.use(new estrategiaToken(function(email, password, done) {
+  if(email === 'alexf@gmail.com' && password === 'test1234')
+    return done(null, {id: 386, nombre: 'Alejandro'});
+  
+  done(null, false);
+}));
+//-- Configuramos la serialización.
+tokenAutenticado.serializeUser(function(user,done) {
+  done(null, user.id);
+});
+//-- Configuramos la deserialización.
+tokenAutenticado.deserializeUser(function(id,done) {
+  done(null, {id: 386, nombre: 'Alejandro'});
+});
+
 //##############################################################################################################//
 
 //##############################################################################################################//
@@ -105,6 +128,20 @@ madservices.set('view engine', 'pug');
 //##############################################################################################################//
 //-- RUTAS DE MAD SERVICES =>
 madservices.use(rutasMain, rutasFormulario);
+//-- RUTAS PARA SESIÓN AUTENTICADA DE MAD SERVICES =>
+madservices.post('/login/cliente', tokenAutenticado.authenticate('local', {
+  successRedirect: '/:id',
+  failureRedirect: '/login/cliente'
+}));
+madservices.get('/:id', (req, res, next) => {
+  if(req.isAuthenticated()) return next();
+  res.redirect('/login/cliente');
+});
+//-- Cerrar Sesión como Cliente o Empresa.
+madservices.get('/cerrar-sesion', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
 //##############################################################################################################//
 
 //##############################################################################################################//

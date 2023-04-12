@@ -11,7 +11,7 @@ block body
             img.madservicestipologo(src='/images/madforcompanies.png' alt='madforcompaniesLOGO')
             //-- Contenido de las alertas.
             if mensaje
-                p.alerta=`${mensaje}`
+                p.alerta#enRojo=`${mensaje}`
             form.formRegistro(method="POST" action='/registrarse/empresa')
                 label='Nombre de la Empresa: '
                     span
