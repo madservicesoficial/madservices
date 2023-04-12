@@ -8,14 +8,14 @@ const { compare } = require('bcrypt');
 //-- Creamos el Punto de Control para configurar el inicio de sesión de los Clientes.
 const loginClientes = {}
 
-loginClientes.clienteLogin = async (req, res) => {
+loginClientes.clienteLogin = (req, res) => {
 
     //-- Introducimos los campos para Iniciar Sesión como Cliente.
     const email = req.body.email;
     const password = req.body.password;
     //-- Comprobamos que el email introducido y la contraseña introducida existen y se encuentran en la base de datos.
     //-- E iniciamos sesión si así es.
-    await consultaEmailPasswordClientedb
+    consultaEmailPasswordClientedb
     (
         madservicesdb,
         email,
