@@ -45,7 +45,7 @@ var madservices = servidor();
 //##############################################################################################################//
 //-- SESIONES EN MAD SERVICES =>
 madservices.use(session({
-  secret: 'secret',
+  secret: 'madserviceskey',
   resave: true,
   saveUninitialized: true,
   cookie: { secure: true }

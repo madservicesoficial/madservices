@@ -38,43 +38,19 @@ const consultaEmailClientedb = async (madservicesdb, email, callback) => {
     });
 }
 
-//-- Creamos la función para consultar si el email del Cliente existe en la base de datos de MAD Services.
-const consultaNoEmailClientedb = async (madservicesdb, data, callback) => {
+//-- Creamos la función para verificar que el email y la contraseña del Cliente están en la base de datos de MAD Services.
+const consultaEmailPasswordClientedb = async (madservicesdb, email, callback) => {
 
     //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT email FROM clientes WHERE email = ?';
+    let instruccionConsultar = 'SELECT id FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    await madservicesdb.getConnection( (error, madservicesdb) => {
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    //-- Establecer la comunicación para consultar el email en la base de datos.
+    madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
-        //-- Establecer la comunicación para consultar el email en la base de datos.
-        madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
-            if(error) throw error
-            callback(results.length === 0);
-        });
-    });
-}
-
-//-- Creamos la función para consultar si la Contraseña del Cliente existe en la base de datos de MAD Services.
-const consultaPasswordClientedb = async (madservicesdb, data, callback) => {
-
-    //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT password FROM clientes WHERE email = ?';
-    //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    await madservicesdb.getConnection( (error, madservicesdb) => {
-        if(error) throw error;
-        //-- Establecer la comunicación para consultar la password en la base de datos.
-        madservicesdb.query(formatoInstruccionConsultar, (error, result) => {
-            if(error) throw error;
-            if(result.length === 0) {
-                callback(result.length === 0);
-            }else {
-                callback(result.length === 0);
-            }
-        });
+        callback(results);
     });
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClientedb, consultaEmailClientedb, consultaNoEmailClientedb, consultaPasswordClientedb};
+module.exports = {registrarClientedb, consultaEmailClientedb, consultaEmailPasswordClientedb};

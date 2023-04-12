@@ -35,6 +35,16 @@ rutasFormulario.get('/registrarse/empresa', (req, res) => {
 });
 rutasFormulario.post('/registrarse/empresa', registroEmpresas.empresaRegistrarse);
 
+//-- Sesión iniciada y autenticada como Cliente.
+rutasFormulario.get('/:id', (req, res) => {
+
+  if (req.session.loggedin) {
+    res.redirect('/:id', req.session.id);
+  }else {
+    res.redirect('/login/cliente');
+  }
+});
+
 //-- Cerrar Sesión como Cliente o Empresa.
 rutasFormulario.get('/cerrar-sesion', (req, res) => {
   req.session.destroy();
