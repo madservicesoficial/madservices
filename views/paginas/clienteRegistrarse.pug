@@ -12,9 +12,6 @@ block body
             //-- Contenido de las alertas.
             if mensaje
                 p.alerta#enRojo=`${mensaje}`
-            div.alerta#enVerde(id='mi-alerta')
-                button(onclick="mostrarAlerta(`${registrado}`)") Mostrar alerta
-            script(src='/javascripts/cuadroAlerta.js')
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
                     span

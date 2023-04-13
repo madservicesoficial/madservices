@@ -24,7 +24,7 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
         }else {
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                res.render('paginas/clienteRegistrarse', {registrado: 'Cliente registrado', redirectUrl: '/'});
+                res.status(201).render('paginas/clienteRegistrarse');
             });
         }
     });
