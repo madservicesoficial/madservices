@@ -1,20 +1,34 @@
 //-- Contenido del Componente Cabecera sin Inicio de Sesión del Comercio Electrónico MAD Services.
-header
-  form(method='GET' action='/')
-    button.btnMADServices
-      img.logoMADServices(src='/images/madservices.png' alt='madservices')
-  ul
-    li.organizacionCabecera#buscarCabecera
+div#cabecera
+  ul.nav
+    li
+      form(method='GET' action='/')
+        button.btnMADServices
+          img.logoMADServices(src='/images/madservices.png' alt='madservices')
+    li.menu
       input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
       button(type='submit')='Buscar'
-    li.organizacionCabecera
+    li.menu
       form(method='GET' action='/login')
-        button='Iniciar Sesión'
-    li.organizacionCabecera
+        button.btnOculto='Iniciar Sesión'
+    li.menu
       form(method='GET' action='/registrarse')
-        button#btnRegistrarse='Registrarse'
-    li.organizacionCabecera
-      img#iconoWorld(src='/icons/world.png' alt='world')
+        button.btnOculto='Registrarse'
+    li.menu#menuIcono
+      form.despliegue(method='GET' action='#')
+        i.fa-solid.fa-cart-arrow-down.fa-2xl
+    li.menuDespliegue
+      form.despliegue(method='GET' action='#')
+        i.fa-solid.fa-bars.fa-2xl
+      ul
+        li
+          form.despliegue(method='GET' action='/perfil')
+            button.btnsubmenu='Mi Perfil'
+        li
+          form.despliegue(method='GET' action='/cerrar-sesion')
+            button.btnsubmenu='Cerrar sesión'
+    li.menuIdiomas
+      i.fa-solid.fa-earth-americas.fa-2xl
       select.eligeIdiomas(name="Idiomas")
         option(value="value1" selected)='Español'
         option(value="value2")='Inglés'

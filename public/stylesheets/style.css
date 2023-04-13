@@ -63,71 +63,72 @@ input[type=number]::-webkit-outer-spin-button {
 /*##################################################################################################*/
 /*############################################ CABECERA ############################################*/
 /*##################################################################################################*/
-header {
-  background: black;
-  color: white;
+#cabecera {
   width: 100%;
   height: 7em;
+}
+.menu {
+  margin: 40 0 0 70;
+}
+ul, ol {
+  list-style: none;
+}
+.nav li .despliegue:hover {
+  background-color: #434343;
+}
+.nav > li {
+  float: left;
+}
+.nav li ul {
+  display: none;
+  position: center;
+}
+.nav li:hover > ul {
+  display: block;
+}
+.nav li ul li {
+  position: relative;
+}
+#menuIcono {
+  margin-top: 50;
+}
+.menuDespliegue {
+  margin: 50 0 0 100;
+}
+.menuIdiomas {
+  margin: 40 0 0 20;
+}
+.btnsubmenu {
+  font-size: medium;
+  background-color: black;
+  color: white;
+  border-radius: 0;
+}
+.btnOculto {
+  background-color: transparent;
+  color: white;
 }
 .btnMADServices {
   background-color: transparent;
   width: 120px;
   height: 97px;
-  margin-left: 100px;
 }
 .logoMADServices {
   width: 120px;
   height: 97px;
 }
-.organizacionCabecera {
-  display: inline-block;
-  margin-left: 120px;
-  position: relative;
-  bottom: 90px;
+i {
+  color: white;
 }
-#buscarCabecera {
-  margin-left: 400px;
-}
-#btnRegistrarse {
-  width: 125px;
-}
-#iconoWorld {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  top: 15px;
-  right: 5px;
+.fa-solid.fa-bars.fa-2xl {
+  width: 200px;
 }
 .eligeIdiomas {
-  width: 80px;
-  height: 40px;
+  width: 75px;
+  height: 35px;
+  margin-left: 5px;
   color: white;
   background-color: black;
-}
-/*##################################################################################################*/
-/*###################################### CABECERA AUTENTICADA ######################################*/
-/*##################################################################################################*/
-#Auth {
-  margin-left: 80px;
-}
-#AuthIdiomas {
-  margin-left: 170px;
-}
-.btnAuth {
-  width: 90px;
-}
-#btnLogout {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  top: 10px;
-  background-color: transparent;
-}
-#iconoLogout {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  right: 5px;
 }
 /*##################################################################################################*/
 /*######################################### PIE DE PÁGINA ##########################################*/
@@ -179,22 +180,22 @@ footer {
 .cuadro {
   box-sizing: border-box;
   align-items: center;
+  justify-content: center;
   text-align: center;
   background: black;
   color: white;
-  justify-content: center;
   place-items: center;
   overflow-x: hidden;
   overflow-y: scroll;
-  position: relative;
-  top: 110px;
-  left: 240px;
   width: 1000px;
   height: 700px;
   border-radius: 20px;
-  border-color: goldenrod;
   padding: 40px;
+  border-color: goldenrod;
   box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+  position: relative;
+  top: 125px;
+  left: 70px;
 }
 /*##################################################################################################*/
 /*############################################# INICIO #############################################*/
@@ -211,8 +212,8 @@ footer {
   background-color: black;
   color: white;
   position: relative;
-  top: 100px;
-  left: 650px;
+  top: 120px;
+  left: 500px;
 }
 /*##################################################################################################*/
 /*######################################## PANTALLA OPCIÓN #########################################*/
@@ -278,9 +279,6 @@ footer {
   border-color: burlywood;
   padding: 40px;
   box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
-}
-::-webkit-scrollbar {
-  display: none;
 }
 .madservicesLOGO {
   width: 80px;
@@ -634,30 +632,29 @@ textarea {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: black;
-  color: white;
+  background-color: silver;
+  color: black;
   place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   width: 500px;
-  height: 300px;
+  height: 500px;
   border-radius: 20px;
   border-color: goldenrod;
   padding: 40px;
   box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
 }
-#Consolas {
-  position: relative;
-  top: 100px;
-  left: 100px;
+#productosMAD {
+  margin: 200 0 0 30;
 }
-#Libros {
-  position: relative;
-  top: 100px;
-  left: 400px;
+#restoMarcas {
+  margin: 200 0 0 80;
 }
-#Videojuegos {
-  position: relative;
-  top: 500px;
-  right: 500px;
+canvas {
+  background-color: transparent;
+}
+#imgMAD {
+  display: none;
+}
+#imgMulti {
+  display: none;
 }

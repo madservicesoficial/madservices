@@ -1,7 +1,7 @@
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const madservicesdb = require('../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { hash, compare } = require('bcrypt');
+const { hash } = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el inicio de sesión de los Clientes.
 const loginClientes = {}
@@ -20,12 +20,10 @@ loginClientes.clienteLogin = async (req, res) => {
     const passwordCifrada = await hash(password, 1);
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultar = 'SELECT id FROM clientes WHERE email = ?';
-    //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
     //-- Establecer la comunicación para consultar el email en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultar, async (error, results) => {
+    madservicesdb.query(instruccionConsultar, [email], (error, results) => {
         if(error) throw error;
-        if(results.length === 0 || !(await compare(passwordCifrada, results[0].password))) {
+        if(results.length === 0 || (passwordCifrada !== results[0].password)) {
             res.status(401).render('paginas/clienteLogin', { mensaje: 'Correo electrónico y/o contraseña incorrectas' });
             return res.end();
         }else {
