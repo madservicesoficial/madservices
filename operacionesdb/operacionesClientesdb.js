@@ -24,25 +24,11 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
         }else {
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                res.status(201).render('paginas/clienteRegistrarse');
+                res.redirect('/');
             });
         }
     });
 }
 
-//-- Creamos la función para verificar en el Inicio de Sesión, que el email y la contraseña del Cliente están en la base de datos de MAD Services.
-const consultaEmailPasswordClientedb = (madservicesdb, email, callback) => {
-
-    //-- Instrucción para consultar en la base de datos.
-    let instruccionConsultar = 'SELECT id FROM clientes WHERE email = ?';
-    //-- Configuración del formato de los datos introducidos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
-    //-- Establecer la comunicación para consultar el email en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
-        if(error) throw error;
-        callback(results);
-    });
-}
-
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb, consultaEmailPasswordClientedb};
+module.exports = {registrarClienteVerificadodb};

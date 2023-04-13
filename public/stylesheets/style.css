@@ -268,7 +268,7 @@ footer {
   background: silver;
   justify-content: center;
   place-items: center;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
   top: 110px;
   left: 560px;
@@ -278,6 +278,9 @@ footer {
   border-color: burlywood;
   padding: 40px;
   box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 .madservicesLOGO {
   width: 80px;

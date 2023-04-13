@@ -1,50 +1,38 @@
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const madservicesdb = require('../config/database.js');
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { consultaEmailPasswordClientedb } = require('../operacionesdb/operacionesClientesdb.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { compare } = require('bcrypt');
+const { hash, compare } = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el inicio de sesión de los Clientes.
 const loginClientes = {}
 
-loginClientes.clienteLogin = (req, res) => {
+loginClientes.clienteLogin = async (req, res) => {
 
     //-- Introducimos los campos para Iniciar Sesión como Cliente.
     const email = req.body.email;
     const password = req.body.password;
     //-- Comprobamos que ningún campo está vacío.
     if(!email || !password) {
-        res.status(401).render('paginas/clienteLogin', {mensaje: 'Campos vacíos'});
+        res.status(401).render('paginas/clienteLogin', {mensaje: 'Debes ingresar el correo electrónico y la contraseña'});
         return res.end();
     }
-    //-- Comprobamos que el email introducido y la contraseña introducida existen y se encuentran en la base de datos.
-    //-- E iniciamos sesión si así es.
-    consultaEmailPasswordClientedb
-    (
-        madservicesdb,
-        email,
-        (results) => {
-            if (results.length > 0) {
-                
-                const miembro = results[0];
-                compare(password,miembro.password, (result) => {
-                    if(result) {
-                        req.session.loggedin = true;
-                        req.session.id = miembro.id;
-                        res.redirect('/:id');
-                    }else {
-                        res.status(401).render('paginas/clienteLogin', {mensaje: 'Contraseña incorrecta'});
-                    }
-                    res.end();
-                });
-    
-            }else {
-                res.status(401).render('paginas/clienteLogin', {mensaje: 'Correo electrónico incorrecto'});
-            }
-            res.end();
+    //-- Configuramos el sistema para cifrar la contraseña metida.
+    const passwordCifrada = await hash(password, 1);
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultar = 'SELECT id FROM clientes WHERE email = ?';
+    //-- Configuración del formato de los datos introducidos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    //-- Establecer la comunicación para consultar el email en la base de datos.
+    madservicesdb.query(formatoInstruccionConsultar, async (error, results) => {
+        if(error) throw error;
+        if(results.length === 0 || !(await compare(passwordCifrada, results[0].password))) {
+            res.status(401).render('paginas/clienteLogin', { mensaje: 'Correo electrónico y/o contraseña incorrectas' });
+            return res.end();
+        }else {
+            req.session.id = results[0].id;
+            res.redirect('/:id');
         }
-    )
+    });
 }
 
 //-- Exportamos la configuración de inicio de sesión de los Clientes para unificarlo con el resto de rutas.
