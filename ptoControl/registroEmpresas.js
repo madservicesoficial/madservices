@@ -3,7 +3,7 @@ const { hash } = require('bcrypt');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { registrarEmpresaVerificadadb, actualizarEmpresadb, darseBajaEmpresadb } = require('../operacionesdb/operacionesEmpresasdb.js');
+const { registrarEmpresaVerificadadb } = require('../operacionesdb/operacionesEmpresasdb.js');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 

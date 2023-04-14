@@ -16,19 +16,19 @@ div#cabecera
         button.btnOculto='Registrarse'
     li.menu#menuIcono
       form.despliegue(method='GET' action='#')
-        i.fa-solid.fa-cart-arrow-down.fa-2xl
+        i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
     li.menuDespliegue
       form.despliegue(method='GET' action='#')
-        i.fa-solid.fa-bars.fa-2xl
+        i.fa-solid.fa-bars.fa-2xl#iconosCab
       ul
         li
-          form.despliegue(method='GET' action='/perfil')
+          form.despliegue(method='GET' action='/:id/perfil')
             button.btnsubmenu='Mi Perfil'
         li
-          form.despliegue(method='GET' action='/cerrar-sesion')
+          form.despliegue(method='GET' action='/:id/cerrar-sesion')
             button.btnsubmenu='Cerrar sesión'
     li.menuIdiomas
-      i.fa-solid.fa-earth-americas.fa-2xl
+      i.fa-solid.fa-earth-americas.fa-2xl#iconosCab
       select.eligeIdiomas(name="Idiomas")
         option(value="value1" selected)='Español'
         option(value="value2")='Inglés'

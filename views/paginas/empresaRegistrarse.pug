@@ -53,11 +53,11 @@ block body
                 li.botonesSalientes
                     form(method='GET' action='/')
                         button.dosbtnRegistro
-                            img.dosIconosRegistro#posdeinicio(src='/icons/home.png' alt='home')
+                            i.fa-solid.fa-house.fa-2xl#iconosRegister
                 li.botonesSalientes
                     form(method='GET' action='/registrarse')
-                        button.dosbtnRegistro#posAtras
-                            img.dosIconosRegistro#posdeAtras(src='/icons/back.png' alt='back')
+                        button.dosbtnRegistro#btnBackRegister
+                            i.fa-solid.fa-circle-left.fa-2xl#iconosRegister
             ul.otrosbtnLogin
                 li 
                     form(method='GET' action='/login/empresa')

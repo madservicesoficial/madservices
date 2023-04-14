@@ -23,12 +23,12 @@ block body
                 ul
                     li.dosbtnLogin
                         form(method='GET' action='/login')
-                            button.btnBackHome
-                                img.icon(src='/icons/back.png' alt='back')
+                            button.btnOpcionesLogin#btnBackLogin
+                                i.fa-solid.fa-circle-left.fa-2xl#iconosLogin
                     li.dosbtnLogin
                         form(method='GET' action='/')
-                            button.btnBackHome#posBtnHome
-                                img.icon(src='/icons/home.png' alt='home')
+                            button.btnOpcionesLogin#btnHomeLogin
+                                i.fa-solid.fa-house.fa-2xl#iconosLogin
             li
                 form(method='GET' action='/registrarse/cliente')
                     button.btnSinCuenta='¡No tengo cuenta!'

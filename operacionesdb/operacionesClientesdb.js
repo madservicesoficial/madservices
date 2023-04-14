@@ -24,11 +24,37 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
         }else {
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                res.redirect('/');
+                return res.redirect('/');
             });
         }
     });
 }
 
+//-- Creamos la función para iniciar sesión como Cliente, con verificación de correo electrónico y contraseña, en la base de datos de MAD Services.
+const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, res) => {
+
+    //-- Instrucción para consultar en la base de datos.
+    let instruccionConsultarEmail = 'SELECT * FROM clientes WHERE email = ?';
+    //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
+    let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
+    //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
+    madservicesdb.query(formatoInstruccionConsultarEmail, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            res.status(401).render('paginas/clienteLogin', { mensaje: 'Correo electrónico incorrecto' });
+            return res.end();
+        }else {
+            const miembro = results[0];
+            if(password !== miembro.password) {
+                res.status(401).render('paginas/clienteLogin', { mensaje: 'Contraseña incorrecta' });
+                return res.end();
+            }else {
+                req.session.miembro = miembro;
+                return res.redirect(`/${miembro.id}`);
+            }
+        }
+    });
+}
+
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb};
+module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb};

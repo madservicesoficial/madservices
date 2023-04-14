@@ -117,7 +117,7 @@ ul, ol {
   width: 120px;
   height: 97px;
 }
-i {
+#iconosCab {
   color: white;
 }
 .fa-solid.fa-bars.fa-2xl {
@@ -319,23 +319,24 @@ footer {
 }
 .dosbtnLogin {
   display: inline-block;
-  position: relative;
-  right: 160px;
 }
-.icon {
-  width: 35px;
-  height: 35px;
+.btnOpcionesLogin {
+  width: 40px;
+  height: 40px;
   position: relative;
-  right: 5px;
-}
-.btnBackHome {
-  width: 35px;
-  height: 35px;
+  top: 2px;
   background-color: transparent;
 }
-#posBtnHome {
+#btnBackLogin {
+  right: 150px;
+}
+#btnHomeLogin {
+  right: 65px;
+}
+#iconosLogin {
+  color: black;
   position: relative;
-  left: 100px;
+  right: 5px;
 }
 .btnSinCuenta {
   color: black;
@@ -424,23 +425,11 @@ footer {
 .dosbtnRegistro {
   width: 40px;
   height: 40px;
+  position: relative;
   background-color: transparent;
 }
-.dosIconosRegistro {
-  width: 40px;
-  height: 40px;
-}
-#posdeinicio {
-  position: relative;
-  right: 5px;
-}
-#posAtras {
-  position: relative;
+#btnBackRegister {
   right: 310px;
-}
-#posdeAtras {
-  position: relative;
-  right: 5px;
 }
 .posAlta {
   position: relative;
@@ -453,6 +442,11 @@ footer {
 }
 ::-webkit-scrollbar {
   display: none;
+}
+#iconosRegister {
+  color: black;
+  position: relative;
+  right: 5px;
 }
 /*##################################################################################################*/
 /*###################################### REGISTRARSE: EMPRESA ######################################*/
