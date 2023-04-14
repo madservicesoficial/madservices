@@ -68,12 +68,12 @@ input[type=number]::-webkit-outer-spin-button {
   height: 7em;
 }
 .menu {
-  margin: 40 0 0 70;
+  margin: 40 0 0 100;
 }
 ul, ol {
   list-style: none;
 }
-.nav li .despliegue:hover {
+.nav li #despliegue:hover {
   background-color: #434343;
 }
 .nav > li {
@@ -88,21 +88,7 @@ ul, ol {
 }
 .nav li ul li {
   position: relative;
-}
-#menuIcono {
-  margin-top: 50;
-}
-.menuDespliegue {
-  margin: 50 0 0 100;
-}
-.menuIdiomas {
-  margin: 40 0 0 20;
-}
-.btnsubmenu {
-  font-size: medium;
-  background-color: black;
-  color: white;
-  border-radius: 0;
+  left: 100px;
 }
 .btnOculto {
   background-color: transparent;
@@ -119,9 +105,6 @@ ul, ol {
 }
 #iconosCab {
   color: white;
-}
-.fa-solid.fa-bars.fa-2xl {
-  width: 200px;
 }
 .eligeIdiomas {
   width: 75px;
