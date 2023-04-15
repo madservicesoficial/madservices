@@ -9,6 +9,12 @@ rutasMain.get('/', (req, res) => {
   return res.end();
 });
 
+//-- Ruta al Inicio Autenticado de MAD Services.
+rutasMain.get('/:id', (req, res) => {
+  res.render('paginas/inicioAuth');
+  return res.end();
+});
+
 //-- Ruta a la Sección de Iniciar Sesión como Cliente o como Empresa.
 rutasMain.get('/login', (req, res) => {
   res.render('paginas/login');
@@ -27,8 +33,20 @@ rutasMain.get('/contacto', (req, res) => {
   return res.end();
 });
 
+//-- Ruta a la Sección de Contacto Autenticado.
+rutasMain.get('/:id/contacto', (req, res) => {
+  res.render('paginas/contacto');
+  return res.end();
+});
+
 //-- Ruta a la Sección de Trabaja con Nosotros.
 rutasMain.get('/empleo', (req, res) => {
+  res.render('paginas/empleo');
+  return res.end();
+});
+
+//-- Ruta a la Sección de Trabaja con Nosotros Autenticado.
+rutasMain.get('/:id/empleo', (req, res) => {
   res.render('paginas/empleo');
   return res.end();
 });

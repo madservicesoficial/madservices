@@ -14,12 +14,7 @@ div#cabecera
     li.menu
       form(method='GET' action='/registrarse')
         button.btnOculto='Registrarse'
-    li.menu
-      i.fa-solid.fa-earth-americas.fa-2xl#iconosCab
-      select.eligeIdiomas(name="Idiomas")
-        option(value="value1" selected)='Español'
-        option(value="value2")='Inglés'
-    li.menu
+    li.menu#despliegue
       button#btnCarrito
         i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
         span.contCarrito
@@ -27,11 +22,15 @@ div#cabecera
         h4.cabeceraCarrito='Carrito de la compra'
         //-- Contenido del carrito de la compra del Comercio Electrónico MAD Services.
         ul.articulosCarrito
-          each articulo in carrito
             li.articuloCarrito
-              span.producto=articulo.producto
-              span.cantidad=articulo.cantidad
-              span.precio=articulo.precio.toFixed(2) + '€'
+              span.producto='Libro'
+              span.cantidad='5'
+              span.precio='3€'
         div.sumaArticulos
           p='Total: '
-          span.precioTotal= precioTotal.toFixed(2) + '€'
+          span.precioTotal='3€'
+    li.menu#menuIdiomas
+      i.fa-solid.fa-earth-americas.fa-2xl#iconosCab
+      select.eligeIdiomas(name="Idiomas")
+        option(value="value1" selected)='Español'
+        option(value="value2")='Inglés'

@@ -79,13 +79,6 @@ ul, ol {
 .nav > li {
   float: left;
 }
-.nav li ul {
-  display: none;
-  position: center;
-}
-.nav li:hover > ul {
-  display: block;
-}
 .nav li ul li {
   position: relative;
   left: 100px;
@@ -106,12 +99,89 @@ ul, ol {
 #iconosCab {
   color: white;
 }
+#menuIdiomas {
+  margin-left: 175px;
+}
 .eligeIdiomas {
   width: 75px;
   height: 35px;
   margin-left: 5px;
   color: white;
   background-color: black;
+}
+#btnCarrito {
+  position: relative;
+  width: 50px;
+  height: 40px;
+  background-color: transparent;
+}
+#btnCarrito .contCarrito {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: orangered;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#carritoHaciaAbajo {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+  display: none;
+  min-width: 250px;
+}
+#carritoHaciaAbajo.show {
+  display: block;
+}
+.menuHaciaAbajo {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.cabeceraCarrito {
+  margin: 0;
+  font-weight: bold;
+}
+.articulosCarrito {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.articuloCarrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.articuloCarrito .cantidad {
+  margin-right: 5px;
+  font-weight: bold;
+}
+.articuloCarrito .precio {
+  font-size: 12px;
+  color: #888;
+}
+.sumaArticulos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding-top: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.sumaArticulos .precioTotal {
+  font-size: 16px;
 }
 /*##################################################################################################*/
 /*######################################### PIE DE PÁGINA ##########################################*/
