@@ -14,10 +14,10 @@ rutasGet.get('/', (req, res) => {
 });
 
 //-- Ruta al Inicio Autenticado de MAD Services.
-rutasGet.get('/sesion/:id', (req, res) => {
+rutasGet.get(`/sesion/${id}`, (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (userID) => {
-    res.render('paginas/inicioAuth', { userID });
+  conseguirID(madservicesdb, id, (id) => {
+    res.render('paginas/inicioAuth', { id });
     return res.end();
   });
 });
@@ -65,10 +65,10 @@ rutasGet.get('/contacto', (req, res) => {
 });
 
 //-- Ruta a la Sección de Contacto Autenticado.
-rutasGet.get('/sesion/:id/contacto', (req, res) => {
+rutasGet.get(`/sesion/${id}/contacto`, (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (userID) => {
-    res.render('paginas/contactoAuth', { userID });
+  conseguirID(madservicesdb, id, (id) => {
+    res.render('paginas/contactoAuth', { id });
     return res.end();
   });
 });
@@ -82,8 +82,8 @@ rutasGet.get('/empleo', (req, res) => {
 //-- Ruta a la Sección de Trabaja con Nosotros Autenticado.
 rutasGet.get('/sesion/:id/empleo', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (userID) => {
-    res.render('paginas/empleoAuth', { userID });
+  conseguirID(madservicesdb, id, (id) => {
+    res.render('paginas/empleoAuth', { id });
     return res.end();
   });
 });
@@ -97,8 +97,8 @@ rutasGet.get('/conoceMADs', (req, res) => {
 //-- Ruta a la Sección de Sobre MAD Services Autenticado.
 rutasGet.get('/sesion/:id/conoceMADs', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (userID) => {
-    res.render('paginas/conoceMADsAuth', { userID });
+  conseguirID(madservicesdb, id, (id) => {
+    res.render('paginas/conoceMADsAuth', { id });
     return res.end();
   });
 });
@@ -112,8 +112,8 @@ rutasGet.get('/categorias', (req,res) => {
 //-- Ruta a la Sección de Categorias Autenticado de MAD Services.
 rutasGet.get('/sesion/:id/categorias', (req,res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (userID) => {
-    res.render('paginas/categoriasAuth', { userID });
+  conseguirID(madservicesdb, id, (id) => {
+    res.render('paginas/categoriasAuth', { id });
     return res.end();
   });
 });
