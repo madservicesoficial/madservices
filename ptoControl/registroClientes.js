@@ -5,12 +5,12 @@ const { registrarClienteVerificadodb } = require('../operacionesdb/operacionesCl
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { hash } = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroClientes = {}
 
-registroClientes.clienteRegistrarse = async (req, res) => {
+registroClientes.clienteRegistrarse = (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
     const email = req.body.email; 
@@ -37,7 +37,7 @@ registroClientes.clienteRegistrarse = async (req, res) => {
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
+    const passwordCifrada = bcrypt.hash(password, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
     registrarClienteVerificadodb
     (

@@ -1,5 +1,5 @@
-//-- Importamos el componente para cifrar las contraseñas.
-const { hash } = require('bcrypt');
+//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+const bcrypt = require('bcrypt');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
@@ -10,7 +10,7 @@ const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Creamos el Punto de Control para configurar el registro de las Empresas.
 const registroEmpresas = {}
 
-registroEmpresas.empresaRegistrarse = async (req, res) => {
+registroEmpresas.empresaRegistrarse = (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de las Empresas.
     const nombreEm = req.body.nombreEm;
@@ -32,7 +32,7 @@ registroEmpresas.empresaRegistrarse = async (req, res) => {
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
+    const passwordCifrada = bcrypt.hash(password, 1);
     //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
     registrarEmpresaVerificadadb
     (

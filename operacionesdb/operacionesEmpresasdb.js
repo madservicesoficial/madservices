@@ -1,6 +1,8 @@
 //-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
+//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+const bcrypt = require('bcrypt');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
@@ -10,9 +12,12 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
         "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM empresas WHERE email = ?';
+    //-- Instrucción para no repetir ID.
+    let instruccionID = 'SELECT * FROM empresas WHERE id = ?';
     //-- Configuración del formato de los datos introducidos para registrar y consultar en base de datos.
     let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [data.id, data.nombre, data.nif, data.email, data.password, data.tiposoc]);
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    let formatoInstruccionID = mysql.format(instruccionID, [data.id]);
     //-- Establecer la comunicación de insertar y consultar datos en la base de datos.
     madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
@@ -22,6 +27,21 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
             res.status(401).render('paginas/empresaRegistrarse', { mensaje: 'Correo ya en uso' });
             return res.end();
         }else {
+            //-- Creamos la variable que controla si se entra a generar el ID aleatoriamente o no.
+            let control = false;
+            //-- Creamos la variable que obtiene resultados de la base de datos.
+            let result;
+            do {
+                if(control === true) {
+                    [data.id] = generarIDrandom() * 3;
+                }
+                result = madservicesdb.query(formatoInstruccionID);
+                if(result.length > 0) {
+                    control = true;
+                }
+
+            }while(result.length > 0);
+
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
@@ -45,13 +65,15 @@ const iniciarSesionEmpresaVerificadadb = (madservicesdb, email, password, req, r
             return res.end();
         }else {
             const miembro = results[0];
-            if(password !== miembro.password) {
-                res.status(401).render('paginas/empresaLogin', { mensaje: 'Contraseña incorrecta' });
-                return res.end();
-            }else {
-                req.session.miembro = miembro;
-                return res.redirect(`/sesion/${miembro.id}`);
-            }
+            bcrypt.compare(password, miembro.password).then((result) => {
+                if(result) {
+                    req.session.miembro = miembro;
+                    return res.redirect(`/sesion/${miembro.id}`);
+                }else {
+                    res.status(401).render('paginas/empresaLogin', { mensaje: 'Contraseña incorrecta' });
+                    return res.end();
+                }
+            });
         }
     });
 }
