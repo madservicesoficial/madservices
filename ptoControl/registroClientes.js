@@ -2,15 +2,13 @@
 const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
 const { registrarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
-//-- Importamos la función que genera el ID aleatoriamente.
-const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const bcrypt = require('bcrypt');
+const {hash} = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroClientes = {}
 
-registroClientes.clienteRegistrarse = (req, res) => {
+registroClientes.clienteRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
     const email = req.body.email; 
@@ -29,21 +27,19 @@ registroClientes.clienteRegistrarse = (req, res) => {
         res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
-    //-- Generación del ID aleatorio.
-    const idCliente = generarIDrandom() * 2;
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
     if(password !== confirmPassword) {
         res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = bcrypt.hash(password, 1);
+    const passwordCifrada = await hash(password, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
     registrarClienteVerificadodb
     (
         madservicesdb,
-        {id: idCliente, email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion,
-        poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
+        {email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion, region: region,
+        pais: pais, cp: cp, genero: genero},
         res
     );
 };

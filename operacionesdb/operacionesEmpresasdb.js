@@ -3,21 +3,18 @@
 const mysql = require('mysql2');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const bcrypt = require('bcrypt');
+//-- Importamos la función que genera el ID aleatoriamente.
+const generarIDrandom = require('../randomIDs/generarIDRandom.js');
+//-- Importamos la función que comprueba que no se repita el ID aleatorio.
+const comprobarIDempresadb = require('../comprobarIDs/comprobarIDempresa.js');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
 
-    //-- Instrucción para registrarse en la base de datos.
-    let instruccionRegistrarse = 
-        "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
-    //-- Instrucción para consultar en la base de datos.
+    //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM empresas WHERE email = ?';
-    //-- Instrucción para no repetir ID.
-    let instruccionID = 'SELECT * FROM empresas WHERE id = ?';
-    //-- Configuración del formato de los datos introducidos para registrar y consultar en base de datos.
-    let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [data.id, data.nombre, data.nif, data.email, data.password, data.tiposoc]);
+    //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    let formatoInstruccionID = mysql.format(instruccionID, [data.id]);
     //-- Establecer la comunicación de insertar y consultar datos en la base de datos.
     madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
@@ -27,21 +24,19 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
             res.status(401).render('paginas/empresaRegistrarse', { mensaje: 'Correo ya en uso' });
             return res.end();
         }else {
-            //-- Creamos la variable que controla si se entra a generar el ID aleatoriamente o no.
-            let control = false;
-            //-- Creamos la variable que obtiene resultados de la base de datos.
-            let result;
-            do {
-                if(control === true) {
-                    [data.id] = generarIDrandom() * 3;
+            let idEmpresa = generarIDrandom() * 3;
+            comprobarIDempresadb(idEmpresa, (idExiste) => {
+                while(idExiste) {
+                    idEmpresa = generarIDrandom() * 3;
+                    comprobarIDempresadb(idEmpresa, (idExiste) => {
+                        idExiste = idExiste;
+                    });
                 }
-                result = madservicesdb.query(formatoInstruccionID);
-                if(result.length > 0) {
-                    control = true;
-                }
-
-            }while(result.length > 0);
-
+            });
+            //-- Instrucción para registrarse en la base de datos.
+            let instruccionRegistrarse = "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
+            //-- Configuración del formato de los datos introducidos para registrar en base de datos.
+            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.nombre, data.nif, data.email, data.password, data.tiposoc]);
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
