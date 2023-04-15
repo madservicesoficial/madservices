@@ -2,10 +2,6 @@
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
-//-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
-//-- Importamos la función de consulta del ID de clientes y empresas para asignarlo al recurso.
-const { conseguirID } = require('../operacionesdb/operacionConseguirID.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -14,12 +10,10 @@ rutasGet.get('/', (req, res) => {
 });
 
 //-- Ruta al Inicio Autenticado de MAD Services.
-rutasGet.get(`/sesion/${id}`, (req, res) => {
+rutasGet.get('/sesion/:id', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (id) => {
-    res.render('paginas/inicioAuth', { id });
-    return res.end();
-  });
+  res.render('paginas/inicioAuth', {id: id});
+  return res.end();
 });
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente o como Empresa.
@@ -65,12 +59,10 @@ rutasGet.get('/contacto', (req, res) => {
 });
 
 //-- Ruta a la Sección de Contacto Autenticado.
-rutasGet.get(`/sesion/${id}/contacto`, (req, res) => {
+rutasGet.get('/sesion/:id/contacto', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (id) => {
-    res.render('paginas/contactoAuth', { id });
-    return res.end();
-  });
+  res.render('paginas/contactoAuth', {id: id});
+  return res.end();
 });
 
 //-- Ruta a la Sección de Trabaja con Nosotros.
@@ -82,10 +74,8 @@ rutasGet.get('/empleo', (req, res) => {
 //-- Ruta a la Sección de Trabaja con Nosotros Autenticado.
 rutasGet.get('/sesion/:id/empleo', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (id) => {
-    res.render('paginas/empleoAuth', { id });
-    return res.end();
-  });
+  res.render('paginas/empleoAuth', {id: id});
+  return res.end();
 });
 
 //-- Ruta a la Sección de Sobre MAD Services.
@@ -97,10 +87,8 @@ rutasGet.get('/conoceMADs', (req, res) => {
 //-- Ruta a la Sección de Sobre MAD Services Autenticado.
 rutasGet.get('/sesion/:id/conoceMADs', (req, res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (id) => {
-    res.render('paginas/conoceMADsAuth', { id });
-    return res.end();
-  });
+  res.render('paginas/conoceMADsAuth', {id: id});
+  return res.end();
 });
 
 //-- Ruta a la Sección de Categorias de MAD Services.
@@ -112,16 +100,13 @@ rutasGet.get('/categorias', (req,res) => {
 //-- Ruta a la Sección de Categorias Autenticado de MAD Services.
 rutasGet.get('/sesion/:id/categorias', (req,res) => {
   let id = req.params.id;
-  conseguirID(madservicesdb, id, (id) => {
-    res.render('paginas/categoriasAuth', { id });
-    return res.end();
-  });
+  res.render('paginas/categoriasAuth', {id: id});
+  return res.end();
 });
 
 //-- Cerrar Sesión como Cliente o Empresa.
-rutasGet.get('/cerrar-sesion', (req, res) => {
-  req.session.destroy();
-  return res.redirect('/');
+rutasGet.get('/', (req, res) => {
+  return req.session.destroy();
 });
 
 //-- Exportamos las rutas con método GET.
