@@ -50,7 +50,7 @@ const iniciarSesionEmpresaVerificadadb = (madservicesdb, email, password, req, r
                 return res.end();
             }else {
                 req.session.miembro = miembro;
-                return res.redirect(`/${miembro.id}`);
+                return res.redirect(`/sesion/${miembro.id}`);
             }
         }
     });

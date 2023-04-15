@@ -33,8 +33,8 @@ var protectorCabeceras = require('helmet');
 //-- seleccionados desde un servidor en un origen distinto al que pertenece.
 var controlAccesoHTTP = require('cors');
 //-- Importamos las rutas de MAD Services.
-var rutasMain = require('./routes/mainRoutes.js');
-var rutasFormulario = require('./routes/formularioRoutes.js');
+var rutasGet = require('./routes/GET.routes.js');
+var rutasPost = require('./routes/POST.routes.js');
 //##############################################################################################################//
 
 //##############################################################################################################//
@@ -104,7 +104,7 @@ madservices.set('view engine', 'pug');
 
 //##############################################################################################################//
 //-- RUTAS DE MAD SERVICES =>
-madservices.use(rutasMain, rutasFormulario);
+madservices.use(rutasGet, rutasPost);
 //##############################################################################################################//
 
 //##############################################################################################################//
