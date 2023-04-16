@@ -705,3 +705,95 @@ canvas {
 #imgMulti {
   display: none;
 }
+/*##################################################################################################*/
+/*#################################### SECCIÓN PERFIL: CLIENTE #####################################*/
+/*##################################################################################################*/
+.perfilCliente {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+  padding-bottom: 50;
+}
+.tituloPerfil {
+  text-align: center;
+  margin: 40 400 0 0;
+}
+.perfilCliente div {
+  display: inline-block;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  color: white;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin: 50 0 0 100;
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+#cuadroParteDerecha {
+  margin-left: 125;
+}
+.perfilCliente div h3 {
+  margin: 50 0 50 0;
+}
+.perfilCliente div form {
+  float: left;
+}
+.formActualizarDatos {
+  margin-left: 50;
+}
+.formActualizarPassword {
+  margin-top: 30;
+  margin-left: 40;
+}
+.formActualizarDomiciliacion {
+  margin-left: 20;
+}
+.formDarseBaja {
+  margin-left: 90;
+}
+.perfilCliente div .camposRellenarPerfil {
+  width: 300;
+  margin-left: 10px;
+}
+#camposNombreActualizarDatos {
+  margin-left: 20px;
+}
+.guardarDatosPerfilClientes {
+  width: 80px;
+  font-size: medium;
+  float: right;
+  margin-left: 20px;
+}
+.camposGeneroPerfilClientes {
+  margin-left: 70;
+}
+#guardarGeneroPerfilClientes {
+  margin-left: 85px;
+}
+.camposRellenarPerfilDomicilio {
+  width: 375px;
+  margin-left: 5px;
+}
+#camposRellenarPerfilDireccion {
+  margin-left: 10px;
+}
+#camposRellenarPerfilRegion {
+  margin-left: 30px;
+}
+#camposRellenarPerfilPais {
+  margin-left: 50px;
+}
+#camposRellenarPerfilCP {
+  margin-left: 20px;
+}
+#confirmarDarseBaja {
+  margin-top: 50;
+  margin-right: 150;
+}

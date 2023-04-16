@@ -1,0 +1,79 @@
+//-- Contenido del Perfil de los Clientes del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title=`MAD Services: Sesión ${id}`
+
+block body
+  include ../componentes/cabeceraAuth.pug
+  div.perfilCliente
+    br
+    h1.tituloPerfil=`Hola ${nombre} ${apellidos}, éste es tu perfil:`
+    div
+        h3='Actualiza tus Datos Personales'
+        form.formActualizarDatos(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Nombre: '
+            input.camposRellenarPerfil#camposNombreActualizarDatos(type='text' name='nombre' placeholder='Escribe tu nombre....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDatos(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Apellidos: '
+            input.camposRellenarPerfil(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDatos(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Género: '
+            input.camposGeneroPerfilClientes(type='radio' name='genero' value='Hombre')
+            label='Hombre'
+            input(type='radio' name='genero' value='Mujer')
+            label='Mujer'
+            input(type='radio' name='genero' value='Otro' checked)
+            label='Otro'
+            button.guardarDatosPerfilClientes#guardarGeneroPerfilClientes='Guardar'
+    div#cuadroParteDerecha
+        h3='Actualiza el E-mail y la Contraseña'
+        form.formActualizarDatos(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='E-mail: '
+            input.camposRellenarPerfil(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarPassword(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Antigua contraseña: '
+            input.camposRellenarPerfil(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+            br
+            br
+            label='Nueva contraseña: '
+            input.camposRellenarPerfil(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+            br
+            br
+            label='Repite la contraseña: '
+            input.camposRellenarPerfil(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+            br
+            br
+            button.guardarDatosPerfilClientes='Guardar'
+    div
+        h3='Actualiza la Domiciliación del Envío'
+        form.formActualizarDomiciliacion(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Dirección: '
+            input.camposRellenarPerfilDomicilio#camposRellenarPerfilDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDomiciliacion(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Población: '
+            input.camposRellenarPerfilDomicilio(type='text' name='poblacion' placeholder='Introduce una población válida....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDomiciliacion(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Región: '
+            input.camposRellenarPerfilDomicilio#camposRellenarPerfilRegion(type='text' name='region' placeholder='Introduce una región válida....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDomiciliacion(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='País: '
+            input.camposRellenarPerfilDomicilio#camposRellenarPerfilPais(type='text' name='pais' placeholder='Introduce un país válido....')
+            button.guardarDatosPerfilClientes='Guardar'
+        form.formActualizarDomiciliacion(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='Código Postal: '
+            input#camposRellenarPerfilCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
+            button.guardarDatosPerfilClientes='Guardar'
+    div#cuadroParteDerecha
+        h3='Darse de baja de MAD Services'
+        form.formDarseBaja(method='PATCH' action=`/sesion/${id}/perfil`)
+            label='¿Confirmas que quieres darte de baja de MAD Services?: '
+            br
+            button.guardarDatosPerfilClientes#confirmarDarseBaja='Confirmo'
+  include ../componentes/piepaginaAuth.pug
