@@ -122,7 +122,7 @@ rutasGet.get('/sesion/:id/perfil', (req,res) => {
         (
           id,
           (datos) => {
-            res.render('paginas/perfilClientes', {id: id, nombre: datos.nombre, apellidos: datos.apellidos});
+            res.render('paginas/perfilClientes', {id: id, nombre: datos.nombre, apellidos: datos.apellidos, email: datos.email, password: datos.password, direccion: datos.direccion, poblacion: datos.poblacion, region: datos.region, pais: datos.pais, cp: datos.cp, genero: datos.genero});
             return res.end();
           }
         );
@@ -131,7 +131,7 @@ rutasGet.get('/sesion/:id/perfil', (req,res) => {
         (
           id,
           (datos) => {
-            res.render('paginas/perfilEmpresas', {id: id, nombre: datos.nombre, apellidos: datos.apellidos});
+            res.render('paginas/perfilEmpresas', {id: id, nombre: datos.nombre, email: datos.email, password: datos.password, nif: datos.nif, tiposoc: datos.tiposoc});
             return res.end();
           }
         );
