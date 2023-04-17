@@ -78,6 +78,11 @@ block body
                 br
                 br
                 button#btnActualizarPerfil='Actualizar'
+                //-- Contenido de las alertas.
+                if msjError
+                    p.alerta#enRojo=msjError
+                if msjActualizacion
+                    p.alerta#enVerde=msjActualizacion
         div#perfilClienteDerecha
             h3='Mi Información: '
             form(method='GET' action=`/sesion/${id}/perfil`)

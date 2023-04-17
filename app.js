@@ -35,6 +35,8 @@ var controlAccesoHTTP = require('cors');
 //-- Importamos las rutas de MAD Services.
 var rutasGet = require('./routes/GET.routes.js');
 var rutasPost = require('./routes/POST.routes.js');
+var rutasPatch = require('./routes/PATCH.routes.js');
+var rutasDelete = require('./routes/DELETE.routes.js');
 //##############################################################################################################//
 
 //##############################################################################################################//
@@ -104,7 +106,7 @@ madservices.set('view engine', 'pug');
 
 //##############################################################################################################//
 //-- RUTAS DE MAD SERVICES =>
-madservices.use(rutasGet, rutasPost);
+madservices.use(rutasGet, rutasPost, rutasPatch, rutasDelete);
 //##############################################################################################################//
 
 //##############################################################################################################//

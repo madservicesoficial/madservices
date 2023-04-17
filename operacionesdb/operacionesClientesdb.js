@@ -73,5 +73,163 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, r
     });
 }
 
+//-- Creamos la función para Actualizar los datos de la base de datos de MAD Services.
+const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
+
+    //-- Establecer la comunicación para actualizar en la base de datos.
+    const hayNombreCliente = data.nombre;
+    if(hayNombreCliente) {
+            //-- Instrucción para actualizar en la base de datos.
+        let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
+        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [data.nombre, data.id]);
+        //-- Proceso de actualización en base de datos.
+        madservicesdb.query(formatoInstruccionActualizarNombre);
+    }else {
+        const hayApellidosCliente = data.apellidos;
+        if(hayApellidosCliente) {
+            //-- Instrucción para actualizar en la base de datos.
+            let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
+            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+            let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [data.apellidos, data.id]);
+            //-- Proceso de actualización en base de datos.
+            madservicesdb.query(formatoInstruccionActualizarApellidos);
+        }else {
+            const hayGeneroCliente = data.genero;
+            if(hayGeneroCliente) {
+                //-- Instrucción para actualizar en la base de datos.
+                let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
+                //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [data.genero, data.id]);
+                //-- Proceso de actualización en base de datos.
+                madservicesdb.query(formatoInstruccionActualizarGenero);
+            }else {
+                const hayEmailCliente = data.email;
+                if(hayEmailCliente) {
+                    //-- Instrucción para actualizar en la base de datos.
+                    let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
+                    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                    let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [data.email, data.id]);
+                    //-- Proceso de actualización en base de datos.
+                    madservicesdb.query(formatoInstruccionActualizarEmail);
+                }else {
+                    const hayDireccionCliente = data.direccion;
+                    if(hayDireccionCliente) {
+                        //-- Instrucción para actualizar en la base de datos.
+                        let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ? WHERE id = ?';
+                        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                        let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [data.direccion, data.id]);
+                        //-- Proceso de actualización en base de datos.
+                        madservicesdb.query(formatoInstruccionActualizarDireccion);
+                    }else {
+                        const hayPoblacionCliente = data.poblacion;
+                        if(hayPoblacionCliente) {
+                            //-- Instrucción para actualizar en la base de datos.
+                            let instruccionActualizarPoblacion = 'UPDATE clientes SET poblacion = ? WHERE id = ?';
+                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                            let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [data.poblacion, data.id]);
+                            //-- Proceso de actualización en base de datos.
+                            madservicesdb.query(formatoInstruccionActualizarPoblacion);
+                        }else {
+                            const hayRegionCliente = data.region;
+                            if(hayRegionCliente) {
+                                //-- Instrucción para actualizar en la base de datos.
+                                let instruccionActualizarRegion = 'UPDATE clientes SET region = ? WHERE id = ?';
+                                //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                                let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [data.region, data.id]);
+                                //-- Proceso de actualización en base de datos.
+                                madservicesdb.query(formatoInstruccionActualizarRegion);
+                            }else {
+                                const hayPaisCliente = data.pais;
+                                if(hayPaisCliente) {
+                                    //-- Instrucción para actualizar en la base de datos.
+                                    let instruccionActualizarPais = 'UPDATE clientes SET pais = ? WHERE id = ?';
+                                    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                                    let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [data.pais, data.id]);
+                                    //-- Proceso de actualización en base de datos.
+                                    madservicesdb.query(formatoInstruccionActualizarPais);
+                                }else {
+                                    const hayCPCliente = data.cp;
+                                    if(hayCPCliente) {
+                                        //-- Instrucción para actualizar en la base de datos.
+                                        let instruccionActualizarCP = 'UPDATE clientes SET cp = ? WHERE id = ?';
+                                        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                                        let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [data.cp, data.id]);
+                                        //-- Proceso de actualización en base de datos.
+                                        madservicesdb.query(formatoInstruccionActualizarCP);
+                                    }else {
+                                        const hayOldPasswordCliente = data.oldpassword;
+                                        const hayNewPasswordCliente = data.newpassword;
+                                        const hayRepitePasswordCliente = data.repitePassword;
+                                        if(hayOldPasswordCliente && hayNewPasswordCliente && hayRepitePasswordCliente) {
+                                            //-- Verificamos que la contraseña de la base de datos es la misma que la antigua introducida.
+                                            //-- Instrucción para consultar contraseña dado el id.
+                                            let instruccionConsultarPasswordPerfil = 'SELECT password FROM clientes WHERE id = ?';
+                                            //-- Configuración del formato para consultar contraseña dado el id.
+                                            let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [data.id]);
+                                            //-- Proceso de consulta de contraseña.
+                                            madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, resultado) => {
+                                                if(error) throw error;
+                                                const passwordEnDatabase = resultado[0];
+                                                bcrypt.compare(hayOldPasswordCliente, passwordEnDatabase).then((result) => {
+                                                    if(result) {
+                                                        //-- Verificamos que la nueva contraseña introducida es correcta.
+                                                        if(hayNewPasswordCliente === hayRepitePasswordCliente) {
+                                                            res.status(201).render('paginas/perfilClientes',
+                                                            {
+                                                                msjActualizacion: ''
+                                                            });
+                                                            return res.end();
+                                                        }else {
+                                                            res.status(401).render('paginas/perfilClientes', 
+                                                            { 
+                                                                msjError: 'La nueva contraseña introducida\n
+                                                                            no es igual a la repetida'
+                                                            });
+                                                            return res.end();
+                                                        }
+                                                    }else {
+                                                        res.status(401).render('paginas/perfilClientes', 
+                                                        { 
+                                                            msjError: `La antigua contraseña introducida\nno coincide con la de la base de datos`
+                                                        });
+                                                        return res.end();
+                                                    }
+                                                });
+                                            });
+                                        }else {
+                                            if(data.nombre || data.apellidos || data.genero || data.email || data.direccion || data.poblacion || data.region || data.pais || data.cp) {
+                                                res.status(201).render('paginas/perfilClientes',
+                                                {
+                                                    msjActualizacion: 'Has actualizado\n:
+                                                                        Nombre: '
+                                                });
+                                                return res.end();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//-- Creamos la función para Borrar los datos de la base de datos de MAD Services.
+const darseBajaEmpresadb = async (madservicesdb, data) => {
+    //-- Variables usadas para borrar los datos de la base de datos.
+    let instruccionDarseBajaEmpresa = "DELETE FROM empresas WHERE email = ?";
+    let formatoinstruccionDarseBajaEmpresa = mySQL.format(instruccionDarseBajaEmpresa, [data.email]);
+    //-- Establecer la conexión dinámica.
+    await madservicesdb.getConnection(function(error, madservicesdb) {
+        if(error) throw error;
+        //-- Establecer la configuración de borrar los datos de la base de datos.
+        madservicesdb.query(formatoinstruccionDarseBajaEmpresa);
+    });
+}
+
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb};
+module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, actualizarClienteVerificadodb};
