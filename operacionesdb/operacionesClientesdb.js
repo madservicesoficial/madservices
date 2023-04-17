@@ -183,7 +183,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                                                         }else {
                                                             res.status(401).render('paginas/perfilClientes', 
                                                             { 
-                                                                msjError: `La nueva contraseña introducida\nno es igual a la repetida`
+                                                                msjError: `La nueva contraseña introducida\n no es igual a la repetida`
                                                             });
                                                             return res.end();
                                                         }
@@ -200,7 +200,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                                             if(data.nombre || data.apellidos || data.genero || data.email || data.direccion || data.poblacion || data.region || data.pais || data.cp) {
                                                 res.status(201).render('paginas/perfilClientes',
                                                 {
-                                                    msjActualizacion: `Has actualizado\n: Nombre: `
+                                                    msjActualizacion: `Has actualizado:\n Nombre: `
                                                 });
                                                 return res.end();
                                             }
