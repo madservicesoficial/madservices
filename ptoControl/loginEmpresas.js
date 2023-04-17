@@ -9,9 +9,10 @@ const loginEmpresas = {}
 loginEmpresas.empresaLogin = async (req, res) => {
 
     //-- Introducimos los campos para Iniciar Sesión como Empresa.
-    const { email, password } = req.body;
+    const emailEmLog = req.body.emailEmLog;
+    const passwordEmLog = req.body.passwordEmLog;
     //-- Comprobamos que ningún campo está vacío.
-    if(!email || !password) {
+    if(!emailEmLog || !passwordEmLog) {
         res.status(401).render('paginas/empresaLogin', {mensaje: 'Campos vacíos'});
         return res.end();
     }
@@ -19,8 +20,8 @@ loginEmpresas.empresaLogin = async (req, res) => {
     iniciarSesionEmpresaVerificadadb
     (
         madservicesdb,
-        email,
-        password,
+        emailEmLog,
+        passwordEmLog,
         req,
         res
     );

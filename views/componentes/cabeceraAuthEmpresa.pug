@@ -1,0 +1,36 @@
+//-- Contenido del Componente Cabecera Autenticada para Empresas del Comercio Electrónico MAD Services.
+div#cabecera
+  ul.nav
+    li
+      form(method='GET' action=`/sesion-empresa/${id}`)
+        button.btnMADServices
+          img.logoMADServices(src='/images/madforcompanies.png' alt='madservices')
+    li.menu
+      input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
+      button(type='submit')='Buscar'
+    li.menu
+      form(method='GET' action=`/sesion-empresa/${id}/perfil`)
+        button.btnOculto='Mi Perfil'
+    li.menu
+      form(method='GET' action='/')
+        button.btnOculto='Cerrar sesión'
+    li.menu#despliegue
+      button#btnCarrito
+        i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
+        span.contCarrito
+      div#carritoHaciaAbajo.menuHaciaAbajo
+        h4.cabeceraCarrito='Carrito de la compra'
+        //-- Contenido del carrito de la compra del Comercio Electrónico MAD Services.
+        ul.articulosCarrito
+            li.articuloCarrito
+              span.producto='Libro'
+              span.cantidad='5'
+              span.precio='3€'
+        div.sumaArticulos
+          p='Total: '
+          span.precioTotal='3€'
+    li.menu#menuIdiomas
+      i.fa-solid.fa-earth-americas.fa-2xl#iconosCab
+      select.eligeIdiomas(name="Idiomas")
+        option(value="value1" selected)='Español'
+        option(value="value2")='Inglés'

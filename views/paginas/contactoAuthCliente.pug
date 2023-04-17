@@ -1,0 +1,16 @@
+//-- Contenido de la Sección Contacto Autenticado del Cliente del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title=`MAD Services: ${id} en Contacto`
+
+block body
+  include ../componentes/cabeceraAuthCliente.pug
+  div.contacto
+    div.cuadro
+      h1='Contacto general'
+      img.logoContacto(src='/images/contacto.png' alt='contacto')
+      br
+      label.emailsContacto='Correo electrónico: '
+        span.separacionContacto='info.madservices@gmail.com'
+  include ../componentes/piepaginaAuthCliente.pug

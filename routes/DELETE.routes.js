@@ -6,7 +6,7 @@ var rutasDelete = servidor.Router();
 const darseBajaCliente = require('../ptoControl/darseBajaCliente.js');
 
 //---- Darse de baja de Clientes MAD Services.
-rutasDelete.post('/sesion/:id/perfil', darseBajaCliente.perfilClientes);
+rutasDelete.post('/sesion-cliente/:id/perfil', darseBajaCliente.perfilClientes);
 
 //-- Exportamos las rutas con método DELETE.
 module.exports = rutasDelete;

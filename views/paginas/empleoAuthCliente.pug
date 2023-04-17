@@ -1,16 +1,16 @@
-//-- Contenido de la Sección Trabaja con Nosotros Autenticado del Comercio Electrónico MAD Services.
+//-- Contenido de la Sección Trabaja con Nosotros Autenticado del Cliente del Comercio Electrónico MAD Services.
 extends ../base.pug
 
 block title
   title=`MAD Services: ${id} en Trabaja con nosotros`
 
 block body
-  include ../componentes/cabeceraAuth.pug
+  include ../componentes/cabeceraAuthCliente.pug
   div.empleo
     div.cuadro
       h1='¡Envíanos tu CV!'
       img.logoEmpleo(src='/images/empleo.png' alt='empleo')
-      form.datosEmpleo(method='POST' action=`/sesion/${id}/empleo`)
+      form.datosEmpleo(method='POST' action=`/sesion-cliente/${id}/empleo`)
         label='Nombre: '
           span
             input.cajaRellenoCV#nombreCV(type='text')
@@ -82,4 +82,4 @@ block body
         br
         br
         button#enviarCV(type='submit')='Enviar'
-  include ../componentes/piepaginaAuth.pug
+  include ../componentes/piepaginaAuthCliente.pug

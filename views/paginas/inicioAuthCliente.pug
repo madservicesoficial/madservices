@@ -1,0 +1,12 @@
+//-- Contenido del Inicio Autenticado para Clientes del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title=`MAD Services: Sesión ${id}`
+
+block body
+  include ../componentes/cabeceraAuthCliente.pug
+  div.inicio
+    form(method='GET' action=`/sesion-cliente/${id}/categorias`)
+      button.btnCategorias='Categorias'
+  include ../componentes/piepaginaAuthCliente.pug

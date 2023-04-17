@@ -11,35 +11,37 @@ const registroClientes = {}
 registroClientes.clienteRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
-    const email = req.body.email; 
-    const password = req.body.password;
+    const emailReg = req.body.emailReg; 
+    const passwordReg = req.body.passwordReg;
     const confirmPassword = req.body.confirmPassword;
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const direccion = req.body.direccion;
-    const poblacion = req.body.poblacion;
-    const region = req.body.region;
-    const pais = req.body.pais;
-    const cp = req.body.cp;
-    const genero = req.body.genero;
+    const nombreReg = req.body.nombreReg;
+    const apellidosReg = req.body.apellidosReg;
+    const direccionReg = req.body.direccionReg;
+    const poblacionReg = req.body.poblacionReg;
+    const regionReg = req.body.regionReg;
+    const paisReg = req.body.paisReg;
+    const cpReg = req.body.cpReg;
+    const generoReg = req.body.generoReg;
     //-- Comprobamos que ningún campo está vacío.
-    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion || !region || !pais || !cp || !genero) {
+    if(!emailReg || !passwordReg || !confirmPassword || !nombreReg || !apellidosReg || !direccionReg || !poblacionReg ||
+        !regionReg || !paisReg || !cpReg || !generoReg) {
         res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword) {
+    if(passwordReg !== confirmPassword) {
         res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
+    const passwordCifrada = await hash(passwordReg, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
     registrarClienteVerificadodb
     (
         madservicesdb,
-        {email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion, region: region,
-        pais: pais, cp: cp, genero: genero},
+        {emailReg: emailReg, passwordReg: passwordCifrada, nombreReg: nombreReg, apellidosReg: apellidosReg,
+        direccionReg: direccionReg, poblacionReg: poblacionReg, regionReg: regionReg,
+        paisReg: paisReg, cpReg: cpReg, generoReg: generoReg},
         res
     );
 };

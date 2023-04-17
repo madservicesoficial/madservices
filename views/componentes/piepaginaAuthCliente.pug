@@ -1,15 +1,15 @@
-//-- Contenido del Componente Pie de Página Autenticado del Comercio Electrónico MAD Services.
+//-- Contenido del Componente Pie de Página Autenticado del Cliente del Comercio Electrónico MAD Services.
 footer
     ul
         li.organizacionPiePagina &copy; 2020-2030 MAD Services
         li.organizacionPiePagina#exceptoCopyright
-            form(method='GET' action=`/sesion/${id}/contacto`)
+            form(method='GET' action=`/sesion-cliente/${id}/contacto`)
                 button.botonesPiePagina#btnContacto='Contacto'
         li.organizacionPiePagina#exceptoCopyright
-            form(method='GET' action=`/sesion/${id}/conoceMADs`)
+            form(method='GET' action=`/sesion-cliente/${id}/conoceMADs`)
                 button.botonesPiePagina#btnConoce='Sobre MAD Services'
         li.organizacionPiePagina#exceptoCopyright
-            form(method='GET' action=`/sesion/${id}/empleo`)
+            form(method='GET' action=`/sesion-cliente/${id}/empleo`)
                 button.botonesPiePagina#btnEmpleo='Trabaja con nosotros'
         li.organizacionPiePagina#exceptoCopyright='Nuestras RR.SS: '
             a(href='https://www.instagram.com/madservicesoficial/' target="_blank")

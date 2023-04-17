@@ -9,26 +9,26 @@ const actualizarPerfilCliente = {}
 actualizarPerfilCliente.perfilClientes = (req, res) => {
 
     //-- Introducción de los campos del cliente para actualizar en base de datos.
-    let id = req.params.id;
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const genero = req.body.genero;
-    const email = req.body.email;
+    let idAct = req.params.id;
+    const nombreAct = req.body.nombreAct;
+    const apellidosAct = req.body.apellidosAct;
+    const generoAct = req.body.generoAct;
+    const emailAct = req.body.emailAct;
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
     const repitePassword = req.body.repitePassword;
-    const direccion = req.body.direccion;
-    const poblacion = req.body.poblacion;
-    const region = req.body.region;
-    const pais = req.body.pais;
-    const cp = req.body.cp;
+    const direccionAct = req.body.direccionAct;
+    const poblacionAct = req.body.poblacionAct;
+    const regionAct = req.body.regionAct;
+    const paisAct = req.body.paisAct;
+    const cpAct = req.body.cpAct;
     //-- Actualizamos los datos del Cliente en la base de datos de MAD Services.
     actualizarClienteVerificadodb
     (
         madservicesdb,
-        {id: id, nombre: nombre, apellidos: apellidos, genero: genero,
-        email: email, oldpassword: oldpassword, password: newpassword, repitePassword: repitePassword,
-        direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp},
+        {idAct: idAct, nombreAct: nombreAct, apellidosAct: apellidosAct, generoAct: generoAct,
+        emailAct: emailAct, oldpassword: oldpassword, password: newpassword, repitePassword: repitePassword,
+        direccionAct: direccionAct, poblacionAct: poblacionAct, regionAct: regionAct, paisAct: paisAct, cpAct: cpAct},
         res
     );
 }

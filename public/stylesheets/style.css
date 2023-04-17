@@ -224,6 +224,10 @@ footer {
   font-size: large;
   font-style: bold;
 }
+.alertaAct {
+  font-size: medium;
+  font-style: bold;
+}
 #enRojo {
   color: red;
 }

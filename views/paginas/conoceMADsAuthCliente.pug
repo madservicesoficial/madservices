@@ -1,11 +1,11 @@
-//-- Contenido de la Sección Sobre MAD Services Autenticado del Comercio Electrónico.
+//-- Contenido de la Sección Sobre MAD Services Autenticado del Cliente del Comercio Electrónico.
 extends ../base.pug
 
 block title
   title=`MAD Services: ${id} en Conócenos`
 
 block body
-  include ../componentes/cabeceraAuth.pug
+  include ../componentes/cabeceraAuthCliente.pug
   div.conoceMADs
     div.cuadro
       h1='Hablemos de MAD Services....'
@@ -23,4 +23,4 @@ block body
       p='A continuación, podéis seguir informándoos sobre MAD Services, en el link a su Wiki en GitHub:'
       a(href='https://github.com/madenterpriseservices/wiki/wiki' target="_blank")
         img.imagenConoce(src='/images/linkToWiki.png' alt='linkToWiki')
-  include ../componentes/piepaginaAuth.pug
+  include ../componentes/piepaginaAuthCliente.pug

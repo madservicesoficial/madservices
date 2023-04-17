@@ -5,36 +5,36 @@ block title
   title=`MAD Services: Sesión ${id}`
 
 block body
-    include ../componentes/cabeceraAuth.pug
+    include ../componentes/cabeceraAuthCliente.pug
     div.perfilCliente
         br
         h1.tituloPerfil=`Hola ${nombre} ${apellidos}, éste es tu perfil:`
         div#perfilClienteIzquierda
             h3='Actualización de mi perfil: '
-            form(method='POST' action=`/sesion/${id}/perfil`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Nombre: '
-                input.entradasNoRadio(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                input.entradasNoRadio(type='text' name='nombreAct' placeholder='Escribe tu nombre....')
                 br
                 br
                 br
                 label='Apellidos: '
-                input.entradasNoRadio(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                input.entradasNoRadio(type='text' name='apellidosAct' placeholder='Escribe tus dos apellidos....')
                 br
                 br
                 br
                 label='Género: '
-                input(type='radio' name='genero' value='Hombre')
+                input(type='radio' name='generoAct' value='Hombre')
                 label='Hombre'
-                input(type='radio' name='genero' value='Mujer')
+                input(type='radio' name='generoAct' value='Mujer')
                 label='Mujer'
-                input(type='radio' name='genero' value='Otro' checked)
+                input(type='radio' name='generoAct' value='Otro' checked)
                 label='Otro'
                 br
                 br
                 br
                 label='E-mail: '
-                input.entradasNoRadio(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                input.entradasNoRadio(type='email' name='emailAct' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 br
@@ -54,39 +54,39 @@ block body
                 br
                 br
                 label='Dirección: '
-                input.entradasNoRadio(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                input.entradasNoRadio(type='text' name='direccionAct' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 br
                 br
                 br
                 label='Población: '
-                input.entradasNoRadio(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                input.entradasNoRadio(type='text' name='poblacionAct' placeholder='Introduce una población válida....')
                 br
                 br
                 br
                 label='Región: '
-                input.entradasNoRadio(type='text' name='region' placeholder='Introduce una región válida....')
+                input.entradasNoRadio(type='text' name='regionAct' placeholder='Introduce una región válida....')
                 br
                 br
                 br
                 label='País: '
-                input.entradasNoRadio(type='text' name='pais' placeholder='Introduce un país válido....')
+                input.entradasNoRadio(type='text' name='paisAct' placeholder='Introduce un país válido....')
                 br
                 br
                 br
                 label='Código Postal: '
-                input.entradasNoRadio(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                input.entradasNoRadio(type='number' name='cpAct' placeholder='Introduce un código postal válido....')
                 br
                 br
                 br
                 button#btnActualizarPerfil(type='submit')='Actualizar'
             //-- Contenido de las alertas.
             if msjError
-                p.alerta#enRojo=msjError
+                p.alertaAct#enRojo=msjError
             if msjActualizacion
-                p.alerta#enVerde=msjActualizacion
+                p.alertaAct#enVerde=msjActualizacion
         div#perfilClienteDerecha
             h3='Mi Información: '
-            form(method='GET' action=`/sesion/${id}/perfil`)
+            form(method='GET' action=`/sesion-cliente/${id}/perfil`)
                 label=`El identificador/ID de mi perfil: ${id}.`
                 br
                 br
@@ -122,9 +122,9 @@ block body
                 label=`Código Postal de mi domicilio: ${cp}`
         div#perfilClienteAbajo
             h3='Darse de baja de MAD Services: '
-            form(method='POST' action=`/sesion/${id}/perfil`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil`)
                 input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas que quieres darte de baja de MAD Services?: '
                 br
                 button#btnDarseBaja(type='submit')='Confirmo'
-    include ../componentes/piepaginaAuth.pug
+    include ../componentes/piepaginaAuthCliente.pug

@@ -11,29 +11,30 @@ const registroEmpresas = {}
 registroEmpresas.empresaRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de las Empresas.
-    const nombreEm = req.body.nombreEm;
-    const cif = req.body.cif;
-    const email = req.body.email;
-    const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
-    const tiposoc = req.body.tiposoc;
+    const nombreEmReg = req.body.nombreEmReg;
+    const nifEmReg = req.body.nifEmReg;
+    const emailEmReg = req.body.emailEmReg;
+    const passwordEmReg = req.body.passwordEmReg;
+    const confirmPasswordEmReg = req.body.confirmPasswordEmReg;
+    const tiposocEmReg = req.body.tiposocEmReg;
     //-- Comprobamos que ningún campo está vacío.
-    if(!nombreEm || !cif || !email || !password || !confirmPassword || !tiposoc) {
+    if(!nombreEmReg || !nifEmReg || !emailEmReg || !passwordEmReg || !confirmPasswordEmReg || !tiposocEmReg) {
         res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword) {
+    if(passwordEmReg !== confirmPasswordEmReg) {
         res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
+    const passwordCifradaEmReg = await hash(passwordEmReg, 1);
     //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
     registrarEmpresaVerificadadb
     (
         madservicesdb,
-        {email: email, password: passwordCifrada, nombre: nombreEm, nif: cif, tiposoc: tiposoc},
+        {emailEmReg: emailEmReg, passwordEmReg: passwordCifradaEmReg, nombreEmReg: nombreEmReg, nifEmReg: nifEmReg,
+        tiposocEmReg: tiposocEmReg},
         res
     );
 };

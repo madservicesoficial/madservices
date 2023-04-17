@@ -2,12 +2,10 @@
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
-//-- Importamos la función que comprueba que no se repita el ID aleatorio.
-const comprobarIDclientedb = require('../comprobarIDs/comprobarIDcliente.js');
-//-- Importamos la función que solicita los datos del cliente para tenerlos en variables.
-const comprobarDatosclientedb = require('../comprobarDatos/comprobarDatosCliente.js');
-//-- Importamos la función que solicita los datos de la empresa para tenerlos en variables.
-const comprobarDatosempresadb = require('../comprobarDatos/comprobarDatosEmpresa.js');
+//-- Importamos la función que muestra datos del cliente para tenerlos en variables.
+const mostrarPerfilCliente = require('../ptoControl/mostrarPerfilCliente.js');
+//-- Importamos la función que muestra datos de la empresa para tenerlos en variables.
+const mostrarPerfilEmpresa = require('../ptoControl/mostrarPerfilEmpresa.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -15,10 +13,17 @@ rutasGet.get('/', (req, res) => {
   return res.end();
 });
 
-//-- Ruta al Inicio Autenticado de MAD Services.
-rutasGet.get('/sesion/:id', (req, res) => {
+//-- Ruta al Inicio Autenticado del Cliente de MAD Services.
+rutasGet.get('/sesion-cliente/:id', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/inicioAuth', {id: id});
+  res.render('paginas/inicioAuthCliente', {id: id});
+  return res.end();
+});
+
+//-- Ruta al Inicio Autenticado de la Empresa de MAD Services.
+rutasGet.get('/sesion-empresa/:id', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/inicioAuthEmpresa', {id: id});
   return res.end();
 });
 
@@ -64,10 +69,17 @@ rutasGet.get('/contacto', (req, res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Contacto Autenticado.
-rutasGet.get('/sesion/:id/contacto', (req, res) => {
+//-- Ruta a la Sección de Contacto Autenticado del Cliente.
+rutasGet.get('/sesion-cliente/:id/contacto', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/contactoAuth', {id: id});
+  res.render('paginas/contactoAuthCliente', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la Sección de Contacto Autenticado de la Empresa.
+rutasGet.get('/sesion-empresa/:id/contacto', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/contactoAuthEmpresa', {id: id});
   return res.end();
 });
 
@@ -77,10 +89,17 @@ rutasGet.get('/empleo', (req, res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Trabaja con Nosotros Autenticado.
-rutasGet.get('/sesion/:id/empleo', (req, res) => {
+//-- Ruta a la Sección de Trabaja con Nosotros Autenticado del Cliente.
+rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/empleoAuth', {id: id});
+  res.render('paginas/empleoAuthCliente', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la Sección de Trabaja con Nosotros Autenticado de la Empresa.
+rutasGet.get('/sesion-empresa/:id/empleo', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/empleoAuthEmpresa', {id: id});
   return res.end();
 });
 
@@ -90,10 +109,17 @@ rutasGet.get('/conoceMADs', (req, res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Sobre MAD Services Autenticado.
-rutasGet.get('/sesion/:id/conoceMADs', (req, res) => {
+//-- Ruta a la Sección de Sobre MAD Services Autenticado del Cliente.
+rutasGet.get('/sesion-cliente/:id/conoceMADs', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/conoceMADsAuth', {id: id});
+  res.render('paginas/conoceMADsAuthCliente', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la Sección de Sobre MAD Services Autenticado de la Empresa.
+rutasGet.get('/sesion-empresa/:id/conoceMADs', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/conoceMADsAuthEmpresa', {id: id});
   return res.end();
 });
 
@@ -103,42 +129,25 @@ rutasGet.get('/categorias', (req,res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Categorias Autenticado de MAD Services.
-rutasGet.get('/sesion/:id/categorias', (req,res) => {
+//-- Ruta a la Sección de Categorias Autenticado del Cliente de MAD Services.
+rutasGet.get('/sesion-cliente/:id/categorias', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/categoriasAuth', {id: id});
+  res.render('paginas/categoriasAuthCliente', {id: id});
   return res.end();
 });
 
-//-- Ruta a la Sección del Perfil de los Clientes o de las Empresas de MAD Services.
-rutasGet.get('/sesion/:id/perfil', (req,res) => {
+//-- Ruta a la Sección de Categorias Autenticado de la Empresa de MAD Services.
+rutasGet.get('/sesion-empresa/:id/categorias', (req,res) => {
   let id = req.params.id;
-  comprobarIDclientedb
-  (
-    id,
-    (existenciaID) => {
-      if(existenciaID) {
-        comprobarDatosclientedb
-        (
-          id,
-          (datos) => {
-            res.render('paginas/perfilClientes', {id: id, nombre: datos.nombre, apellidos: datos.apellidos, email: datos.email, password: datos.password, direccion: datos.direccion, poblacion: datos.poblacion, region: datos.region, pais: datos.pais, cp: datos.cp, genero: datos.genero});
-            return res.end();
-          }
-        );
-      }else {
-        comprobarDatosempresadb
-        (
-          id,
-          (datos) => {
-            res.render('paginas/perfilEmpresas', {id: id, nombre: datos.nombre, email: datos.email, password: datos.password, nif: datos.nif, tiposoc: datos.tiposoc});
-            return res.end();
-          }
-        );
-      }
-    }
-  );
+  res.render('paginas/categoriasAuthEmpresa', {id: id});
+  return res.end();
 });
+
+//-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
+rutasGet.get('/sesion-cliente/:id/perfil', mostrarPerfilCliente.perfilClientes);
+
+//-- Ruta a la Sección del Perfil de las Empresas de MAD Services.
+rutasGet.get('/sesion-empresa/:id/perfil', mostrarPerfilEmpresa.perfilEmpresas);
 
 //-- Cerrar Sesión como Cliente o Empresa.
 rutasGet.get('/', (req, res) => {

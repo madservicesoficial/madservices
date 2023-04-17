@@ -1,11 +1,11 @@
-//-- Contenido de la Sección Categorias Autenticado del Comercio Electrónico MAD Services.
+//-- Contenido de la Sección Categorias Autenticado de la Empresa del Comercio Electrónico MAD Services.
 extends ../base.pug
 
 block title
     title=`MAD Services: ${id} en Categorias`
 
 block body
-    include ../componentes/cabeceraAuth.pug
+    include ../componentes/cabeceraAuthEmpresa.pug
     div.categoriasSeccion
         div.categoria#productosMAD='Productos MAD'
             canvas#marcaMAD
@@ -13,4 +13,4 @@ block body
         div.categoria#restoMarcas='Resto de marcas'
             canvas#multiMarca
             img#imgMulti(src='/images/multimarca.png' alt='multimarca')
-    include ../componentes/piepaginaAuth.pug
+    include ../componentes/piepaginaAuthEmpresa.pug

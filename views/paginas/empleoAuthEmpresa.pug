@@ -1,0 +1,85 @@
+//-- Contenido de la Sección Trabaja con Nosotros Autenticado del Empresa del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title=`MAD Services: ${id} en Trabaja con nosotros`
+
+block body
+  include ../componentes/cabeceraAuthEmpresa.pug
+  div.empleo
+    div.cuadro
+      h1='¡Envíanos tu CV!'
+      img.logoEmpleo(src='/images/empleo.png' alt='empleo')
+      form.datosEmpleo(method='POST' action=`/sesion-empresa/${id}/empleo`)
+        label='Nombre: '
+          span
+            input.cajaRellenoCV#nombreCV(type='text')
+        br
+        br
+        label='Apellidos: '
+          span
+            input.cajaRellenoCV(type='text')
+        br
+        br
+        label='Email: '
+          span
+            input.cajaRellenoCV#emailCV(type='email')
+        br
+        br
+        label#tabulacionNacimiento='Fecha de nacimiento: '
+          span
+            input.cajaRellenoCV#nacimientoCV(type='date')
+        br
+        br
+        label#tabulacionCV='Curriculum Vitae: '
+          span
+            input.cajaRellenoCV#archivoCV(type="file" accept=".pdf")
+        br
+        br
+        label#tabulacionFicheros='Títulos/Certificados: '
+          span
+            input.cajaRellenoCV#otrosFicheros(type="file" accept=".pdf" multiple)
+        br
+        br
+        label#tabulacionPerfil='Perfil: '
+          span
+            select.cajaRellenoCV#especializacionCV(name='especializacion')
+              option(value="value1" selected)='técnico'
+              option(value="value2")='administrativo'
+              option(value="value3")='economista'
+              option(value="value4")='comercial'
+              option(value="value5")='logístico'
+        br
+        br
+        label#tabulacionPEmpleo='Población: '
+          span
+            input.cajaRellenoCV#empleoP(type="text")
+        br
+        br
+        label#tabulacionREmpleo='Región: '
+          span
+            input.cajaRellenoCV#empleoR(type="text")
+        br
+        br
+        label#tabulacionPaisEmpleo='País: '
+          span
+            input.cajaRellenoCV#empleoPais(type="text")
+        br
+        br
+        label#tabulacionMEmpleo='Móvil: '
+          span
+            input.cajaRellenoCV#empleoM(type="number")
+        br
+        br
+        label#tabulacionAEmpleo='Asunto: '
+          span
+            input.cajaRellenoCV#empleoA(type='text' maxLength='60')
+        br
+        br
+        label='Mensaje: '
+          span
+            textarea(rows="30" cols="70")
+        br
+        br
+        button#enviarCV(type='submit')='Enviar'
+  include ../componentes/piepaginaAuthEmpresa.pug
