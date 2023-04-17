@@ -9,7 +9,7 @@ const actualizarPerfilCliente = {}
 actualizarPerfilCliente.perfilClientes = (req, res) => {
 
     //-- Introducción de los campos del cliente para actualizar en base de datos.
-    const id = req.params.id;
+    let id = req.params.id;
     const nombre = req.body.nombre;
     const apellidos = req.body.apellidos;
     const genero = req.body.genero;
@@ -27,7 +27,7 @@ actualizarPerfilCliente.perfilClientes = (req, res) => {
     (
         madservicesdb,
         {id: id, nombre: nombre, apellidos: apellidos, genero: genero,
-        email: email, password: newpassword, oldpassword: oldpassword, repitePassword: repitePassword,
+        email: email, oldpassword: oldpassword, password: newpassword, repitePassword: repitePassword,
         direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp},
         res
     );

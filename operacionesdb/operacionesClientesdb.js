@@ -76,17 +76,32 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, r
 //-- Creamos la función para Actualizar los datos de la base de datos de MAD Services.
 const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
 
-    //-- Establecer la comunicación para actualizar en la base de datos.
-    const hayNombreCliente = data.nombre;
+    //-- Declaramos la estructura para actualizar el cliente, con todos sus campos.
+    const hayCliente = {
+        hayNombreCliente: data.nombre,
+        hayApellidosCliente: data.apellidos,
+        hayGeneroCliente: data.genero,
+        hayEmailCliente: data.email,
+        hayDireccionCliente: data.direccion,
+        hayPoblacionCliente: data.poblacion,
+        hayRegionCliente: data.region,
+        hayPaisCliente: data.pais,
+        hayCPCliente: data.cp,
+        hayOldPasswordCliente: data.oldpassword,
+        hayPasswordCliente: data.password
+    };
+    switch(hayCliente) {
+
+    }
     if(hayNombreCliente) {
             //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [data.nombre, data.id]);
-        //-- Proceso de actualización en base de datos.
+        //-- Establecer la comunicación para actualizar en la base de datos.
         madservicesdb.query(formatoInstruccionActualizarNombre);
-    }else {
-        const hayApellidosCliente = data.apellidos;
+    }
+    else {
         if(hayApellidosCliente) {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
@@ -201,18 +216,42 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                                                                 }
                                                             });
                                                         }else {
+                                                            if(hayNombreCliente || hayApellidosCliente || hayGeneroCliente || hayEmailCliente || hayPasswordCliente || hayDireccionCliente || hayPoblacionCliente || hayRegionCliente || hayPaisCliente || hayCPCliente) {
+                                                                res.status(401).render('paginas/perfilClientes', 
+                                                                {
+                                                                    msjError: `La nueva contraseña introducida\n no es igual a la repetida`,
+                                                                    msjActualizacion: `Pero aun así has actualizado:\n
+                                                                    Nombre: ${hayNombreCliente}\n
+                                                                    Apellidos: ${hayApellidosCliente}\n
+                                                                    Género: ${hayGeneroCliente}\n
+                                                                    Email: ${hayEmailCliente}\n
+                                                                    Dirección: ${hayDireccionCliente}\n
+                                                                    Población: ${hayPoblacionCliente}\n
+                                                                    Región: ${hayRegionCliente}\n
+                                                                    País: ${hayPaisCliente}\n
+                                                                    Código Postal: ${hayCPCliente}\n`
+                                                                });
+                                                                return res.end();
+                                                            }
+                                                        }
+                                                    }else {
+                                                        if(hayNombreCliente || hayApellidosCliente || hayGeneroCliente || hayEmailCliente || hayPasswordCliente || hayDireccionCliente || hayPoblacionCliente || hayRegionCliente || hayPaisCliente || hayCPCliente) {
                                                             res.status(401).render('paginas/perfilClientes', 
-                                                            { 
-                                                                msjError: `La nueva contraseña introducida\n no es igual a la repetida`
+                                                            {
+                                                                msjError: `La antigua contraseña introducida\n no coincide con la de la base de datos`,
+                                                                msjActualizacion: `Pero aun así has actualizado:\n
+                                                                Nombre: ${hayNombreCliente}\n
+                                                                Apellidos: ${hayApellidosCliente}\n
+                                                                Género: ${hayGeneroCliente}\n
+                                                                Email: ${hayEmailCliente}\n
+                                                                Dirección: ${hayDireccionCliente}\n
+                                                                Población: ${hayPoblacionCliente}\n
+                                                                Región: ${hayRegionCliente}\n
+                                                                País: ${hayPaisCliente}\n
+                                                                Código Postal: ${hayCPCliente}\n`
                                                             });
                                                             return res.end();
                                                         }
-                                                    }else {
-                                                        res.status(401).render('paginas/perfilClientes', 
-                                                        { 
-                                                            msjError: `La antigua contraseña introducida\n no coincide con la de la base de datos`
-                                                        });
-                                                        return res.end();
                                                     }
                                                 });
                                             });

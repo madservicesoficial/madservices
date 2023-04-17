@@ -11,7 +11,8 @@ block body
         h1.tituloPerfil=`Hola ${nombre} ${apellidos}, éste es tu perfil:`
         div#perfilClienteIzquierda
             h3='Actualización de mi perfil: '
-            form(method='PATCH' action=`/sesion/${id}/perfil`)
+            form(method='POST' action=`/sesion/${id}/perfil`)
+                input(type='hidden' name='_method' value='PATCH')
                 label='Nombre: '
                 input.entradasNoRadio(type='text' name='nombre' placeholder='Escribe tu nombre....')
                 br
@@ -77,12 +78,12 @@ block body
                 br
                 br
                 br
-                button#btnActualizarPerfil='Actualizar'
-                //-- Contenido de las alertas.
-                if msjError
-                    p.alerta#enRojo=msjError
-                if msjActualizacion
-                    p.alerta#enVerde=msjActualizacion
+                button#btnActualizarPerfil(type='submit')='Actualizar'
+            //-- Contenido de las alertas.
+            if msjError
+                p.alerta#enRojo=msjError
+            if msjActualizacion
+                p.alerta#enVerde=msjActualizacion
         div#perfilClienteDerecha
             h3='Mi Información: '
             form(method='GET' action=`/sesion/${id}/perfil`)
@@ -121,8 +122,9 @@ block body
                 label=`Código Postal de mi domicilio: ${cp}`
         div#perfilClienteAbajo
             h3='Darse de baja de MAD Services: '
-            form(method='DELETE' action=`/sesion/${id}/perfil`)
+            form(method='POST' action=`/sesion/${id}/perfil`)
+                input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas que quieres darte de baja de MAD Services?: '
                 br
-                button#btnDarseBaja='Confirmo'
+                button#btnDarseBaja(type='submit')='Confirmo'
     include ../componentes/piepaginaAuth.pug

@@ -5,8 +5,8 @@ var rutasPatch = servidor.Router();
 //-- Importamos la configuración de los formularios de actualización de los clientes.
 const actualizarPerfilCliente = require('../ptoControl/actualizarPerfilCliente.js');
 
-//-- Formulario de actualización de datos del Perfil Cliente.
-rutasPatch.patch('/sesion/:id/perfil', actualizarPerfilCliente.perfilClientes);
+//-- Formulario de actualización de datos del Perfil Cliente.actualizarPerfilCliente.perfilClientes
+rutasPatch.post('/sesion/:id/perfil', actualizarPerfilCliente.perfilClientes);
 
 //-- Exportamos las rutas con método PATCH.
 module.exports = rutasPatch;

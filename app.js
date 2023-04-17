@@ -12,6 +12,8 @@ var servidor = require('express');
 var session = require('express-session');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 var { body, validationResult } = require("express-validator");
+//-- Importamos la tecnología para poder usar los métodos PATCH y DELETE.
+const patchdeletemethods = require('method-override');
 //-- Importamos la Tecnología que enrruta todas las rutas de MAD Services.
 var path = require('path');
 //-- Importamos la Tecnología basada en un middleware que analiza el encabezado Cookie y, rellena req.cookies 
@@ -67,7 +69,8 @@ madservices.use(session({
 //-- 8. Analizar las cabeceras HTTP de cada conexión.
 //-- 9. Analizar el Control de Acceso HTTP de cada conexión.
 //-- 10. Configurar la Protección de Cabeceras HTTP.
-//-- 11. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.                                                
+//-- 11. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.
+//-- 12. Poder usar los métodos PATCH y DELETE.                                                
 madservices.use(analizadorSolicitudes('dev'));                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
@@ -95,6 +98,7 @@ madservices.use((req, res, next) => {
 madservices.use(controlAccesoHTTP());
 madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
+madservices.use(patchdeletemethods('_method', { methods: ['POST', 'GET', 'PATCH', 'DELETE'] }));
 //##############################################################################################################//
 
 //##############################################################################################################//
