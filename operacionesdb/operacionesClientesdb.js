@@ -2,7 +2,7 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const bcrypt = require('bcrypt');
+const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
@@ -60,7 +60,7 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, r
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(password, miembro.password).then((result) => {
+            compare(password, miembro.password).then((result) => {
                 if(result) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-cliente/${miembro.id}`);
@@ -74,29 +74,32 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, r
 }
 
 //-- Creamos la función para Actualizar los datos de la base de datos de MAD Services.
-const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
+const actualizarClienteVerificadodb = async (madservicesdb, data, res) => {
 
     //-- Declaramos la estructura para actualizar el cliente, con todos sus campos.
     const hayCliente = {
-        hayNombreCliente: data.nombreAct,
-        hayApellidosCliente: data.apellidosAct,
-        hayGeneroCliente: data.generoAct,
-        hayEmailCliente: data.emailAct,
-        hayDireccionCliente: data.direccionAct,
-        hayPoblacionCliente: data.poblacionAct,
-        hayRegionCliente: data.regionAct,
-        hayPaisCliente: data.paisAct,
-        hayCPCliente: data.cpAct,
+        hayNombreCliente: data.nombre,
+        hayApellidosCliente: data.apellidos,
+        hayGeneroCliente: data.genero,
+        hayEmailCliente: data.email,
+        hayDireccionCliente: data.direccion,
+        hayPoblacionCliente: data.poblacion,
+        hayRegionCliente: data.region,
+        hayPaisCliente: data.pais,
+        hayCPCliente: data.cp,
         hayOldPasswordCliente: data.oldpassword,
         hayPasswordCliente: data.password,
         hayRepitePasswordCliente: data.repitePassword
     };
+    //-- Cifrar la nueva contraseña.
+    const nuevaPasswordCifrada = await hash(hayCliente.hayPasswordCliente,1);
+    //-- Actualizar campos del cliente en función se quiera.
     switch(hayCliente) {
         case hayCliente.hayNombreCliente:
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [data.nombreAct, data.idAct]);
+            let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [data.nombre, data.id]);
             //-- Establecer la comunicación para actualizar en la base de datos.
             madservicesdb.query(formatoInstruccionActualizarNombre);
             break;
@@ -104,7 +107,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [data.apellidosAct, data.idAct]);
+            let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [data.apellidos, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarApellidos);
             break;
@@ -112,7 +115,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [data.generoAct, data.idAct]);
+            let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [data.genero, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarGenero);
             break;
@@ -120,7 +123,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [data.emailAct, data.idAct]);
+            let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [data.email, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarEmail);
             break;
@@ -128,7 +131,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [data.direccionAct, data.idAct]);
+            let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [data.direccion, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarDireccion);
             break;
@@ -136,7 +139,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarPoblacion = 'UPDATE clientes SET poblacion = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [data.poblacionAct, data.idAct]);
+            let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [data.poblacion, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarPoblacion);
             break;
@@ -144,7 +147,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarRegion = 'UPDATE clientes SET region = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [data.regionAct, data.idAct]);
+            let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [data.region, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarRegion);
             break;
@@ -152,7 +155,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarPais = 'UPDATE clientes SET pais = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [data.paisAct, data.idAct]);
+            let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [data.pais, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarPais);
             break;
@@ -160,7 +163,7 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para actualizar en la base de datos.
             let instruccionActualizarCP = 'UPDATE clientes SET cp = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [data.cpAct, data.idAct]);
+            let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [data.cp, data.id]);
             //-- Proceso de actualización en base de datos.
             madservicesdb.query(formatoInstruccionActualizarCP);
             break;
@@ -170,21 +173,19 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
         //-- Instrucción para consultar contraseña dado el id.
         let instruccionConsultarPasswordPerfil = 'SELECT password FROM clientes WHERE id = ?';
         //-- Configuración del formato para consultar contraseña dado el id.
-        let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [data.idAct]);
+        let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [data.id]);
         //-- Proceso de consulta de contraseña.
         madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, resultado) => {
             if(error) throw error;
             const passwordEnDatabase = resultado[0];
-            bcrypt.compare(hayCliente.hayOldPasswordCliente, passwordEnDatabase).then((result) => {
+            compare(hayCliente.hayOldPasswordCliente, passwordEnDatabase).then((result) => {
                 if(result) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(hayCliente.hayPasswordCliente === hayCliente.hayRepitePasswordCliente) {
-                        //-- Cifrar la nueva contraseña.
-                        const nuevaPasswordCifrada = bcrypt.hash(hayCliente.hayPasswordCliente,1);
                         //-- Instrucción para actualizar en la base de datos.
                         let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
                         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                        let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, data.idAct]);
+                        let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, data.id]);
                         //-- Proceso de actualización en base de datos.
                         madservicesdb.query(formatoInstruccionActualizarANuevaPassword, (error) => {
                             if(error) throw error;
@@ -193,7 +194,18 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                                 hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
                                 res.status(201).render('paginas/perfilClientes',
                                 {
-                                    msjActualizacion: `Has actualizado:\nNombre: ${hayCliente.hayNombreCliente}\nApellidos: ${hayCliente.hayApellidosCliente}\nGénero: ${hayCliente.hayGeneroCliente}\nEmail: ${hayCliente.hayEmailCliente}\nContraseña: #ActualizadaYoculta#\nDirección: ${hayCliente.hayDireccionCliente}\nPoblación: ${hayCliente.hayPoblacionCliente}\nRegión: ${hayCliente.hayRegionCliente}\nPaís: ${hayCliente.hayPaisCliente}\nCódigo Postal: ${hayCliente.hayCPCliente}`
+                                    msjActualizacion: `Has actualizado: `,
+                                    msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
+                                    msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
+                                    msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
+                                    msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
+                                    msjActualizacion5: `Contraseña: #ActualizadaYoculta#`,
+                                    msjActualizacion6: `Dirección: ${hayCliente.hayDireccionCliente}`,
+                                    msjActualizacion7: `Población: ${hayCliente.hayPoblacionCliente}`,
+                                    msjActualizacion8: `Región: ${hayCliente.hayRegionCliente}`,
+                                    msjActualizacion9: `País: ${hayCliente.hayPaisCliente}`,
+                                    msjActualizacion10: `Código Postal: ${hayCliente.hayCPCliente}`
+
                                 });
                                 return res.end();
                             }
@@ -204,8 +216,18 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                             hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
                             res.status(401).render('paginas/perfilClientes', 
                             {
-                                msjError: `La nueva contraseña introducida\nno es igual a la repetida\n`,
-                                msjActualizacion: `Pero aun así has actualizado:\nNombre: ${hayCliente.hayNombreCliente}\nApellidos: ${hayCliente.hayApellidosCliente}\nGénero: ${hayCliente.hayGeneroCliente}\nEmail: ${hayCliente.hayEmailCliente}\nDirección: ${hayCliente.hayDireccionCliente}\nPoblación: ${hayCliente.hayPoblacionCliente}\nRegión: ${hayCliente.hayRegionCliente}\nPaís: ${hayCliente.hayPaisCliente}\nCódigo Postal: ${hayCliente.hayCPCliente}`
+                                msjError: `La nueva contraseña introducida`,
+                                msjError1: `no es igual a la repetida`,
+                                msjActualizacion: `Pero aun así has actualizado: `,
+                                msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
+                                msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
+                                msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
+                                msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
+                                msjActualizacion5: `Dirección: ${hayCliente.hayDireccionCliente}`,
+                                msjActualizacion6: `Población: ${hayCliente.hayPoblacionCliente}`,
+                                msjActualizacion7: `Región: ${hayCliente.hayRegionCliente}`,
+                                msjActualizacion8: `País: ${hayCliente.hayPaisCliente}`,
+                                msjActualizacion9: `Código Postal: ${hayCliente.hayCPCliente}`
                             });
                             return res.end();
                         }
@@ -216,8 +238,19 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
                         hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
                         res.status(401).render('paginas/perfilClientes', 
                         {
-                            msjError: `La antigua contraseña introducida\nno coincide con la de la base de datos\n`,
-                            msjActualizacion: `Pero aun así has actualizado:\nNombre: ${hayCliente.hayNombreCliente}\nApellidos: ${hayCliente.hayApellidosCliente}\nGénero: ${hayCliente.hayGeneroCliente}\nEmail: ${hayCliente.hayEmailCliente}\nDirección: ${hayCliente.hayDireccionCliente}\nPoblación: ${hayCliente.hayPoblacionCliente}\nRegión: ${hayCliente.hayRegionCliente}\nPaís: ${hayCliente.hayPaisCliente}\nCódigo Postal: ${hayCliente.hayCPCliente}`
+                            msjError: `La antigua contraseña introducida`,
+                            msjError1: `no coincide con la de la base de datos`,
+                            msjActualizacion: `Pero aun así has actualizado: `,
+                            msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
+                            msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
+                            msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
+                            msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
+                            msjActualizacion5: `Dirección: ${hayCliente.hayDireccionCliente}`,
+                            msjActualizacion6: `Población: ${hayCliente.hayPoblacionCliente}`,
+                            msjActualizacion7: `Región: ${hayCliente.hayRegionCliente}`,
+                            msjActualizacion8: `País: ${hayCliente.hayPaisCliente}`,
+                            msjActualizacion9: `Código Postal: ${hayCliente.hayCPCliente}`
+
                         });
                         return res.end();
                     }
@@ -230,7 +263,17 @@ const actualizarClienteVerificadodb = (madservicesdb, data, res) => {
             hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
             res.status(201).render('paginas/perfilClientes',
             {
-                msjActualizacion: `Has actualizado:\nNombre: ${hayCliente.hayNombreCliente}\nApellidos: ${hayCliente.hayApellidosCliente}\nGénero: ${hayCliente.hayGeneroCliente}\nEmail: ${hayCliente.hayEmailCliente}\nDirección: ${hayCliente.hayDireccionCliente}\nPoblación: ${hayCliente.hayPoblacionCliente}\nRegión: ${hayCliente.hayRegionCliente}\nPaís: ${hayCliente.hayPaisCliente}\nCódigo Postal: ${hayCliente.hayCPCliente}`
+                msjActualizacion: `Has actualizado: `,
+                msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
+                msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
+                msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
+                msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
+                msjActualizacion5: `Contraseña: #ActualizadaYoculta#`,
+                msjActualizacion6: `Dirección: ${hayCliente.hayDireccionCliente}`,
+                msjActualizacion7: `Población: ${hayCliente.hayPoblacionCliente}`,
+                msjActualizacion8: `Región: ${hayCliente.hayRegionCliente}`,
+                msjActualizacion9: `País: ${hayCliente.hayPaisCliente}`,
+                msjActualizacion10: `Código Postal: ${hayCliente.hayCPCliente}`
             });
             return res.end();
         }
