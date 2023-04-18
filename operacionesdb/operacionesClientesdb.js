@@ -286,34 +286,43 @@ const organizarClienteVerificadodb = async (madservicesdb, data, res) => {
             });
         });
     }else {
-        if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
-            !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
-            !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
-            hayCliente.hayNombreCliente = tablaCliente.nombre;
-            hayCliente.hayApellidosCliente = tablaCliente.apellidos;
-            hayCliente.hayGeneroCliente = tablaCliente.genero;
-            hayCliente.hayEmailCliente = tablaCliente.email;
-            hayCliente.hayDireccionCliente = tablaCliente.direccion;
-            hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
-            hayCliente.hayRegionCliente = tablaCliente.region;
-            hayCliente.hayPaisCliente = tablaCliente.pais;
-            hayCliente.hayCPCliente = tablaCliente.cp;
-            res.status(201).render('paginas/perfilClientes',
-            {
-                msjActualizacion: `Campos actualizados con éxito: `,
-                id: data.id,
-                nombre: hayCliente.hayNombreCliente,
-                apellidos: hayCliente.hayApellidosCliente,
-                genero: hayCliente.hayGeneroCliente,
-                email: hayCliente.hayEmailCliente,
-                direccion: hayCliente.hayDireccionCliente,
-                poblacion: hayCliente.hayPoblacionCliente,
-                region: hayCliente.hayRegionCliente,
-                pais: hayCliente.hayPaisCliente,
-                cp: hayCliente.hayCPCliente
-            });
-            return res.end();
-        }
+        //-- Instrucción para consultar contraseña dado el id.
+        let instruccionConsultarPasswordPerfil = 'SELECT * FROM clientes WHERE id = ?';
+        //-- Configuración del formato para consultar contraseña dado el id.
+        let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [data.id]);
+        //-- Proceso de consulta de contraseña.
+        madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, resultado) => {
+            if(error) throw error;
+            const tablaCliente = resultado[0];
+            if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
+                !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
+                !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
+                hayCliente.hayNombreCliente = tablaCliente.nombre;
+                hayCliente.hayApellidosCliente = tablaCliente.apellidos;
+                hayCliente.hayGeneroCliente = tablaCliente.genero;
+                hayCliente.hayEmailCliente = tablaCliente.email;
+                hayCliente.hayDireccionCliente = tablaCliente.direccion;
+                hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
+                hayCliente.hayRegionCliente = tablaCliente.region;
+                hayCliente.hayPaisCliente = tablaCliente.pais;
+                hayCliente.hayCPCliente = tablaCliente.cp;
+                res.status(201).render('paginas/perfilClientes',
+                {
+                    msjActualizacion: `Campos actualizados con éxito: `,
+                    id: data.id,
+                    nombre: hayCliente.hayNombreCliente,
+                    apellidos: hayCliente.hayApellidosCliente,
+                    genero: hayCliente.hayGeneroCliente,
+                    email: hayCliente.hayEmailCliente,
+                    direccion: hayCliente.hayDireccionCliente,
+                    poblacion: hayCliente.hayPoblacionCliente,
+                    region: hayCliente.hayRegionCliente,
+                    pais: hayCliente.hayPaisCliente,
+                    cp: hayCliente.hayCPCliente
+                });
+                return res.end();
+            }
+        });
     }
 }
 
