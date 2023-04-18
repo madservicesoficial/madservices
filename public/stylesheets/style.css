@@ -758,6 +758,12 @@ canvas {
   margin-left: 50;
   text-align: left;
 }
+.mostrarPerfilCliente {
+  text-align: left;
+  margin-left: 50;
+  margin-top: 25;
+  float: left;
+}
 .entradasNoRadio {
   width: 380;
 }

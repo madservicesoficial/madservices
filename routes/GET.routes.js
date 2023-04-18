@@ -2,10 +2,10 @@
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
-//-- Importamos la función que muestra datos del cliente para tenerlos en variables.
-const mostrarPerfilCliente = require('../ptoControl/mostrarPerfilCliente.js');
-//-- Importamos la función que muestra datos de la empresa para tenerlos en variables.
-const mostrarPerfilEmpresa = require('../ptoControl/mostrarPerfilEmpresa.js');
+//-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
+const sacarParametrosClientedb = require('../sacarParametros/sacarParametrosClientes.js');
+//-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
+const sacarParametrosEmpresadb = require('../sacarParametros/sacarParametrosEmpresas.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -144,10 +144,51 @@ rutasGet.get('/sesion-empresa/:id/categorias', (req,res) => {
 });
 
 //-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
-rutasGet.get('/sesion-cliente/:id/perfil', mostrarPerfilCliente.perfilClientes);
+rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
+  let id = req.params.id;
+  sacarParametrosClientedb
+  (
+    id,
+    (tablaClientes) => {
+        res.render('paginas/perfilClientes', 
+        {
+          id: id,
+          nombre: tablaClientes.nombre,
+          apellidos: tablaClientes.apellidos,
+          genero: tablaClientes.genero,
+          email: tablaClientes.email,
+          password: tablaClientes.password,
+          direccion: tablaClientes.direccion,
+          poblacion: tablaClientes.poblacion,
+          region: tablaClientes.region,
+          pais: tablaClientes.pais,
+          cp: tablaClientes.cp
+        });
+        return res.end();
+    }
+  );
+});
 
 //-- Ruta a la Sección del Perfil de las Empresas de MAD Services.
-rutasGet.get('/sesion-empresa/:id/perfil', mostrarPerfilEmpresa.perfilEmpresas);
+rutasGet.get('/sesion-empresa/:id/perfil', (req,res) => {
+  let id = req.params.id;
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+        res.render('paginas/perfilEmpresas', 
+        {
+          id: id,
+          nombredelaempresa: tablaEmpresas.nombre,
+          nif: tablaEmpresas.nif,
+          email: tablaEmpresas.email,
+          password: tablaEmpresas.password,
+          tiposoc: tablaEmpresas.tiposoc
+        });
+        return res.end();
+    }
+  );
+});
 
 //-- Cerrar Sesión como Cliente o Empresa.
 rutasGet.get('/', (req, res) => {

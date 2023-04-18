@@ -1,14 +1,14 @@
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
+const { organizarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
 
-//-- Creamos el Punto de Control para configurar la actualización del nombre del cliente.
-const actualizarPerfilCliente = {}
+//-- Creamos el Punto de Control para configurar la organización del perfil del cliente.
+const organizarPerfilCliente = {}
 
-actualizarPerfilCliente.perfilClientes = (req, res) => {
+organizarPerfilCliente.perfilClientes = (req, res) => {
 
-    //-- Introducción de los campos del cliente para actualizar en base de datos.
+    //-- Introducción de los campos del perfil del cliente para organizar en base de datos.
     let id = req.params.id;
     const nombre = req.body.nombre;
     const apellidos = req.body.apellidos;
@@ -22,8 +22,8 @@ actualizarPerfilCliente.perfilClientes = (req, res) => {
     const region = req.body.region;
     const pais = req.body.pais;
     const cp = req.body.cp;
-    //-- Actualizamos los datos del Cliente en la base de datos de MAD Services.
-    actualizarClienteVerificadodb
+    //-- Organizamos los datos del Cliente en la base de datos de MAD Services.
+    organizarClienteVerificadodb
     (
         madservicesdb,
         {id: id, nombre: nombre, apellidos: apellidos, genero: genero, email: email, oldpassword: oldpassword,
@@ -33,5 +33,5 @@ actualizarPerfilCliente.perfilClientes = (req, res) => {
     );
 }
 
-//-- Exportamos la configuración de la actualización del nombre del cliente para unificarlo con el resto de rutas.
-module.exports = actualizarPerfilCliente;
+//-- Exportamos la configuración de la organización del perfil del cliente para unificarlo con el resto de rutas.
+module.exports = organizarPerfilCliente;

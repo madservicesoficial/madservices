@@ -14,43 +14,10 @@ block body
             //-- Contenido de las alertas.
             if msjError
                 p.alertaAct#enRojo=msjError
-                br
             if msjError1
                 p.alertaAct#enRojo=msjError1
-                br
             if msjActualizacion
                 p.alertaAct#enVerde=msjActualizacion
-                br
-            if msjActualizacion1
-                p.alertaAct#enVerde=msjActualizacion1
-                br
-            if msjActualizacion2
-                p.alertaAct#enVerde=msjActualizacion2
-                br
-            if msjActualizacion3
-                p.alertaAct#enVerde=msjActualizacion3
-                br
-            if msjActualizacion4
-                p.alertaAct#enVerde=msjActualizacion4
-                br
-            if msjActualizacion5
-                p.alertaAct#enVerde=msjActualizacion5
-                br
-            if msjActualizacion6
-                p.alertaAct#enVerde=msjActualizacion6
-                br
-            if msjActualizacion7
-                p.alertaAct#enVerde=msjActualizacion7
-                br
-            if msjActualizacion8
-                p.alertaAct#enVerde=msjActualizacion8
-                br
-            if msjActualizacion9
-                p.alertaAct#enVerde=msjActualizacion9
-                br
-            if msjActualizacion10
-                p.alertaAct#enVerde=msjActualizacion10
-                br
             form(method='POST' action=`/sesion-cliente/${id}/perfil`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Nombre: '
@@ -121,40 +88,52 @@ block body
                 button#btnActualizarPerfil(type='submit')='Actualizar'
         div#perfilClienteDerecha
             h3='Mi Información: '
-            form(method='GET' action=`/sesion-cliente/${id}/perfil`)
-                label=`El identificador/ID de mi perfil: ${id}.`
-                br
-                br
-                label=`Mi nombre: ${nombre}.`
-                br
-                br
-                label=`Mis dos apellidos: ${apellidos}.`
-                br
-                br
-                label=`Mi género: ${genero}.`
-                br
-                br
-                label=`Mi correo electrónico: ${email}`
-                br
-                br
-                label='Mi contraseña: '
-                span(hidden)=`${password}`
-                span='(oculta).'
-                br
-                br
-                label=`Mi dirección y nº: ${direccion}.`
-                br
-                br
-                label=`Mi población: ${poblacion}.`
-                br
-                br
-                label=`Mi región: ${region}.`
-                br
-                br
-                label=`Mi país: ${pais}.`
-                br
-                br
-                label=`Código Postal de mi domicilio: ${cp}`
+            ul 
+                li.mostrarPerfilCliente
+                    if id
+                        label='El identificador/ID de mi perfil: ' + id
+                        br
+                        br
+                    if nombre
+                        label='Mi nombre: ' + nombre
+                        br
+                        br
+                    if apellidos
+                        label='Mis dos apellidos: ' + apellidos
+                        br
+                        br
+                    if genero
+                        label='Mi género: ' + genero
+                        br
+                        br
+                    if email
+                        label='Mi E-mail: ' + email
+                        br
+                        br
+                    if password
+                        label='Mi contraseña: '
+                        span(hidden)=password
+                        span='(oculta).'
+                        br
+                        br
+                    if direccion
+                        label='Mi dirección y nº: ' + direccion
+                        br
+                        br
+                    if poblacion
+                        label='Mi población: ' + poblacion
+                        br
+                        br
+                    if region
+                        label='Mi región: ' + region
+                        br
+                        br
+                    if pais
+                        label='Mi país: ' + pais
+                        br
+                        br
+                    if cp
+                        label='Código Postal de mi domicilio: ' + cp
         div#perfilClienteAbajo
             h3='Darse de baja de MAD Services: '
             form(method='POST' action=`/sesion-cliente/${id}/perfil`)

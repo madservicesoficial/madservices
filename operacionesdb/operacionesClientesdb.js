@@ -73,10 +73,10 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, r
     });
 }
 
-//-- Creamos la función para Actualizar los datos de la base de datos de MAD Services.
-const actualizarClienteVerificadodb = async (madservicesdb, data, res) => {
+//-- Creamos la función para Organizar los datos de la base de datos de MAD Services.
+const organizarClienteVerificadodb = async (madservicesdb, data, res) => {
 
-    //-- Declaramos la estructura para actualizar el cliente, con todos sus campos.
+    //-- Declaramos la estructura para organizar el cliente en el Perfil con todos sus campos.
     const hayCliente = {
         hayNombreCliente: data.nombre,
         hayApellidosCliente: data.apellidos,
@@ -168,16 +168,18 @@ const actualizarClienteVerificadodb = async (madservicesdb, data, res) => {
             madservicesdb.query(formatoInstruccionActualizarCP);
             break;
     }
+    //-- Caso de actualizar la contraseña, cumpliendo los requisitos. Y al acabar mostrar también en el perfil.
     if(hayCliente.hayOldPasswordCliente && hayCliente.hayPasswordCliente && hayCliente.hayRepitePasswordCliente) {
         //-- Verificamos que la contraseña de la base de datos es la misma que la antigua introducida.
         //-- Instrucción para consultar contraseña dado el id.
-        let instruccionConsultarPasswordPerfil = 'SELECT password FROM clientes WHERE id = ?';
+        let instruccionConsultarPasswordPerfil = 'SELECT * FROM clientes WHERE id = ?';
         //-- Configuración del formato para consultar contraseña dado el id.
         let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [data.id]);
         //-- Proceso de consulta de contraseña.
         madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, resultado) => {
             if(error) throw error;
-            const passwordEnDatabase = resultado[0];
+            const tablaCliente = resultado[0];
+            const passwordEnDatabase = tablaCliente.password;
             compare(hayCliente.hayOldPasswordCliente, passwordEnDatabase).then((result) => {
                 if(result) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
@@ -189,68 +191,94 @@ const actualizarClienteVerificadodb = async (madservicesdb, data, res) => {
                         //-- Proceso de actualización en base de datos.
                         madservicesdb.query(formatoInstruccionActualizarANuevaPassword, (error) => {
                             if(error) throw error;
-                            if(hayCliente.hayNombreCliente || hayCliente.hayApellidosCliente || hayCliente.hayGeneroCliente ||
-                                hayCliente.hayEmailCliente || hayCliente.hayDireccionCliente || hayCliente.hayPoblacionCliente ||
-                                hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
+                            if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
+                                !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
+                                !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
+                                hayCliente.hayNombreCliente = tablaCliente.nombre;
+                                hayCliente.hayApellidosCliente = tablaCliente.apellidos;
+                                hayCliente.hayGeneroCliente = tablaCliente.genero;
+                                hayCliente.hayEmailCliente = tablaCliente.email;
+                                hayCliente.hayDireccionCliente = tablaCliente.direccion;
+                                hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
+                                hayCliente.hayRegionCliente = tablaCliente.region;
+                                hayCliente.hayPaisCliente = tablaCliente.pais;
+                                hayCliente.hayCPCliente = tablaCliente.cp;
                                 res.status(201).render('paginas/perfilClientes',
                                 {
-                                    msjActualizacion: `Has actualizado: `,
-                                    msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
-                                    msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
-                                    msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
-                                    msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
-                                    msjActualizacion5: `Contraseña: #ActualizadaYoculta#`,
-                                    msjActualizacion6: `Dirección: ${hayCliente.hayDireccionCliente}`,
-                                    msjActualizacion7: `Población: ${hayCliente.hayPoblacionCliente}`,
-                                    msjActualizacion8: `Región: ${hayCliente.hayRegionCliente}`,
-                                    msjActualizacion9: `País: ${hayCliente.hayPaisCliente}`,
-                                    msjActualizacion10: `Código Postal: ${hayCliente.hayCPCliente}`
-
+                                    msjActualizacion: 'Campos actualizados con éxito: ',
+                                    id: data.id,
+                                    nombre: hayCliente.hayNombreCliente,
+                                    apellidos: hayCliente.hayApellidosCliente,
+                                    genero: hayCliente.hayGeneroCliente,
+                                    email: hayCliente.hayEmailCliente,
+                                    password: nuevaPasswordCifrada,
+                                    direccion: hayCliente.hayDireccionCliente,
+                                    poblacion: hayCliente.hayPoblacionCliente,
+                                    region: hayCliente.hayRegionCliente,
+                                    pais: hayCliente.hayPaisCliente,
+                                    cp: hayCliente.hayCPCliente
                                 });
                                 return res.end();
                             }
                         });
                     }else {
-                        if(hayCliente.hayNombreCliente || hayCliente.hayApellidosCliente || hayCliente.hayGeneroCliente ||
-                            hayCliente.hayEmailCliente || hayCliente.hayDireccionCliente || hayCliente.hayPoblacionCliente ||
-                            hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
+                        if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
+                            !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
+                            !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
+                            hayCliente.hayNombreCliente = tablaCliente.nombre;
+                            hayCliente.hayApellidosCliente = tablaCliente.apellidos;
+                            hayCliente.hayGeneroCliente = tablaCliente.genero;
+                            hayCliente.hayEmailCliente = tablaCliente.email;
+                            hayCliente.hayDireccionCliente = tablaCliente.direccion;
+                            hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
+                            hayCliente.hayRegionCliente = tablaCliente.region;
+                            hayCliente.hayPaisCliente = tablaCliente.pais;
+                            hayCliente.hayCPCliente = tablaCliente.cp;
                             res.status(401).render('paginas/perfilClientes', 
                             {
                                 msjError: `La nueva contraseña introducida`,
                                 msjError1: `no es igual a la repetida`,
-                                msjActualizacion: `Pero aun así has actualizado: `,
-                                msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
-                                msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
-                                msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
-                                msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
-                                msjActualizacion5: `Dirección: ${hayCliente.hayDireccionCliente}`,
-                                msjActualizacion6: `Población: ${hayCliente.hayPoblacionCliente}`,
-                                msjActualizacion7: `Región: ${hayCliente.hayRegionCliente}`,
-                                msjActualizacion8: `País: ${hayCliente.hayPaisCliente}`,
-                                msjActualizacion9: `Código Postal: ${hayCliente.hayCPCliente}`
+                                id: data.id,
+                                nombre: hayCliente.hayNombreCliente,
+                                apellidos: hayCliente.hayApellidosCliente,
+                                genero: hayCliente.hayGeneroCliente,
+                                email: hayCliente.hayEmailCliente,
+                                direccion: hayCliente.hayDireccionCliente,
+                                poblacion: hayCliente.hayPoblacionCliente,
+                                region: hayCliente.hayRegionCliente,
+                                pais: hayCliente.hayPaisCliente,
+                                cp: hayCliente.hayCPCliente
                             });
                             return res.end();
                         }
                     }
                 }else {
-                    if(hayCliente.hayNombreCliente || hayCliente.hayApellidosCliente || hayCliente.hayGeneroCliente ||
-                        hayCliente.hayEmailCliente || hayCliente.hayDireccionCliente || hayCliente.hayPoblacionCliente ||
-                        hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
+                    if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
+                        !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
+                        !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
+                        hayCliente.hayNombreCliente = tablaCliente.nombre;
+                        hayCliente.hayApellidosCliente = tablaCliente.apellidos;
+                        hayCliente.hayGeneroCliente = tablaCliente.genero;
+                        hayCliente.hayEmailCliente = tablaCliente.email;
+                        hayCliente.hayDireccionCliente = tablaCliente.direccion;
+                        hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
+                        hayCliente.hayRegionCliente = tablaCliente.region;
+                        hayCliente.hayPaisCliente = tablaCliente.pais;
+                        hayCliente.hayCPCliente = tablaCliente.cp;
                         res.status(401).render('paginas/perfilClientes', 
                         {
                             msjError: `La antigua contraseña introducida`,
                             msjError1: `no coincide con la de la base de datos`,
-                            msjActualizacion: `Pero aun así has actualizado: `,
-                            msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
-                            msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
-                            msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
-                            msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
-                            msjActualizacion5: `Dirección: ${hayCliente.hayDireccionCliente}`,
-                            msjActualizacion6: `Población: ${hayCliente.hayPoblacionCliente}`,
-                            msjActualizacion7: `Región: ${hayCliente.hayRegionCliente}`,
-                            msjActualizacion8: `País: ${hayCliente.hayPaisCliente}`,
-                            msjActualizacion9: `Código Postal: ${hayCliente.hayCPCliente}`
-
+                            id: data.id,
+                            nombre: hayCliente.hayNombreCliente,
+                            apellidos: hayCliente.hayApellidosCliente,
+                            genero: hayCliente.hayGeneroCliente,
+                            email: hayCliente.hayEmailCliente,
+                            direccion: hayCliente.hayDireccionCliente,
+                            poblacion: hayCliente.hayPoblacionCliente,
+                            region: hayCliente.hayRegionCliente,
+                            pais: hayCliente.hayPaisCliente,
+                            cp: hayCliente.hayCPCliente
                         });
                         return res.end();
                     }
@@ -258,40 +286,35 @@ const actualizarClienteVerificadodb = async (madservicesdb, data, res) => {
             });
         });
     }else {
-        if(hayCliente.hayNombreCliente || hayCliente.hayApellidosCliente || hayCliente.hayGeneroCliente ||
-            hayCliente.hayEmailCliente || hayCliente.hayDireccionCliente || hayCliente.hayPoblacionCliente ||
-            hayCliente.hayRegionCliente || hayCliente.hayPaisCliente || hayCliente.hayCPCliente) {
+        if(!hayCliente.hayNombreCliente || !hayCliente.hayApellidosCliente || !hayCliente.hayGeneroCliente ||
+            !hayCliente.hayEmailCliente || !hayCliente.hayDireccionCliente || !hayCliente.hayPoblacionCliente ||
+            !hayCliente.hayRegionCliente || !hayCliente.hayPaisCliente || !hayCliente.hayCPCliente) {
+            hayCliente.hayNombreCliente = tablaCliente.nombre;
+            hayCliente.hayApellidosCliente = tablaCliente.apellidos;
+            hayCliente.hayGeneroCliente = tablaCliente.genero;
+            hayCliente.hayEmailCliente = tablaCliente.email;
+            hayCliente.hayDireccionCliente = tablaCliente.direccion;
+            hayCliente.hayPoblacionCliente = tablaCliente.poblacion;
+            hayCliente.hayRegionCliente = tablaCliente.region;
+            hayCliente.hayPaisCliente = tablaCliente.pais;
+            hayCliente.hayCPCliente = tablaCliente.cp;
             res.status(201).render('paginas/perfilClientes',
             {
-                msjActualizacion: `Has actualizado: `,
-                msjActualizacion1: `Nombre: ${hayCliente.hayNombreCliente}`,
-                msjActualizacion2: `Apellidos: ${hayCliente.hayApellidosCliente}`,
-                msjActualizacion3: `Género: ${hayCliente.hayGeneroCliente}`,
-                msjActualizacion4: `Email: ${hayCliente.hayEmailCliente}`,
-                msjActualizacion5: `Contraseña: #ActualizadaYoculta#`,
-                msjActualizacion6: `Dirección: ${hayCliente.hayDireccionCliente}`,
-                msjActualizacion7: `Población: ${hayCliente.hayPoblacionCliente}`,
-                msjActualizacion8: `Región: ${hayCliente.hayRegionCliente}`,
-                msjActualizacion9: `País: ${hayCliente.hayPaisCliente}`,
-                msjActualizacion10: `Código Postal: ${hayCliente.hayCPCliente}`
+                msjActualizacion: `Campos actualizados con éxito: `,
+                id: data.id,
+                nombre: hayCliente.hayNombreCliente,
+                apellidos: hayCliente.hayApellidosCliente,
+                genero: hayCliente.hayGeneroCliente,
+                email: hayCliente.hayEmailCliente,
+                direccion: hayCliente.hayDireccionCliente,
+                poblacion: hayCliente.hayPoblacionCliente,
+                region: hayCliente.hayRegionCliente,
+                pais: hayCliente.hayPaisCliente,
+                cp: hayCliente.hayCPCliente
             });
             return res.end();
         }
     }
-}
-
-//-- Creamos la función para Mostrar datos de la base de datos de MAD Services.
-const mostrarClientedb = (madservicesdb, id, res) => {
-    //-- Instrucción.
-    let instruccionID = 'SELECT * FROM clientes WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, id);
-    //-- Establecer la comunicación de consultar ID en la base de datos.
-    madservicesdb.query(formatoInstruccionID, (error, results) => {
-        if(error) throw error;
-        const datos = results[0];
-        res.status(201).render('paginas/perfilClientes', {id: id, nombre: datos.nombre, apellidos: datos.apellidos, genero: datos.genero, email: datos.email, password: datos.password, direccion: datos.direccion, poblacion: datos.poblacion, region: datos.region, pais: datos.pais, cp: datos.cp});
-    });
 }
 
 //-- Creamos la función para Borrar los datos de la base de datos de MAD Services.
@@ -308,4 +331,4 @@ const darseBajaEmpresadb = (madservicesdb, data) => {
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, actualizarClienteVerificadodb, mostrarClientedb};
+module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, organizarClienteVerificadodb};
