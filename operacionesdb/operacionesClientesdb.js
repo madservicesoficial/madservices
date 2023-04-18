@@ -14,7 +14,7 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.emailReg]);
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     //-- Establecer la comunicación de consultar Email en la base de datos.
     madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
@@ -36,7 +36,7 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
             //-- Instrucción para registrarse en la base de datos.
             let instruccionRegistrarse = "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
-            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.emailReg, data.passwordReg, data.nombreReg, data.apellidosReg, data.direccionReg, data.poblacionReg, data.regionReg, data.paisReg, data.cpReg, data.generoReg]);
+            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, data.password, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
@@ -46,12 +46,12 @@ const registrarClienteVerificadodb = (madservicesdb, data, res) => {
 }
 
 //-- Creamos la función para iniciar sesión como Cliente, con verificación de correo electrónico y contraseña, en la base de datos de MAD Services.
-const iniciarSesionClienteVerificadodb = (madservicesdb, emailLog, passwordLog, req, res) => {
+const iniciarSesionClienteVerificadodb = (madservicesdb, email, password, req, res) => {
 
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultarEmail = 'SELECT * FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
-    let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [emailLog]);
+    let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
     madservicesdb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
@@ -60,7 +60,7 @@ const iniciarSesionClienteVerificadodb = (madservicesdb, emailLog, passwordLog, 
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(passwordLog, miembro.password).then((result) => {
+            bcrypt.compare(password, miembro.password).then((result) => {
                 if(result) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-cliente/${miembro.id}`);

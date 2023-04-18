@@ -13,10 +13,10 @@ block body
         if mensaje
             p.alerta#enRojo=mensaje
         form(method='POST' action='/login/empresa')
-            label.entradas#espaciadoEtiqueta(for="inputEmail")='Correo Electrónico:'
-            input.entradas#rellenoLogin(type='email' name='emailEmLog' placeholder='Correo Electrónico....')
+            label.entradas#espaciadoEtiqueta(for="inputEmail")='E-mail:'
+            input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
             label.entradas#espaciadoEtiqueta(for="inputPassword")='Contraseña:'
-            input.entradas#rellenoLogin(type='password' name='passwordEmLog' placeholder='Contraseña....')
+            input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
             button#btnAcceso(type='submit')='Acceder'
         ul.otrosbtnLogin
             li

@@ -8,10 +8,10 @@ const loginClientes = {}
 loginClientes.clienteLogin = (req, res) => {
 
     //-- Introducimos los campos para Iniciar Sesión como Cliente.
-    const emailLog = req.body.emailLog;
-    const passwordLog = req.body.passwordLog;
+    const email = req.body.email;
+    const password = req.body.password;
     //-- Comprobamos que ningún campo está vacío.
-    if(!emailLog || !passwordLog) {
+    if(!email || !password) {
         res.status(401).render('paginas/clienteLogin', {mensaje: 'Campos vacíos'});
         return res.end();
     }
@@ -19,8 +19,8 @@ loginClientes.clienteLogin = (req, res) => {
     iniciarSesionClienteVerificadodb
     (
         madservicesdb,
-        emailLog,
-        passwordLog,
+        email,
+        password,
         req,
         res
     );

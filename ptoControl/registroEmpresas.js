@@ -11,30 +11,30 @@ const registroEmpresas = {}
 registroEmpresas.empresaRegistrarse = async (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de las Empresas.
-    const nombreEmReg = req.body.nombreEmReg;
-    const nifEmReg = req.body.nifEmReg;
-    const emailEmReg = req.body.emailEmReg;
-    const passwordEmReg = req.body.passwordEmReg;
-    const confirmPasswordEmReg = req.body.confirmPasswordEmReg;
-    const tiposocEmReg = req.body.tiposocEmReg;
+    const nombredelaempresa = req.body.nombredelaempresa;
+    const nif = req.body.nif;
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const tiposoc = req.body.tiposoc;
     //-- Comprobamos que ningún campo está vacío.
-    if(!nombreEmReg || !nifEmReg || !emailEmReg || !passwordEmReg || !confirmPasswordEmReg || !tiposocEmReg) {
+    if(!nombredelaempresa || !nif || !email || !password || !confirmPassword || !tiposoc) {
         res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
     //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(passwordEmReg !== confirmPasswordEmReg) {
+    if(password !== confirmPassword) {
         res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
         return res.end();
     }
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifradaEmReg = await hash(passwordEmReg, 1);
+    const passwordCifrada = await hash(password, 1);
     //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
     registrarEmpresaVerificadadb
     (
         madservicesdb,
-        {emailEmReg: emailEmReg, passwordEmReg: passwordCifradaEmReg, nombreEmReg: nombreEmReg, nifEmReg: nifEmReg,
-        tiposocEmReg: tiposocEmReg},
+        {email: email, password: passwordCifrada, nombredelaempresa: nombredelaempresa, nif: nif,
+        tiposoc: tiposoc},
         res
     );
 };

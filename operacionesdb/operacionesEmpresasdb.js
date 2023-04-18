@@ -14,7 +14,7 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM empresas WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.emailEmReg]);
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     //-- Establecer la comunicación de insertar y consultar datos en la base de datos.
     madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
@@ -36,7 +36,7 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
             //-- Instrucción para registrarse en la base de datos.
             let instruccionRegistrarse = "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
-            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.nombreEmReg, data.nifEmReg, data.emailEmReg, data.passwordEmReg, data.tiposocEmReg]);
+            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.nombredelaempresa, data.nif, data.email, data.password, data.tiposoc]);
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
@@ -46,12 +46,12 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
 }
 
 //-- Creamos la función para iniciar sesión como Empresa, con verificación de correo electrónico y contraseña, en la base de datos de MAD Services.
-const iniciarSesionEmpresaVerificadadb = (madservicesdb, emailEmLog, passwordEmLog, req, res) => {
+const iniciarSesionEmpresaVerificadadb = (madservicesdb, email, password, req, res) => {
 
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultarEmail = 'SELECT * FROM empresas WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
-    let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [emailEmLog]);
+    let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
     madservicesdb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
@@ -60,7 +60,7 @@ const iniciarSesionEmpresaVerificadadb = (madservicesdb, emailEmLog, passwordEmL
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(passwordEmLog, miembro.password).then((result) => {
+            bcrypt.compare(password, miembro.password).then((result) => {
                 if(result) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-empresa/${miembro.id}`);
