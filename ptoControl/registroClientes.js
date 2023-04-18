@@ -1,14 +1,10 @@
-//-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
 const { registrarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const {hash} = require('bcrypt');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroClientes = {}
 
-registroClientes.clienteRegistrarse = async (req, res) => {
+registroClientes.clienteRegistrarse = (req, res) => {
     
     //-- Obtenemos los campos de entrada del Registro de los Clientes.
     const email = req.body.email; 
@@ -33,13 +29,10 @@ registroClientes.clienteRegistrarse = async (req, res) => {
         res.status(401).render('paginas/clienteRegistrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
         return res.end();
     }
-    //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
     //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
     registrarClienteVerificadodb
     (
-        madservicesdb,
-        {email: email, password: passwordCifrada, nombre: nombre, apellidos: apellidos,
+        {email: email, password: password, nombre: nombre, apellidos: apellidos,
         direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
         res
     );

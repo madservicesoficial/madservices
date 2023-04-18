@@ -1,16 +1,20 @@
 //-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
+//-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
+const madservicesdb = require('../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const bcrypt = require('bcrypt');
+const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const comprobarIDempresadb = require('../comprobarIDs/comprobarIDempresa.js');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
+const registrarEmpresaVerificadadb = async (data, res) => {
 
+    //-- Configuramos el sistema para cifrar la contraseña metida.
+    const passwordCifrada = await hash(data.password, 1);
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM empresas WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
@@ -36,7 +40,7 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
             //-- Instrucción para registrarse en la base de datos.
             let instruccionRegistrarse = "INSERT INTO empresas (id, nombre, nif, email, password, tiposoc) VALUES (?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
-            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.nombredelaempresa, data.nif, data.email, data.password, data.tiposoc]);
+            let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.nombredelaempresa, data.nif, data.email, passwordCifrada, data.tiposoc]);
             madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
@@ -46,7 +50,7 @@ const registrarEmpresaVerificadadb = async (madservicesdb, data, res) => {
 }
 
 //-- Creamos la función para iniciar sesión como Empresa, con verificación de correo electrónico y contraseña, en la base de datos de MAD Services.
-const iniciarSesionEmpresaVerificadadb = (madservicesdb, email, password, req, res) => {
+const iniciarSesionEmpresaVerificadadb = (email, password, req, res) => {
 
     //-- Instrucción para consultar en la base de datos.
     let instruccionConsultarEmail = 'SELECT * FROM empresas WHERE email = ?';
@@ -60,7 +64,7 @@ const iniciarSesionEmpresaVerificadadb = (madservicesdb, email, password, req, r
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(password, miembro.password).then((result) => {
+            compare(password, miembro.password).then((result) => {
                 if(result) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-empresa/${miembro.id}`);

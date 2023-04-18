@@ -1,7 +1,5 @@
-//-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { organizarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
+const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
 
 //-- Creamos el Punto de Control para configurar la organización del perfil del cliente.
 const organizarPerfilCliente = {}
@@ -22,13 +20,19 @@ organizarPerfilCliente.perfilClientes = (req, res) => {
     const region = req.body.region;
     const pais = req.body.pais;
     const cp = req.body.cp;
-    //-- Organizamos los datos del Cliente en la base de datos de MAD Services.
-    organizarClienteVerificadodb
+    //-- Actualizamos todos los campos menos la contraseña.
+    actualizarClienteVerificadodb
     (
-        madservicesdb,
-        {id: id, nombre: nombre, apellidos: apellidos, genero: genero, email: email, oldpassword: oldpassword,
-        password: newpassword, repitePassword: repitePassword, direccion: direccion, poblacion: poblacion, region: region,
-        pais: pais, cp: cp},
+        {id: id, nombre: nombre, apellidos: apellidos, genero: genero, email: email, direccion: direccion,
+        poblacion: poblacion, region: region, pais: pais, cp: cp}
+    );
+    //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
+    mostrarClienteVerificadodb
+    (
+        id,
+        oldpassword,
+        newpassword,
+        repitePassword,
         res
     );
 }
