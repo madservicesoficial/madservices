@@ -190,6 +190,12 @@ rutasGet.get('/sesion-empresa/:id/perfil', (req,res) => {
   );
 });
 
+//-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
+rutasGet.get('/sesion-cliente/:id/categorias/productosMAD', (req, res) => {
+  res.render('paginas/productosMADcliente');
+  return res.end();
+});
+
 //-- Cerrar Sesión como Cliente o Empresa.
 rutasGet.get('/', (req, res) => {
   return req.session.destroy();
