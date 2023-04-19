@@ -5,16 +5,17 @@ const mysql = require('mysql2');
 const madservicesdb = require('../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const bcrypt = require('bcrypt');
+const { hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const comprobarIDclientedb = require('../comprobarIDs/comprobarIDcliente.js');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarClienteVerificadodb = (data, res) => {
+const registrarClienteVerificadodb = async (data, res) => {
 
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = bcrypt.hash(data.password, 1);
+    const passwordCifrada = await hash(data.password, 1);
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
@@ -172,19 +173,19 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
     if(oldpassword && newpassword && repitePassword) {
         //-- Verificamos que la contraseña de la base de datos es la misma que la antigua introducida.
         //-- Instrucción para consultar contraseña dado el id.
-        let instruccionConsultarPasswordPerfil = 'SELECT password FROM clientes WHERE id = ?';
+        let instruccionConsultarPasswordPerfil = 'SELECT * FROM clientes WHERE id = ?';
         //-- Configuración del formato para consultar contraseña dado el id.
         let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [id]);
         //-- Proceso de consulta de contraseña.
-        madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, resultado) => {
+        madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, results) => {
             if(error) throw error;
-            const passwordEnDatabase = resultado[0];
-            bcrypt.compare(oldpassword, passwordEnDatabase).then( (match) => {
+            const passwordEnDatabase = results[0].password;
+            bcrypt.compare(oldpassword, passwordEnDatabase).then( async (match) => {
                 if(match) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {
                         //-- Cifrar la nueva contraseña.
-                        const nuevaPasswordCifrada = bcrypt.hash(newpassword,1);
+                        const nuevaPasswordCifrada = await hash(newpassword,1);
                         //-- Instrucción para actualizar en la base de datos.
                         let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
                         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
@@ -222,9 +223,9 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                         //-- Configuración del formato de la instrucción.
                         let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
                         //-- Proceso de la consulta.
-                        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+                        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
                             if(error) throw error;
-                            const tablaCliente = resultado[0];
+                            const tablaCliente = result[0];
                             res.status(401).render('paginas/perfilClientes', 
                             {
                                 msjError: `La nueva contraseña introducida`,
@@ -250,9 +251,9 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                     //-- Configuración del formato de la instrucción.
                     let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
                     //-- Proceso de la consulta.
-                    madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+                    madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
                         if(error) throw error;
-                        const tablaCliente = resultado[0];
+                        const tablaCliente = field[0];
                         res.status(401).render('paginas/perfilClientes', 
                         {
                             msjError: `La antigua contraseña introducida`,
@@ -280,9 +281,9 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
         //-- Configuración del formato de la instrucción.
         let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
         //-- Proceso de la consulta.
-        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
             if(error) throw error;
-            const tablaCliente = resultado[0];
+            const tablaCliente = fields[0];
             res.status(201).render('paginas/perfilClientes',
             {
                 msjActualizacion: `Campos actualizados con éxito sin contraseña: `,
