@@ -519,12 +519,19 @@ footer {
 }
 .tipoEmpresa {
   margin-left: 160px;
+  border-radius: 10px;
+  width: 200px;
+  height: 25px;
 }
 #posicionCIF {
   margin-left: 120px;
 }
 #posicionEmailCo {
   margin-left: 185px;
+}
+#posicionEBITDA {
+  margin-left: 238px;
+  margin-top: -20;
 }
 #posicionPsswd {
   margin-left: 100px;
@@ -777,4 +784,11 @@ canvas {
 }
 #btnDarseBaja {
   margin-top: 25;
+}
+.ConfirmarBaja {
+  margin-top: 20;
+  margin-left: 10;
+}
+#siConfirmar {
+  margin-left: 100;
 }

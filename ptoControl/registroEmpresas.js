@@ -12,9 +12,10 @@ registroEmpresas.empresaRegistrarse = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
-    const tiposoc = req.body.tiposoc;
+    const tipoEmpresa = req.body.tipoEmpresa;
+    const ebitda = req.body.ebitda;
     //-- Comprobamos que ningún campo está vacío.
-    if(!nombredelaempresa || !nif || !email || !password || !confirmPassword || !tiposoc) {
+    if(!nombredelaempresa || !nif || !email || !password || !confirmPassword || !tipoEmpresa || !ebitda) {
         res.status(401).render('paginas/empresaRegistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
@@ -26,7 +27,8 @@ registroEmpresas.empresaRegistrarse = (req, res) => {
     //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
     registrarEmpresaVerificadadb
     (
-        {email: email, password: password, nombredelaempresa: nombredelaempresa, nif: nif, tiposoc: tiposoc},
+        {email: email, nombredelaempresa: nombredelaempresa, nif: nif, tipoEmpresa: tipoEmpresa, ebitda: ebitda},
+        password,
         res
     );
 };

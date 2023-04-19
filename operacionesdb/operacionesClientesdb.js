@@ -304,14 +304,17 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
     }
 }
 
-//-- Creamos la función para Borrar los datos de la base de datos de MAD Services.
-const darseBajaClientedb = (data) => {
+//-- Creamos la función para Dar de Baja al Cliente de la base de datos de MAD Services.
+const darseBajaClientedb = (id, req, res) => {
     //-- Variables usadas para borrar los datos de la base de datos.
-    let instruccionDarseBajaEmpresa = "DELETE FROM empresas WHERE email = ?";
-    let formatoinstruccionDarseBajaEmpresa = mySQL.format(instruccionDarseBajaEmpresa, [data.email]);
+    let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
+    let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
     //-- Establecer la configuración de borrar los datos de la base de datos.
-    madservicesdb.query(formatoinstruccionDarseBajaEmpresa);
+    madservicesdb.query(formatoinstruccionDarseBajaCliente);
+    //-- Redireccionar a Inicio por darse de baja y destruir sesión.
+    req.session.destroy();
+    res.redirect('/');
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, actualizarClienteVerificadodb, mostrarClienteVerificadodb};
+module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, actualizarClienteVerificadodb, mostrarClienteVerificadodb, darseBajaClientedb};

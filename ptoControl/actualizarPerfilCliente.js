@@ -2,9 +2,9 @@
 const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
 
 //-- Creamos el Punto de Control para configurar la organización del perfil del cliente.
-const organizarPerfilCliente = {}
+const actualizarPerfilCliente = {}
 
-organizarPerfilCliente.perfilClientes = (req, res) => {
+actualizarPerfilCliente.perfilClientes = (req, res) => {
 
     //-- Introducción de los campos del perfil del cliente para organizar en base de datos.
     let id = req.params.id;
@@ -38,4 +38,4 @@ organizarPerfilCliente.perfilClientes = (req, res) => {
 }
 
 //-- Exportamos la configuración de la organización del perfil del cliente para unificarlo con el resto de rutas.
-module.exports = organizarPerfilCliente;
+module.exports = actualizarPerfilCliente;

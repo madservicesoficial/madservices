@@ -19,18 +19,30 @@ block body
                 br
                 br
                 label='Tipo de empresa: '
-                    span.tipoEmpresa
-                        input(type='radio' name='tiposoc' value='PYME')
-                        label='PYME'
-                        input(type='radio' name='tiposoc' value='Multinacional')
-                        label='Multinacional'
-                        input(type='radio' name='tiposoc' value='StartUp' checked)
-                        label='StartUp'
+                    select.tipoEmpresa(name='tipoEmpresa')
+                        option(value="value0" checked)=''
+                        option(value="value1")='Restaurante'
+                        option(value="value2")='Educación'
+                        option(value="value3")='Ventas'
+                        option(value="value4")='Peluquería'
+                        option(value="value5")='Agencia de Viajes'
+                        option(value="value5")='Cine'
+                        option(value="value5")='Teatro'
+                        option(value="value5")='Portal de Música'
+                        option(value="value5")='Portal de Películas y Series'
+                        option(value="value5")='Portal Deportivo'
+                        option(value="value5")='Periódico Digital'
+                        option(value="value5")='TV por Internet'
                 br
                 br
                 label='Código CIF/NIF: '
                     span
-                    input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF....')
+                    input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                br
+                br
+                label='Indicador EBITDA: '
+                    span
+                    input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
                 br
                 br
                 label='E-mail: '
