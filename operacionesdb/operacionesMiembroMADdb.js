@@ -39,7 +39,7 @@ const registrarMiembroMADVerificadodb = async (data, res) => {
                 }
             });
             //-- Instrucción para registrarse en la base de datos.
-            let instruccionRegistrarse = "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            let instruccionRegistrarse = "INSERT INTO miembrosmad (id, nombre, apellidos, genero, email, password) VALUES (?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idMiembroMAD, data.nombreMiembro, data.apellidosMiembro, data.generoMiembro, data.emailMiembro, passwordCifradaMiembroMAD]);
             madservicesAdmindb.query(formatoInstruccionRegistrarse, (error) => {
