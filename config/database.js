@@ -4,14 +4,32 @@ const mysql = require('mysql2');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
 require('./env.js');
 
-//-- Creamos la conexión con la base de datos de MAD Services y la establecemos de forma dinámica.
-const madservicesdb = mysql.createPool({
+//-- Creamos la conexión con la base de datos de MAD Services y la establecemos de forma dinámica => Usuario: root.
+const madservicesAdmindb = mysql.createPool({
     host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USUARIO,
-    password: process.env.MYSQL_PASSWORD,
+    user: process.env.MYSQL_ADMIN,
+    password: process.env.MYSQL_PASSWORD_ADMIN,
+    database: process.env.MYSQL_DATABASE,
+    port: process.env.PUERTO_DB
+});
+
+//-- Creamos la conexión con la base de datos de MAD Services y la establecemos de forma dinámica => Usuario: cliente.
+const madservicesClientedb = mysql.createPool({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_CLIENTE,
+    password: process.env.MYSQL_PASSWORD_CLIENTE,
+    database: process.env.MYSQL_DATABASE,
+    port: process.env.PUERTO_DB
+});
+
+//-- Creamos la conexión con la base de datos de MAD Services y la establecemos de forma dinámica => Usuario: empresa.
+const madservicesEmpresadb = mysql.createPool({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_EMPRESA,
+    password: process.env.MYSQL_PASSWORD_EMPRESA,
     database: process.env.MYSQL_DATABASE,
     port: process.env.PUERTO_DB
 });
 
 //-- Exportamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-module.exports = madservicesdb;
+module.exports = {madservicesAdmindb, madservicesClientedb, madservicesEmpresadb};

@@ -2,17 +2,17 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
+const {madservicesAdmindb} = require('../config/database.js');
 
 //-- Creamos la función que comprueba el ID de la base de datos para no repetir.
-function comprobarIDempresadb(idEmpresa, callback) {
+function comprobarIDmiembroMADdb(idMiembroMAD, callback) {
 
     //-- Instrucción para no repetir ID.
-    let instruccionID = 'SELECT COUNT(*) AS count FROM empresas WHERE id = ?';
+    let instruccionID = 'SELECT COUNT(*) AS count FROM miembrosmad WHERE id = ?';
     //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, idEmpresa);
+    let formatoInstruccionID = mysql.format(instruccionID, idMiembroMAD);
     //-- Establecer la comunicación de consultar ID en la base de datos.
-    madservicesdb.query(formatoInstruccionID, (error, result) => {
+    madservicesAdmindb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
         const valor = result[0].count;
         callback(valor > 0);
@@ -20,4 +20,4 @@ function comprobarIDempresadb(idEmpresa, callback) {
 }
 
 //-- Exportamos las funciones.
-module.exports = comprobarIDempresadb;
+module.exports = comprobarIDmiembroMADdb;

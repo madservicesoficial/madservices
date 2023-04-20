@@ -2,13 +2,13 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
+const {madservicesEmpresadb} = require('../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
-const comprobarIDempresadb = require('../comprobarIDs/comprobarIDempresa.js');
+const comprobarIDempresadb = require('./operacionesIDempresa.js');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarEmpresaVerificadadb = async (data, password, res) => {
@@ -20,7 +20,7 @@ const registrarEmpresaVerificadadb = async (data, password, res) => {
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     //-- Establecer la comunicación de insertar y consultar datos en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
+    madservicesEmpresadb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
         const cont = results[0].count;
         const emailExiste = cont > 0;
@@ -41,7 +41,7 @@ const registrarEmpresaVerificadadb = async (data, password, res) => {
             let instruccionRegistrarse = "INSERT INTO empresas (id, email, password, nombre, nif, tipoEmpresa, ebitda) VALUES (?, ?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.email, passwordCifrada, data.nombredelaempresa, data.nif, data.tipoEmpresa, data.ebitda]);
-            madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
+            madservicesEmpresadb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
             });
@@ -57,7 +57,7 @@ const iniciarSesionEmpresaVerificadadb = (email, password, req, res) => {
     //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
     let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultarEmail, (error, results) => {
+    madservicesEmpresadb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
             res.status(401).render('paginas/empresaLogin', { mensaje: 'Correo electrónico incorrecto' });
@@ -71,7 +71,7 @@ const iniciarSesionEmpresaVerificadadb = (email, password, req, res) => {
                     //-- Configuración del formato del tipo de empresa.
                     let formatoinstruccionConsultarTipoEmpresa = mysql.format(instruccionConsultarTipoEmpresa, [email]);
                     //-- Establecemos la comunicación con el tipo de empresa de la base de datos.
-                    madservicesdb.query(formatoinstruccionConsultarTipoEmpresa, (error, salida) => {
+                    madservicesEmpresadb.query(formatoinstruccionConsultarTipoEmpresa, (error, salida) => {
                         if(error) throw error;
                         const seleccionTipoEmpresa = salida[0];
                         switch(seleccionTipoEmpresa) {
@@ -136,10 +136,10 @@ const actualizarEmpresadb = async (madservicesdb, data) => {
     let actualizarquery = "UPDATE empresas SET email = ? WHERE id = ?";
     let query = mySQL.format(actualizarquery, [newEmail, data.id]);
     //-- Establecer la conexión dinámica.
-    await madservicesdb.getConnection(function(error, madservicesdb) {
+    await madservicesEmpresadb.getConnection(function(error, madservicesdb) {
         if(error) throw error;
         //-- Establecer la configuración de actualizar los datos de la base de datos.
-        madservicesdb.query(query);
+        madservicesEmpresadb.query(query);
     });
 }
 
@@ -149,10 +149,10 @@ const darseBajaEmpresadb = async (madservicesdb, data) => {
     let instruccionDarseBajaEmpresa = "DELETE FROM empresas WHERE email = ?";
     let formatoinstruccionDarseBajaEmpresa = mySQL.format(instruccionDarseBajaEmpresa, [data.email]);
     //-- Establecer la conexión dinámica.
-    await madservicesdb.getConnection(function(error, madservicesdb) {
+    await madservicesEmpresadb.getConnection(function(error, madservicesdb) {
         if(error) throw error;
         //-- Establecer la configuración de borrar los datos de la base de datos.
-        madservicesdb.query(formatoinstruccionDarseBajaEmpresa);
+        madservicesEmpresadb.query(formatoinstruccionDarseBajaEmpresa);
     });
 }
 

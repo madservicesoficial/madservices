@@ -6,10 +6,14 @@ var rutasPost = servidor.Router();
 const registroClientes = require('../ptoControl/registroClientes.js');
 //-- Importamos el Controlador del Registro de las Empresas.
 const registroEmpresas = require('../ptoControl/registroEmpresas.js');
+//-- Importamos el Controlador del Registro de los Miembros MAD.
+const registroMiembroMAD = require('../ptoControl/registroMiembroMAD.js');
 //-- Importamos el Controlador del Inicio de Sesión de los Clientes.
 const loginClientes = require('../ptoControl/loginClientes.js');
 //-- Importamos el Controlador del Inicio de Sesión de las Empresas.
 const loginEmpresas = require('../ptoControl/loginEmpresas.js');
+//-- Importamos el Controlador del Inicio de Sesión de los Miembros MAD.
+const loginMiembroMAD = require('../ptoControl/loginMiembroMAD.js');
 //-- Importamos la función para autorizar como Miembro MAD para Registro.
 const autorizacionMiembroMADRegistro = require('../ptoControl/autorizacionMiembroMADRegistro.js');
 //-- Importamos la función para autorizar como Miembro MAD para Login.

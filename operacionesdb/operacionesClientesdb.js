@@ -2,14 +2,14 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const madservicesdb = require('../config/database.js');
+const {madservicesClientedb} = require('../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const bcrypt = require('bcrypt');
 const { hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
-const comprobarIDclientedb = require('../comprobarIDs/comprobarIDcliente.js');
+const comprobarIDclientedb = require('./operacionesIDcliente.js');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarClienteVerificadodb = async (data, res) => {
@@ -21,7 +21,7 @@ const registrarClienteVerificadodb = async (data, res) => {
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
     //-- Establecer la comunicación de consultar Email en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultar, (error, results) => {
+    madservicesClientedb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
         const cont = results[0].count;
         const emailExiste = cont > 0;
@@ -42,7 +42,7 @@ const registrarClienteVerificadodb = async (data, res) => {
             let instruccionRegistrarse = "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
-            madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
+            madservicesClientedb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
             });
@@ -58,7 +58,7 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
     //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
     let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
-    madservicesdb.query(formatoInstruccionConsultarEmail, (error, results) => {
+    madservicesClientedb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
             res.status(401).render('paginas/clienteLogin', { mensaje: 'Correo electrónico incorrecto' });
@@ -99,7 +99,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayCliente.hayNombreCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarNombre);
+        madservicesClientedb.query(formatoInstruccionActualizarNombre);
     }
     if(hayCliente.hayApellidosCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -107,7 +107,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayCliente.hayApellidosCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarApellidos);
+        madservicesClientedb.query(formatoInstruccionActualizarApellidos);
     }
     if(hayCliente.hayGeneroCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -115,7 +115,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayCliente.hayGeneroCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarGenero);
+        madservicesClientedb.query(formatoInstruccionActualizarGenero);
     }
     if(hayCliente.hayEmailCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -123,7 +123,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayCliente.hayEmailCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarEmail);
+        madservicesClientedb.query(formatoInstruccionActualizarEmail);
     }
     if(hayCliente.hayDireccionCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -131,7 +131,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [hayCliente.hayDireccionCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarDireccion);
+        madservicesClientedb.query(formatoInstruccionActualizarDireccion);
     }
     if(hayCliente.hayPoblacionCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -139,7 +139,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [hayCliente.hayPoblacionCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarPoblacion);
+        madservicesClientedb.query(formatoInstruccionActualizarPoblacion);
     }
     if(hayCliente.hayRegionCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -147,7 +147,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [hayCliente.hayRegionCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarRegion);
+        madservicesClientedb.query(formatoInstruccionActualizarRegion);
     }
     if(hayCliente.hayPaisCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -155,7 +155,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [hayCliente.hayPaisCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarPais);
+        madservicesClientedb.query(formatoInstruccionActualizarPais);
     }
     if(hayCliente.hayCPCliente) {
         //-- Instrucción para actualizar en la base de datos.
@@ -163,7 +163,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
         let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [hayCliente.hayCPCliente, data.id]);
         //-- Proceso de actualización en base de datos.
-        madservicesdb.query(formatoInstruccionActualizarCP);
+        madservicesClientedb.query(formatoInstruccionActualizarCP);
     }
 }
 
@@ -177,7 +177,7 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
         //-- Configuración del formato para consultar contraseña dado el id.
         let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [id]);
         //-- Proceso de consulta de contraseña.
-        madservicesdb.query(formatoInstruccionConsultarPasswordPerfil, (error, results) => {
+        madservicesClientedb.query(formatoInstruccionConsultarPasswordPerfil, (error, results) => {
             if(error) throw error;
             const passwordEnDatabase = results[0].password;
             bcrypt.compare(oldpassword, passwordEnDatabase).then( async (match) => {
@@ -191,13 +191,13 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
                         let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
                         //-- Proceso de actualización en base de datos.
-                        madservicesdb.query(formatoInstruccionActualizarANuevaPassword);
+                        madservicesClientedb.query(formatoInstruccionActualizarANuevaPassword);
                         //-- Instrucción consultar para mostrar.
                         let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
                         //-- Configuración del formato de la instrucción.
                         let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
                         //-- Proceso de la consulta.
-                        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+                        madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
                             if(error) throw error;
                             const tablaCliente = resultado[0];
                             res.status(201).render('paginas/perfilClientes',
@@ -223,7 +223,7 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                         //-- Configuración del formato de la instrucción.
                         let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
                         //-- Proceso de la consulta.
-                        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
+                        madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
                             if(error) throw error;
                             const tablaCliente = result[0];
                             res.status(401).render('paginas/perfilClientes', 
@@ -251,7 +251,7 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                     //-- Configuración del formato de la instrucción.
                     let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
                     //-- Proceso de la consulta.
-                    madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
+                    madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
                         if(error) throw error;
                         const tablaCliente = field[0];
                         res.status(401).render('paginas/perfilClientes', 
@@ -281,7 +281,7 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
         //-- Configuración del formato de la instrucción.
         let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
         //-- Proceso de la consulta.
-        madservicesdb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
+        madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
             if(error) throw error;
             const tablaCliente = fields[0];
             res.status(201).render('paginas/perfilClientes',
@@ -310,7 +310,7 @@ const darseBajaClientedb = (id, req, res) => {
     let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
     let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
     //-- Establecer la configuración de borrar los datos de la base de datos.
-    madservicesdb.query(formatoinstruccionDarseBajaCliente);
+    madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
     //-- Redireccionar a Inicio por darse de baja y destruir sesión.
     req.session.destroy();
     res.redirect('/');

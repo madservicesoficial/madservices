@@ -1,7 +1,7 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
 const { darseBajaClientedb } = require('../operacionesdb/operacionesClientesdb.js');
 //-- Importamos la función para sacar y mostrar los campos del cliente.
-const sacarParametrosClientedb = require('../sacarParametros/sacarParametrosClientes.js');
+const sacarParametrosClientedb = require('../operacionesdb/operacionesParametrosClientes.js');
 
 //-- Creamos el Punto de Control para configurar el darse de baja del cliente.
 const darseBajaCliente = {}

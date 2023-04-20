@@ -3,9 +3,9 @@ var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
 //-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
-const sacarParametrosClientedb = require('../sacarParametros/sacarParametrosClientes.js');
+const sacarParametrosClientedb = require('../operacionesdb/operacionesParametrosClientes.js');
 //-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
-const sacarParametrosEmpresadb = require('../sacarParametros/sacarParametrosEmpresas.js');
+const sacarParametrosEmpresadb = require('../operacionesdb/operacionesParametrosEmpresas.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
