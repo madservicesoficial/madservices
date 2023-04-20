@@ -42,7 +42,7 @@ const registrarMiembroMADVerificadodb = async (data, res) => {
             let instruccionRegistrarse = "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idMiembroMAD, data.nombreMiembro, data.apellidosMiembro, data.generoMiembro, data.emailMiembro, passwordCifradaMiembroMAD]);
-            madservicesdb.query(formatoInstruccionRegistrarse, (error) => {
+            madservicesAdmindb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
                 return res.redirect('/');
             });
