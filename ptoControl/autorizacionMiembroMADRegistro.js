@@ -12,8 +12,11 @@ autorizacionMiembroMADRegistro.autorizacionMiembroMADRegistro = async (req, res)
     if(passwordMAD === process.env.MYSQL_PASSWORD_ADMIN) {
         res.redirect('/registrarse/miembroMAD');
         return res.end();
+    }else if(!passwordMAD) {
+        res.status(401).render('paginas/autorizacionMiembroMADRegistro', {msjError: 'Campo vacío'});
+        return res.end();
     }else {
-        res.render('paginas/autorizacionMiembroMADRegistro', {msjError: 'Contraseña incorrecta'});
+        res.status(401).render('paginas/autorizacionMiembroMADRegistro', {msjError: 'Contraseña incorrecta'});
         return res.end();
     }
 }
