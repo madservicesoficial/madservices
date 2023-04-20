@@ -45,6 +45,12 @@ rutasGet.get('/login/empresa', (req, res) => {
   return res.end();
 });
 
+//-- Ruta a la Sección de Iniciar Sesión como Miembro MAD.
+rutasGet.get('/login/miembroMAD', (req, res) => {
+  res.render('paginas/miembroMADlogin');
+  return res.end();
+});
+
 //-- Ruta a la Sección de Registrarse como Cliente o como Empresa.
 rutasGet.get('/registrarse', (req, res) => {
   res.render('paginas/registrarse');
@@ -60,6 +66,24 @@ rutasGet.get('/registrarse/cliente', (req, res) => {
 //-- Ruta a la Sección de Registrarse como Empresa.
 rutasGet.get('/registrarse/empresa', (req, res) => {
   res.render('paginas/empresaRegistrarse');
+  return res.end();
+});
+
+//-- Ruta a la Sección de Registrarse como Miembro MAD.
+rutasGet.get('/registrarse/miembroMAD', (req, res) => {
+  res.render('paginas/miembroMADregistrarse');
+  return res.end();
+});
+
+//-- Ruta a autorizar al miembro MAD en Registrarse.
+rutasGet.get('/registrarse/autorizarR-miembroMAD', (req, res) => {
+  res.render('paginas/autorizacionMiembroMADRegistro');
+  return res.end();
+});
+
+//-- Ruta a autorizar al miembro MAD en Iniciar Sesión.
+rutasGet.get('/login/autorizarL-miembroMAD', (req, res) => {
+  res.render('paginas/autorizacionMiembroMADLogin');
   return res.end();
 });
 
@@ -190,9 +214,21 @@ rutasGet.get('/sesion-empresa/:id/perfil', (req,res) => {
   );
 });
 
+//-- Ruta a la Sección de los Productos MAD.
+rutasGet.get('/categorias/productosMAD', (req, res) => {
+  res.render('paginas/productosMAD');
+  return res.end();
+});
+
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
 rutasGet.get('/sesion-cliente/:id/categorias/productosMAD', (req, res) => {
   res.render('paginas/productosMADcliente');
+  return res.end();
+});
+
+//-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
+rutasGet.get('/sesion-empresa/:id/categorias/productosMAD', (req, res) => {
+  res.render('paginas/productosMADempresa');
   return res.end();
 });
 

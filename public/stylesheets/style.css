@@ -65,7 +65,7 @@ input[type=number]::-webkit-outer-spin-button {
 /*##################################################################################################*/
 #cabecera {
   width: 100%;
-  height: 7em;
+  height: 15%;
 }
 .menu {
   margin: 40 0 0 100;
@@ -301,12 +301,60 @@ footer {
 }
 #btnCliente {
   position: relative;
-  right: 133px;
+  right: 225px;
 }
 #btnEmpresa {
   position: relative;
-  left: 97px;
+  right: 15;
   bottom: 76px;
+}
+#btnMiembroMAD {
+  width: 220px;
+  position: relative;
+  bottom: 152;
+  left: 200;
+}
+/*##################################################################################################*/
+/*############################# PANTALLA AUTORIZACIÓN PARA MIEMBROS MAD ############################*/
+/*##################################################################################################*/
+.formularioAuthMiembroMAD {
+  margin: 325 0 0 575;
+  color: white;
+}
+.alertaAuth {
+  margin: 25 0 0 575;
+}
+.formularioAuthMiembroMAD input {
+  margin-top: 20;
+  margin-right: 20;
+  width: 225;
+}
+.formularioBtn1MiembroMAD {
+  margin: 40 0 0 775;
+}
+.formularioBtn1MiembroMAD button {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+}
+.formularioBtn1MiembroMAD button i {
+  position: relative;
+  right: 5px;
+}
+.formularioBtn2MiembroMAD {
+  margin: -40 0 0 725;
+}
+.formularioBtn2MiembroMAD button {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+}
+.formularioBtn2MiembroMAD button i {
+  position: relative;
+  right: 5px;
+}
+#iconosAuth {
+  color: white;
 }
 /*##################################################################################################*/
 /*############################### INICIAR SESIÓN: EMPRESA O CLIENTE ################################*/
@@ -537,6 +585,18 @@ footer {
   margin-left: 100px;
 }
 /*##################################################################################################*/
+/*#################################### REGISTRARSE: Miembro MAD ####################################*/
+/*##################################################################################################*/
+.fondoRegistrarseMiembroMAD {
+  background-color: black;
+}
+#posicionNombreMiembro {
+  margin-left: 180px;
+}
+#miembroMAD {
+  color: white;
+}
+/*##################################################################################################*/
 /*######################################## SECCIÓN CONTACTO ########################################*/
 /*##################################################################################################*/
 .contacto {
@@ -687,7 +747,6 @@ textarea {
 }
 .categoria {
   display: inline-block;
-  cursor: pointer;
   font-size: xx-large;
   box-sizing: border-box;
   align-items: center;
@@ -711,6 +770,13 @@ textarea {
   margin: 200 0 0 80;
 }
 canvas {
+  background-color: transparent;
+}
+.btnCanvas {
+  position: relative;
+  bottom: 400;
+  width: 400;
+  height: 400;
   background-color: transparent;
 }
 #imgMAD {
@@ -793,10 +859,46 @@ canvas {
   margin-left: 100;
 }
 /*##################################################################################################*/
-/*################################ SECCIÓN PRODUCTOS MAD: CLIENTE ##################################*/
+/*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
 /*##################################################################################################*/
-.seccionProductosMADcliente {
+.seccionProductosMAD {
   width: 100%;
   min-height: 130vh;
+  background-color: silver;
+}
+.cuadroProductosMAD {
+  display: inline-block;
+  margin: 70 0 0 0;
+  font-size: medium;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  place-items: center;
+  height: 800;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-radius: 20px;
+  border-color: goldenrod;
+  padding: 40px;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+#cuadroFiltro {
   background-color: white;
+  width: 300;
+  margin-left: -100;
+}
+#contenidoProductos {
+  background-color: black;
+  width: 1000;
+  margin-left: 100;
+}
+#tituloBusquedaMedida {
+  margin-bottom: 40;
+}
+.seccionFiltrado {
+  text-align: left;
+  position: relative;
+  right: 50;
+  width: 280;
 }

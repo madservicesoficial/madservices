@@ -7,12 +7,14 @@ block title
 block body
     include ../componentes/cabeceraAuthCliente.pug
     div.categoriasSeccion
-        form(method='GET' action=`/sesion-cliente/${id}/categorias/productosMAD`)
-            div.categoria#productosMAD='Productos MAD'
+        div.categoria#productosMAD='Productos MAD'
+            form(method='GET' action=`/sesion-cliente/${id}/categorias/productosMAD`)
                 canvas#marcaMAD
                 img#imgMAD(src='/images/madservices.png' alt='madservices')
-        form(method='GET' action=`/sesion-cliente/${id}/categorias/mall`)
-            div.categoria#restoMarcas='Resto de marcas'
+                button.btnCanvas
+        div.categoria#restoMarcas='Resto de marcas'
+            form(method='GET' action=`/sesion-cliente/${id}/categorias/mall`)
                 canvas#multiMarca
                 img#imgMulti(src='/images/multimarca.png' alt='multimarca')
+                button.btnCanvas
     include ../componentes/piepaginaAuthCliente.pug
