@@ -9,7 +9,7 @@ autorizacionMiembroMADRegistro.autorizacionMiembroMADRegistro = async (req, res)
     //-- Introducir correctamente la contraseña para poder acceder.
     const passwordMAD = req.body.passwordMAD;
     //-- Condición de haber metido correctamente la contraseña.
-    if(passwordMAD === process.env.MYSQL_PASSWORD) {
+    if(passwordMAD === process.env.MYSQL_PASSWORD_ADMIN) {
         res.redirect('/registrarse/miembroMAD');
         return res.end();
     }else {
