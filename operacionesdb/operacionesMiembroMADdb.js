@@ -78,4 +78,4 @@ const iniciarSesionMiembroMADVerificadodb = (emailMiembro, passwordMiembro, req,
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarMiembroMADVerificadodb, iniciarSesionMiembroMADVerificadodb, actualizarMiembroMADVerificadodb, mostrarMiembroMADVerificadodb, darseBajaMiembroMADdb};
+module.exports = {registrarMiembroMADVerificadodb, iniciarSesionMiembroMADVerificadodb};
