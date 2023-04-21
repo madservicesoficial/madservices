@@ -9,11 +9,11 @@ div#cabecera
       input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
       button(type='submit')='Buscar'
     li.menu
-      form(method='GET' action=`/sesion-empresa/${id}/perfil`)
-        button.btnOculto='Mi Perfil'
+      form(method='GET' action=`/sesion-empresa/${id}/interfaz`)
+        button.btnOculto#posMiInterfaz='Mi Interfaz'
     li.menu
       form(method='GET' action='/')
-        button.btnOculto='Cerrar sesión'
+        button.btnOculto#posCerrarSesion='Cerrar sesión'
     li.menu#despliegue
       button#btnCarrito
         i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab

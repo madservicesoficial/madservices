@@ -1,16 +1,16 @@
-//-- Contenido del Componente Cabecera Autenticada para Clientes del Comercio Electrónico MAD Services.
+//-- Contenido del Componente Cabecera Autenticada para Miembros MAD del Comercio Electrónico MAD Services.
 div#cabecera
   ul.nav
     li
-      form(method='GET' action=`/sesion-cliente/${id}`)
+      form(method='GET' action=`/sesion-mad/MAD${id}`)
         button.btnMADServices
-          img.logoMADServices(src='/images/madforclients.png' alt='madservices')
+          img.logoMADServices(src='/images/madservices.png' alt='madservices')
     li.menu
       input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
       button(type='submit')='Buscar'
     li.menu
-      form(method='GET' action=`/sesion-cliente/${id}/perfil`)
-        button.btnOculto#posMiInterfaz='Mi Perfil'
+      form(method='GET' action=`/sesion-mad/MAD${id}/interfaz`)
+        button.btnOculto#posMiInterfaz='Mi Interfaz'
     li.menu
       form(method='GET' action='/')
         button.btnOculto#posCerrarSesion='Cerrar sesión'

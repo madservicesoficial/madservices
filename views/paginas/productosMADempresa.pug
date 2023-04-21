@@ -6,5 +6,14 @@ block title
 
 block body
     include ../componentes/cabeceraAuthEmpresa.pug
-    div.seccionProductosMADcliente
+    div.seccionProductosMAD
+        div.cuadroProductosMAD#cuadroFiltro
+            h3#tituloBusquedaMedida='Búsqueda a medida:'
+            ul 
+                li.seccionFiltrado='Por tipo de empresa:'
+                li.seccionFiltrado='Por nombre de empresa:'
+                li.seccionFiltrado='Por producto o servicio:'
+                li.seccionFiltrado='Por nombre del producto:'
+                li.seccionFiltrado='Por precio del producto:'
+        div.cuadroProductosMAD#contenidoProductos
     include ../componentes/piepaginaAuthEmpresa.pug
