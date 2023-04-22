@@ -67,55 +67,16 @@ const iniciarSesionEmpresaVerificadadb = (email, password, req, res) => {
             compare(password, miembro.password).then((result) => {
                 if(result) {
                     //-- Instrucción para consultar el tipo de empresa en la base de datos.
-                    let instruccionConsultarTipoEmpresa = 'SELECT tipoEmpresa FROM empresas WHERE email = ?';
+                    let instruccionConsultarTipoEmpresa = 'SELECT * FROM empresas WHERE email = ?';
                     //-- Configuración del formato del tipo de empresa.
                     let formatoinstruccionConsultarTipoEmpresa = mysql.format(instruccionConsultarTipoEmpresa, [email]);
                     //-- Establecemos la comunicación con el tipo de empresa de la base de datos.
                     madservicesEmpresadb.query(formatoinstruccionConsultarTipoEmpresa, (error, salida) => {
                         if(error) throw error;
-                        const seleccionTipoEmpresa = salida[0];
-                        switch(seleccionTipoEmpresa) {
-                            case 'Restaurante':
-                                const codigoR = 'R';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoR}${miembro.id}`);
-                            case 'Educación':
-                                const codigoE = 'E';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoE}${miembro.id}`);
-                            case 'Ventas':
-                                const codigoV = 'V';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoV}${miembro.id}`);
-                            case 'Peluquería':
-                                const codigoPQ = 'PQ';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoPQ}${miembro.id}`);
-                            case 'Agencia de Viajes':
-                                const codigoTravelAgency = 'TravelAgency';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoTravelAgency}${miembro.id}`);
-                            case 'Cine':
-                                const codigoCine = 'Cine';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoCine}${miembro.id}`);
-                            case 'Teatro':
-                                const codigoTeatro = 'Teatro';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoTeatro}${miembro.id}`);
-                            case 'Portal de Música':
-                                const codigoMusicPortal = 'MusicPortal';
-                                //-- Establecemos el inicio de sesión.
-                                req.session.miembro = miembro;
-                                return res.redirect(`/sesion-empresa/${codigoMusicPortal}${miembro.id}`);
-                        }
+                        const seleccionTipoEmpresa = salida[0].tipoEmpresa;
+                        //-- Establecemos el inicio de sesión.
+                        req.session.miembro = miembro;
+                        return res.redirect(`/sesion-empresa/${seleccionTipoEmpresa}${miembro.id}`);
                     });
                 }else {
                     res.status(401).render('paginas/empresaLogin', { mensaje: 'Contraseña incorrecta' });

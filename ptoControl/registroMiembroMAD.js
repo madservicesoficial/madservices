@@ -7,14 +7,14 @@ const registroMiembroMAD = {}
 registroMiembroMAD.miembroMADregistrarse = (req, res) => {
 
     //-- Obtenemos los campos de entrada del Registro de los Miembros MAD.
-    const nombreMiembro = req.body.nombreMiembro;
-    const apellidosMiembro = req.body.apellidosMiembro;
+    const miembro = req.body.miembro;
+    const tipoDepartamento = req.body.tipoDepartamento;
     const generoMiembro = req.body.generoMiembro;
     const emailMiembro = req.body.emailMiembro; 
     const passwordMiembro = req.body.passwordMiembro;
     const confirmPasswordMiembro = req.body.confirmPasswordMiembro;
     //-- Comprobamos que ningún campo está vacío.
-    if(!nombreMiembro || !apellidosMiembro || !generoMiembro || !emailMiembro || !passwordMiembro || !confirmPasswordMiembro) {
+    if(!miembro || !tipoDepartamento || !generoMiembro || !emailMiembro || !passwordMiembro || !confirmPasswordMiembro) {
         res.status(401).render('paginas/miembroMADregistrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }
@@ -26,7 +26,7 @@ registroMiembroMAD.miembroMADregistrarse = (req, res) => {
     //-- Registramos el Miembro MAD en la base de datos de MAD Services, verificando que no existía ya.
     registrarMiembroMADVerificadodb
     (
-        {nombreMiembro: nombreMiembro, apellidosMiembro: apellidosMiembro, generoMiembro: generoMiembro, emailMiembro: emailMiembro,
+        {miembro: miembro, tipoDepartamento: tipoDepartamento, generoMiembro: generoMiembro, emailMiembro: emailMiembro,
         passwordMiembro: passwordMiembro, confirmPasswordMiembro: confirmPasswordMiembro},
         res
     );

@@ -8,8 +8,8 @@ actualizarInterfazMiembroMAD.interfazMiembroMAD = (req, res) => {
 
     //-- Introducción de los campos de la interfaz del Miembro MAD para organizar en base de datos.
     let id = req.params.id;
-    const nombre = req.body.nombreMiembroMAD;
-    const apellidos = req.body.apellidosMiembroMAD;
+    const miembro = req.body.miembro;
+    const tipoDepartamento = req.body.tipoDepartamento;
     const genero = req.body.generoMiembroMAD;
     const email = req.body.emailMiembroMAD;
     const oldpassword = req.body.oldpasswordMiembroMAD;
@@ -18,7 +18,7 @@ actualizarInterfazMiembroMAD.interfazMiembroMAD = (req, res) => {
     //-- Actualizamos todos los campos menos la contraseña.
     actualizarMiembroMADVerificadodb
     (
-        {id: id, nombre: nombre, apellidos: apellidos, genero: genero, email: email}
+        {id: id, miembro: miembro, tipoDepartamento: tipoDepartamento, genero: genero, email: email}
     );
     //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
     mostrarMiembroMADVerificadodb

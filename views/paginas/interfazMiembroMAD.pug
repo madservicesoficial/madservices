@@ -8,7 +8,7 @@ block body
     include ../componentes/cabeceraAuthMiembroMAD.pug
     div.perfilCliente
         br
-        h1.tituloPerfil=`Interfaz del Miembro MAD: ${nombre} ${apellidos}: `
+        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}:`
         div#perfilMiembroMADIzquierda
             h3='Actualización de campos: '
             //-- Contenido de las alertas.
@@ -20,13 +20,21 @@ block body
                 p.alertaAct#enVerde=msjActualizacion
             form(method='POST' action=`/sesion-mad/MAD${id}/interfaz/actualizar-miembroMAD`)
                 input(type='hidden' name='_method' value='PATCH')
-                label='Nombre: '
-                input.entradasNoRadio(type='text' name='nombreMiembroMAD' placeholder='Escribe tu nombre....')
+                label='Miembro: '
+                input.camposRegistro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
                 br
                 br
                 br
-                label='Apellidos: '
-                input.entradasNoRadio(type='text' name='apellidosMiembroMAD' placeholder='Escribe tus dos apellidos....')
+                label='Departamento: '
+                    select.camposRegistro#designTipoDept(name='tipoDepartamento')
+                        option(checked)=''
+                        option='Dirección'
+                        option='Administración'
+                        option='Ciberseguridad'
+                        option='Ingeniería'
+                        option='RRHH'
+                        option='Ventas'
+                        option='Economía'
                 br
                 br
                 br
@@ -69,12 +77,12 @@ block body
                         label='El identificador/ID oficial: ' + id
                         br
                         br
-                    if nombre
-                        label='Nombre: ' + nombre
+                    if miembro
+                        label='Miembro: ' + miembro
                         br
                         br
-                    if apellidos
-                        label='Apellidos: ' + apellidos
+                    if departamento
+                        label='Departamento: ' + departamento
                         br
                         br
                     if genero

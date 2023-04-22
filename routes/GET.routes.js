@@ -230,7 +230,7 @@ rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
   );
 });
 
-//-- Ruta a la Sección del Perfil de las Empresas de MAD Services.
+//-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
 rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
   let id = req.params.id;
   sacarParametrosEmpresadb
@@ -251,7 +251,7 @@ rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
   );
 });
 
-//-- Ruta a la Sección del Perfil de los Miembros MAD de MAD Services.
+//-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
 rutasGet.get('/sesion-mad/MAD:id/interfaz', (req,res) => {
   let id = req.params.id;
   sacarParametrosMiembroMADdb
@@ -261,8 +261,8 @@ rutasGet.get('/sesion-mad/MAD:id/interfaz', (req,res) => {
         res.render('paginas/interfazMiembroMAD', 
         {
           id: id,
-          nombre: tablaMiembroMAD.nombre,
-          apellidos: tablaMiembroMAD.apellidos,
+          miembro: tablaMiembroMAD.miembro,
+          departamento: tablaMiembroMAD.departamento,
           genero: tablaMiembroMAD.genero,
           email: tablaMiembroMAD.email,
           password: tablaMiembroMAD.password

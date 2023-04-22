@@ -597,10 +597,19 @@ footer {
   background-color: black;
 }
 #posicionNombreMiembro {
-  margin-left: 180px;
+  margin-left: 165px;
 }
 #miembroMAD {
   color: white;
+}
+#etiquetagenero {
+  position: relative;
+  bottom: 5;
+}
+#posTipoDepartamento {
+  margin-left: 125;
+  border-radius: 10px;
+  height: 25px;
 }
 /*##################################################################################################*/
 /*######################################## SECCIÓN CONTACTO ########################################*/
@@ -883,6 +892,10 @@ canvas {
   margin: 50 0 0 100;
   height: 600px;
   width: 1340px;
+}
+#designTipoDept {
+  border-radius: 10px;
+  height: 25;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/

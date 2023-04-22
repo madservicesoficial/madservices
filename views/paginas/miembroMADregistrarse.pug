@@ -2,7 +2,7 @@
 extends ../base.pug
 
 block title
-    title='MAD Services: Registrar miembros MAD'
+    title='MAD Services: Registrar Miembros MAD'
 
 block body
     div.fondoRegistrarseMiembroMAD
@@ -13,22 +13,29 @@ block body
             if mensaje
                 p.alerta#enRojo=mensaje
             form.formRegistro(method="POST" action='/registrarse/miembroMAD')
-                label='Nombre: '
-                input.camposRegistro#posicionNombreMiembro(type='text' name='nombreMiembro' placeholder='Introduce el nombre de la Empresa....')
+                label='Miembro: '
+                input.camposRegistro#posicionNombreMiembro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
                 br
                 br
-                label='Apellidos: '
-                    span
-                        input.camposRegistro#posicionApellidos(type='text' name='apellidosMiembro' placeholder='Escribe tus dos apellidos....')
+                label='Departamento: '
+                    select.camposRegistro#posTipoDepartamento(name='tipoDepartamento')
+                        option(checked)=''
+                        option='Dirección'
+                        option='Administración'
+                        option='Ciberseguridad'
+                        option='Ingeniería'
+                        option='RRHH'
+                        option='Ventas'
+                        option='Economía'
                 br
                 br
-                label='Género: '
+                label#etiquetagenero='Género: '
                     span.genero
                         input(type='radio' name='generoMiembro' value='Hombre')
                         label='Hombre'
                         input(type='radio' name='generoMiembro' value='Mujer')
                         label='Mujer'
-                        input(type='radio' name='generoMiembro' value='Otro' checked)
+                        input(type='radio' name='generoMiembro' value='Otro')
                         label='Otro'
                 br
                 br
