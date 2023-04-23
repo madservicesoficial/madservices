@@ -24,7 +24,7 @@ rutasPost.post('/login/cliente', iniciarSesionClientes.login);
 //-- Formulario de envío de datos para Iniciar Sesión como Empresa.
 rutasPost.post('/login/empresa', iniciarSesionEmpresas.login);
 //-- Formulario de autenticación como Miembro MAD para Login.
-rutasPost.post('/login/autorizar', autorizacionInicioSesionMiembros.autorizacionLogin);
+rutasPost.post('/login/autorizar', autorizacionInicioSesionMiembros.autorizacionInicioSesion);
 //-- Formulario de envío de datos para Iniciar Sesión como Miembro MAD.
 rutasPost.post('/login/autorizar/miembro', iniciarSesionMiembros.login);
 //-- Formulario de envío de datos para Registrarse como Cliente.

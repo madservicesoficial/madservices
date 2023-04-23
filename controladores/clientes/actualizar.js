@@ -4,7 +4,7 @@ const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('.
 //-- Creamos el Punto de Control para configurar la organización del perfil del cliente.
 const actualizarPerfilCliente = {}
 
-actualizarPerfilCliente.perfilClientes = (req, res) => {
+actualizarPerfilCliente.perfil = (req, res) => {
 
     //-- Introducción de los campos del perfil del cliente para organizar en base de datos.
     let id = req.params.id;
