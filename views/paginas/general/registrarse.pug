@@ -1,0 +1,19 @@
+//-- Contenido de la Sección Registrarse como Cliente, Empresa o Miembro MAD del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title='MAD Services: Elección de Registro'
+
+block body
+    div.pantallaOpcion
+        h1.tituloOpcion='REGISTRARSE COMO:'
+        ul
+            li.botonesEnLinea
+                form(method='GET' action='/registrarse/cliente')
+                    button.btnEleccion#btnCliente='Cliente'
+            li.botonesEnLinea
+                form(method='GET' action='/registrarse/empresa')
+                    button.btnEleccion#btnEmpresa='Empresa'
+            li.botonesEnLinea
+                form(method='GET' action='/registrarse/autorizar')
+                    button.btnEleccion#btnMiembroMAD='Miembro MAD'

@@ -1,0 +1,19 @@
+//-- Contenido de la Sección Productos MAD Autenticado del Cliente del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title=`${id} viendo Productos MAD`
+
+block body
+    include ./componentes/cabecera.pug
+    div.seccionProductosMAD
+        div.cuadroProductosMAD#cuadroFiltro
+            h3#tituloBusquedaMedida='Búsqueda a medida:'
+            ul 
+                li.seccionFiltrado='Por tipo de empresa:'
+                li.seccionFiltrado='Por nombre de empresa:'
+                li.seccionFiltrado='Por producto o servicio:'
+                li.seccionFiltrado='Por nombre del producto:'
+                li.seccionFiltrado='Por precio del producto:'
+        div.cuadroProductosMAD#contenidoProductos
+    include ./componentes/piepagina.pug

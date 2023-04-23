@@ -1,0 +1,20 @@
+//-- Contenido para autorizar con contraseña a los Miembros MAD para que inicien sesión en MAD Services.
+extends ../../base.pug
+
+block title
+    title='Autorización para Miembros MAD'
+
+block body
+    if msjError
+        p.alertaAuth#enRojo=msjError
+    form.formularioAuthMiembroMAD(method='POST' action='/login/autorizar')
+        label='Contraseña MAD:'
+        br
+        input(type="password" name='password' placeholder='Escribe la contraseña MAD....')
+        button='Acceso MAD'
+    form.formularioBtn1MiembroMAD(method='GET' action='/')
+        button
+            i.fa-solid.fa-house.fa-2xl#iconosAuth
+    form.formularioBtn2MiembroMAD(method='GET' action='/login')
+        button
+            i.fa-solid.fa-circle-left.fa-2xl#iconosAuth

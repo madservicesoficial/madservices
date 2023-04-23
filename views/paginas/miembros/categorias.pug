@@ -1,0 +1,20 @@
+//-- Contenido de la Sección Categorias Autenticado del Miembro MAD del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title=`MAD Services: ${id} en Categorias`
+
+block body
+    include ./componentes/cabecera.pug
+    div.categoriasSeccion
+        div.categoria#productosMAD='Productos MAD'
+            form(method='GET' action=`/sesion-miembro/${id}/categorias/productosmadservices`)
+                canvas#marcaMAD
+                img#imgMAD(src='/images/madservices.png' alt='madservices')
+                button.btnCanvas
+        div.categoria#restoMarcas='Resto de marcas'
+            form(method='GET' action=`/sesion-miembro/${id}/categorias/themall`)
+                canvas#multiMarca
+                img#imgMulti(src='/images/multimarca.png' alt='multimarca')
+                button.btnCanvas
+    include ./componentes/piepagina.pug

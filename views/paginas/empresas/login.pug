@@ -1,0 +1,34 @@
+//-- Contenido de la Sección Iniciar Sesión como Empresa del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title='MAD Services: Iniciar Sesión como Empresa'
+
+block body
+    h1.etiquetaLogin#Empresa='Empresa'
+    div.login
+        h1='INICIAR SESIÓN:'
+        img.madservicesLOGO(src='/images/madforcompanies.png' alt='madforcompanies')
+        //-- Contenido de las alertas.
+        if mensaje
+            p.alerta#enRojo=mensaje
+        form(method='POST' action='/login/empresa')
+            label.entradas#espaciadoEtiqueta(for="inputEmail")='E-mail:'
+            input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
+            label.entradas#espaciadoEtiqueta(for="inputPassword")='Contraseña:'
+            input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
+            button#btnAcceso(type='submit')='Acceder'
+        ul.otrosbtnLogin
+            li
+                ul
+                    li.dosbtnLogin
+                        form(method='GET' action='/login')
+                            button.btnOpcionesLogin#btnBackLogin
+                                i.fa-solid.fa-circle-left.fa-2xl#iconosLogin
+                    li.dosbtnLogin
+                        form(method='GET' action='/')
+                            button.btnOpcionesLogin#btnHomeLogin
+                                i.fa-solid.fa-house.fa-2xl#iconosLogin
+            li
+                form(method='GET' action='/registrarse/empresa')
+                    button.btnSinCuenta='¡No tengo cuenta!'

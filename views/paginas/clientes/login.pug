@@ -1,0 +1,34 @@
+//-- Contenido de la Sección Iniciar Sesión como Cliente del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title='MAD Services: Iniciar Sesión como Cliente'
+
+block body
+    h1.etiquetaLogin#Cliente='Cliente'
+    div.login
+        h1='INICIAR SESIÓN:'
+        img.madservicesLOGO(src='/images/madforclients.png' alt='madforclients')
+        //-- Contenido de las alertas.
+        if mensaje
+            p.alerta#enRojo=mensaje
+        form(method='POST' action='/login/cliente')
+            label.entradas#espaciadoEtiqueta(for="email")='E-mail:'
+            input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
+            label.entradas#espaciadoEtiqueta(for="password")='Contraseña:'
+            input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
+            button#btnAcceso(type='submit')='Acceder'
+        ul.otrosbtnLogin
+            li
+                ul
+                    li.dosbtnLogin
+                        form(method='GET' action='/login')
+                            button.btnOpcionesLogin#btnBackLogin
+                                i.fa-solid.fa-circle-left.fa-2xl#iconosLogin
+                    li.dosbtnLogin
+                        form(method='GET' action='/')
+                            button.btnOpcionesLogin#btnHomeLogin
+                                i.fa-solid.fa-house.fa-2xl#iconosLogin
+            li
+                form(method='GET' action='/registrarse/cliente')
+                    button.btnSinCuenta='¡No tengo cuenta!'
