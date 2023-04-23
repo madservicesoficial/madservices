@@ -19,14 +19,14 @@ block body
                 br
                 label='Departamento: '
                     select.camposRegistro#posTipoDepartamento(name='departamento')
-                        option(value='' checked)
-                        option(value='DIRECCION')
-                        option(value='ADMINISTRACION')
-                        option(value='CIBERSEGURIDAD')
-                        option(value='INGENIERIA')
-                        option(value='RRHH')
-                        option(value='VENTAS')
-                        option(value='ECONOMIA')
+                        option(checked)=''
+                        option='DIRECCION'
+                        option='ADMINISTRACION'
+                        option='CIBERSEGURIDAD'
+                        option='INGENIERIA'
+                        option='RRHH'
+                        option='VENTAS'
+                        option='ECONOMIA'
                 br
                 br
                 label#etiquetagenero='Género: '
@@ -63,5 +63,5 @@ block body
                             i.fa-solid.fa-circle-left.fa-2xl#iconosRegister
             ul.otrosbtnLogin
                 li 
-                    form(method='GET' action='/login/miembroMAD')
+                    form(method='GET' action='/login/autorizar/miembro')
                         button.btnSinCuenta='¡Ya tengo cuenta!'
