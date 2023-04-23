@@ -2,10 +2,10 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesClientedb} = require('../config/database.js');
+const {madservicesClientedb} = require('../../config/database.js');
 
 //-- Creamos la función que saca parámetros de la base de datos de los Clientes.
-function sacarParametrosClientedb(idCliente, callback) {
+function mostrarClientedb(idCliente, callback) {
 
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM clientes WHERE id = ?';
@@ -20,4 +20,4 @@ function sacarParametrosClientedb(idCliente, callback) {
 }
 
 //-- Exportamos las funciones.
-module.exports = sacarParametrosClientedb;
+module.exports = mostrarClientedb;

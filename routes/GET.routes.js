@@ -3,11 +3,11 @@ var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
 //-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
-const sacarParametrosClientedb = require('../operacionesdb/operacionesParametrosClientes.js');
+const mostrarClientedb = require('../modelos/clientes/mostrarCampos.js');
 //-- Importamos la función que comprueba el ID de las empresas y saca los parámetros.
-const sacarParametrosEmpresadb = require('../operacionesdb/operacionesParametrosEmpresas.js');
+const mostrarEmpresadb = require('../modelos/empresas/mostrarCampos.js');
 //-- Importamos la función que comprueba el ID de los Miembros MAD y saca los parámetros.
-const sacarParametrosMiembroMADdb = require('../operacionesdb/operacionesParametrosMiembrosMAD.js');
+const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -207,23 +207,23 @@ rutasGet.get('/sesion-miembro/:id/categorias', (req,res) => {
 //-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
 rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
   let id = req.params.id;
-  sacarParametrosClientedb
+  mostrarClientedb
   (
     id,
-    (tablaClientes) => {
+    (tablaCliente) => {
         res.render('paginas/clientes/perfil', 
         {
           id: id,
-          email: tablaClientes.email,
-          password: tablaClientes.password,
-          nombre: tablaClientes.nombre,
-          apellidos: tablaClientes.apellidos,
-          direccion: tablaClientes.direccion,
-          poblacion: tablaClientes.poblacion,
-          region: tablaClientes.region,
-          pais: tablaClientes.pais,
-          cp: tablaClientes.cp,
-          genero: tablaClientes.genero
+          email: tablaCliente.email,
+          password: tablaCliente.password,
+          nombre: tablaCliente.nombre,
+          apellidos: tablaCliente.apellidos,
+          direccion: tablaCliente.direccion,
+          poblacion: tablaCliente.poblacion,
+          region: tablaCliente.region,
+          pais: tablaCliente.pais,
+          cp: tablaCliente.cp,
+          genero: tablaCliente.genero
         });
         return res.end();
     }
@@ -233,19 +233,19 @@ rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
 //-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
 rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
   let id = req.params.id;
-  sacarParametrosEmpresadb
+  mostrarEmpresadb
   (
     id,
-    (tablaEmpresas) => {
+    (tablaEmpresa) => {
         res.render('paginas/empresas/interfaz', 
         {
           id: id,
-          email: tablaEmpresas.email,
-          password: tablaEmpresas.password,
-          marca: tablaEmpresas.marca,
-          nif: tablaEmpresas.nif,
-          tipo: tablaEmpresas.tipo,
-          ebitda: tablaEmpresas.ebitda
+          email: tablaEmpresa.email,
+          password: tablaEmpresa.password,
+          marca: tablaEmpresa.marca,
+          nif: tablaEmpresa.nif,
+          tipo: tablaEmpresa.tipo,
+          ebitda: tablaEmpresa.ebitda
         });
         return res.end();
     }
@@ -255,18 +255,18 @@ rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
 //-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
 rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
   let id = req.params.id;
-  sacarParametrosMiembroMADdb
+  mostrarMiembrodb
   (
     id,
-    (tablaMiembroMAD) => {
+    (tablaMiembro) => {
         res.render('paginas/miembros/interfaz', 
         {
           id: id,
-          email: tablaMiembroMAD.email,
-          password: tablaMiembroMAD.password,
-          miembro: tablaMiembroMAD.miembro,
-          departamento: tablaMiembroMAD.departamento,
-          genero: tablaMiembroMAD.genero
+          email: tablaMiembro.email,
+          password: tablaMiembro.password,
+          miembro: tablaMiembro.miembro,
+          departamento: tablaMiembro.departamento,
+          genero: tablaMiembro.genero
         });
         return res.end();
     }
