@@ -68,7 +68,7 @@ const iniciarSesionMiembroMADVerificadodb = (emailMiembro, passwordMiembro, req,
             bcrypt.compare(passwordMiembro, miembro.password).then((match) => {
                 if(match) {
                     req.session.miembro = miembro;
-                    return res.redirect(`/sesion-mad/MAD${miembro.id}`);
+                    return res.redirect(`/sesion-mad/${miembro.departamento}${miembro.id}`);
                 }else {
                     res.status(401).render('paginas/miembroMADlogin', { mensaje: 'Contraseña incorrecta' });
                     return res.end();

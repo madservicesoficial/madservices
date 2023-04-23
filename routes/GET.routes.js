@@ -23,17 +23,30 @@ rutasGet.get('/sesion-cliente/:id', (req, res) => {
 });
 
 //-- Ruta al Inicio Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id', (req, res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/inicioAuthEmpresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/inicioAuthEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta al Inicio Autenticado del Miembro MAD de MAD Services.
-rutasGet.get('/sesion-mad/MAD:id', (req, res) => {
+rutasGet.get('/sesion-mad/:departamento:id', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/inicioAuthMiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      const departamento = tablaMiembroMAD.departamento;
+      res.render('paginas/inicioAuthMiembroMAD', {id: id, departamento: departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente o como Empresa.
@@ -110,17 +123,29 @@ rutasGet.get('/sesion-cliente/:id/contacto', (req, res) => {
 });
 
 //-- Ruta a la Sección de Contacto Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/contacto', (req, res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/contacto', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/contactoAuthEmpresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/contactoAuthEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Contacto Autenticado del Miembro MAD.
-rutasGet.get('/sesion-mad/MAD:id/contacto', (req, res) => {
+rutasGet.get('/sesion-mad/:departamento:id/contacto', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/contactoAuthMiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      res.render('paginas/contactoAuthMiembroMAD', {id: id, departamento: tablaMiembroMAD.departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Trabaja con Nosotros.
@@ -137,17 +162,29 @@ rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => {
 });
 
 //-- Ruta a la Sección de Trabaja con Nosotros Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/empleo', (req, res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/empleo', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/empleoAuthEmpresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/empleoAuthEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Trabaja con Nosotros Autenticado del Miembro MAD.
-rutasGet.get('/sesion-mad/MAD:id/empleo', (req, res) => {
+rutasGet.get('/sesion-mad/:departamento:id/empleo', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/empleoAuthMiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      res.render('paginas/empleoAuthMiembroMAD', {id: id, departamento: tablaMiembroMAD.departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Sobre MAD Services.
@@ -164,17 +201,29 @@ rutasGet.get('/sesion-cliente/:id/conoceMADs', (req, res) => {
 });
 
 //-- Ruta a la Sección de Sobre MAD Services Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/conoceMADs', (req, res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/conoceMADs', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/conoceMADsAuthEmpresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/conoceMADsAuthEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Sobre MAD Services Autenticado del Miembro MAD.
-rutasGet.get('/sesion-mad/MAD:id/conoceMADs', (req, res) => {
+rutasGet.get('/sesion-mad/:departamento:id/conoceMADs', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/conoceMADsAuthMiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      res.render('paginas/conoceMADsAuthMiembroMAD', {id: id, departamento: tablaMiembroMAD.departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Categorias de MAD Services.
@@ -191,17 +240,29 @@ rutasGet.get('/sesion-cliente/:id/categorias', (req,res) => {
 });
 
 //-- Ruta a la Sección de Categorias Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id/categorias', (req,res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/categorias', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/categoriasAuthEmpresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/categoriasAuthEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de Categorias Autenticado del Miembro MAD de MAD Services.
-rutasGet.get('/sesion-mad/MAD:id/categorias', (req,res) => {
+rutasGet.get('/sesion-mad/:departamento:id/categorias', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/categoriasAuthMiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      res.render('paginas/categoriasAuthMiembroMAD', {id: id, departamento: tablaMiembroMAD.departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
@@ -231,7 +292,7 @@ rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
 });
 
 //-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
-rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/interfaz', (req,res) => {
   let id = req.params.id;
   sacarParametrosEmpresadb
   (
@@ -244,7 +305,8 @@ rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
           nif: tablaEmpresas.nif,
           email: tablaEmpresas.email,
           password: tablaEmpresas.password,
-          tiposoc: tablaEmpresas.tiposoc
+          tipoEmpresa: tablaEmpresas.tipoEmpresa,
+          ebitda: tablaEmpresas.ebitda
         });
         return res.end();
     }
@@ -252,7 +314,7 @@ rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
 });
 
 //-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
-rutasGet.get('/sesion-mad/MAD:id/interfaz', (req,res) => {
+rutasGet.get('/sesion-mad/:departamento:id/interfaz', (req,res) => {
   let id = req.params.id;
   sacarParametrosMiembroMADdb
   (
@@ -286,17 +348,29 @@ rutasGet.get('/sesion-cliente/:id/categorias/productosMAD', (req, res) => {
 });
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
-rutasGet.get('/sesion-empresa/:id/categorias/productosMAD', (req, res) => {
+rutasGet.get('/sesion-empresa/:tipoEmpresa:id/categorias/productosMAD', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/productosMADempresa', {id: id});
-  return res.end();
+  sacarParametrosEmpresadb
+  (
+    id,
+    (tablaEmpresas) => {
+      res.render('paginas/productosMADEmpresa', {id: id, tipoEmpresa: tablaEmpresas.tipoEmpresa});
+      return res.end();
+    }
+  );
 });
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-mad/MAD:id/categorias/productosMAD', (req, res) => {
+rutasGet.get('/sesion-mad/:departamento:id/categorias/productosMAD', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/productosMADmiembroMAD', {id: id});
-  return res.end();
+  sacarParametrosMiembroMADdb
+  (
+    id,
+    (tablaMiembroMAD) => {
+      res.render('paginas/productosMADMiembroMAD', {id: id, departamento: tablaMiembroMAD.departamento});
+      return res.end();
+    }
+  );
 });
 
 //-- Cerrar Sesión como Cliente o Empresa.

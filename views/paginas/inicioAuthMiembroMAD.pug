@@ -2,11 +2,11 @@
 extends ../base.pug
 
 block title
-  title=`MAD Services: Sesión ${id}`
+  title=`MAD Services: Sesión ${departamento}${id}`
 
 block body
   include ../componentes/cabeceraAuthMiembroMAD.pug
   div.inicio
-    form(method='GET' action=`/sesion-mad/MAD${id}/categorias`)
+    form(method='GET' action=`/sesion-mad/${departamento}${id}/categorias`)
       button.btnCategorias='Categorias'
   include ../componentes/piepaginaAuthMiembroMAD.pug

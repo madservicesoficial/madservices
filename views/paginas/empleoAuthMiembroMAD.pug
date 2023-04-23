@@ -2,7 +2,7 @@
 extends ../base.pug
 
 block title
-  title=`MAD Services: ${id} en Trabaja con nosotros`
+  title=`MAD Services: ${departamento}${id} en Trabaja con nosotros`
 
 block body
   include ../componentes/cabeceraAuthMiembroMAD.pug
@@ -10,7 +10,7 @@ block body
     div.cuadro
       h1='¡Envíanos tu CV!'
       img.logoEmpleo(src='/images/empleo.png' alt='empleo')
-      form.datosEmpleo(method='POST' action=`/sesion-mad/MAD${id}/empleo`)
+      form.datosEmpleo(method='POST' action=`/sesion-mad/${departamento}${id}/empleo`)
         label='Nombre: '
           span
             input.cajaRellenoCV#nombreCV(type='text')

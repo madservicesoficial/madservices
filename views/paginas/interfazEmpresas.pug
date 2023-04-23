@@ -1,0 +1,118 @@
+//-- Contenido de la Interfaz de las Empresas del Comercio Electrónico MAD Services.
+extends ../base.pug
+
+block title
+  title=`MAD Services: Sesión ${id}`
+
+block body
+    include ../componentes/cabeceraAuthMiembroMAD.pug
+    div.perfilCliente
+        br
+        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}:`
+        div#perfilMiembroMADIzquierda
+            h3='Actualización de campos: '
+            //-- Contenido de las alertas.
+            if msjError
+                p.alertaAct#enRojo=msjError
+            if msjError1
+                p.alertaAct#enRojo=msjError1
+            if msjActualizacion
+                p.alertaAct#enVerde=msjActualizacion
+            form(method='POST' action=`/sesion-mad/MAD${id}/interfaz/actualizar-miembroMAD`)
+                input(type='hidden' name='_method' value='PATCH')
+                label='Nombre de la Empresa: '
+                input.camposRegistro#posicionNombreSoc(type='text' name='nombredelaempresa' placeholder='Introduce el nombre de la Empresa....')
+                br
+                br
+                br
+                label='Tipo de empresa: '
+                    select.tipoEmpresa(name='tipoEmpresa')
+                        option(checked)=''
+                        option='RESTAURANTE'
+                        option='EDUCACION'
+                        option='VENTAS'
+                        option='PELUQUERIA'
+                        option='VIAJES'
+                        option='CINE'
+                        option='TEATRO'
+                        option='IPTV'
+                br
+                br
+                br
+                label='Código CIF/NIF: '
+                input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                br
+                br
+                br
+                label='Indicador EBITDA: '
+                input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
+                br
+                br
+                br
+                label='E-mail: '
+                input.entradasNoRadio(type='email' name='emailMiembroMAD' placeholder='Introduce un correo electrónico válido....')
+                br
+                br
+                br
+                label='Antigua contraseña: '
+                input.entradasNoRadio(type='password' name='oldpasswordMiembroMAD' placeholder='Introduce una contraseña válida....')
+                br
+                br
+                br
+                label='Nueva contraseña: '
+                input.entradasNoRadio(type='password' name='newpasswordMiembroMAD' placeholder='Introduce una contraseña válida....')
+                br
+                br
+                br
+                label='Repite la contraseña: '
+                input.entradasNoRadio(type='password' name='repitePasswordMiembroMAD' placeholder='Introduce una Contraseña válida....')
+                br
+                br
+                br
+                button#btnActualizarPerfil(type='submit')='Actualizar'
+        div#perfilMiembroMADDerecha
+            h3='Información del Miembro MAD: '
+            ul 
+                li.mostrarPerfilCliente
+                    if id
+                        label='El identificador/ID oficial: ' + id
+                        br
+                        br
+                    if miembro
+                        label='Miembro: ' + miembro
+                        br
+                        br
+                    if departamento
+                        label='Departamento: ' + departamento
+                        br
+                        br
+                    if genero
+                        label='Género: ' + genero
+                        br
+                        br
+                    if email
+                        label='E-mail: ' + email
+                        br
+                        br
+                    if password
+                        label='Contraseña: '
+                        span(hidden)=password
+                        span='(oculta).'
+        div#perfilMiembroMADDerecha2
+            h3='Confirmación de separación de MAD Services: '
+            if msjError2
+                p.alertaAct#enRojo=msjError2
+            if msjBaja
+                p.alertaAct#enVerde=msjBaja
+            form(method='POST' action=`/sesion-mad/MAD${id}/interfaz/darse-baja-miembroMAD`)
+                input(type='hidden' name='_method' value='DELETE')
+                label='¿Confirmas separarte de MAD Services y seguir tu propio camino?: '
+                br
+                label.ConfirmarBaja#siConfirmar='Sí'
+                input.ConfirmarBaja(name="siConfirmar" type="checkbox")
+                label.ConfirmarBaja='No'
+                input.ConfirmarBaja(name="noConfirmar" type="checkbox")
+                button#btnDarseBaja(type='submit')='Confirmo'
+        div#perfilMiembroMADAbajo
+            h3='Ingreso de productos para su venta: '
+    include ../componentes/piepaginaAuthMiembroMAD.pug

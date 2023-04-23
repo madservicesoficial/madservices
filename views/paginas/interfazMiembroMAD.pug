@@ -1,8 +1,8 @@
-//-- Contenido del Perfil de los Miembros MAD del Comercio Electrónico MAD Services.
+//-- Contenido de la Interfaz de los Miembros MAD del Comercio Electrónico MAD Services.
 extends ../base.pug
 
 block title
-  title=`MAD Services: Sesión ${id}`
+  title=`MAD Services: Sesión ${departamento}${id}`
 
 block body
     include ../componentes/cabeceraAuthMiembroMAD.pug
@@ -18,7 +18,7 @@ block body
                 p.alertaAct#enRojo=msjError1
             if msjActualizacion
                 p.alertaAct#enVerde=msjActualizacion
-            form(method='POST' action=`/sesion-mad/MAD${id}/interfaz/actualizar-miembroMAD`)
+            form(method='POST' action=`/sesion-mad/${departamento}${id}/interfaz/actualizar-miembroMAD`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Miembro: '
                 input.camposRegistro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
@@ -28,13 +28,13 @@ block body
                 label='Departamento: '
                     select.camposRegistro#designTipoDept(name='tipoDepartamento')
                         option(checked)=''
-                        option='Dirección'
-                        option='Administración'
-                        option='Ciberseguridad'
-                        option='Ingeniería'
+                        option='DIRECCION'
+                        option='ADMINISTRACION'
+                        option='CIBERSEGURIDAD'
+                        option='INGENIERIA'
                         option='RRHH'
-                        option='Ventas'
-                        option='Economía'
+                        option='VENTAS'
+                        option='ECONOMIA'
                 br
                 br
                 br
@@ -103,7 +103,7 @@ block body
                 p.alertaAct#enRojo=msjError2
             if msjBaja
                 p.alertaAct#enVerde=msjBaja
-            form(method='POST' action=`/sesion-mad/MAD${id}/interfaz/darse-baja-miembroMAD`)
+            form(method='POST' action=`/sesion-mad/${departamento}${id}/interfaz/darse-baja-miembroMAD`)
                 input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas separarte de MAD Services y seguir tu propio camino?: '
                 br

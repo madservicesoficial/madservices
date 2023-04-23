@@ -14,8 +14,7 @@ block body
                 p.alerta#enRojo=mensaje
             form.formRegistro(method="POST" action='/registrarse/empresa')
                 label='Nombre de la Empresa: '
-                    span
-                    input.camposRegistro#posicionNombreSoc(type='text' name='nombredelaempresa' placeholder='Introduce el nombre de la Empresa....')
+                input.camposRegistro#posicionNombreSoc(type='text' name='nombredelaempresa' placeholder='Introduce el nombre de la Empresa....')
                 br
                 br
                 label='Tipo de empresa: '
@@ -32,28 +31,23 @@ block body
                 br
                 br
                 label='Código CIF/NIF: '
-                    span
-                    input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
                 br
                 br
                 label='Indicador EBITDA: '
-                    span
-                    input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
+                input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
                 br
                 br
                 label='E-mail: '
-                    span
-                    input.camposRegistro#posicionEmailCo(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                input.camposRegistro#posicionEmailCo(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 label='Nueva contraseña: '
-                    span
-                    input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 label='Confirmación de la contraseña: '
-                    span
-                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
+                input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 button.posAlta#btnAlta(type='submit')='Darse de alta'
