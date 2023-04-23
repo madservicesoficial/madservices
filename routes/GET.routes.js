@@ -11,7 +11,7 @@ const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
-  res.render('paginas/inicio');
+  res.render('paginas/general/inicio');
   return res.end();
 });
 
@@ -38,7 +38,7 @@ rutasGet.get('/sesion-miembro/:id', (req, res) => {
 
 //-- Ruta a la Sección de Iniciar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/login', (req, res) => {
-  res.render('paginas/login');
+  res.render('paginas/general/login');
   return res.end();
 });
 
@@ -68,7 +68,7 @@ rutasGet.get('/login/autorizar/miembro', (req, res) => {
 
 //-- Ruta a la Sección de Registrarse como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/registrarse', (req, res) => {
-  res.render('paginas/registrarse');
+  res.render('paginas/general/registrarse');
   return res.end();
 });
 
@@ -98,7 +98,7 @@ rutasGet.get('/registrarse/autorizar/miembro', (req, res) => {
 
 //-- Ruta a la Sección de Contacto.
 rutasGet.get('/contacto', (req, res) => {
-  res.render('paginas/contacto');
+  res.render('paginas/general/contacto');
   return res.end();
 });
 
@@ -125,7 +125,7 @@ rutasGet.get('/sesion-miembro/:id/contacto', (req, res) => {
 
 //-- Ruta a la Sección de Trabaja con Nosotros.
 rutasGet.get('/empleo', (req, res) => {
-  res.render('paginas/empleo');
+  res.render('paginas/general/empleo');
   return res.end();
 });
 
@@ -152,7 +152,7 @@ rutasGet.get('/sesion-miembro/:id/empleo', (req, res) => {
 
 //-- Ruta a la Sección de Sobre MAD Services.
 rutasGet.get('/conocenos', (req, res) => {
-  res.render('paginas/conocemadservices');
+  res.render('paginas/general/conocemadservices');
   return res.end();
 });
 
@@ -179,7 +179,7 @@ rutasGet.get('/sesion-miembro/:id/conocenos', (req, res) => {
 
 //-- Ruta a la Sección de Categorias de MAD Services.
 rutasGet.get('/categorias', (req,res) => {
-  res.render('paginas/categorias');
+  res.render('paginas/general/categorias');
   return res.end();
 });
 
@@ -275,7 +275,7 @@ rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
 
 //-- Ruta a la Sección de los Productos MAD.
 rutasGet.get('/categorias/productosmadservices', (req, res) => {
-  res.render('paginas/productosmadservices');
+  res.render('paginas/general/productosmadservices');
   return res.end();
 });
 
