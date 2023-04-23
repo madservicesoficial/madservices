@@ -10,7 +10,7 @@ autorizacionRegistroMiembros.autorizacionRegistro = async (req, res) => {
     const password = req.body.password;
     //-- Condición de haber metido correctamente la contraseña.
     if(password === process.env.MYSQL_PASSWORD_ADMIN) {
-        return res.redirect('/registrarse/autorizar/miembro');
+        return res.status(201).redirect('/registrarse/autorizar/miembro');
     }else if(!password) {
         res.status(401).render('paginas/miembros/autorizacionRegistro', {msjError: 'Campo vacío'});
         return res.end();

@@ -10,12 +10,12 @@ autorizacionInicioSesionMiembros.autorizacionInicioSesion = async (req, res) => 
     const password = req.body.password;
     //-- Condición de haber metido correctamente la contraseña.
     if(password === process.env.MYSQL_PASSWORD_ADMIN) {
-        return res.redirect('/login/autorizar/miembro');
+        return res.status(201).redirect('/login/autorizar/miembro');
     }else if(!password) {
-        res.render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Campo vacío'});
+        res.status(401).render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Campo vacío'});
         return res.end();
     }else {
-        res.render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Contraseña incorrecta'});
+        res.status(401).render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Contraseña incorrecta'});
         return res.end();
     }
 }
