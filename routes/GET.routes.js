@@ -56,7 +56,7 @@ rutasGet.get('/login/empresa', (req, res) => {
 
 //-- Ruta a autorizar al miembro MAD para Iniciar Sesión.
 rutasGet.get('/login/autorizar', (req, res) => {
-  res.render('paginas/miembros/autorizacionLogin');
+  res.render('paginas/miembros/autorizacionInicioSesion');
   return res.end();
 });
 
