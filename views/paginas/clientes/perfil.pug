@@ -18,7 +18,7 @@ block body
                 p.alertaAct#enRojo=msjError1
             if msjActualizacion
                 p.alertaAct#enVerde=msjActualizacion
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-cliente`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Nombre: '
                 input.entradasNoRadio(type='text' name='nombre' placeholder='Escribe tu nombre....')
@@ -140,7 +140,7 @@ block body
                 p.alertaAct#enRojo=msjError2
             if msjBaja
                 p.alertaAct#enVerde=msjBaja
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja-cliente`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)
                 input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas que quieres darte de baja de MAD Services?: '
                 br

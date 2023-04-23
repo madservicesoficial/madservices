@@ -8,7 +8,7 @@ block body
     include ./componentes/cabecera.pug
     div.perfilCliente
         br
-        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}:`
+        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}: ${miembro}`
         div#perfilMiembroMADIzquierda
             h3='Actualización de campos: '
             //-- Contenido de las alertas.
@@ -26,7 +26,7 @@ block body
                 br
                 br
                 label='Departamento: '
-                    select.camposRegistro#designTipoDept(name='tipoDepartamento')
+                    select.camposRegistro#designTipoDept(name='departamento')
                         option(value='' checked)
                         option(value='DIRECCION')
                         option(value='ADMINISTRACION')
@@ -39,32 +39,32 @@ block body
                 br
                 br
                 label='Género: '
-                input(type='radio' name='generoMiembroMAD' value='Hombre')
+                input(type='radio' name='genero' value='Hombre')
                 label='Hombre'
-                input(type='radio' name='generoMiembroMAD' value='Mujer')
+                input(type='radio' name='genero' value='Mujer')
                 label='Mujer'
-                input(type='radio' name='generoMiembroMAD' value='Otro')
+                input(type='radio' name='genero' value='Otro')
                 label='Otro'
                 br
                 br
                 br
                 label='E-mail: '
-                input.entradasNoRadio(type='email' name='emailMiembroMAD' placeholder='Introduce un correo electrónico válido....')
+                input.entradasNoRadio(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 br
                 label='Antigua contraseña: '
-                input.entradasNoRadio(type='password' name='oldpasswordMiembroMAD' placeholder='Introduce una contraseña válida....')
+                input.entradasNoRadio(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 br
                 label='Nueva contraseña: '
-                input.entradasNoRadio(type='password' name='newpasswordMiembroMAD' placeholder='Introduce una contraseña válida....')
+                input.entradasNoRadio(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 br
                 label='Repite la contraseña: '
-                input.entradasNoRadio(type='password' name='repitePasswordMiembroMAD' placeholder='Introduce una Contraseña válida....')
+                input.entradasNoRadio(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
                 br
@@ -114,4 +114,4 @@ block body
                 button#btnDarseBaja(type='submit')='Confirmo'
         div#perfilMiembroMADAbajo
             h3='Ingreso de productos para su venta: '
-    include ../componentes/piepaginaAuthMiembroMAD.pug
+    include ./componentes/piepagina.pug

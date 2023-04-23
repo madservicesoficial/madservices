@@ -1,5 +1,5 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../operacionesdb/operacionesClientesdb.js');
+const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 
 //-- Creamos el Punto de Control para configurar la organización del perfil del cliente.
 const actualizarPerfilCliente = {}

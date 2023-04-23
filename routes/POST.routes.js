@@ -3,21 +3,21 @@ var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasPost = servidor.Router();
 //-- Importamos el Controlador del Registro de los Clientes.
-const registroClientes = require('../ptoControl/clientes/registrarse.js');
+const registroClientes = require('../controladores/clientes/registrarse.js');
 //-- Importamos el Controlador del Registro de las Empresas.
-const registroEmpresas = require('../ptoControl/empresas/registrarse.js');
+const registroEmpresas = require('../controladores/empresas/registrarse.js');
 //-- Importamos el Controlador del Registro de los Miembros MAD.
-const registroMiembros = require('../ptoControl/miembros/registrarse.js');
+const registroMiembros = require('../controladores/miembros/registrarse.js');
 //-- Importamos el Controlador del Inicio de Sesión de los Clientes.
-const iniciarSesionClientes = require('../ptoControl/clientes/iniciarSesion.js');
+const iniciarSesionClientes = require('../controladores/clientes/iniciarSesion.js');
 //-- Importamos el Controlador del Inicio de Sesión de las Empresas.
-const iniciarSesionEmpresas = require('../ptoControl/empresas/iniciarSesion.js');
+const iniciarSesionEmpresas = require('../controladores/empresas/iniciarSesion.js');
 //-- Importamos el Controlador del Inicio de Sesión de los Miembros MAD.
-const iniciarSesionMiembros = require('../ptoControl/miembros/iniciarSesion.js');
+const iniciarSesionMiembros = require('../controladores/miembros/iniciarSesion.js');
 //-- Importamos la función para autorizar como Miembro MAD para Registro.
-const autorizacionRegistroMiembros = require('../ptoControl/miembros/autorizacionRegistro.js');
+const autorizacionRegistroMiembros = require('../controladores/miembros/autorizacionRegistro.js');
 //-- Importamos la función para autorizar como Miembro MAD para Login.
-const autorizacionInicioSesionMiembros = require('../ptoControl/miembros/autorizacionInicioSesion.js');
+const autorizacionInicioSesionMiembros = require('../controladores/miembros/autorizacionInicioSesion.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes.login);

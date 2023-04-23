@@ -13,9 +13,9 @@ block body
         if mensaje
             p.alerta#enRojo=mensaje
         form(method='POST' action='/login/cliente')
-            label.entradas#espaciadoEtiqueta(for="email")='E-mail:'
+            label.entradas#espaciadoEtiqueta='E-mail:'
             input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
-            label.entradas#espaciadoEtiqueta(for="password")='Contraseña:'
+            label.entradas#espaciadoEtiqueta='Contraseña:'
             input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
             button#btnAcceso(type='submit')='Acceder'
         ul.otrosbtnLogin

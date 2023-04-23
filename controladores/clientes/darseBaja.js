@@ -1,12 +1,12 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { darseBajaClientedb } = require('../operacionesdb/operacionesClientesdb.js');
+const { darseBajaClientedb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la función para sacar y mostrar los campos del cliente.
-const sacarParametrosClientedb = require('../operacionesdb/operacionesParametrosClientes.js');
+const mostrarClientedb = require('../../modelos/clientes/mostrarCampos.js');
 
 //-- Creamos el Punto de Control para configurar el darse de baja del cliente.
 const darseBajaCliente = {}
 
-darseBajaCliente.perfilClientes = async (req, res) => {
+darseBajaCliente.perfil = async (req, res) => {
 
     //-- Obtenemos el parámetro del ID cliente.
     let id = req.params.id;
@@ -15,11 +15,11 @@ darseBajaCliente.perfilClientes = async (req, res) => {
     const noConfirmo = req.body.noConfirmar;
     //-- Si dejamos en blanco la confirmación de darse de baja, que avise de que debe confirmar.
     if(!siConfirmo && !noConfirmo) {
-        sacarParametrosClientedb
+        mostrarClientedb
         (
             id,
             (tablaClientes) => {
-                res.status(401).render('paginas/perfilClientes', 
+                res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError2: 'Debes confirmar si quieres o no darte de baja',
                     id: tablaClientes.id,
@@ -38,11 +38,11 @@ darseBajaCliente.perfilClientes = async (req, res) => {
             }
         );
     }else if(siConfirmo && noConfirmo) {
-        sacarParametrosClientedb
+        mostrarClientedb
         (
             id,
             (tablaClientes) => {
-                res.status(401).render('paginas/perfilClientes', 
+                res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError2: 'Debes elegir sólo una opción de confirmación',
                     id: tablaClientes.id,
@@ -61,11 +61,11 @@ darseBajaCliente.perfilClientes = async (req, res) => {
             }
         );
     }else if(!siConfirmo && noConfirmo) {
-        sacarParametrosClientedb
+        mostrarClientedb
         (
             id,
             (tablaClientes) => {
-                res.status(201).render('paginas/perfilClientes', 
+                res.status(201).render('paginas/clientes/perfil', 
                 {
                     msjBaja: 'Has pulsado que no quieres darte de baja',
                     id: tablaClientes.id,

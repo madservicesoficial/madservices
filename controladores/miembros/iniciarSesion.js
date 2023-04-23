@@ -1,28 +1,28 @@
 //-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { iniciarSesionMiembroMADVerificadodb } = require('../operacionesdb/operacionesMiembroMADdb.js');
+const { iniciarSesionMiembroVerificadodb } = require('../../modelos/miembros/operacionesDB.js');
 
 //-- Creamos el Punto de Control para configurar el inicio de sesión de los Miembros MAD.
-const loginMiembroMAD = {}
+const iniciarSesionMiembros = {}
 
-loginMiembroMAD.miembroMADlogin = (req, res) => {
+iniciarSesionMiembros.login = (req, res) => {
 
     //-- Introducimos los campos para Iniciar Sesión como Miembro MAD.
-    const emailMiembro = req.body.emailMiembro; 
-    const passwordMiembro = req.body.passwordMiembro;
+    const email = req.body.email; 
+    const password = req.body.password;
     //-- Comprobamos que ningún campo está vacío.
-    if(!emailMiembro || !passwordMiembro) {
-        res.status(401).render('paginas/miembroMADlogin', {mensaje: 'Campos vacíos'});
+    if(!email || !password) {
+        res.status(401).render('paginas/miembros/login', {mensaje: 'Campos vacíos'});
         return res.end();
     }
     //-- Llamamos a la función para Iniciar Sesión de forma verificada.
-    iniciarSesionMiembroMADVerificadodb
+    iniciarSesionMiembroVerificadodb
     (
-        emailMiembro,
-        passwordMiembro,
+        email,
+        password,
         req,
         res
     );
 }
 
 //-- Exportamos la configuración de inicio de sesión de los Miembros MAD para unificarlo con el resto de rutas.
-module.exports = loginMiembroMAD;
+module.exports = iniciarSesionMiembros;

@@ -2,10 +2,10 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesEmpresadb} = require('../config/database.js');
+const {madservicesEmpresadb} = require('../../config/database.js');
 
 //-- Creamos la función que saca parámetros de la base de datos de las Empresas.
-function sacarParametrosEmpresadb(idEmpresa, callback) {
+function mostrarEmpresadb(idEmpresa, callback) {
 
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM empresas WHERE id = ?';
@@ -14,10 +14,10 @@ function sacarParametrosEmpresadb(idEmpresa, callback) {
     //-- Establecer la comunicación de consultar ID en la base de datos.
     madservicesEmpresadb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
-        const tablaEmpresas = result[0];
-        callback(tablaEmpresas);
+        const tablaEmpresa = result[0];
+        callback(tablaEmpresa);
     });
 }
 
 //-- Exportamos las funciones.
-module.exports = sacarParametrosEmpresadb;
+module.exports = mostrarEmpresadb;

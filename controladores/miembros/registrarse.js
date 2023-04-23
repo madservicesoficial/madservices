@@ -1,5 +1,5 @@
 //-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { registrarMiembroVerificadodb } = require('../operacionesdb');
+const { registrarMiembroVerificadodb } = require('../../modelos/miembros/operacionesDB.js');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroMiembros = {}
