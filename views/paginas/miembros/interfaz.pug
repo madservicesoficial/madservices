@@ -8,7 +8,7 @@ block body
     include ./componentes/cabecera.pug
     div.perfilCliente
         br
-        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}: ${miembro}`
+        h1.tituloPerfil=`Interfaz del Departamento de ${departamento}:`
         div#perfilMiembroMADIzquierda
             h3='Actualización de campos: '
             //-- Contenido de las alertas.
@@ -114,4 +114,26 @@ block body
                 button#btnDarseBaja(type='submit')='Confirmo'
         div#perfilMiembroMADAbajo
             h3='Ingreso de productos para su venta: '
+            img(src='/images/madservices.png' alt='madservices')
+            ul
+                li='Introduce imágenes/vídeos del producto:'
+                    input.introduceImagen(type="file" accept="image/png, image/jpg, video/mp4" multiple)
+                li='Título:'
+                    input(type="text" name='titulo' placeholder='Ponle un título....')
+                li='Precio:'
+                    input(type="number" name='precio' placeholder='Precio del producto....')
+                    span#euros='€'
+                li='Peso (para el envío):'
+                    select(name="peso")
+                        option(checked)=''
+                        option='Hasta 2'
+                        option='Hasta 5'
+                        option='Hasta 7'
+                        option='Hasta 10'
+                        option='Hasta 15'
+                        option='> 15'
+                    span#euros='Kg'
+                li='Descripción:'
+                textarea(rows="20" cols="100" name='descripcion' placeholder='Describe el producto....')
+                li='Tipo de producto:'
     include ./componentes/piepagina.pug
