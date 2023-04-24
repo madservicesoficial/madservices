@@ -6,10 +6,10 @@ block title
 
 block body
     include ./componentes/cabecera.pug
-    div.perfilCliente
+    div.perfilEmpresa
         br
-        h1.tituloPerfil=`Interfaz de ${tipo}: ${marca}`
-        div#perfilMiembroMADIzquierda
+        h1.tituloPerfil=`Interfaz de ${tipo} ${marca}:`
+        div#perfilEmpresaIzquierda
             h3='Actualización de campos: '
             //-- Contenido de las alertas.
             if msjError
@@ -21,12 +21,12 @@ block body
             form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Nombre de la Empresa: '
-                input.camposRegistro#posicionNombreSoc(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+                input.camposRegistro#posicionMarcaCo(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
                 br
                 br
                 br
-                label='Tipo de empresa: '
-                    select.tipoEmpresa(name='tipo')
+                label#posEtiqTipoCo='Tipo de empresa: '
+                    select.tipoEmpresa#posTipoCo(name='tipo')
                         option(checked)=''
                         option='RESTAURANTE'
                         option='EDUCACION'
@@ -39,39 +39,39 @@ block body
                 br
                 br
                 br
-                label='Código CIF/NIF: '
-                input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                label#posactualizEmpresa='Código CIF/NIF: '
+                input.camposRegistro#posactualizEmpresa(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
                 br
                 br
                 br
-                label='Indicador EBITDA: '
-                input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
+                label#posactualizEmpresa='Indicador EBITDA: '
+                input.camposRegistro#posactualizEmpresa(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
                 br
                 br
                 br
-                label='E-mail: '
-                input.entradasNoRadio(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                label#posactualizEmpresa='E-mail: '
+                input.entradasNoRadio#posactualizEmpresa(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 br
-                label='Antigua contraseña: '
-                input.entradasNoRadio(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                label#posactualizEmpresa='Antigua contraseña: '
+                input.entradasNoRadio#posactualizEmpresa(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 br
-                label='Nueva contraseña: '
-                input.entradasNoRadio(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                label#posactualizEmpresa='Nueva contraseña: '
+                input.entradasNoRadio#posactualizEmpresa(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 br
-                label='Repite la contraseña: '
-                input.entradasNoRadio(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                label#posactualizEmpresa='Repite la contraseña: '
+                input.entradasNoRadio#posactualizEmpresa(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
                 br
-                button#btnActualizarPerfil(type='submit')='Actualizar'
-        div#perfilMiembroMADDerecha
-            h3='Información del Miembro MAD: '
+                button#btnActualizarEmpresa(type='submit')='Actualizar'
+        div#perfilEmpresaDerecha
+            h3=`Información sobre ${tipo} ${marca}: `
             ul 
                 li.mostrarPerfilCliente
                     if id
@@ -102,8 +102,8 @@ block body
                         label='Contraseña: '
                         span(hidden)=password
                         span='(oculta).'
-        div#perfilMiembroMADDerecha2
-            h3='Confirmación de separación de MAD Services: '
+        div#perfilEmpresaDerecha2
+            h3='Darse de baja de MAD Services: '
             if msjError2
                 p.alertaAct#enRojo=msjError2
             if msjBaja
@@ -116,7 +116,7 @@ block body
                 input.ConfirmarBaja(name="siConfirmar" type="checkbox")
                 label.ConfirmarBaja='No'
                 input.ConfirmarBaja(name="noConfirmar" type="checkbox")
-                button#btnDarseBaja(type='submit')='Confirmo'
-        div#perfilMiembroMADAbajo
+                button#btnDarseBajaEmpresa(type='submit')='Confirmo'
+        div#perfilEmpresaAbajo
             h3='Ingreso de productos para su venta: '
     include ./componentes/piepagina.pug

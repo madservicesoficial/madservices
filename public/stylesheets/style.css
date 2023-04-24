@@ -874,7 +874,86 @@ canvas {
   margin-left: 100;
 }
 /*##################################################################################################*/
-/*################################## SECCIÓN PERFIL: MIEMBRO MAD ###################################*/
+/*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
+/*##################################################################################################*/
+.perfilEmpresa {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+}
+.perfilEmpresa div {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  color: white;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 600px;
+  border-radius: 20px;
+  border-color: goldenrod;
+  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+}
+#perfilEmpresaIzquierda form {
+  margin-top: 60;
+}
+#posTipoCo {
+  width: 250;
+  position: relative;
+  right: 80;
+}
+#posEtiqTipoCo {
+  position: relative;
+  bottom: 10;
+  margin-left: 40;
+}
+#posicionMarcaCo {
+  margin-left: 10;
+}
+#posactualizEmpresa {
+  position: relative;
+  bottom: 20;
+}
+#perfilEmpresaIzquierda {
+  height: 650;
+  margin-left: 100;
+  margin-top: 50;
+}
+#perfilEmpresaDerecha {
+  height: 350;
+  margin-left: 835;
+  position: relative;
+  bottom: 650;
+}
+#perfilEmpresaDerecha2 {
+  height: 200;
+  margin-left: 835;
+  position: relative;
+  bottom: 550;
+}
+#perfilEmpresaAbajo {
+  margin-left: 100;
+  position: relative;
+  bottom: 400;
+  width: 1340;
+  height: 600;
+}
+#perfilEmpresaDerecha2 form {
+  margin-top: 40;
+}
+#btnActualizarEmpresa {
+  width: 100;
+  height: 30;
+}
+#btnDarseBajaEmpresa {
+  width: 100;
+  height: 30;
+  margin-left: 40;
+}
+/*##################################################################################################*/
+/*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/
 /*##################################################################################################*/
 #perfilMiembroMADIzquierda {
   margin: 50 0 0 100;
