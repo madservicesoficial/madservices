@@ -136,4 +136,10 @@ block body
                 li='Descripción:'
                 textarea(rows="20" cols="100" name='descripcion' placeholder='Describe el producto....')
                 li='Tipo de producto:'
+                    button.dropdown-btn='Categorias'
+                        div.dropdown-content
+                            p='Libros'
+                            p='Juegos'
+                            p='Electrónica'
+                            p='Informática'
     include ./componentes/piepagina.pug

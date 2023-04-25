@@ -177,30 +177,30 @@ rutasGet.get('/sesion-miembro/:id/conocenos', (req, res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Categorias de MAD Services.
-rutasGet.get('/categorias', (req,res) => {
-  res.render('paginas/general/categorias');
+//-- Ruta a la Sección de Entrada MAD de MAD Services.
+rutasGet.get('/empieza', (req,res) => {
+  res.render('paginas/general/entradaMAD');
   return res.end();
 });
 
-//-- Ruta a la Sección de Categorias Autenticado del Cliente de MAD Services.
-rutasGet.get('/sesion-cliente/:id/categorias', (req,res) => {
+//-- Ruta a la Sección de Entrada MAD Autenticado del Cliente de MAD Services.
+rutasGet.get('/sesion-cliente/:id/empieza', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/clientes/categorias', {id: id});
+  res.render('paginas/clientes/entradaMAD', {id: id});
   return res.end();
 });
 
-//-- Ruta a la Sección de Categorias Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id/categorias', (req,res) => {
+//-- Ruta a la Sección de Entrada MAD Autenticado de la Empresa de MAD Services.
+rutasGet.get('/sesion-empresa/:id/empieza', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/empresas/categorias', {id: id});
+  res.render('paginas/empresas/entradaMAD', {id: id});
   return res.end();
 });
 
-//-- Ruta a la Sección de Categorias Autenticado del Miembro MAD de MAD Services.
-rutasGet.get('/sesion-miembro/:id/categorias', (req,res) => {
+//-- Ruta a la Sección de Entrada MAD Autenticado del Miembro MAD de MAD Services.
+rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => {
   let id = req.params.id;
-  res.render('paginas/miembros/categorias', {id: id});
+  res.render('paginas/miembros/entradaMAD', {id: id});
   return res.end();
 });
 
@@ -274,27 +274,27 @@ rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
 });
 
 //-- Ruta a la Sección de los Productos MAD.
-rutasGet.get('/categorias/productosmadservices', (req, res) => {
+rutasGet.get('/empieza/productosmadservices', (req, res) => {
   res.render('paginas/general/productosmadservices');
   return res.end();
 });
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
-rutasGet.get('/sesion-cliente/:id/categorias/productosmadservices', (req, res) => {
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', (req, res) => {
   let id = req.params.id;
   res.render('paginas/clientes/productosmadservices', {id: id});
   return res.end();
 });
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
-rutasGet.get('/sesion-empresa/:id/categorias/productosmadservices', (req, res) => {
+rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', (req, res) => {
   let id = req.params.id;
   res.render('paginas/empresas/productosmadservices', {id: id});
   return res.end();
 });
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/categorias/productosmadservices', (req, res) => {
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', (req, res) => {
   let id = req.params.id;
   res.render('paginas/miembros/productosmadservices', {id: id});
   return res.end();
