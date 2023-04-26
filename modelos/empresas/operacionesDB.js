@@ -9,6 +9,8 @@ const { compare, hash } = require('bcrypt');
 const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const consultaID = require('./consultaID.js');
+//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
+const alerta = require('alert');
 
 //-- Creamos la función para registrarse como Empresa, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarEmpresaVerificadadb = async (data, password, res) => {
@@ -43,6 +45,8 @@ const registrarEmpresaVerificadadb = async (data, password, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.email, passwordCifrada, data.marca, data.nif, data.tipo, data.ebitda]);
             madservicesEmpresadb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
+                //-- Mostrar Alerta Emergente.
+                alerta('Empresa registrada con éxito');
                 // Redirigir a la página principal de la aplicación.
                 return res.redirect('/');
             });
@@ -265,6 +269,8 @@ const darseBajaEmpresadb = (id, req, res) => {
     madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
     //-- Destruir sesión.
     req.session.destroy();
+    //-- Mostrar Alerta Emergente.
+    alerta('Empresa dada de baja definitivamente');
     // Redirigir a la página principal de la aplicación.
     return res.redirect('/');
 }

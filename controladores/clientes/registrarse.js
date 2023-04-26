@@ -1,5 +1,7 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
 const { registrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
+//-- Importamos la función que valida todos los campos del registro clientes.
+const validacionCamposCliente = require('../../validaciones/clientes/validacionRegistro.js');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
 const registroClientes = {}
@@ -18,17 +20,14 @@ registroClientes.registrarse = (req, res) => {
     const pais = req.body.pais;
     const cp = req.body.cp;
     const genero = req.body.genero;
-    //-- Comprobamos que ningún campo está vacío.
-    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion ||
-        !region || !pais || !cp || !genero) {
-        res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Campos vacíos'});
-        return res.end();
-    }
-    //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-    if(password !== confirmPassword) {
-        res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
-        return res.end();
-    }
+    //-- Función de validación de todos los campos.
+    validacionCamposCliente
+    (
+        {email: email, password: password, confirmPassword: confirmPassword, nombre: nombre, apellidos: apellidos,
+        direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
+        req,
+        res
+    );
     //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
     registrarClienteVerificadodb
     (

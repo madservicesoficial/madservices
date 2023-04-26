@@ -10,8 +10,6 @@ var controladorErrores = require('http-errors');
 var servidor = require('express');
 //-- Importamos el Componente de la Tecnología Express para que los Miembros de MAD Services se puedan autenticar.
 var session = require('express-session');
-//-- Importamos la Tecnología para validar datos enviados por el cliente.
-var { body, validationResult } = require("express-validator");
 //-- Importamos la tecnología para poder usar los métodos PATCH y DELETE.
 const patchdeletemethods = require('method-override');
 //-- Importamos la Tecnología que enrruta todas las rutas de MAD Services.

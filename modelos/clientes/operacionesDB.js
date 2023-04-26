@@ -10,6 +10,8 @@ const { hash } = require('bcrypt');
 const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const consultaID = require('./consultaID.js');
+//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
+const alerta = require('alert');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarClienteVerificadodb = async (data, res) => {
@@ -44,7 +46,9 @@ const registrarClienteVerificadodb = async (data, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
             madservicesClientedb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                // Redirigir a la página principal de la aplicación.
+                //-- Mostrar Alerta Emergente.
+                alerta('Cliente registrado con éxito');
+                //-- Redirigir a la página principal de la aplicación.
                 return res.redirect('/');
             });
         }
@@ -314,6 +318,8 @@ const darseBajaClientedb = (id, req, res) => {
     madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
     //-- Destruir la sesión.
     req.session.destroy();
+    //-- Mostrar Alerta Emergente.
+    alerta('Cliente dado de baja definitivamente');
     // Redirigir a la página principal de la aplicación.
     return res.redirect('/');
 }
