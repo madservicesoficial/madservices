@@ -114,6 +114,7 @@ block body
                 button#btnDarseBaja(type='submit')='Confirmo'
         div#perfilMiembroMADAbajo
             h3='Ingreso de productos para su venta: '
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/añadir-producto`)
             img(src='/images/madservices.png' alt='madservices')
             ul
                 li='Introduce imágenes/vídeos del producto:'
