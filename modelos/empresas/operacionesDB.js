@@ -43,6 +43,7 @@ const registrarEmpresaVerificadadb = async (data, password, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.email, passwordCifrada, data.marca, data.nif, data.tipo, data.ebitda]);
             madservicesEmpresadb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
+                // Redirigir a la página principal de la aplicación.
                 return res.redirect('/');
             });
         }
@@ -262,9 +263,10 @@ const darseBajaEmpresadb = (id, req, res) => {
     let formatoinstruccionDarDeBajaEmpresa = mysql.format(instruccionDarDeBajaEmpresa, [id]);
     //-- Proceso de dar de baja.
     madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
-    //-- Redireccionar a Inicio por darse de baja y destruir sesión.
+    //-- Destruir sesión.
     req.session.destroy();
-    res.redirect('/');
+    // Redirigir a la página principal de la aplicación.
+    return res.redirect('/');
 }
 
 //-- Exportamos las funciones.

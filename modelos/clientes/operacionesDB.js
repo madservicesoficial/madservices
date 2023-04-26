@@ -12,7 +12,7 @@ const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 const consultaID = require('./consultaID.js');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarClienteVerificadodb = async (data, req, res) => {
+const registrarClienteVerificadodb = async (data, res) => {
 
     //-- Configuramos el sistema para cifrar la contraseña metida.
     const passwordCifrada = await hash(data.password, 1);
@@ -44,7 +44,7 @@ const registrarClienteVerificadodb = async (data, req, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
             madservicesClientedb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                alert('Cliente registrado con éxito');
+                // Redirigir a la página principal de la aplicación.
                 return res.redirect('/');
             });
         }
@@ -312,9 +312,10 @@ const darseBajaClientedb = (id, req, res) => {
     let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
     //-- Establecer la configuración de borrar los datos de la base de datos.
     madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
-    //-- Redireccionar a Inicio por darse de baja y destruir sesión.
+    //-- Destruir la sesión.
     req.session.destroy();
-    res.redirect('/');
+    // Redirigir a la página principal de la aplicación.
+    return res.redirect('/');
 }
 
 //-- Exportamos las funciones.

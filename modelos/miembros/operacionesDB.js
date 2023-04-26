@@ -44,6 +44,7 @@ const registrarMiembroVerificadodb = async (data, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idMiembro, data.email, passwordCifrada, data.miembro, data.departamento, data.genero]);
             madservicesAdmindb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
+                // Redirigir a la página principal de la aplicación.
                 return res.redirect('/');
             });
         }
@@ -249,9 +250,10 @@ const darseBajaMiembrodb = (id, req, res) => {
     let formatoinstruccionDarDeBajaMiembro = mysql.format(instruccionDarDeBajaMiembro, [id]);
     //-- Proceso de dar de baja.
     madservicesAdmindb.query(formatoinstruccionDarDeBajaMiembro);
-    //-- Redireccionar a Inicio por darse de baja y destruir sesión.
+    //-- Destruir sesión.
     req.session.destroy();
-    res.redirect('/');
+    // Redirigir a la página principal de la aplicación.
+    return res.redirect('/');
 }
 
 //-- Exportamos las funciones.

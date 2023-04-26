@@ -34,7 +34,6 @@ registroClientes.registrarse = (req, res) => {
     (
         {email: email, password: password, nombre: nombre, apellidos: apellidos,
         direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
-        req,
         res
     );
 };
