@@ -12,7 +12,7 @@ const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 const consultaID = require('./consultaID.js');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarClienteVerificadodb = async (data, res) => {
+const registrarClienteVerificadodb = async (data, req, res) => {
 
     //-- Configuramos el sistema para cifrar la contraseña metida.
     const passwordCifrada = await hash(data.password, 1);
@@ -44,6 +44,7 @@ const registrarClienteVerificadodb = async (data, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
             madservicesClientedb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
+                alert('Cliente registrado con éxito');
                 return res.redirect('/');
             });
         }
