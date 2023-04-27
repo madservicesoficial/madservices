@@ -1010,10 +1010,13 @@ canvas {
 }
 .imagenIngresoMAD {
   position: relative;
-  top: -700;
-  left: 750;
-  width: 350;
-  height: 350;
+  top: -650;
+  left: 850;
+  width: 325;
+  height: 325;
+}
+#perfilMiembroMADAbajo button {
+  margin-top: 50;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/

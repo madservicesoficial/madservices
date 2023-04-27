@@ -114,12 +114,12 @@ block body
                 button#btnDarseBaja(type='submit')='Confirmo'
         div#perfilMiembroMADAbajo
             h3='Ingreso de productos para su venta: '
-            form(method='POST' action=`/sesion-miembro/${id}/interfaz/añadir-producto`)
+            if mensajeVerif 
+                p.alertaAct#enRojo=mensajeVerif
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/add-producto`)
                 ul
-                    li='Introduce imágenes/vídeos del producto:'
-                        input.introduceImagen(type="file" accept="image/png, image/jpg, video/mp4" multiple)
                     li='Tipo de producto:'
-                        select(name="productosCategorias")='Categorias'
+                        select(name="categoria")='Categorias'
                             option(checked)=''
                             optgroup(label='Libros')
                                 option='Libros infantiles' 
@@ -128,6 +128,7 @@ block body
                                 option='Libros de naturaleza'
                                 option='Libros de economía'
                                 option='Libros escolares'
+                                option='Libros de misterio'
                             optgroup(label='Juegos')
                                 option='Juegos de mesa'
                                 option='Juegos de calle'
@@ -144,7 +145,7 @@ block body
                     li='Título:'
                         input(type="text" name='titulo' placeholder='Ponle un título....')
                     li='Precio:'
-                        input(type="number" name='precio' placeholder='Precio del producto....')
+                        input(type="number" step="any" name='precio' placeholder='Precio del producto....')
                         span#euros='€'
                     li='Peso (para el envío):'
                         select(name="peso")
@@ -158,7 +159,6 @@ block body
                         span#euros='Kg'
                     li='Descripción:'
                     textarea(rows="20" cols="100" name='descripcion' placeholder='Describe el producto....')
-                    button='Ingresar'
-                    li
-                        img.imagenIngresoMAD(src='/images/madservices.png' alt='madservices')
+                button(type='submit')='Ingresar'
+                img.imagenIngresoMAD(src='/images/madservices.png' alt='madservices')
     include ./componentes/piepagina.pug

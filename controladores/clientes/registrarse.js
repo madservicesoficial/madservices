@@ -1,5 +1,3 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { registrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la función que valida todos los campos del registro clientes.
 const validacionCamposCliente = require('../../validaciones/clientes/validacionRegistro.js');
 

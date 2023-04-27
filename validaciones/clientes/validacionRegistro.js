@@ -1,3 +1,5 @@
+//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
+const { registrarClienteVerificadodb } = require('../../');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
