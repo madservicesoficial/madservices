@@ -50,14 +50,9 @@ block body
                     input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
-                label='Dirección: '
+                label='País: '
                     span
-                    input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
-                br
-                br
-                label='Población: '
-                    span
-                    input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
                 br
                 br
                 label='Región: '
@@ -65,9 +60,14 @@ block body
                     input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
                 br
                 br
-                label='País: '
+                label='Población: '
                     span
-                    input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
+                    input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                br
+                br
+                label='Dirección: '
+                    span
+                    input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 br
                 br
                 label='Código Postal - CP: '

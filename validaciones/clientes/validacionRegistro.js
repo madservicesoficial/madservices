@@ -1,7 +1,7 @@
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
-//-- Importamos la Tecnología para localizar la API de Google Maps y el GPS y saber si la ubicación es correcta.
-const GPS = require('axios');
+//-- Importamos la Tecnología para validar el país introducido.
+const validacionPais = require('country-list-spanish');
 
 //-- la función de Express-Validator: isEmail(), comprueba que el email introducido cumple con el estándar RFC5322, estándar basado
 //-- en que la estructura válida de un correo electrónico debe cumplir uno de estos tres esquemas:
@@ -10,35 +10,6 @@ const GPS = require('axios');
 //-- 3) usuario+etiqueta@dominio.com
 //-- Es decir, debe cumplir con la estructura: usuario + @ + dominio (incluyendo o no subdominio) + terminación .com (global/comercial)
 //-- o .es (España) o .abreviacionPais (cualquier otro pais).
-
-//-- Función GPS.
-async function ubicacionCliente(ubicA, ubicB, ubicC, ubicD, ubicE) {
-
-    try {
-        //-- Declaramos la ubicación completa.
-        const ubicacion = `${ubicA}, ${ubicB}, ${ubicC}, ${ubicD} - ${ubicE}`;
-        //-- Declaramos la conexión con el GPS.
-        const conexionGPS = await GPS.get('https://maps.googleapis.com/maps/api/geocode/json', {
-            params: {
-                address: ubicacion,
-                key: 'TU_API_KEY_DE_GOOGLE_MAPS'
-              }
-        });
-
-        //-- Declaramos y obtenemos los resultados.
-        const resultados = conexionGPS.data.results;
-        if (resultados.length === 0) {
-            return false;
-        }
-        const resultados_ubica = results[0];
-        if (resultados_ubica.types.includes('postal_code') && resultados_ubica.formatted_address.includes(ubicE)) {
-            return true;
-        }
-
-    }catch(error) {
-        throw error;
-    }
-}
 
 //-- Creamos la función que valida los datos enviados por el cliente.
 const validacionCamposCliente = (data, res) => {
@@ -68,23 +39,20 @@ const validacionCamposCliente = (data, res) => {
                 res.status(401).render('paginas/clientes/registrarse', {mensaje: `Los apellidos deben tener entre ${minLong} y ${maxLong2} caracteres`});
                 return res.end();
             }
-            const Email = data.email;
             const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
-            if(validacion.isEmail(Email) && estructuraEmail.test(Email) && validacion.matches(Email, /[a-z]/)
-            && validacion.matches(Email, /[A-Z]/) && validacion.matches(Email, /[0-9]/) && validacion.matches(Email, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+            if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
                 console.log('Email verificado y correcto');
             }else {
                 res.status(401).render('paginas/clientes/registrarse', 
                 {
-                    mensaje: `El Email: ${Email} debe seguir la estructura válida Internacional`,
-                    mensaje2: `Y debe contener letras minúsculas, mayúsculas, números y caracteres especiales`
+                    mensaje: `El Email: ${Email} debe seguir la estructura válida Internacional`
                 });
                 return res.end();
             }
-            const Password = data.password;
-            if(validacion.isLength(Password, { min: minLong2, max: maxLong2}) && validacion.matches(Email, /[a-z]/)
-            && validacion.matches(Email, /[A-Z]/) && validacion.matches(Email, /[0-9]/)) {
-                console.log('Contraseña verificado y correcto');
+            if(validacion.isLength(data.password, { min: minLong2, max: maxLong2}) && validacion.matches(data.password, /[a-z]/)
+            && validacion.matches(data.password, /[A-Z]/) && validacion.matches(data.password, /[0-9]/) &&
+            validacion.matches(data.password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+                console.log('Contraseña verificada y correcta');
             }else {
                 res.status(401).render('paginas/clientes/registrarse', 
                 {
@@ -93,13 +61,19 @@ const validacionCamposCliente = (data, res) => {
                 });
                 return res.end();
             }
-            //-- Comprobamos la ubicación del cliente.
-            /* const ubicA = data.direccion;
-            const ubicB = data.poblacion;
-            const ubicC = data.region;
-            const ubicD = data.pais;
-            const ubicE = data.cp;
-            ubicacionCliente(ubicA, ubicB, ubicC, ubicD, ubicE); */
+            if(validacionPais.getName(data.pais)) {
+                console.log('País verificado y correcto');
+            }else {
+                res.status(401).render('paginas/clientes/registrarse', {mensaje: 'País incorrecto'});
+                return res.end();
+            }
+            const abreviaturaPais = validacionPais.getCodes().find(pais => pais.value === data.pais);
+            const regiones = validacionPais.getStatesByCode(abreviaturaPais.key);
+            res.status(401).render('paginas/clientes/registrarse', 
+                {
+                    mensaje: `${regiones}`
+                });
+            return res.end();
         }
     }
 }
