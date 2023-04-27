@@ -82,14 +82,17 @@ const validacionCamposCliente = (data, res) => {
                 return res.end();
             }
             const Password = data.password;
-            if(validacion.isLength(Password, { min: minLong2, max: maxLong2})) {
+            if(validacion.isLength(Password, { min: minLong2, max: maxLong2}) && validacion.matches(Email, /[a-z]/)
+            && validacion.matches(Email, /[A-Z]/) && validacion.matches(Email, /[0-9]/) && validacion.matches(Email, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
                 console.log('Contraseña verificado y correcto');
             }else {
-                
+                res.status(401).render('paginas/clientes/registrarse', 
+                {
+                    mensaje: 'La contraseña debe contener como mínimo 12 caracteres, letras',
+                    mensaje2: 'minúsculas y mayúsculas, números y caracteres especiales'
+                });
+                return res.end();
             }
-            check()
-                .matches(/^[a-zA-Z0-9]+[!@#\$%\^&\*]+[a-zA-Z0-9]+$/).withMessage('La contraseña debe contener letras, números y un carácter especial')
-            
             //-- Comprobamos la ubicación del cliente.
             /* const ubicA = data.direccion;
             const ubicB = data.poblacion;
