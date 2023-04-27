@@ -12,6 +12,8 @@ block body
             //-- Contenido de las alertas.
             if mensaje
                 p.alerta#enRojo=mensaje
+            if mensaje2 
+                p.alerta#enRojo=mensaje2
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
                     span
