@@ -1,7 +1,9 @@
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
-const validacionPais = require('country-list-spanish');
+const {getCountries, getCode} = require('country-list-spanish');
+//-- Importamos la Tecnología para validar el Código Postal introducido.
+const { postcodeValidator } = require('postcode-validator');
 
 //-- la función de Express-Validator: isEmail(), comprueba que el email introducido cumple con el estándar RFC5322, estándar basado
 //-- en que la estructura válida de un correo electrónico debe cumplir uno de estos tres esquemas:
@@ -61,19 +63,20 @@ const validacionCamposCliente = (data, res) => {
                 });
                 return res.end();
             }
-            if(validacionPais.getName(data.pais)) {
+            const paises = getCountries();
+            if(paises.includes(data.pais)) {
                 console.log('País verificado y correcto');
             }else {
                 res.status(401).render('paginas/clientes/registrarse', {mensaje: 'País incorrecto'});
                 return res.end();
             }
-            const abreviaturaPais = validacionPais.getCodes().find(pais => pais.value === data.pais);
-            const regiones = validacionPais.getStatesByCode(abreviaturaPais.key);
-            res.status(401).render('paginas/clientes/registrarse', 
-                {
-                    mensaje: `${regiones}`
-                });
-            return res.end();
+            const codigoPais = getCode(data.pais);
+            if(postcodeValidator(data.cp, codigoPais)) {
+                console.log('Código Postal verificado y correcto');
+            }else {
+                res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal incorrecto'});
+                return res.end();
+            }
         }
     }
 }
