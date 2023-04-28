@@ -16,12 +16,12 @@ block body
                 li.seccionFiltrado='Por nombre del producto:'
                 li.seccionFiltrado='Por precio del producto:'
         div.cuadroProductosMAD#contenidoProductos
-            div.cartaProductoMAD
-                img
-                h3.tipoProducto
-                h3.tituloProducto
-                h3.precioProducto
-                p.descripcionProducto
-                h3.pesoProducto
-                button.alCarrito='Añadir al carrito'
+            each campo in cartaProducto
+                div.cartaProductoMAD
+                    h3.tipoProducto=campo.producto
+                    h3.tituloProducto=campo.titulo
+                    h3.precioProducto=campo.precio + '€'
+                    p.descripcionProducto=campo.descripcion
+                    h3.pesoProducto=campo.peso + 'Kg'
+                    button.alCarrito='Añadir al carrito'
     include ./componentes/piepagina.pug

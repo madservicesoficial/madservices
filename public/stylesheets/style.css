@@ -1065,12 +1065,12 @@ canvas {
 .cartaProductoMAD {
   border: 5px solid orange;
   background-color: silver;
-  width: 300px;
-  height: 400px;
+  width: 260px;
+  height: 350px;
 	text-align: center;
-}
-.cartaProductoMAD img {
-	max-width: 100%;
+  float: left;
+  display: inline-block;
+  margin: 10px;
 }
 .cartaProductoMAD button {
 	background-color: orange;
@@ -1079,5 +1079,4 @@ canvas {
   height: 40px;
 	border: none;
 	border-radius: 5px;
-  margin-top: 330;
 }

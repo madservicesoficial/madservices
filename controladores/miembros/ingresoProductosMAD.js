@@ -13,11 +13,13 @@ ingresoProductosMAD.interfaz = (req, res) => {
     const precio = req.body.precio;
     const peso = req.body.peso;
     const descripcion = req.body.descripcion;
-    const imagesLoad = req.body.imagesLoad;
+    const imagenes = req.files;
+
     //-- Verificamos los campos introducidos.
     verificarProductosmetidos
     (
         id,
+        imagenes,
         {categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
         res
     );

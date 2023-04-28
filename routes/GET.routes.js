@@ -8,6 +8,8 @@ const mostrarClientedb = require('../modelos/clientes/mostrarCampos.js');
 const mostrarEmpresadb = require('../modelos/empresas/mostrarCampos.js');
 //-- Importamos la función que comprueba el ID de los Miembros MAD y saca los parámetros.
 const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
+//-- Importamos la función que muestra los productos MAD.
+const mostrarProductosMAD = require('../modelos/general/mostrarProductosMAD.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -274,10 +276,7 @@ rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
 });
 
 //-- Ruta a la Sección de los Productos MAD.
-rutasGet.get('/empieza/productosmadservices', (req, res) => {
-  res.render('paginas/general/productosmadservices');
-  return res.end();
-});
+rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD.productosmadservices);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
 rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', (req, res) => {
