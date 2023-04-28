@@ -263,23 +263,19 @@ const darseBajaMiembrodb = (id, req, res) => {
 }
 
 //-- Creamos la función para ingresar los productos MAD en la base de datos de MAD Services.
-const ingresarProductosMADdb = (data, res) => {
-    if(!data.precio) {
-        
-    }else {
-        //-- Instrucción para ingresar productos.
-        let instruccionIngresaProductos = 'INSERT INTO productos (producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?)';
-        //-- Formato de la instrucción ingresar.
-        let formatoinstruccionIngresaProductos = mysql.format(instruccionIngresaProductos, [data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
-        //-- Establecimiento de la conexión con base de datos.
-        madservicesAdmindb.query(formatoinstruccionIngresaProductos, (error) => {
-            if(error) throw error;
-            //-- Mostrar Alerta Emergente.
-            alerta('Producto ingresado con éxito');
-            // Redirigir a la página principal de la aplicación.
-            return res.redirect('/sesion-miembro/:id');
-        });
-    }
+const ingresarProductosMADdb = (id, data, res) => {
+    //-- Instrucción para ingresar productos.
+    let instruccionIngresaProductos = 'INSERT INTO productos (producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?)';
+    //-- Formato de la instrucción ingresar.
+    let formatoinstruccionIngresaProductos = mysql.format(instruccionIngresaProductos, [data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
+    //-- Establecimiento de la conexión con base de datos.
+    madservicesAdmindb.query(formatoinstruccionIngresaProductos, (error) => {
+        if(error) throw error;
+        //-- Mostrar Alerta Emergente.
+        alerta('Producto ingresado con éxito');
+        // Redirigir a la página principal de la aplicación.
+        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+    });
 }
 
 //-- Exportamos las funciones.

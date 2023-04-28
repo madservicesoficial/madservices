@@ -3,6 +3,8 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesAdmindb} = require('../../config/database.js');
+//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
+const { ingresarProductosMADdb } = require('../../modelos/miembros/operacionesDB.js');
 
 //-- Creamos la función que valida los campos de ingreso de los productos MAD.
 const verificarProductosmetidos = (id, data, res) => {
@@ -78,6 +80,19 @@ const verificarProductosmetidos = (id, data, res) => {
                 return res.end();
             });
         }
+        //-- Declaramos las variables o campos de ingreso de productos.
+        const categoria = data.categoria;
+        const titulo = data.titulo;
+        const precio = data.precio;
+        const peso = data.peso;
+        const descripcion = data.descripcion;
+        //-- Ingresamos los productos en la base de datos.
+        ingresarProductosMADdb
+        (
+            id,
+            {categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
+            res
+        );
     }
 }
 

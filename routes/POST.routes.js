@@ -38,7 +38,7 @@ rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros.autorizaci
 //-- Formulario de envío de datos para Registrarse como Miembro MAD.
 rutasPost.post('/registrarse/autorizar/miembro', registroMiembros.registrarse);
 //-- Formulario de ingreso de productos MAD.
-rutasPost.post('/sesion-miembro/:id/interfaz/add-producto', ingresoProductosMAD.interfaz);
+rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', ingresoProductosMAD.interfaz);
 //-- Formulario de envío de datos del CV.
 rutasPost.post('/empleo');
 //-- Formulario de envío de datos del CV para clientes.

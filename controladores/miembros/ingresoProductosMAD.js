@@ -1,5 +1,4 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { ingresarProductosMADdb } = require('../../modelos/miembros/operacionesDB.js');
+//-- Importamos la función que verifica que el producto introducido sigue con lo establecido.
 const verificarProductosmetidos = require('../../validaciones/miembros/validacionIngreso.js');
 
 //-- Creamos el Punto de Control para configurar el registro de los Clientes.
@@ -14,16 +13,11 @@ ingresoProductosMAD.interfaz = (req, res) => {
     const precio = req.body.precio;
     const peso = req.body.peso;
     const descripcion = req.body.descripcion;
+    const imagesLoad = req.body.imagesLoad;
     //-- Verificamos los campos introducidos.
     verificarProductosmetidos
     (
         id,
-        {categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
-        res
-    );
-    //-- Ingresamos los productos en la base de datos.
-    ingresarProductosMADdb
-    (
         {categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
         res
     );

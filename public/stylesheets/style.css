@@ -1062,3 +1062,22 @@ canvas {
   right: 50;
   width: 280;
 }
+.cartaProductoMAD {
+  border: 5px solid orange;
+  background-color: silver;
+  width: 300px;
+  height: 400px;
+	text-align: center;
+}
+.cartaProductoMAD img {
+	max-width: 100%;
+}
+.cartaProductoMAD button {
+	background-color: orange;
+	color: black;
+  width: 160px;
+  height: 40px;
+	border: none;
+	border-radius: 5px;
+  margin-top: 330;
+}

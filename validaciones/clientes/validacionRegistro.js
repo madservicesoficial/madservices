@@ -1,5 +1,5 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { registrarClienteVerificadodb } = require('../../');
+const { registrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
@@ -49,7 +49,7 @@ const validacionCamposCliente = (data, res) => {
             }else {
                 res.status(401).render('paginas/clientes/registrarse', 
                 {
-                    mensaje: `El Email: ${Email} debe seguir la estructura válida Internacional`
+                    mensaje: `El Email: ${data.email} debe seguir la estructura válida Internacional`
                 });
                 return res.end();
             }
@@ -79,6 +79,24 @@ const validacionCamposCliente = (data, res) => {
                 res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal incorrecto'});
                 return res.end();
             }
+            //-- Declaramos las variables o campos del cliente.
+            const email = data.email;
+            const password = data.password;
+            const nombre = data.nombre;
+            const apellidos = data.apellidos;
+            const direccion = data.direccion;
+            const poblacion = data.poblacion;
+            const region = data.region;
+            const pais = data.pais;
+            const cp = data.cp;
+            const genero = data.genero;
+            //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
+            registrarClienteVerificadodb
+            (
+                {email: email, password: password, nombre: nombre, apellidos: apellidos,
+                direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
+                res
+            );
         }
     }
 }

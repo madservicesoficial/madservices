@@ -25,13 +25,6 @@ registroClientes.registrarse = (req, res) => {
         direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
         res
     );
-    //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
-    registrarClienteVerificadodb
-    (
-        {email: email, password: password, nombre: nombre, apellidos: apellidos,
-        direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
-        res
-    );
 };
 
 //-- Exportamos la configuración de registro de los Clientes para unificarlo con el resto de rutas.

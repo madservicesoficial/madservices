@@ -116,8 +116,10 @@ block body
             h3='Ingreso de productos para su venta: '
             if mensajeVerif 
                 p.alertaAct#enRojo=mensajeVerif
-            form(method='POST' action=`/sesion-miembro/${id}/interfaz/add-producto`)
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto`)
                 ul
+                    li='Cargar imágenes: '
+                        input(type='file' name='imagesLoad' accept="image/*" multiple)
                     li='Tipo de producto:'
                         select(name="categoria")='Categorias'
                             option(checked)=''
