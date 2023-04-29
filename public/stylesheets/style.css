@@ -524,7 +524,7 @@ footer {
 }
 .formRegistro {
   position: relative;
-  top: 60px;
+  top: 30px;
   text-align: left;
   margin-left: 50px;
 }
@@ -547,8 +547,8 @@ footer {
 }
 .posAlta {
   position: relative;
-  left: 465px;
-  top: 75px;
+  left: 460px;
+  top: 105px;
 }
 #btnAlta {
   width: 120px;
@@ -568,6 +568,9 @@ footer {
 .fondoRegistrarseEmpresa {
   background-image: url(../gifs/gifEmpresaRegistrarse.gif);
 }
+.fondoRegistrarseEmpresa h3 {
+  margin-top: 40;
+}
 #posicionNombreSoc {
   margin-left: 65px;
 }
@@ -583,12 +586,19 @@ footer {
 #posicionEmailCo {
   margin-left: 185px;
 }
-#posicionEBITDA {
-  margin-left: 238px;
-  margin-top: -20;
-}
 #posicionPsswd {
   margin-left: 100px;
+}
+#posIBAN {
+  margin-left: 190px;
+}
+#btnVerCuota {
+  width: 100px;
+  height: 25px;
+  font-size: medium;
+}
+#verCuota {
+  margin-top: 20;
 }
 /*##################################################################################################*/
 /*#################################### REGISTRARSE: Miembro MAD ####################################*/

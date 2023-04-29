@@ -12,6 +12,39 @@ block body
             //-- Contenido de las alertas.
             if mensaje
                 p.alerta#enRojo=mensaje
+            h3='Configuración del EBITDA: '
+            form(method='POST' action='/registrarse/empresa/ebitda')
+                label='Ingresos: '
+                input.camposRegistro(type='number' step="any" name='ingresos' placeholder='Los ingresos de tu empresa....')
+                label=' €/mes'
+                br
+                br
+                label='Costes: '
+                input.camposRegistro(type='number' step="any" name='costes' placeholder='Los costes de tu empresa....')
+                label=' €/mes'
+                br
+                br
+                label='Gastos de operaciones: '
+                input.camposRegistro(type='number' step="any" name='gastos' placeholder='Los gastos de operaciones de tu empresa....')
+                label=' €/mes'
+                br
+                br
+                label='Depreciación: '
+                input.camposRegistro(type='number' step="any" name='depreciacion' placeholder='La depreciación de tu empresa....')
+                label=' %/mes'
+                br
+                br
+                label='Amortización: '
+                input.camposRegistro(type='number' step="any" name='amortizacion' placeholder='La amortización de tu empresa....')
+                label=' %/mes'
+                br
+                br
+                button#btnVerCuota(type='submit')='Ver cuota'
+            if cuotaMAD
+                label#verCuota='Tu cuota MAD a pagar: ' + cuotaMAD + '€/mes'
+            br
+            br
+            h3='Datos del Registro: '
             form.formRegistro(method="POST" action='/registrarse/empresa')
                 label='Nombre de la Empresa: '
                 input.camposRegistro#posicionNombreSoc(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
@@ -25,17 +58,11 @@ block body
                         option='VENTAS'
                         option='PELUQUERIA'
                         option='VIAJES'
-                        option='CINE'
-                        option='TEATRO'
                         option='IPTV'
                 br
                 br
                 label='Código CIF/NIF: '
                 input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
-                br
-                br
-                label='Indicador EBITDA: '
-                input.camposRegistro#posicionEBITDA(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
                 br
                 br
                 label='E-mail: '
@@ -48,6 +75,10 @@ block body
                 br
                 label='Confirmación de la contraseña: '
                 input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
+                br
+                br
+                label='IBAN: '
+                input.camposRegistro#posIBAN(type='text' name='iban' placeholder='Introduce un IBAN válido....')
                 br
                 br
                 button.posAlta#btnAlta(type='submit')='Darse de alta'

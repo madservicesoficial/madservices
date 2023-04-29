@@ -1,5 +1,3 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la función que valida todos los campos de la actualización de los clientes.
 const validacionEntradasCliente = require('../../validaciones/clientes/validacionActualizacion.js');
 
@@ -25,23 +23,12 @@ actualizarPerfilCliente.perfil = (req, res) => {
     //-- Función de validación de todos los campos.
     validacionEntradasCliente
     (
-        {email: email, password: password, confirmPassword: confirmPassword, nombre: nombre, apellidos: apellidos,
-        direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
-        res
-    );
-    //-- Actualizamos todos los campos menos la contraseña.
-    actualizarClienteVerificadodb
-    (
-        {id: id, nombre: nombre, apellidos: apellidos, genero: genero, email: email, direccion: direccion,
-        poblacion: poblacion, region: region, pais: pais, cp: cp}
-    );
-    //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
-    mostrarClienteVerificadodb
-    (
         id,
         oldpassword,
         newpassword,
         repitePassword,
+        {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
+        region: region, pais: pais, cp: cp, genero: genero},
         res
     );
 }

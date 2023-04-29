@@ -86,7 +86,7 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
 }
 
 //-- Creamos la función para actualizar los campos del Perfil Cliente de la base de datos de MAD Services.
-const actualizarClienteVerificadodb = (data) => {
+const actualizarClienteVerificadodb = (id, data) => {
     //-- Creamos la estructura para definir los campos del perfil del cliente.
     const hayCliente = {
         hayNombre: data.nombre,
@@ -104,7 +104,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayCliente.hayNombre, data.id]);
+        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayCliente.hayNombre, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarNombre);
     }
@@ -112,7 +112,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayCliente.hayApellidos, data.id]);
+        let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayCliente.hayApellidos, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarApellidos);
     }
@@ -120,7 +120,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayCliente.hayGenero, data.id]);
+        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayCliente.hayGenero, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarGenero);
     }
@@ -128,7 +128,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayCliente.hayEmail, data.id]);
+        let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayCliente.hayEmail, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarEmail);
     }
@@ -136,7 +136,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [hayCliente.hayDireccion, data.id]);
+        let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [hayCliente.hayDireccion, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarDireccion);
     }
@@ -144,7 +144,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarPoblacion = 'UPDATE clientes SET poblacion = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [hayCliente.hayPoblacion, data.id]);
+        let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [hayCliente.hayPoblacion, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarPoblacion);
     }
@@ -152,7 +152,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarRegion = 'UPDATE clientes SET region = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [hayCliente.hayRegion, data.id]);
+        let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [hayCliente.hayRegion, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarRegion);
     }
@@ -160,7 +160,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarPais = 'UPDATE clientes SET pais = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [hayCliente.hayPais, data.id]);
+        let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [hayCliente.hayPais, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarPais);
     }
@@ -168,7 +168,7 @@ const actualizarClienteVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarCP = 'UPDATE clientes SET cp = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [hayCliente.hayCP, data.id]);
+        let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [hayCliente.hayCP, id]);
         //-- Proceso de actualización en base de datos.
         madservicesClientedb.query(formatoInstruccionActualizarCP);
     }

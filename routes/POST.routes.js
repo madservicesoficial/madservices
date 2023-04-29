@@ -20,6 +20,8 @@ const autorizacionRegistroMiembros = require('../controladores/miembros/autoriza
 const autorizacionInicioSesionMiembros = require('../controladores/miembros/autorizacionInicioSesion.js');
 //-- Importamos la función para ingresar productos MAD en la base de datos.
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
+//-- Importamos la función que calcula el ebitda y muestra la cuota MAD a pagar.
+const consultaEBITDA = require('../controladores/empresas/consultarEBITDA.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes.login);
@@ -39,6 +41,8 @@ rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros.autorizaci
 rutasPost.post('/registrarse/autorizar/miembro', registroMiembros.registrarse);
 //-- Formulario de ingreso de productos MAD.
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', ingresoProductosMAD.interfaz);
+//-- Formulario para consultar la cuota que una empresa tiene que pagar a MAD Services.
+rutasPost.post('/registrarse/empresa/ebitda', consultaEBITDA.registrarse);
 //-- Formulario de envío de datos del CV.
 rutasPost.post('/empleo');
 //-- Formulario de envío de datos del CV para clientes.

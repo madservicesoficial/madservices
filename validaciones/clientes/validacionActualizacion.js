@@ -1,5 +1,5 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { registrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
+const { actualizarClienteVerificadodb, mostrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
@@ -16,89 +16,72 @@ const { postcodeValidator } = require('postcode-validator');
 //-- o .es (España) o .abreviacionPais (cualquier otro pais).
 
 //-- Creamos la función que valida los datos enviados por el cliente.
-const validacionCamposCliente = (data, res) => {
+const validacionCamposCliente = (id, oldpassword, newpassword, repitePassword, data, res) => {
 
     //-- Declaración de ctes.
     const minLong = 3;
     const minLong2 = 4 * minLong;
     const maxLong = 48;
     const maxLong2 = 2 * maxLong;
-    //-- Comprobamos que no hay campos vacíos.
-    if(!data.email || !data.password || !data.confirmPassword || !data.nombre || !data.apellidos ||
-    !data.direccion || !data.poblacion || !data.region || !data.pais || !data.cp || !data.genero) {
-        res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Campos vacíos'});
+    //-- Si no, chequeamos que cada campo cumpla con los requisitos.
+    if(data.nombre.length < minLong || data.nombre.length > maxLong) {
+        res.status(401).render('paginas/clientes/perfil', {mensaje: `El nombre debe tener entre ${minLong} y ${maxLong} caracteres`});
         return res.end();
-    }else {
-        //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-        if(data.password !== data.confirmPassword) {
-            res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
-            return res.end();
-        }else {
-            //-- Si no, chequeamos que cada campo cumpla con los requisitos.
-            if(data.nombre.length < minLong || data.nombre.length > maxLong) {
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: `El nombre debe tener entre ${minLong} y ${maxLong} caracteres`});
-                return res.end();
-            }
-            if(data.apellidos.length < minLong || data.apellidos.length > maxLong2) {
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: `Los apellidos deben tener entre ${minLong} y ${maxLong2} caracteres`});
-                return res.end();
-            }
-            const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
-            if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
-                console.log('Email verificado y correcto');
-            }else {
-                res.status(401).render('paginas/clientes/registrarse', 
-                {
-                    mensaje: `El Email: ${data.email} debe seguir la estructura válida Internacional`
-                });
-                return res.end();
-            }
-            if(validacion.isLength(data.password, { min: minLong2, max: maxLong2}) && validacion.matches(data.password, /[a-z]/)
-            && validacion.matches(data.password, /[A-Z]/) && validacion.matches(data.password, /[0-9]/) &&
-            validacion.matches(data.password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                console.log('Contraseña verificada y correcta');
-            }else {
-                res.status(401).render('paginas/clientes/registrarse', 
-                {
-                    mensaje: 'La contraseña debe contener como mínimo 12 caracteres, letras',
-                    mensaje2: 'minúsculas y mayúsculas, números y caracteres especiales'
-                });
-                return res.end();
-            }
-            const paises = getCountries();
-            if(paises.includes(data.pais)) {
-                console.log('País verificado y correcto');
-            }else {
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: 'País incorrecto'});
-                return res.end();
-            }
-            const codigoPais = getCode(data.pais);
-            if(postcodeValidator(data.cp, codigoPais)) {
-                console.log('Código Postal verificado y correcto');
-            }else {
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal incorrecto'});
-                return res.end();
-            }
-            //-- Declaramos las variables o campos del cliente.
-            const email = data.email;
-            const password = data.password;
-            const nombre = data.nombre;
-            const apellidos = data.apellidos;
-            const direccion = data.direccion;
-            const poblacion = data.poblacion;
-            const region = data.region;
-            const pais = data.pais;
-            const cp = data.cp;
-            const genero = data.genero;
-            //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
-            registrarClienteVerificadodb
-            (
-                {email: email, password: password, nombre: nombre, apellidos: apellidos,
-                direccion: direccion, poblacion: poblacion, region: region, pais: pais, cp: cp, genero: genero},
-                res
-            );
-        }
     }
+    if(data.apellidos.length < minLong || data.apellidos.length > maxLong2) {
+        res.status(401).render('paginas/clientes/perfil', {mensaje: `Los apellidos deben tener entre ${minLong} y ${maxLong2} caracteres`});
+        return res.end();
+    }
+    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
+    if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
+        console.log('Email verificado y correcto');
+    }else {
+        res.status(401).render('paginas/clientes/perfil', 
+        {
+            mensaje: `El Email: ${data.email} debe seguir la estructura válida Internacional`
+        });
+        return res.end();
+    }
+    const paises = getCountries();
+    if(paises.includes(data.pais)) {
+        console.log('País verificado y correcto');
+    }else {
+        res.status(401).render('paginas/clientes/perfil', {mensaje: 'País incorrecto'});
+        return res.end();
+    }
+    const codigoPais = getCode(data.pais);
+    if(postcodeValidator(data.cp, codigoPais)) {
+        console.log('Código Postal verificado y correcto');
+    }else {
+        res.status(401).render('paginas/clientes/perfil', {mensaje: 'Código Postal incorrecto'});
+        return res.end();
+    }
+    //-- Declaramos las variables o campos del cliente.
+    const email = data.email;
+    const nombre = data.nombre;
+    const apellidos = data.apellidos;
+    const direccion = data.direccion;
+    const poblacion = data.poblacion;
+    const region = data.region;
+    const pais = data.pais;
+    const cp = data.cp;
+    const genero = data.genero;
+    //-- Actualizamos todos los campos menos la contraseña.
+    actualizarClienteVerificadodb
+    (
+        id,
+        {nombre: nombre, apellidos: apellidos, genero: genero, email: email, direccion: direccion,
+        poblacion: poblacion, region: region, pais: pais, cp: cp}
+    );
+    //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
+    mostrarClienteVerificadodb
+    (
+        id,
+        oldpassword,
+        newpassword,
+        repitePassword,
+        res
+    );
 }
 
 //-- Exportamos dicha función para unirlo al resto del programa.
