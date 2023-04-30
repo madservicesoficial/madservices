@@ -49,20 +49,53 @@ const validacionEntradasEmpresa = (id, data, oldpassword, newpassword, repitePas
     if((cifvalidacion.isValidCif(data.nif) || cifvalidacion.isValidNif(data.nif)) && data.nif) {
         console.log('CIF/NIF verificado y correcto');
     }else {
-        res.status(401).render('paginas/empresas/interfaz', {msjError: `El CIF/NIF no es oficial`});
-        return res.end();
+        //-- Instrucción consultar para mostrar.
+        let instruccionConsultarParaMostrar = 'SELECT * FROM empresas WHERE id = ?';
+        //-- Configuración del formato de la instrucción.
+        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
+        //-- Proceso de la consulta.
+        madservicesEmpresadb.query(formatoinstruccionConsultarParaMostrar, (error, results) => {
+            if(error) throw error;
+            const tablaEmpresa = results[0];
+            res.status(401).render('paginas/empresas/interfaz', 
+            {
+                msjError: `El CIF/NIF no es oficial`,
+                id: tablaEmpresa.id,
+                email: tablaEmpresa.email,
+                password: tablaEmpresa.password,
+                marca: tablaEmpresa.marca,
+                tipo: tablaEmpresa.tipo,
+                nif: tablaEmpresa.nif
+            });
+            return res.end();
+        });
     }
     const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     if(validacion.isEmail(data.email) && estructuraEmail.test(data.email) && data.email) {
         console.log('Email verificado y correcto');
     }else {
-        res.status(401).render('paginas/empresas/interfaz', 
-        {
-            msjError: `El Email: ${data.email} debe seguir la estructura válida Internacional`
+        //-- Instrucción consultar para mostrar.
+        let instruccionConsultarParaMostrar = 'SELECT * FROM empresas WHERE id = ?';
+        //-- Configuración del formato de la instrucción.
+        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
+        //-- Proceso de la consulta.
+        madservicesEmpresadb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
+            if(error) throw error;
+            const tablaEmpresa = result[0];
+            res.status(401).render('paginas/empresas/interfaz', 
+            {
+                msjError: `El Email: ${data.email} debe seguir la estructura válida Internacional`,
+                id: tablaEmpresa.id,
+                email: tablaEmpresa.email,
+                password: tablaEmpresa.password,
+                marca: tablaEmpresa.marca,
+                tipo: tablaEmpresa.tipo,
+                nif: tablaEmpresa.nif
+            });
+            return res.end();
         });
-        return res.end();
     }
-    //-- Declaramos las variables o campos del cliente.
+    //-- Declaramos las variables o campos de la Empresa.
     const email = data.email;
     const marca = data.marca;
     const tipo = data.tipo;
