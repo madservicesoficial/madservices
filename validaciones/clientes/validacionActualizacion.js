@@ -27,17 +27,20 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
     const minLong = 3;
     const maxLong = 48;
     const maxLong2 = 2 * maxLong;
+    //-- Ctes de códigos país.
+    const codigoPais = getCode(data.pais);
+    const paises = getCountries();
     //-- Si no, chequeamos que cada campo cumpla con los requisitos.
-    if(data.nombre !== undefined) {
+    if(!data.nombre) {
         if(data.nombre.length < minLong || data.nombre.length > maxLong) {
             //-- Instrucción consultar para mostrar.
             let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultadoNombre) => {
                 if(error) throw error;
-                const tablaCliente = resultado[0];
+                const tablaCliente = resultadoNombre[0];
                 res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError: `El nombre debe tener entre ${minLong} y ${maxLong} caracteres`,
@@ -57,16 +60,16 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(data.apellidos !== undefined) {
+    if(!data.apellidos) {
         if(data.apellidos.length < minLong || data.apellidos.length > maxLong2) {
             //-- Instrucción consultar para mostrar.
             let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
+            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultadoApellidos) => {
                 if(error) throw error;
-                const tablaCliente = result[0];
+                const tablaCliente = resultadoApellidos[0];
                 res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError: `Los apellidos deben tener entre ${minLong} y ${maxLong2} caracteres`,
@@ -86,7 +89,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(data.email !== undefined) {
+    if(!data.email) {
         const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
         if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
             console.log('Email verificado y correcto');
@@ -96,9 +99,9 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, results) => {
+            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultadoEmail) => {
                 if(error) throw error;
-                const tablaCliente = results[0];
+                const tablaCliente = resultadoEmail[0];
                 res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError: `El Email: ${data.email} debe seguir la estructura válida Internacional`,
@@ -118,8 +121,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(data.pais !== undefined) {
-        const paises = getCountries();
+    if(!data.pais) {
         if(paises.includes(data.pais)) {
             console.log('País verificado y correcto');
         }else {
@@ -128,9 +130,9 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
+            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultadoPais) => {
                 if(error) throw error;
-                const tablaCliente = field[0];
+                const tablaCliente = resultadoPais[0];
                 res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError: 'País incorrecto',
@@ -150,8 +152,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(data.cp !== undefined) {
-        const codigoPais = getCode(data.pais);
+    if(!data.cp) {
         if(postcodeValidator(data.cp, codigoPais)) {
             console.log('Código Postal verificado y correcto');
         }else {
@@ -160,9 +161,9 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
+            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultadoCP) => {
                 if(error) throw error;
-                const tablaCliente = fields[0];
+                const tablaCliente = resultadoCP[0];
                 res.status(401).render('paginas/clientes/perfil', 
                 {
                     msjError: 'Código Postal incorrecto',
