@@ -1,5 +1,5 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { actualizarEmpresaVerificadadb, mostrarEmpresaVerificadadb } = require('../../modelos/empresas/operacionesDB.js');
+//-- Importamos la función que valida todos los campos de la actualización de los clientes.
+const validacionEntradasEmpresa = require('../../validaciones/empresas/validacionActualizacion.js');
 
 //-- Creamos el Punto de Control para actualizar la interfaz de la Empresa.
 const actualizarEmpresa = {}
@@ -11,20 +11,15 @@ actualizarEmpresa.interfaz = (req, res) => {
     const marca = req.body.marca;
     const tipo = req.body.tipo;
     const nif = req.body.nif;
-    const ebitda = req.body.ebitda;
     const email = req.body.email;
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
     const repitePassword = req.body.repitePassword;
-    //-- Actualizamos todos los campos menos la contraseña.
-    actualizarEmpresaVerificadadb
-    (
-        {id: id, marca: marca, tipo: tipo, nif: nif, ebitda: ebitda, email: email}
-    );
-    //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
-    mostrarEmpresaVerificadadb
+    //-- Función de validación de todos los campos.
+    validacionEntradasEmpresa
     (
         id,
+        {marca: marca, nif: nif, tipo: tipo, email: email},
         oldpassword,
         newpassword,
         repitePassword,

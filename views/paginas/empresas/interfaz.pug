@@ -44,11 +44,6 @@ block body
                 br
                 br
                 br
-                label#posactualizEmpresa='Indicador EBITDA: '
-                input.camposRegistro#posactualizEmpresa(type='number' name='ebitda' placeholder='Introduce el indicador EBITDA válido....')
-                br
-                br
-                br
                 label#posactualizEmpresa='E-mail: '
                 input.entradasNoRadio#posactualizEmpresa(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
@@ -88,10 +83,6 @@ block body
                         br
                     if nif
                         label='Código CIF/NIF: ' + nif
-                        br
-                        br
-                    if ebitda
-                        label='Indicador EBITDA: ' + ebitda
                         br
                         br
                     if email

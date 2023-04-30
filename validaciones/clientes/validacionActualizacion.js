@@ -16,7 +16,7 @@ const { postcodeValidator } = require('postcode-validator');
 //-- o .es (España) o .abreviacionPais (cualquier otro pais).
 
 //-- Creamos la función que valida los datos enviados por el cliente.
-const validacionCamposCliente = (id, oldpassword, newpassword, repitePassword, data, res) => {
+const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword, data, res) => {
 
     //-- Declaración de ctes.
     const minLong = 3;
@@ -85,4 +85,4 @@ const validacionCamposCliente = (id, oldpassword, newpassword, repitePassword, d
 }
 
 //-- Exportamos dicha función para unirlo al resto del programa.
-module.exports = validacionCamposCliente;
+module.exports = validacionEntradasCliente;
