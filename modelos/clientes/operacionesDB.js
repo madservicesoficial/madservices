@@ -191,7 +191,9 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
                 if(match) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {
-                        if(validacion.isLength(newpassword, { min: minLong2, max: maxLong2}) && validacion.matches(newpassword, /[a-z]/)
+                        const minPsswd = 12;
+                        const maxPsswd = 98;
+                        if(validacion.isLength(newpassword, { min: minPsswd, max: maxPsswd}) && validacion.matches(newpassword, /[a-z]/)
                         && validacion.matches(newpassword, /[A-Z]/) && validacion.matches(newpassword, /[0-9]/) &&
                         validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
                             //-- Cifrar la nueva contraseña.

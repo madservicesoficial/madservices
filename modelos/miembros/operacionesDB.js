@@ -12,12 +12,16 @@ const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 const consultaID = require('./consultaID.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//-- Importamos la Tecnología para validar datos enviados por la Empresa.
+const validacion = require("validator");
+//-- Importamos la Tecnología para leer ficheros.
+const fs = require('fs');
 
 //-- Creamos la función para registrarse como Miembro MAD, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarMiembroVerificadodb = async (data, res) => {
+const registrarMiembroVerificadodb = async (data, password, res) => {
 
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(data.password, 1);
+    const passwordCifrada = await hash(password, 1);
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM miembros WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
@@ -84,7 +88,7 @@ const iniciarSesionMiembroVerificadodb = (email, password, req, res) => {
 }
 
 //-- Creamos la función para actualizar los campos de la interfaz del Miembro MAD de la base de datos de MAD Services.
-const actualizarMiembroVerificadodb = (data) => {
+const actualizarMiembroVerificadodb = (id, data) => {
 
     //-- Creamos la estructura para definir los campos de la interfaz del Miembro MAD.
     const hayMiembro = {
@@ -98,7 +102,7 @@ const actualizarMiembroVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarNombre = 'UPDATE miembros SET miembro = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayMiembro.hayMiembro, data.id]);
+        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayMiembro.hayMiembro, id]);
         //-- Proceso de actualización en base de datos.
         madservicesAdmindb.query(formatoInstruccionActualizarNombre);
     }
@@ -106,7 +110,7 @@ const actualizarMiembroVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarApellidos = 'UPDATE miembros SET departamento = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayMiembro.hayDepartamento, data.id]);
+        let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayMiembro.hayDepartamento, id]);
         //-- Proceso de actualización en base de datos.
         madservicesAdmindb.query(formatoInstruccionActualizarApellidos);
     }
@@ -114,7 +118,7 @@ const actualizarMiembroVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarGenero = 'UPDATE miembros SET genero = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayMiembro.hayGenero, data.id]);
+        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayMiembro.hayGenero, id]);
         //-- Proceso de actualización en base de datos.
         madservicesAdmindb.query(formatoInstruccionActualizarGenero);
     }
@@ -122,7 +126,7 @@ const actualizarMiembroVerificadodb = (data) => {
         //-- Instrucción para actualizar en la base de datos.
         let instruccionActualizarEmail = 'UPDATE miembros SET email = ? WHERE id = ?';
         //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayMiembro.hayEmail, data.id]);
+        let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayMiembro.hayEmail, id]);
         //-- Proceso de actualización en base de datos.
         madservicesAdmindb.query(formatoInstruccionActualizarEmail);
     }
@@ -146,34 +150,62 @@ const mostrarMiembroVerificadodb = (id, oldpassword, newpassword, repitePassword
                 if(match) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {
-                        //-- Cifrar la nueva contraseña.
-                        const nuevaPasswordCifrada = await hash(newpassword,1);
-                        //-- Instrucción para actualizar en la base de datos.
-                        let instruccionActualizarANuevaPassword = 'UPDATE miembros SET password = ? WHERE id = ?';
-                        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                        let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
-                        //-- Proceso de actualización en base de datos.
-                        madservicesAdmindb.query(formatoInstruccionActualizarANuevaPassword);
-                        //-- Instrucción consultar para mostrar.
-                        let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
-                        //-- Configuración del formato de la instrucción.
-                        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-                        //-- Proceso de la consulta.
-                        madservicesAdmindb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
-                            if(error) throw error;
-                            const tablaMiembro = resultado[0];
-                            res.status(201).render('paginas/miembros/interfaz',
-                            {
-                                msjActualizacion: 'Campos actualizados con éxito y contraseña: ',
-                                id: tablaMiembro.id,
-                                miembro: tablaMiembro.miembro,
-                                departamento: tablaMiembro.departamento,
-                                genero: tablaMiembro.genero,
-                                email: tablaMiembro.email,
-                                password: tablaMiembro.password
+                        const minLong = 12;
+                        const maxLong = 98;
+                        if(validacion.isLength(newpassword, { min: minLong, max: maxLong}) && validacion.matches(newpassword, /[a-z]/)
+                        && validacion.matches(newpassword, /[A-Z]/) && validacion.matches(newpassword, /[0-9]/) &&
+                        validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+                            //-- Cifrar la nueva contraseña.
+                            const nuevaPasswordCifrada = await hash(newpassword,1);
+                            //-- Instrucción para actualizar en la base de datos.
+                            let instruccionActualizarANuevaPassword = 'UPDATE miembros SET password = ? WHERE id = ?';
+                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                            let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
+                            //-- Proceso de actualización en base de datos.
+                            madservicesAdmindb.query(formatoInstruccionActualizarANuevaPassword);
+                            //-- Instrucción consultar para mostrar.
+                            let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
+                            //-- Configuración del formato de la instrucción.
+                            let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
+                            //-- Proceso de la consulta.
+                            madservicesAdmindb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
+                                if(error) throw error;
+                                const tablaMiembro = resultado[0];
+                                res.status(201).render('paginas/miembros/interfaz',
+                                {
+                                    msjActualizacion: 'Campos actualizados con éxito y contraseña: ',
+                                    id: tablaMiembro.id,
+                                    miembro: tablaMiembro.miembro,
+                                    departamento: tablaMiembro.departamento,
+                                    genero: tablaMiembro.genero,
+                                    email: tablaMiembro.email,
+                                    password: tablaMiembro.password
+                                });
+                                return res.end();
                             });
-                            return res.end();
-                        });
+                        }else {
+                            //-- Instrucción consultar para mostrar.
+                            let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
+                            //-- Configuración del formato de la instrucción.
+                            let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
+                            //-- Proceso de la consulta.
+                            madservicesEmpresadb.query(formatoinstruccionConsultarParaMostrar, (error, resultados) => {
+                                if(error) throw error;
+                                const tablaMiembro = resultados[0];
+                                res.status(401).render('paginas/miembros/interfaz', 
+                                {
+                                    msjError: 'La contraseña debe contener como mínimo 12 caracteres, letras',
+                                    msjError1: 'minúsculas y mayúsculas, números y caracteres especiales',
+                                    id: tablaMiembro.id,
+                                    miembro: tablaMiembro.miembro,
+                                    departamento: tablaMiembro.departamento,
+                                    genero: tablaMiembro.genero,
+                                    email: tablaMiembro.email,
+                                    password: tablaMiembro.password
+                                });
+                                return res.end();
+                            });
+                        }
                     }else {
                         //-- Instrucción consultar para mostrar.
                         let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';

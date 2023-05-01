@@ -20,6 +20,16 @@ const autorizacionRegistroMiembros = require('../controladores/miembros/autoriza
 const autorizacionInicioSesionMiembros = require('../controladores/miembros/autorizacionInicioSesion.js');
 //-- Importamos la función para ingresar productos MAD en la base de datos.
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
+//-- Importamos la Tecnología para almacenar las imágenes introducidas.
+const almacenaje = require('multer');
+const path = require('path');
+const almacenamientoImages = almacenaje.diskStorage({
+    destination: path.join(__dirname, '../public/imagenes'),
+    filename: (req, file, callback) => {
+        callback(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+const cargarImagenes = almacenaje({ almacenamientoImages: almacenamientoImages });
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes.login);
@@ -39,6 +49,8 @@ rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros.autorizaci
 rutasPost.post('/registrarse/autorizar/miembro', registroMiembros.registrarse);
 //-- Formulario de ingreso de productos MAD.
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', ingresoProductosMAD.interfaz);
+//-- Formulario de ingreso de imágenes para productos MAD.
+rutasPost.post('/sesion-miembro/:id/interfaz/nuevas-imgs', cargarImagenes.array('imagenes', 12));
 //-- Formulario de envío de datos del CV.
 rutasPost.post('/empleo');
 //-- Formulario de envío de datos del CV para clientes.

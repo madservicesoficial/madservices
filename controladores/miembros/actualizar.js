@@ -1,5 +1,5 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarMiembroVerificadodb, mostrarMiembroVerificadodb } = require('../../modelos/miembros/operacionesDB.js');
+//-- Importamos la función que valida todos los campos de la actualización de los clientes.
+const validacionEntradasMiembro = require('../../validaciones/miembros/validacionActualizacion.js');
 
 //-- Creamos el Punto de Control para actualizar la interfaz del Miembro MAD.
 const actualizarMiembro = {}
@@ -15,15 +15,11 @@ actualizarMiembro.interfaz = (req, res) => {
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
     const repitePassword = req.body.repitePassword;
-    //-- Actualizamos todos los campos menos la contraseña.
-    actualizarMiembroVerificadodb
-    (
-        {id: id, miembro: miembro, departamento: departamento, genero: genero, email: email}
-    );
-    //-- Actualizamos la contraseña y mostramos en función de lo que se haya introducido en ella.
-    mostrarMiembroVerificadodb
+    //-- Función que valida los campos de actualización del Miembro MAD.
+    validacionEntradasMiembro
     (
         id,
+        {miembro: miembro, departamento: departamento, genero: genero, email: email},
         oldpassword,
         newpassword,
         repitePassword,

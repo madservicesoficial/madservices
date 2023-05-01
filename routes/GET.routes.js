@@ -10,6 +10,12 @@ const mostrarEmpresadb = require('../modelos/empresas/mostrarCampos.js');
 const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
 //-- Importamos la función que muestra los productos MAD.
 const mostrarProductosMAD = require('../modelos/general/mostrarProductosMAD.js');
+//-- Importamos la función que muestra los productos MAD desde el cliente.
+const mostrarProductosMADclientes = require('../modelos/clientes/mostrarProductosMAD.js');
+//-- Importamos la función que muestra los productos MAD desde la empresa.
+const mostrarProductosMADempresas = require('../modelos/empresas/mostrarProductosMAD.js');
+//-- Importamos la función que muestra los productos MAD desde un miembro MAD.
+const mostrarProductosMADmiembros = require('../modelos/miembros/mostrarProductosMAD.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -279,25 +285,13 @@ rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
 rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD.productosmadservices);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/productosmadservices', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes.productosmadservices);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
-rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/productosmadservices', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', mostrarProductosMADempresas.productosmadservices);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/productosmadservices', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros.productosmadservices);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {

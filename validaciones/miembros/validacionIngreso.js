@@ -5,8 +5,6 @@ const mysql = require('mysql2');
 const {madservicesAdmindb} = require('../../config/database.js');
 //-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
 const { ingresarProductosMADdb } = require('../../modelos/miembros/operacionesDB.js');
-//-- Importamos la Tecnología para almacenar en directorio.
-const almacenaje = require('multer');
 
 //-- Creamos la función que valida los campos de ingreso de los productos MAD.
 const verificarProductosmetidos = (id, imagenes, data, res) => {
@@ -16,7 +14,7 @@ const verificarProductosmetidos = (id, imagenes, data, res) => {
     const maxlong = 98;
     const maxtexto = 10 * maxlong;
     //-- Comprobamos que no haya campos vacíos.
-    if(!data.categoria || !data.titulo || !data.precio || !data.peso || !data.descripcion) {
+    if(!data.categoria || !data.titulo || !data.precio || !data.peso || !data.descripcion || !imagenes) {
         //-- Instrucción consultar para mostrar.
         let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
         //-- Configuración del formato de la instrucción.
@@ -38,28 +36,15 @@ const verificarProductosmetidos = (id, imagenes, data, res) => {
             return res.end();
         });
     }else {
-        //-- Subir la imagen en su espacio de memoria.
-        const almacenamiento = almacenaje.diskStorage({
-            destination: function (req, file, cb) {
-                cb(null, 'public/vistaProductos/');
-                console.log('destination');
-            },
-            filename: function (req, file, cb) {
-                cb(null, file.originalname);
-                console.log('filename');
-            }
-        });
-        const subirImagen = almacenaje({almacenamiento: almacenamiento});
-        subirImagen.array(imagenes, 10);
         if(data.titulo.length < minlong || data.titulo.length > maxlong) {
             //-- Instrucción consultar para mostrar.
             let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
             //-- Configuración del formato de la instrucción.
             let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
             //-- Proceso de la consulta.
-            madservicesAdmindb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
+            madservicesAdmindb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
                 if(error) throw error;
-                const tablaMiembro = fields[0];
+                const tablaMiembro = field[0];
                 res.status(401).render('paginas/miembros/interfaz',
                 {
                     mensajeVerif: `No pongas un título de más de ${maxlong}`,
@@ -105,6 +90,7 @@ const verificarProductosmetidos = (id, imagenes, data, res) => {
         ingresarProductosMADdb
         (
             id,
+            imagenes,
             {categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
             res
         );

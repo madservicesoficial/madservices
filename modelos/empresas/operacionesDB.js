@@ -144,7 +144,7 @@ const mostrarEmpresaVerificadadb = (id, oldpassword, newpassword, repitePassword
         madservicesEmpresadb.query(formatoInstruccionConsultarPasswordPerfil, (error, results) => {
             if(error) throw error;
             const passwordEnDatabase = results[0].password;
-            bcrypt.compare(oldpassword, passwordEnDatabase).then( async (match) => {
+            compare(oldpassword, passwordEnDatabase).then( async (match) => {
                 if(match) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {

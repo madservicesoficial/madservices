@@ -2,7 +2,7 @@
 extends ../../base.pug
 
 block title
-    title=`MAD Services: ${id} en Categorias`
+    title=`${id} viendo Productos MAD`
 
 block body
     include ./componentes/cabecera.pug
@@ -16,4 +16,12 @@ block body
                 li.seccionFiltrado='Por nombre del producto:'
                 li.seccionFiltrado='Por precio del producto:'
         div.cuadroProductosMAD#contenidoProductos
+            each campo in cartaProducto
+                div.cartaProductoMAD
+                    h3.tipoProducto=campo.producto
+                    h3.tituloProducto=campo.titulo
+                    h3.precioProducto=campo.precio + '€'
+                    p.descripcionProducto=campo.descripcion
+                    h3.pesoProducto=campo.peso + 'Kg'
+                    button.alCarrito='Añadir al carrito'
     include ./componentes/piepagina.pug

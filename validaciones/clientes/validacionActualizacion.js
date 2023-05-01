@@ -31,7 +31,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
     const codigoPais = getCode(data.pais);
     const paises = getCountries();
     //-- Si no, chequeamos que cada campo cumpla con los requisitos.
-    if(!data.nombre) {
+    if(data.nombre) {
         if(data.nombre.length < minLong || data.nombre.length > maxLong) {
             //-- Instrucción consultar para mostrar.
             let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
@@ -60,7 +60,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(!data.apellidos) {
+    if(data.apellidos) {
         if(data.apellidos.length < minLong || data.apellidos.length > maxLong2) {
             //-- Instrucción consultar para mostrar.
             let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
@@ -89,7 +89,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(!data.email) {
+    if(data.email) {
         const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
         if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
             console.log('Email verificado y correcto');
@@ -121,7 +121,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(!data.pais) {
+    if(data.pais) {
         if(paises.includes(data.pais)) {
             console.log('País verificado y correcto');
         }else {
@@ -152,7 +152,7 @@ const validacionEntradasCliente = (id, oldpassword, newpassword, repitePassword,
             });
         }
     }
-    if(!data.cp) {
+    if(data.cp) {
         if(postcodeValidator(data.cp, codigoPais)) {
             console.log('Código Postal verificado y correcto');
         }else {

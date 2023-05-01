@@ -12,6 +12,8 @@ block body
             //-- Contenido de las alertas.
             if mensaje
                 p.alerta#enRojo=mensaje
+            if mensaje2
+                p.alerta#enRojo=mensaje2
             form.formRegistro(method="POST" action='/registrarse/autorizar/miembro')
                 label='Miembro: '
                 input.camposRegistro#posicionNombreMiembro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
