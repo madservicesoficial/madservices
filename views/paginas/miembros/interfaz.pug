@@ -18,13 +18,14 @@ block body
                 p.alertaAct#enRojo=msjError1
             if msjActualizacion
                 p.alertaAct#enVerde=msjActualizacion
-            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar`)
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-miembro`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Miembro: '
                 input.camposRegistro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
-                br
-                br
-                br
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-departamento`)
+                input(type='hidden' name='_method' value='PATCH')
                 label='Departamento: '
                     select.camposRegistro#designTipoDept(name='departamento')
                         option(checked)=''
@@ -35,9 +36,10 @@ block body
                         option='RRHH'
                         option='VENTAS'
                         option='ECONOMIA'
-                br
-                br
-                br
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-genero`)
+                input(type='hidden' name='_method' value='PATCH')
                 label='Género: '
                 input(type='radio' name='genero' value='Hombre')
                 label='Hombre'
@@ -45,14 +47,16 @@ block body
                 label='Mujer'
                 input(type='radio' name='genero' value='Otro')
                 label='Otro'
-                br
-                br
-                br
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-email`)
+                input(type='hidden' name='_method' value='PATCH')
                 label='E-mail: '
                 input.entradasNoRadio(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                br
-                br
-                br
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-password`)
+                input(type='hidden' name='_method' value='PATCH')
                 label='Antigua contraseña: '
                 input.entradasNoRadio(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                 br
@@ -65,10 +69,8 @@ block body
                 br
                 label='Repite la contraseña: '
                 input.entradasNoRadio(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
-                br
-                br
-                br
-                button#btnActualizarPerfil(type='submit')='Actualizar'
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
         div#perfilMiembroMADDerecha
             h3='Información del Miembro MAD: '
             ul 
@@ -116,13 +118,12 @@ block body
             h3='Ingreso de productos para su venta: '
             if mensajeVerif 
                 p.alertaAct#enRojo=mensajeVerif
-            form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevas-imgs` enctype="multipart/form-data")
+            form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
                 ul
-                    li='Cargar imágenes: '
-                        input(type='file' name='imagenes' accept="image/*" multiple)
-                button(type='submit')='Guardar'
-            form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto`)
-                ul
+                    li='Imagen de portada: '
+                        input(type='file' name='portada' accept="image/*")
+                    li='Cantidad: '
+                        input(type="number" name='cantidad' placeholder='Cantidad de productos....')
                     li='Tipo de producto:'
                         select(name="categoria")='Categorias'
                             option(checked)=''

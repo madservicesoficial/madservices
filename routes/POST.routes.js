@@ -21,15 +21,7 @@ const autorizacionInicioSesionMiembros = require('../controladores/miembros/auto
 //-- Importamos la función para ingresar productos MAD en la base de datos.
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
-const almacenaje = require('multer');
-const path = require('path');
-const almacenamientoImages = almacenaje.diskStorage({
-    destination: path.join(__dirname, '../public/imagenes'),
-    filename: (req, file, callback) => {
-        callback(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-const cargarImagenes = almacenaje({ almacenamientoImages: almacenamientoImages });
+const multer = require('multer');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes.login);
@@ -46,11 +38,19 @@ rutasPost.post('/registrarse/empresa', registroEmpresas.registrarse);
 //-- Formulario de autenticación como Miembro MAD para Registro.
 rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros.autorizacionRegistro);
 //-- Formulario de envío de datos para Registrarse como Miembro MAD.
-rutasPost.post('/registrarse/autorizar/miembro', registroMiembros.registrarse);
+rutasPost.post('/registrarse/autorizar/miembro', registroMiembros);
 //-- Formulario de ingreso de productos MAD.
-rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', ingresoProductosMAD.interfaz);
-//-- Formulario de ingreso de imágenes para productos MAD.
-rutasPost.post('/sesion-miembro/:id/interfaz/nuevas-imgs', cargarImagenes.array('imagenes', 12));
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, './imagenes');
+    },
+    filename: (req, file, callback) => {
+        const extension = file.originalname.split('.').pop();
+        callback(null, `${Date.now()}.${extension}`);
+    }
+});
+const upload = multer({ storage: storage });
+rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
 //-- Formulario de envío de datos del CV.
 rutasPost.post('/empleo');
 //-- Formulario de envío de datos del CV para clientes.

@@ -18,65 +18,56 @@ const validacionCamposEmpresa = (data, res) => {
 
     //-- Declaración de ctes.
     const minLong = 3;
-    const minLong2 = 4 * minLong;
+    const minLong2 = 4 * minLong - 2;
     const maxLong = 98;
     const maxLong2 = 50 + maxLong;
+    //-- Declaramos las variables o campos de la Empresa.
+    const email = data.email;
+    const password = data.password;
+    const confirmPassword = data.confirmPassword;
+    const marca = data.marca;
+    const nif = data.nif;
+    const tipo = data.tipo;
+    //-- Declaración de la estructura correcta del Email.
+    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Comprobamos que no hay campos vacíos.
-    if(!data.email || !data.password || !data.confirmPassword || !data.marca || !data.nif || !data.tipo) {
+    if(!email || !password || !confirmPassword || !marca || !nif || !tipo) {
         res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }else {
         //-- Comprobamos que la Contraseña metida y la confirmación de la Contraseña son iguales.
-        if(data.password !== data.confirmPassword) {
+        if(password !== confirmPassword) {
             res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
             return res.end();
         }else {
             //-- Si no, chequeamos que cada campo cumpla con los requisitos.
-            if(data.marca.length < minLong || data.marca.length > maxLong2) {
-                res.status(401).render('paginas/empresas/registrarse', {mensaje: `La marca empresarial debe tener entre ${minLong} y ${maxLong2} caracteres`});
+            if(marca.length < minLong || marca.length > maxLong2) {
+                res.status(401).render('paginas/empresas/registrarse', {mensaje: 'La marca empresarial es demasiado larga'});
                 return res.end();
-            }
-            if(cifvalidacion.isValidCif(data.nif) || cifvalidacion.isValidNif(data.nif)) {
-                console.log('CIF/NIF verificado y correcto');
-            }else {
-                res.status(401).render('paginas/empresas/registrarse', {mensaje: `El CIF/NIF no es oficial`});
+            }else if(!cifvalidacion.isValidCif(nif) || !cifvalidacion.isValidNif(nif)) {
+                res.status(401).render('paginas/empresas/registrarse', {mensaje: 'El CIF/NIF no es oficial'});
                 return res.end();
-            }
-            const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
-            if(validacion.isEmail(data.email) && estructuraEmail.test(data.email)) {
-                console.log('Email verificado y correcto');
-            }else {
+            }else if(!validacion.isEmail(email) && !estructuraEmail.test(email)) {
+                res.status(401).render('paginas/empresas/registrarse', { mensaje: `El Email: ${email} no es válido`});
+                return res.end();
+            }else if(!validacion.isLength(password, { min: minLong2, max: maxLong}) && !validacion.matches(password, /[a-z]/)
+            && !validacion.matches(password, /[A-Z]/) && !validacion.matches(password, /[0-9]/) &&
+            !validacion.matches(password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
                 res.status(401).render('paginas/empresas/registrarse', 
                 {
-                    mensaje: `El Email: ${data.email} debe seguir la estructura válida Internacional`
-                });
-                return res.end();
-            }
-            if(validacion.isLength(data.password, { min: minLong2, max: maxLong}) && validacion.matches(data.password, /[a-z]/)
-            && validacion.matches(data.password, /[A-Z]/) && validacion.matches(data.password, /[0-9]/) &&
-            validacion.matches(data.password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                console.log('Contraseña verificada y correcta');
-            }else {
-                res.status(401).render('paginas/empresas/registrarse', 
-                {
-                    mensaje: 'La contraseña debe contener como mínimo 12 caracteres, letras',
+                    mensaje: `La contraseña debe contener como mínimo ${minLong2} caracteres, letras`,
                     mensaje2: 'minúsculas y mayúsculas, números y caracteres especiales'
                 });
                 return res.end();
+            }else {
+                //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
+                registrarEmpresaVerificadadb
+                (
+                    {email: email, marca: marca, nif: nif, tipo: tipo},
+                    password,
+                    res
+                );
             }
-            //-- Declaramos las variables o campos de la Empresa.
-            const email = data.email;
-            const password = data.password;
-            const marca = data.marca;
-            const nif = data.nif;
-            const tipo = data.tipo;
-            //-- Registramos la Empresa en la base de datos de MAD Services, verificando que no existía ya.
-            registrarEmpresaVerificadadb
-            (
-                {email: email, marca: marca, nif: nif, tipo: tipo},
-                password,
-                res
-            );
         }
     }
 }

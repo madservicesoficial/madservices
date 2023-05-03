@@ -25,30 +25,33 @@ const validacionEntradasEmpresa = (id, data, oldpassword, newpassword, repitePas
     const minLong = 3;
     const maxLong = 98;
     const maxLong2 = 50 + maxLong;
-    if(data.marca) {
-        //-- Si no, chequeamos que cada campo cumpla con los requisitos.
-        if(data.marca.length < minLong || data.marca.length > maxLong2) {
-            //-- Instrucción consultar para mostrar.
-            let instruccionConsultarParaMostrar = 'SELECT * FROM empresas WHERE id = ?';
-            //-- Configuración del formato de la instrucción.
-            let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-            //-- Proceso de la consulta.
-            madservicesEmpresadb.query(formatoinstruccionConsultarParaMostrar, (error, salida) => {
-                if(error) throw error;
-                const tablaEmpresa = salida[0];
-                res.status(401).render('paginas/empresas/interfaz', 
-                {
-                    msjError: `La marca empresarial debe tener entre ${minLong} y ${maxLong2} caracteres`,
-                    id: tablaEmpresa.id,
-                    email: tablaEmpresa.email,
-                    password: tablaEmpresa.password,
-                    marca: tablaEmpresa.marca,
-                    tipo: tablaEmpresa.tipo,
-                    nif: tablaEmpresa.nif
-                });
-                return res.end();
+    //-- Declaramos las variables o campos de la Empresa.
+    const email = data.email;
+    const marca = data.marca;
+    const tipo = data.tipo;
+    const nif = data.nif;
+    //-- Chequeamos que cada campo cumpla con los requisitos.
+    if(marca.length < minLong || marca.length > maxLong2) {
+        //-- Instrucción consultar para mostrar.
+        let instruccionConsultarParaMostrar = 'SELECT * FROM empresas WHERE id = ?';
+        //-- Configuración del formato de la instrucción.
+        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
+        //-- Proceso de la consulta.
+        madservicesEmpresadb.query(formatoinstruccionConsultarParaMostrar, (error, salida) => {
+            if(error) throw error;
+            const tablaEmpresa = salida[0];
+            res.status(401).render('paginas/empresas/interfaz', 
+            {
+                msjError: 'La marca empresarial es demasiado larga',
+                id: tablaEmpresa.id,
+                email: tablaEmpresa.email,
+                password: tablaEmpresa.password,
+                marca: tablaEmpresa.marca,
+                tipo: tablaEmpresa.tipo,
+                nif: tablaEmpresa.nif
             });
-        }
+            return res.end();
+        });
     }
     if(data.nif) {
         if(cifvalidacion.isValidCif(data.nif) || cifvalidacion.isValidNif(data.nif)) {
@@ -103,11 +106,6 @@ const validacionEntradasEmpresa = (id, data, oldpassword, newpassword, repitePas
             });
         }
     }
-    //-- Declaramos las variables o campos de la Empresa.
-    const email = data.email;
-    const marca = data.marca;
-    const tipo = data.tipo;
-    const nif = data.nif;
     //-- Actualizamos todos los campos menos la contraseña.
     actualizarEmpresaVerificadadb
     (
