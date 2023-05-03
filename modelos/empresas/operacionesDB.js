@@ -148,19 +148,8 @@ const mostrarEmpresaVerificadadb = (id, oldpassword, newpassword, repitePassword
                 if(match) {
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {
-                        const minLong = 12;
-                        const maxLong = 98;
-                        if(validacion.isLength(newpassword, { min: minLong, max: maxLong}) && validacion.matches(newpassword, /[a-z]/)
-                        && validacion.matches(newpassword, /[A-Z]/) && validacion.matches(newpassword, /[0-9]/) &&
-                        validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                            //-- Cifrar la nueva contraseña.
-                            const nuevaPasswordCifrada = await hash(newpassword,1);
-                            //-- Instrucción para actualizar en la base de datos.
-                            let instruccionActualizarANuevaPassword = 'UPDATE empresas SET password = ? WHERE id = ?';
-                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                            let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
-                            //-- Proceso de actualización en base de datos.
-                            madservicesEmpresadb.query(formatoInstruccionActualizarANuevaPassword);
+                        
+                            
                             //-- Instrucción consultar para mostrar.
                             let instruccionConsultarParaMostrar = 'SELECT * FROM empresas WHERE id = ?';
                             //-- Configuración del formato de la instrucción.
@@ -277,20 +266,47 @@ const mostrarEmpresaVerificadadb = (id, oldpassword, newpassword, repitePassword
 }
 
 //-- Creamos la función para Dar de Baja a la Empresa de la base de datos de MAD Services.
-const darseBajaEmpresadb = (id, req, res) => {
-    //-- Instrucción para dar de baja.
-    let instruccionDarDeBajaEmpresa = 'DELETE FROM empresas WHERE id = ?';
-    //-- Configuración del formato de la instrucción dar de baja.
-    let formatoinstruccionDarDeBajaEmpresa = mysql.format(instruccionDarDeBajaEmpresa, [id]);
-    //-- Proceso de dar de baja.
-    madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
-    //-- Destruir sesión.
-    req.session.destroy();
-    //-- Mostrar Alerta Emergente.
-    alerta('Empresa dada de baja definitivamente');
-    // Redirigir a la página principal de la aplicación.
-    return res.redirect('/');
+const darseBajaEmpresadb = (id, siConfirmo, noConfirmo, req, res) => {
+    //-- Caso 1: dejar en blanco la confirmación.
+    if(!siConfirmo && !noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Debes confirmar si quieres o no darte de baja');
+        // Redirigir a la interfaz de la Empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    //-- Caso 2: pulsar ambas confirmaciones.
+    }else if(siConfirmo && noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Debes elegir sólo una opción de confirmación');
+        // Redirigir a la interfaz de la Empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    //-- Caso 3: pulsar que no quieres darte de baja.
+    }else if(!siConfirmo && noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Gracias por no querer darte de baja');
+        // Redirigir a la interfaz de la Empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    //-- Caso 4: pulsar que sí quieres darte de baja.
+    }else if(siConfirmo && !noConfirmo) {
+        //-- Instrucción para dar de baja.
+        let instruccionDarDeBajaEmpresa = 'DELETE FROM empresas WHERE id = ?';
+        //-- Configuración del formato de la instrucción dar de baja.
+        let formatoinstruccionDarDeBajaEmpresa = mysql.format(instruccionDarDeBajaEmpresa, [id]);
+        //-- Proceso de dar de baja.
+        madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
+        //-- Destruir sesión.
+        req.session.destroy();
+        //-- Mostrar Alerta Emergente.
+        alerta('Empresa dada de baja definitivamente');
+        // Redirigir a la página principal de la aplicación.
+        return res.redirect('/');
+    }
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarEmpresaVerificadadb, iniciarSesionEmpresaVerificadadb, actualizarEmpresaVerificadadb, mostrarEmpresaVerificadadb, darseBajaEmpresadb};
+module.exports = {
+    registrarEmpresaVerificadadb,
+    iniciarSesionEmpresaVerificadadb,
+    actualizarEmpresaVerificadadb,
+    mostrarEmpresaVerificadadb,
+    darseBajaEmpresadb
+};

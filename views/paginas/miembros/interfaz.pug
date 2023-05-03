@@ -11,13 +11,6 @@ block body
         h1.tituloPerfil=`Interfaz del Departamento de ${departamento}:`
         div#perfilMiembroMADIzquierda
             h3='Actualización de campos: '
-            //-- Contenido de las alertas.
-            if msjError
-                p.alertaAct#enRojo=msjError
-            if msjError1
-                p.alertaAct#enRojo=msjError1
-            if msjActualizacion
-                p.alertaAct#enVerde=msjActualizacion
             form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-miembro`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Miembro: '
@@ -101,10 +94,6 @@ block body
                         span='(oculta).'
         div#perfilMiembroMADDerecha2
             h3='Confirmación de separación de MAD Services: '
-            if msjError2
-                p.alertaAct#enRojo=msjError2
-            if msjBaja
-                p.alertaAct#enVerde=msjBaja
             form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
                 input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas separarte de MAD Services y seguir tu propio camino?: '

@@ -4,8 +4,7 @@ const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const bcrypt = require('bcrypt');
-const { hash } = require('bcrypt');
+const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
 const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
@@ -72,7 +71,7 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(password, miembro.password).then((match) => {
+            compare(password, miembro.password).then((match) => {
                 if(match) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-cliente/${miembro.id}`);
@@ -345,19 +344,46 @@ const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword
 }
 
 //-- Creamos la función para Dar de Baja al Cliente de la base de datos de MAD Services.
-const darseBajaClientedb = (id, req, res) => {
-    //-- Variables usadas para borrar los datos de la base de datos.
-    let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
-    let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
-    //-- Establecer la configuración de borrar los datos de la base de datos.
-    madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
-    //-- Destruir la sesión.
-    req.session.destroy();
-    //-- Mostrar Alerta Emergente.
-    alerta('Cliente dado de baja definitivamente');
-    // Redirigir a la página principal de la aplicación.
-    return res.redirect('/');
+const darseBajaClientedb = (id, siConfirmo, noConfirmo, req, res) => {
+    //-- Caso 1: dejar en blanco la confirmación.
+    if(!siConfirmo && !noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Debes confirmar si quieres o no darte de baja');
+        // Redirigir al perfil del Cliente.
+        return res.redirect(`/sesion-cliente/${id}/perfil`);
+    //-- Caso 2: pulsar ambas confirmaciones.
+    }else if(siConfirmo && noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Debes elegir sólo una opción de confirmación');
+        // Redirigir al perfil del Cliente.
+        return res.redirect(`/sesion-cliente/${id}/perfil`);
+    //-- Caso 3: pulsar que no quieres darte de baja.
+    }else if(!siConfirmo && noConfirmo) {
+        //-- Mostrar Alerta Emergente.
+        alerta('Gracias por no querer darte de baja');
+        // Redirigir al perfil del Cliente.
+        return res.redirect(`/sesion-cliente/${id}/perfil`);
+    //-- Caso 4: pulsar que sí quieres darte de baja.
+    }else if(siConfirmo && !noConfirmo) {
+        //-- Variables usadas para borrar los datos de la base de datos.
+        let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
+        let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
+        //-- Establecer la configuración de borrar los datos de la base de datos.
+        madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
+        //-- Destruir la sesión.
+        req.session.destroy();
+        //-- Mostrar Alerta Emergente.
+        alerta('Cliente dado de baja definitivamente');
+        // Redirigir a la página principal de la aplicación.
+        return res.redirect('/');
+    }
 }
 
 //-- Exportamos las funciones.
-module.exports = {registrarClienteVerificadodb, iniciarSesionClienteVerificadodb, actualizarClienteVerificadodb, mostrarClienteVerificadodb, darseBajaClientedb};
+module.exports = {
+    registrarClienteVerificadodb,
+    iniciarSesionClienteVerificadodb,
+    actualizarClienteVerificadodb,
+    mostrarClienteVerificadodb,
+    darseBajaClientedb
+};

@@ -5,9 +5,7 @@ const mysql = require('mysql2');
 const {madservicesEmpresadb} = require('../../config/database.js');
 
 //-- Función que muestra los productos MAD.
-const mostrarProductosMADempresas = {}
-
-mostrarProductosMADempresas.productosmadservices = (req, res) => {
+const mostrarProductosMADempresas = (req, res) => {
     //-- Captar el ID empresa.
     let id = req.params.id;
     //-- Instrucción que muestra productos MAD.

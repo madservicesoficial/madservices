@@ -213,85 +213,25 @@ rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => {
 });
 
 //-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
-rutasGet.get('/sesion-cliente/:id/perfil', (req,res) => {
-  let id = req.params.id;
-  mostrarClientedb
-  (
-    id,
-    (tablaCliente) => {
-        res.render('paginas/clientes/perfil', 
-        {
-          id: id,
-          email: tablaCliente.email,
-          password: tablaCliente.password,
-          nombre: tablaCliente.nombre,
-          apellidos: tablaCliente.apellidos,
-          direccion: tablaCliente.direccion,
-          poblacion: tablaCliente.poblacion,
-          region: tablaCliente.region,
-          pais: tablaCliente.pais,
-          cp: tablaCliente.cp,
-          genero: tablaCliente.genero
-        });
-        return res.end();
-    }
-  );
-});
+rutasGet.get('/sesion-cliente/:id/perfil', mostrarClientedb);
 
 //-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
-rutasGet.get('/sesion-empresa/:id/interfaz', (req,res) => {
-  let id = req.params.id;
-  mostrarEmpresadb
-  (
-    id,
-    (tablaEmpresa) => {
-        res.render('paginas/empresas/interfaz', 
-        {
-          id: id,
-          email: tablaEmpresa.email,
-          password: tablaEmpresa.password,
-          marca: tablaEmpresa.marca,
-          nif: tablaEmpresa.nif,
-          tipo: tablaEmpresa.tipo,
-          ebitda: tablaEmpresa.ebitda
-        });
-        return res.end();
-    }
-  );
-});
+rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresadb);
 
 //-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
-rutasGet.get('/sesion-miembro/:id/interfaz', (req,res) => {
-  let id = req.params.id;
-  mostrarMiembrodb
-  (
-    id,
-    (tablaMiembro) => {
-        res.render('paginas/miembros/interfaz', 
-        {
-          id: id,
-          email: tablaMiembro.email,
-          password: tablaMiembro.password,
-          miembro: tablaMiembro.miembro,
-          departamento: tablaMiembro.departamento,
-          genero: tablaMiembro.genero
-        });
-        return res.end();
-    }
-  );
-});
+rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembrodb);
 
 //-- Ruta a la Sección de los Productos MAD.
-rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD.productosmadservices);
+rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes.productosmadservices);
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
-rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', mostrarProductosMADempresas.productosmadservices);
+rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', mostrarProductosMADempresas);
 
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros.productosmadservices);
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {

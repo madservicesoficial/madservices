@@ -24,7 +24,7 @@ const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosM
 const multer = require('multer');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
-rutasPost.post('/login/cliente', iniciarSesionClientes.login);
+rutasPost.post('/login/cliente', iniciarSesionClientes);
 //-- Formulario de envío de datos para Iniciar Sesión como Empresa.
 rutasPost.post('/login/empresa', iniciarSesionEmpresas.login);
 //-- Formulario de autenticación como Miembro MAD para Login.
