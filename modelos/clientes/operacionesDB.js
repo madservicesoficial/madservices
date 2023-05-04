@@ -84,262 +84,36 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
     });
 }
 
-//-- Creamos la función para actualizar los campos del Perfil Cliente de la base de datos de MAD Services.
-const actualizarClienteVerificadodb = (id, data) => {
-    //-- Creamos la estructura para definir los campos del perfil del cliente.
-    const hayCliente = {
-        hayNombre: data.nombre,
-        hayApellidos: data.apellidos,
-        hayGenero: data.genero,
-        hayEmail: data.email,
-        hayDireccion: data.direccion,
-        hayPoblacion: data.poblacion,
-        hayRegion: data.region,
-        hayPais: data.pais,
-        hayCP: data.cp,
-    };
-    //-- Actualizamos cada campo del Perfil Cliente, si así lo ha indicado el propio Cliente.
-    if(hayCliente.hayNombre) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [hayCliente.hayNombre, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarNombre);
-    }
-    if(hayCliente.hayApellidos) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [hayCliente.hayApellidos, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarApellidos);
-    }
-    if(hayCliente.hayGenero) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [hayCliente.hayGenero, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarGenero);
-    }
-    if(hayCliente.hayEmail) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [hayCliente.hayEmail, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarEmail);
-    }
-    if(hayCliente.hayDireccion) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [hayCliente.hayDireccion, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarDireccion);
-    }
-    if(hayCliente.hayPoblacion) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarPoblacion = 'UPDATE clientes SET poblacion = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [hayCliente.hayPoblacion, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarPoblacion);
-    }
-    if(hayCliente.hayRegion) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarRegion = 'UPDATE clientes SET region = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [hayCliente.hayRegion, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarRegion);
-    }
-    if(hayCliente.hayPais) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarPais = 'UPDATE clientes SET pais = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [hayCliente.hayPais, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarPais);
-    }
-    if(hayCliente.hayCP) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarCP = 'UPDATE clientes SET cp = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [hayCliente.hayCP, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarCP);
-    }
-}
+//-- Creamos la función para actualizar el campo nombre del Cliente de la base de datos de MAD Services.
+const actualizarNombreVerificadodb = (id, nombre, res) => {
 
-//-- Creamos la función para mostrar los campos del Perfil Cliente de la base de datos de MAD Services.
-const mostrarClienteVerificadodb = (id, oldpassword, newpassword, repitePassword, res) => {
-    //-- Proceso de verificación y actualización de la contraseña + Mostrar todos los campos del Perfil del Cliente.
-    if(oldpassword && newpassword && repitePassword) {
-        //-- Verificamos que la contraseña de la base de datos es la misma que la antigua introducida.
-        //-- Instrucción para consultar contraseña dado el id.
-        let instruccionConsultarPasswordPerfil = 'SELECT * FROM clientes WHERE id = ?';
-        //-- Configuración del formato para consultar contraseña dado el id.
-        let formatoInstruccionConsultarPasswordPerfil = mysql.format(instruccionConsultarPasswordPerfil, [id]);
-        //-- Proceso de consulta de contraseña.
-        madservicesClientedb.query(formatoInstruccionConsultarPasswordPerfil, (error, results) => {
-            if(error) throw error;
-            const passwordEnDatabase = results[0].password;
-            bcrypt.compare(oldpassword, passwordEnDatabase).then( async (match) => {
-                if(match) {
-                    //-- Verificamos que la nueva contraseña introducida es correcta.
-                    if(newpassword === repitePassword) {
-                        const minPsswd = 12;
-                        const maxPsswd = 98;
-                        if(validacion.isLength(newpassword, { min: minPsswd, max: maxPsswd}) && validacion.matches(newpassword, /[a-z]/)
-                        && validacion.matches(newpassword, /[A-Z]/) && validacion.matches(newpassword, /[0-9]/) &&
-                        validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                            //-- Cifrar la nueva contraseña.
-                            const nuevaPasswordCifrada = await hash(newpassword,1);
-                            //-- Instrucción para actualizar en la base de datos.
-                            let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
-                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                            let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
-                            //-- Proceso de actualización en base de datos.
-                            madservicesClientedb.query(formatoInstruccionActualizarANuevaPassword);
-                            //-- Instrucción consultar para mostrar.
-                            let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
-                            //-- Configuración del formato de la instrucción.
-                            let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-                            //-- Proceso de la consulta.
-                            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
-                                if(error) throw error;
-                                const tablaCliente = resultado[0];
-                                res.status(201).render('paginas/clientes/perfil',
-                                {
-                                    msjActualizacion: 'Campos actualizados con éxito y contraseña: ',
-                                    id: tablaCliente.id,
-                                    nombre: tablaCliente.nombre,
-                                    apellidos: tablaCliente.apellidos,
-                                    genero: tablaCliente.genero,
-                                    email: tablaCliente.email,
-                                    password: tablaCliente.password,
-                                    direccion: tablaCliente.direccion,
-                                    poblacion: tablaCliente.poblacion,
-                                    region: tablaCliente.region,
-                                    pais: tablaCliente.pais,
-                                    cp: tablaCliente.cp
-                                });
-                                return res.end();
-                            });
-                        }else {
-                            //-- Instrucción consultar para mostrar.
-                            let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
-                            //-- Configuración del formato de la instrucción.
-                            let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-                            //-- Proceso de la consulta.
-                            madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, resultado) => {
-                                if(error) throw error;
-                                const tablaCliente = resultado[0];
-                                res.status(401).render('paginas/clientes/perfil', 
-                                {
-                                    msjError: 'La contraseña debe contener como mínimo 12 caracteres, letras',
-                                    msjError1: 'minúsculas y mayúsculas, números y caracteres especiales',
-                                    id: tablaCliente.id,
-                                    nombre: tablaCliente.nombre,
-                                    apellidos: tablaCliente.apellidos,
-                                    genero: tablaCliente.genero,
-                                    email: tablaCliente.email,
-                                    password: tablaCliente.password,
-                                    direccion: tablaCliente.direccion,
-                                    poblacion: tablaCliente.poblacion,
-                                    region: tablaCliente.region,
-                                    pais: tablaCliente.pais,
-                                    cp: tablaCliente.cp
-                                });
-                                return res.end();
-                            });
-                        }
-                    }else {
-                        //-- Instrucción consultar para mostrar.
-                        let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
-                        //-- Configuración del formato de la instrucción.
-                        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-                        //-- Proceso de la consulta.
-                        madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, result) => {
-                            if(error) throw error;
-                            const tablaCliente = result[0];
-                            res.status(401).render('paginas/clientes/perfil', 
-                            {
-                                msjError: `La nueva contraseña introducida`,
-                                msjError1: `no es igual a la repetida`,
-                                id: tablaCliente.id,
-                                nombre: tablaCliente.nombre,
-                                apellidos: tablaCliente.apellidos,
-                                genero: tablaCliente.genero,
-                                email: tablaCliente.email,
-                                password: tablaCliente.password,
-                                direccion: tablaCliente.direccion,
-                                poblacion: tablaCliente.poblacion,
-                                region: tablaCliente.region,
-                                pais: tablaCliente.pais,
-                                cp: tablaCliente.cp
-                            });
-                            return res.end();
-                        });
-                    }
-                }else {
-                    //-- Instrucción consultar para mostrar.
-                    let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
-                    //-- Configuración del formato de la instrucción.
-                    let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-                    //-- Proceso de la consulta.
-                    madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, field) => {
-                        if(error) throw error;
-                        const tablaCliente = field[0];
-                        res.status(401).render('paginas/clientes/perfil', 
-                        {
-                            msjError: `La antigua contraseña introducida`,
-                            msjError1: `no coincide con la de la base de datos`,
-                            id: tablaCliente.id,
-                            nombre: tablaCliente.nombre,
-                            apellidos: tablaCliente.apellidos,
-                            genero: tablaCliente.genero,
-                            email: tablaCliente.email,
-                            password: tablaCliente.password,
-                            direccion: tablaCliente.direccion,
-                            poblacion: tablaCliente.poblacion,
-                            region: tablaCliente.region,
-                            pais: tablaCliente.pais,
-                            cp: tablaCliente.cp
-                        });
-                        return res.end();
-                    });
-                }
-            });
-        });
+    //-- Declaración de ctes.
+    const minLong = 3;
+    const maxLong = 48;
+    //-- Actualizamos y validamos el campo.
+    if(nombre) {
+        if(nombre.length < minLong || nombre.length > maxLong) {
+            //-- Mostrar Alerta Emergente.
+            alerta('El nombre del cliente no se ajusta al estándar MAD');
+            // Redirigir a la interfaz del Cliente.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            //-- Instrucción para actualizar en la base de datos.
+            let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
+            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+            let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [nombre, id]);
+            //-- Proceso de actualización en base de datos.
+            madservicesClientedb.query(formatoInstruccionActualizarNombre);
+            //-- Mostrar Alerta Emergente.
+            alerta(`El nombre del cliente ha cambiado a: ${nombre}`);
+            // Redirigir a la interfaz del Cliente.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }
     }else {
-        //-- Instrucción consultar para mostrar.
-        let instruccionConsultarParaMostrar = 'SELECT * FROM clientes WHERE id = ?';
-        //-- Configuración del formato de la instrucción.
-        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-        //-- Proceso de la consulta.
-        madservicesClientedb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
-            if(error) throw error;
-            const tablaCliente = fields[0];
-            res.status(201).render('paginas/clientes/perfil',
-            {
-                msjActualizacion: `Campos actualizados con éxito sin contraseña: `,
-                id: tablaCliente.id,
-                nombre: tablaCliente.nombre,
-                apellidos: tablaCliente.apellidos,
-                genero: tablaCliente.genero,
-                email: tablaCliente.email,
-                password: tablaCliente.password,
-                direccion: tablaCliente.direccion,
-                poblacion: tablaCliente.poblacion,
-                region: tablaCliente.region,
-                pais: tablaCliente.pais,
-                cp: tablaCliente.cp
-            });
-            return res.end();
-        });
+        //-- Mostrar Alerta Emergente.
+        alerta('El nombre del cliente no ha cambiado');
+        // Redirigir a la interfaz del Cliente.
+        return res.redirect(`/sesion-cliente/${id}/perfil`);
     }
 }
 
@@ -383,7 +157,6 @@ const darseBajaClientedb = (id, siConfirmo, noConfirmo, req, res) => {
 module.exports = {
     registrarClienteVerificadodb,
     iniciarSesionClienteVerificadodb,
-    actualizarClienteVerificadodb,
-    mostrarClienteVerificadodb,
+    actualizarNombreVerificadodb,
     darseBajaClientedb
 };

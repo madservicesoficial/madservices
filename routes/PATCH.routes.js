@@ -14,7 +14,11 @@ const actualizarRegion = require('../controladores/clientes/actualizarRegion.js'
 const actualizarPais = require('../controladores/clientes/actualizarPais.js');
 const actualizarCP = require('../controladores/clientes/actualizarCP.js');
 //-- Importamos la configuración de los formularios de actualización de las Empresas.
-const actualizarEmpresa = require('../controladores/empresas/actualizar.js');
+const actualizarMarca = require('../controladores/empresas/actualizarMarca.js');
+const actualizarTipo = require('../controladores/empresas/actualizarTipo.js');
+const actualizarNIF = require('../controladores/empresas/actualizarNIF.js');
+const actualizarEmailEmpresa = require('../controladores/empresas/actualizarEmailEmpresa.js');
+const actualizarPasswordEmpresa = require('../controladores/empresas/actualizarPasswordEmpresa.js');
 //-- Importamos la configuración de los formularios de actualización de los Miembros MAD.
 const actualizarMiembro = require('../controladores/miembros/actualizarMiembro.js');
 const actualizarDepartamento = require('../controladores/miembros/actualizarDepartamento.js');
@@ -34,7 +38,11 @@ rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-region', actualizarRegion
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-pais', actualizarPais);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-cp', actualizarCP);
 //-- Formulario de actualización de datos de la Interfaz Empresa.
-rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar', actualizarEmpresa.interfaz);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-marca', actualizarMarca);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-tipo', actualizarTipo);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-nif', actualizarNIF);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-email', actualizarEmailEmpresa);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-password', actualizarPasswordEmpresa);
 //-- Formulario de actualización de datos de la Interfaz Miembro MAD.
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-miembro', actualizarMiembro);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-departamento', actualizarDepartamento);

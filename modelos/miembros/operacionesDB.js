@@ -107,11 +107,11 @@ const actualizarMiembroVerificadodb = (id, miembro, res) => {
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
         }else {
             //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarNombre = 'UPDATE miembros SET miembro = ? WHERE id = ?';
+            let instruccionActualizarMiembro = 'UPDATE miembros SET miembro = ? WHERE id = ?';
             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [miembro, id]);
+            let formatoInstruccionActualizarMiembro = mysql.format(instruccionActualizarMiembro, [miembro, id]);
             //-- Proceso de actualización en base de datos.
-            madservicesAdmindb.query(formatoInstruccionActualizarNombre);
+            madservicesAdmindb.query(formatoInstruccionActualizarMiembro);
             //-- Mostrar Alerta Emergente.
             alerta(`El nombre del miembro ha cambiado a: ${miembro}`);
             // Redirigir a la interfaz del Miembro MAD.

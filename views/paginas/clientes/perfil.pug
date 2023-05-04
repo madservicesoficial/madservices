@@ -136,10 +136,6 @@ block body
                         label='Código Postal de mi domicilio: ' + cp
         div#perfilClienteAbajo
             h3='Darse de baja de MAD Services: '
-            if msjError2
-                p.alertaAct#enRojo=msjError2
-            if msjBaja
-                p.alertaAct#enVerde=msjBaja
             form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)
                 input(type='hidden' name='_method' value='DELETE')
                 label='¿Confirmas que quieres darte de baja de MAD Services?: '
