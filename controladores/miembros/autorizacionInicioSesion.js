@@ -2,9 +2,7 @@
 require('../../config/env.js');
 
 //-- Creamos el Punto de Control para configurar la autorización de los miembros MAD para Login.
-const autorizacionInicioSesionMiembros = {}
-
-autorizacionInicioSesionMiembros.autorizacionInicioSesion = async (req, res) => {
+const autorizacionInicioSesionMiembros = async (req, res) => {
 
     //-- Introducir correctamente la contraseña para poder acceder.
     const password = req.body.password;

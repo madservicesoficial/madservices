@@ -79,7 +79,7 @@ const iniciarSesionMiembroVerificadodb = (email, password, req, res) => {
             return res.end();
         }else {
             const miembro = results[0];
-            bcrypt.compare(password, miembro.password).then((match) => {
+            compare(password, miembro.password).then((match) => {
                 if(match) {
                     req.session.miembro = miembro;
                     return res.redirect(`/sesion-miembro/${miembro.id}`);
@@ -178,7 +178,7 @@ const actualizarEmailVerificadodb = (id, email, res) => {
     const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Actualizamos y validamos el campo.
     if(email) {
-        if(!validacion.isEmail(email) && !estructuraEmail.test(email)) {
+        if(!validacion.isEmail(email) || !estructuraEmail.test(email)) {
             //-- Mostrar Alerta Emergente.
             alerta(`${email} es un email no válido`);
             // Redirigir a la interfaz del Miembro MAD.
@@ -234,7 +234,7 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
                             //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
                             let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
                             //-- Proceso de actualización en base de datos.
-                            madservicesEmpresadb.query(formatoInstruccionActualizarANuevaPassword);
+                            madservicesAdmindb.query(formatoInstruccionActualizarANuevaPassword);
                             //-- Mostrar Alerta Emergente.
                             alerta('Nueva contraseña agregada');
                             // Redirigir a la interfaz del Miembro MAD.
@@ -261,7 +261,7 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
         });
     }else {
         //-- Mostrar Alerta Emergente.
-        alerta('Requisitos para actualizar la contraseña:\nCompletar los tres campos\nAntigua Contraseña y la nueva con su repetición');
+        alerta('Requisitos para actualizar la contraseña:\nCompletar los tres campos');
         // Redirigir a la interfaz del Miembro MAD.
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
     }

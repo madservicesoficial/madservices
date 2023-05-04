@@ -15,10 +15,10 @@ const alerta = require('alert');
 const validacion = require("validator");
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarClienteVerificadodb = async (data, res) => {
+const registrarClienteVerificadodb = async (data, password, res) => {
 
     //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(data.password, 1);
+    const passwordCifrada = await hash(password, 1);
     //-- Instrucción para consultar Email en la base de datos.
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
     //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.

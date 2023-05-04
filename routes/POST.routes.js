@@ -26,17 +26,17 @@ const multer = require('multer');
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
 //-- Formulario de envío de datos para Iniciar Sesión como Empresa.
-rutasPost.post('/login/empresa', iniciarSesionEmpresas.login);
+rutasPost.post('/login/empresa', iniciarSesionEmpresas);
 //-- Formulario de autenticación como Miembro MAD para Login.
-rutasPost.post('/login/autorizar', autorizacionInicioSesionMiembros.autorizacionInicioSesion);
+rutasPost.post('/login/autorizar', autorizacionInicioSesionMiembros);
 //-- Formulario de envío de datos para Iniciar Sesión como Miembro MAD.
-rutasPost.post('/login/autorizar/miembro', iniciarSesionMiembros.login);
+rutasPost.post('/login/autorizar/miembro', iniciarSesionMiembros);
 //-- Formulario de envío de datos para Registrarse como Cliente.
-rutasPost.post('/registrarse/cliente', registroClientes.registrarse);
+rutasPost.post('/registrarse/cliente', registroClientes);
 //-- Formulario de envío de datos para Registrarse como Empresa.
-rutasPost.post('/registrarse/empresa', registroEmpresas.registrarse);
+rutasPost.post('/registrarse/empresa', registroEmpresas);
 //-- Formulario de autenticación como Miembro MAD para Registro.
-rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros.autorizacionRegistro);
+rutasPost.post('/registrarse/autorizar', autorizacionRegistroMiembros);
 //-- Formulario de envío de datos para Registrarse como Miembro MAD.
 rutasPost.post('/registrarse/autorizar/miembro', registroMiembros);
 //-- Formulario de ingreso de productos MAD.
