@@ -56,16 +56,10 @@ block body
                 input.entradasNoRadio(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
                 button(type='submit')
                     i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-direccion`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-pais`)
                 input(type='hidden' name='_method' value='PATCH')
-                label='Dirección: '
-                input.entradasNoRadio(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-poblacion`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Población: '
-                input.entradasNoRadio(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                label='País: '
+                input.entradasNoRadio(type='text' name='pais' placeholder='Introduce un país válido....')
                 button(type='submit')
                     i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
             form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-region`)
@@ -74,15 +68,25 @@ block body
                 input.entradasNoRadio(type='text' name='region' placeholder='Introduce una región válida....')
                 button(type='submit')
                     i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-pais`)
+            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-poblacion`)
                 input(type='hidden' name='_method' value='PATCH')
-                label='País: '
-                input.entradasNoRadio(type='text' name='pais' placeholder='Introduce un país válido....')
+                label='Población: '
+                input.entradasNoRadio(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                button(type='submit')
+                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-direccion`)
+                input(type='hidden' name='_method' value='PATCH')
+                label='Dirección: '
+                input.entradasNoRadio(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 button(type='submit')
                     i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
             form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-cp`)
                 input(type='hidden' name='_method' value='PATCH')
                 label='Código Postal: '
+                input.entradasNoRadio(type='text' name='pais' placeholder='Introduce un país válido....')
+                br
+                br
+                br
                 input.entradasNoRadio(type='number' name='cp' placeholder='Introduce un código postal válido....')
                 button(type='submit')
                     i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
