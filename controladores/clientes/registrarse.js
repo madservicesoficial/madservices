@@ -1,5 +1,3 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { registrarClienteVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la función que verifica la localización del cliente.
@@ -28,7 +26,7 @@ const registroClientes = (req, res) => {
     //-- Declaración de la estructura correcta del Email.
     const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Comprobamos que no hay campos vacíos.
-    if(!email || !password || !confirmPassword || !nombre || !apellidos || !direccion || !poblacion || !region || !pais || !cp || !genero) {
+    if(!email || !password || !confirmPassword || !nombre || !apellidos || !genero || !direccion || !poblacion || !region || !pais) {
         res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }else {
@@ -44,11 +42,11 @@ const registroClientes = (req, res) => {
             }else if(apellidos.length < minLong || apellidos.length > maxLong2) {
                 res.status(401).render('paginas/clientes/registrarse', {mensaje: `Los apellidos no pueden ser más largos de ${maxLong2} caracteres`});
                 return res.end();
-            }else if(!validacion.isEmail(email) && !estructuraEmail.test(email)) {
+            }else if(!validacion.isEmail(email) || !estructuraEmail.test(email)) {
                 res.status(401).render('paginas/clientes/registrarse', { mensaje: `El Email: ${email} no es válido` });
                 return res.end();
-            }else if(!validacion.isLength(password, { min: minLong2, max: maxLong2}) && !validacion.matches(password, /[a-z]/)
-            && !validacion.matches(password, /[A-Z]/) && !validacion.matches(password, /[0-9]/) &&
+            }else if(!validacion.isLength(password, { min: minLong2, max: maxLong2}) || !validacion.matches(password, /[a-z]/)
+            || !validacion.matches(password, /[A-Z]/) || !validacion.matches(password, /[0-9]/) ||
             !validacion.matches(password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
                 res.status(401).render('paginas/clientes/registrarse', 
                 {
@@ -59,14 +57,8 @@ const registroClientes = (req, res) => {
             }else {
                 localizacionCliente
                 (
-                    pais, cp, region, poblacion, direccion
-                );
-                //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
-                registrarClienteVerificadodb
-                (
-                    {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
+                    {email: email, password: password, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
                     region: region, pais: pais, cp: cp, genero: genero},
-                    password,
                     res
                 );
             }

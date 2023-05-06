@@ -16,63 +16,53 @@ block body
                 p.alerta#enRojo=mensaje2
             form.formRegistro(method='POST' action='/registrarse/cliente')
                 label='Nombre: '
-                    span
-                        input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')
                 br
                 br
                 label='Apellidos: '
-                    span
-                        input.camposRegistro#posicionApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                input.camposRegistro#posicionApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
                 br
                 br
                 label='Género: '
                     span.genero
-                        input(type='radio' name='genero' value='Hombre')
-                        label='Hombre'
-                        input(type='radio' name='genero' value='Mujer')
-                        label='Mujer'
-                        input(type='radio' name='genero' value='Otro')
-                        label='Otro'
+                    input(type='radio' name='genero' value='Hombre')
+                    label='Hombre'
+                    input(type='radio' name='genero' value='Mujer')
+                    label='Mujer'
+                    input(type='radio' name='genero' value='Otro')
+                    label='Otro'
                 br
                 br
                 label='E-mail: '
-                    span
-                    input.camposRegistro#posicionEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                input.camposRegistro#posicionEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                 br
                 br
                 label='Nueva contraseña: '
-                    span
-                    input.camposRegistro#posicionPassword(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                input.camposRegistro#posicionPassword(type='password' name='password' placeholder='Introduce una contraseña válida....')
                 br
                 br
                 label='Confirmación de la contraseña: '
-                    span
-                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
+                input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
                 br
                 br
                 label='País: '
-                    span
-                    input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
+                input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
+                br
+                br
+                label#posEtiqCP='Código Postal: '
+                input.camposRegistro#posicionCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
                 br
                 br
                 label='Región: '
-                    span
-                    input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
+                input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
                 br
                 br
                 label='Población: '
-                    span
-                    input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
                 br
                 br
                 label='Dirección: '
-                    span
-                    input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
-                br
-                br
-                label='Código Postal - CP: '
-                    span
-                    input.camposRegistro#posicionCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                 br
                 br
                 button.posAlta#btnAlta(type='submit')='Darse de alta'
