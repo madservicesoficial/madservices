@@ -17,6 +17,10 @@ const validacion = require("validator");
 const {getCountries, getCode} = require('country-list-spanish');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
+//-- Importamos la configuración del entorno ENV para poder usar su información.
+require('../../config/env.js');
+//-- Importamos la Tecnología para solicitar URLs de Geolocalización.
+const axios = require('axios');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarClienteVerificadodb = async (data, password, res) => {
@@ -273,171 +277,76 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
     }
 }
 
-//-- Creamos la función para actualizar el campo dirección del Cliente de la base de datos de MAD Services.
-const actualizarDireccionVerificadadb = (id, direccion, res) => {
+//-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
+const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacion, direccion, res) => {
 
     //-- Declaración de ctes.
     const minLong = 3;
     const maxLong = 48;
-    //-- Actualizamos y validamos el campo.
-    if(direccion) {
-        if(direccion.length < minLong || direccion.length > maxLong) {
-            //-- Mostrar Alerta Emergente.
-            alerta('La dirección del cliente no se ajusta al estándar MAD');
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [direccion, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarDireccion);
-            //-- Mostrar Alerta Emergente.
-            alerta(`La dirección del cliente ha cambiado a: ${direccion}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('La dirección del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
-}
-
-//-- Creamos la función para actualizar el campo población del Cliente de la base de datos de MAD Services.
-const actualizarPoblacionVerificadadb = (id, poblacion, res) => {
-
-    //-- Declaración de ctes.
-    const minLong = 3;
-    const maxLong = 48;
-    //-- Actualizamos y validamos el campo.
-    if(poblacion) {
-        if(poblacion.length < minLong || poblacion.length > maxLong) {
-            //-- Mostrar Alerta Emergente.
-            alerta('La población del cliente no se ajusta al estándar MAD');
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarPoblacion = 'UPDATE clientes SET poblacion = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarPoblacion = mysql.format(instruccionActualizarPoblacion, [poblacion, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarPoblacion);
-            //-- Mostrar Alerta Emergente.
-            alerta(`La población del cliente ha cambiado a: ${poblacion}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('La población del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
-}
-
-//-- Creamos la función para actualizar el campo región del Cliente de la base de datos de MAD Services.
-const actualizarRegionVerificadadb = (id, region, res) => {
-
-    //-- Declaración de ctes.
-    const minLong = 3;
-    const maxLong = 48;
-    //-- Actualizamos y validamos el campo.
-    if(region) {
-        if(region.length < minLong || region.length > maxLong) {
-            //-- Mostrar Alerta Emergente.
-            alerta('La región del cliente no se ajusta al estándar MAD');
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarRegion = 'UPDATE clientes SET region = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarRegion = mysql.format(instruccionActualizarRegion, [region, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarRegion);
-            //-- Mostrar Alerta Emergente.
-            alerta(`La región del cliente ha cambiado a: ${region}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('La región del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
-}
-
-//-- Creamos la función para actualizar el campo país del Cliente de la base de datos de MAD Services.
-const actualizarPaisVerificadodb = (id, pais, res) => {
-
+    //-- Actualizamos y validamos la localización.
     //-- Declaración de la cte que saca todos los países del mundo en español.
     const paises = getCountries();
-    //-- Actualizamos y validamos el campo.
-    if(pais) {
-        if(!paises.includes(pais)) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`El país: ${pais} no es válido`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+    //-- Proceso de verificación de la localización.
+    if(paises.includes(pais)) {
+        const codigoPais = getCode(pais);
+        if(postcodeValidator(cp, codigoPais)) {
+            try {
+                //-- Enviamos una solicitud HTTP a la API de Geonames.
+                const response = await axios.get('http://api.geonames.org/postalCodeLookupJSON', {
+                    params: {
+                        postalcode: cp,
+                        country: codigoPais,
+                        username: process.env.USUARIO_DE_GEONAMES,
+                        password: process.env.MYSQL_PASSWORD_CLIENTE
+                    },
+                });
+                const lugar = response.data.postalcodes[0];
+                if(region === lugar.adminName1) {
+                    if(poblacion === lugar.adminName3) {
+                        const minLong = 5;
+                        const maxLong = 48;
+                        if(direccion.length >= minLong && direccion.length <= maxLong) {
+                            //-- Actualizamos la localización del Cliente en la base de datos de MAD Services.
+                            //-- Instrucción para actualizar en la base de datos.
+                            let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ?, poblacion = ?, region = ?, pais = ?, cp = ? WHERE id = ?';
+                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                            let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [direccion, poblacion, region, pais, cp, id]);
+                            //-- Proceso de actualización en base de datos.
+                            madservicesClientedb.query(formatoInstruccionActualizarDireccion);
+                            //-- Mostrar Alerta Emergente.
+                            alerta('Localización del Cliente actualizada');
+                            // Redirigir al perfil del Cliente.
+                            return res.redirect(`/sesion-cliente/${id}/perfil`);
+                        }else {
+                            //-- Mostrar Alerta Emergente.
+                            alerta(`Dirección de ${poblacion} incorrecta`);
+                            // Redirigir al perfil del Cliente.
+                            return res.redirect(`/sesion-cliente/${id}/perfil`);
+                        }
+                    }else {
+                        //-- Mostrar Alerta Emergente.
+                        alerta(`Población de ${region} incorrecta`);
+                        // Redirigir al perfil del Cliente.
+                        return res.redirect(`/sesion-cliente/${id}/perfil`);
+                    }
+                }else {
+                    //-- Mostrar Alerta Emergente.
+                    alerta(`Región de ${pais} incorrecta`);
+                    // Redirigir al perfil del Cliente.
+                    return res.redirect(`/sesion-cliente/${id}/perfil`);
+                }
+            }catch(error) {
+                console.log('Error de conexión con la API de GeoNames: ', error);
+            }
         }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarPais = 'UPDATE clientes SET pais = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarPais = mysql.format(instruccionActualizarPais, [pais, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarPais);
             //-- Mostrar Alerta Emergente.
-            alerta(`El país ha cambiado a: ${pais}`);
+            alerta('Código Postal incorrecto');
             // Redirigir al perfil del Cliente.
             return res.redirect(`/sesion-cliente/${id}/perfil`);
         }
     }else {
         //-- Mostrar Alerta Emergente.
-        alerta('El país no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
-}
-
-//-- Creamos la función para actualizar el campo CP del Cliente de la base de datos de MAD Services.
-const actualizarCPVerificadodb = (id, cp, pais, res) => {
-
-    //-- Declaración de la cte que saca todos los países del mundo en español.
-    const paises = getCountries();
-    //-- Declaración de la cte que saca el código del país en español.
-    const codigoPais = getCode(pais);
-    //-- Actualizamos y validamos el campo.
-    if(cp && pais) {
-        if(!paises.includes(pais)) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`El país: ${pais} no es válido`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else if(!postcodeValidator(cp, codigoPais)) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`El Código Postal: ${cp} no es válido`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarCP = 'UPDATE clientes SET cp = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarCP = mysql.format(instruccionActualizarCP, [cp, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarCP);
-            //-- Mostrar Alerta Emergente.
-            alerta(`El Código Postal ha cambiado a: ${cp}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('El Código Postal no ha cambiado\nRecuerda que debes meter también el país para sacar\nel código correspondiente y así, averiguar el Código Postal');
+        alerta('País incorrecto');
         // Redirigir al perfil del Cliente.
         return res.redirect(`/sesion-cliente/${id}/perfil`);
     }
@@ -488,10 +397,6 @@ module.exports = {
     actualizarGeneroVerificadodb,
     actualizarEmailVerificadodb,
     actualizarPasswordVerificadadb,
-    actualizarDireccionVerificadadb,
-    actualizarPoblacionVerificadadb,
-    actualizarRegionVerificadadb,
-    actualizarPaisVerificadodb,
-    actualizarCPVerificadodb,
+    actualizarLocalizacionVerificadadb,
     darseBajaClientedb
 };
