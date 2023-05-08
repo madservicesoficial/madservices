@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 //-- Importamos la Tecnología para leer de forma asíncrona.
 const util = require('util');
+//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
+const alerta = require('alert');
 
 //-- Creamos el Punto de Control para configurar el ingreso de productos MAD.
 const ingresoProductosMAD = async (req, res) => {
@@ -54,12 +56,12 @@ const ingresoProductosMAD = async (req, res) => {
             alerta(`La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`);
             // Redirigir a la página principal de la aplicación.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }else if(cantidad < CANTIDAD_MIN || !Number.isInteger(cantidad)) {
+        }else if(cantidad < CANTIDAD_MIN) {
             //-- Mostrar Alerta Emergente.
             alerta(`No tiene sentido la cantidad ${cantidad}`);
             // Redirigir a la página principal de la aplicación.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }else if(precio < COSTE_NULO || Number.isInteger(precio)) {
+        }else if(precio < COSTE_NULO) {
             //-- Mostrar Alerta Emergente.
             alerta(`No puedes vender por debajo de ${COSTE_NULO}€`);
             // Redirigir a la página principal de la aplicación.

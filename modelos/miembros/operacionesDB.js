@@ -347,26 +347,10 @@ const ingresarProductosMADdb = async (id, data, res) => {
         // Redirigir a la página de la interfaz del Miembro MAD.
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
     }else {
-        //-- Instrucción consultar para mostrar.
-        let instruccionConsultarParaMostrar = 'SELECT * FROM miembros WHERE id = ?';
-        //-- Configuración del formato de la instrucción.
-        let formatoinstruccionConsultarParaMostrar = mysql.format(instruccionConsultarParaMostrar, [id]);
-        //-- Proceso de la consulta.
-        madservicesAdmindb.query(formatoinstruccionConsultarParaMostrar, (error, fields) => {
-            if(error) throw error;
-            const tablaMiembro = fields[0];
-            res.status(401).render('paginas/miembros/interfaz',
-            {
-                mensajeVerif: `Debes introducir una imagen de portada`,
-                id: tablaMiembro.id,
-                miembro: tablaMiembro.miembro,
-                departamento: tablaMiembro.departamento,
-                genero: tablaMiembro.genero,
-                email: tablaMiembro.email,
-                password: tablaMiembro.password
-            });
-            return res.end();
-        });
+        //-- Mostrar Alerta Emergente.
+        alerta('Debes introducir una imagen de portada');
+        // Redirigir a la página de la interfaz del Miembro MAD.
+        return res.redirect(`/sesion-miembro/${id}/interfaz`);
     }
 }
 

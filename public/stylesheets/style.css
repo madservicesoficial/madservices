@@ -1081,9 +1081,13 @@ canvas {
 .cartaProductoMAD {
   border: 5px solid orange;
   background-color: silver;
-  width: 260px;
-  height: 520px;
+  width: 275px;
+  height: 580px;
 	text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   float: left;
   margin: 10px;
 }

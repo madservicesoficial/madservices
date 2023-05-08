@@ -18,6 +18,7 @@ block body
         div.cuadroProductosMAD#contenidoProductos
             each campo in cartaProducto
                 div.cartaProductoMAD
+                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/add-to-cart`)
                     img(src=`data:image/*;base64,${campo.portada}`)
                     h3=campo.titulo
                     h3='Cantidad: ' + campo.cantidad
