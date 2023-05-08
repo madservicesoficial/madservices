@@ -22,6 +22,8 @@ const autorizacionInicioSesionMiembros = require('../controladores/miembros/auto
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
 const multer = require('multer');
+//-- Importamos la función para ingresar al carrito de la compra.
+const ingresoCarrito = require('../modelos/miembros/ingresoCarrito.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -59,6 +61,8 @@ rutasPost.post('/sesion-cliente/:id/empleo');
 rutasPost.post('/sesion-empresa/:id/empleo');
 //-- Formulario de envío de datos del CV para miembros MAD.
 rutasPost.post('/sesion-miembro/:id/empleo');
+//-- Formulario para añadir artículos al carrito de la compra.
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/add-to-cart', ingresoCarrito);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

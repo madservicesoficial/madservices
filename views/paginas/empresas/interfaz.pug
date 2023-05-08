@@ -6,99 +6,49 @@ block title
 
 block body
     include ./componentes/cabecera.pug
-    div.perfilEmpresa
+    .interfazEmpresa
         br
-        h1.tituloPerfil=`Interfaz de ${tipo} ${marca}:`
-        div#perfilEmpresaIzquierda
-            h3='Actualización de campos: '
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-marca`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Nombre de la Empresa: '
-                input.camposRegistro#posicionMarcaCo(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-tipo`)
-                input(type='hidden' name='_method' value='PATCH')
-                label#posEtiqTipoCo='Tipo de empresa: '
-                    select.tipoEmpresa#posTipoCo(name='tipo')
-                        option(checked)=''
-                        option='RESTAURANTE'
-                        option='EDUCACION'
-                        option='VENTAS'
-                        option='PELUQUERIA'
-                        option='VIAJES'
-                        option='CINE'
-                        option='TEATRO'
-                        option='IPTV'
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)
-                input(type='hidden' name='_method' value='PATCH')
-                label#posactualizEmpresa='Código CIF/NIF: '
-                input.camposRegistro#posactualizEmpresa(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-email`)
-                input(type='hidden' name='_method' value='PATCH')
-                label#posactualizEmpresa='E-mail: '
-                input.entradasNoRadio#posactualizEmpresa(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-password`)
-                input(type='hidden' name='_method' value='PATCH')
-                label#posactualizEmpresa='Antigua contraseña: '
-                input.entradasNoRadio#posactualizEmpresa(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+        ul
+            img.encabezadoEmpresa(src='/images/encabezadoPeluq.jpg' alt='encabezadoPeluq')
+            h1=`${tipo} ${marca}:`
+            li.descripcionEmpresa
+                h3='Descripción: '
+                p
+            h3='Datos de la Empresa: '
+            li.datosEmpresa
+                if id
+                    label='El identificador/ID oficial: ' + id
                 br
                 br
-                br
-                label#posactualizEmpresa='Nueva contraseña: '
-                input.entradasNoRadio#posactualizEmpresa(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
-                br
+                if marca
+                    label='Nombre de la empresa: ' + marca
                 br
                 br
-                label#posactualizEmpresa='Repite la contraseña: '
-                input.entradasNoRadio#posactualizEmpresa(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        div#perfilEmpresaDerecha
-            h3=`Información sobre ${tipo} ${marca}: `
-            ul 
-                li.mostrarPerfilCliente
-                    if id
-                        label='El identificador/ID oficial: ' + id
-                        br
-                        br
-                    if marca
-                        label='Nombre de la empresa: ' + marca
-                        br
-                        br
-                    if tipo
-                        label='Tipo de empresa: ' + tipo
-                        br
-                        br
-                    if nif
-                        label='Código CIF/NIF: ' + nif
-                        br
-                        br
-                    if email
-                        label='E-mail: ' + email
-                        br
-                        br
-                    if password
-                        label='Contraseña: '
-                        span(hidden)=password
-                        span='(oculta).'
-        div#perfilEmpresaDerecha2
-            h3='Darse de baja de MAD Services: '
-            form(method='POST' action=`/sesion-empresa/${id}/interfaz/darse-baja`)
-                input(type='hidden' name='_method' value='DELETE')
-                label='¿Confirmas que quieres darte de baja de MAD Services?: '
+                if tipo
+                    label='Tipo de empresa: ' + tipo
                 br
-                label.ConfirmarBaja#siConfirmar='Sí'
-                input.ConfirmarBaja(name="siConfirmar" type="checkbox")
-                label.ConfirmarBaja='No'
-                input.ConfirmarBaja(name="noConfirmar" type="checkbox")
-                button#btnDarseBajaEmpresa(type='submit')='Confirmo'
-        div#perfilEmpresaAbajo
-            h3='Ingreso de productos para su venta: '
+                br
+            li.datosEmpresa2
+                if nif
+                    label='Código CIF/NIF: ' + nif
+                br
+                br
+                if email
+                    label='E-mail: ' + email
+                br
+                br
+                if password
+                    label='Contraseña: '
+                    span(hidden)=password
+                    span='(oculta).'
+            li.iconosContactEmpresa
+                h3='Iconos de contacto: '
+                img.iconoRRSSempresa(src="/images/whatsapp.png", alt="whatsapp")
+                p
+                br
+                img.iconoRRSSempresa(src="/images/instagram.png", alt="instagram")
+                p
+                br
+                img.iconoRRSSempresa(src="/images/twitter.png", alt="twitter")
+                p
     include ./componentes/piepagina.pug

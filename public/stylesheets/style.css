@@ -882,81 +882,62 @@ canvas {
 /*##################################################################################################*/
 /*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
 /*##################################################################################################*/
-.perfilEmpresa {
+.interfazEmpresa {
   width: 100%;
   min-height: 130vh;
   background-color: silver;
-}
-.perfilEmpresa div {
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: black;
-  color: white;
-  place-items: center;
   overflow-x: hidden;
   overflow-y: scroll;
-  width: 600px;
-  border-radius: 20px;
-  border-color: goldenrod;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
 }
-#perfilEmpresaIzquierda form {
-  margin-top: 60;
+.interfazEmpresa ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-#posTipoCo {
-  width: 250;
+.encabezadoEmpresa {
+  border-color: black;
+  border-width: 7px;
+  border-style: double;
+  width: 1300;
+  height: 300;
+  display: block;
+}
+.interfazEmpresa ul h1 {
   position: relative;
-  right: 80;
+  top: -190;
 }
-#posEtiqTipoCo {
+.descripcionEmpresa {
   position: relative;
-  bottom: 10;
-  margin-left: 40;
+  right: 550;
+  top: 55;
 }
-#posicionMarcaCo {
-  margin-left: 10;
-}
-#posactualizEmpresa {
+.interfazEmpresa ul h3 {
   position: relative;
-  bottom: 20;
+  top: -107;
 }
-#perfilEmpresaIzquierda {
-  height: 650;
-  margin-left: 100;
-  margin-top: 50;
-}
-#perfilEmpresaDerecha {
-  height: 350;
-  margin-left: 835;
+.datosEmpresa {
   position: relative;
-  bottom: 650;
+  top: -107;
+  right: 200;
 }
-#perfilEmpresaDerecha2 {
-  height: 200;
-  margin-left: 835;
+.datosEmpresa2 {
   position: relative;
-  bottom: 550;
+  top: -225;
+  left: 200;
 }
-#perfilEmpresaAbajo {
-  margin-left: 100;
+.iconosContactEmpresa {
   position: relative;
-  bottom: 400;
-  width: 1340;
-  height: 600;
+  top: -275;
+  left: 525;
 }
-#perfilEmpresaDerecha2 form {
-  margin-top: 40;
+.interfazEmpresa ul li label {
+  font-size: large;
 }
-#btnActualizarEmpresa {
-  width: 100;
-  height: 30;
-}
-#btnDarseBajaEmpresa {
-  width: 100;
-  height: 30;
-  margin-left: 40;
+.iconoRRSSempresa {
+  width: 40;
+  height: 40;
+  position: relative;
+  top: -110;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/
