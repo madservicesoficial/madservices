@@ -6,7 +6,7 @@ const {madservicesClientedb} = require('../../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
-const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
+const generarIDrandom = require('../generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const consultaID = require('./consultaID.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
@@ -280,17 +280,14 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
 //-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
 const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacion, direccion, res) => {
 
-    //-- Declaración de ctes.
-    const minLong = 3;
-    const maxLong = 48;
-    //-- Actualizamos y validamos la localización.
     //-- Declaración de la cte que saca todos los países del mundo en español.
     const paises = getCountries();
     //-- Proceso de verificación de la localización.
-    if(paises.includes(pais)) {
-        const codigoPais = getCode(pais);
-        if(postcodeValidator(cp, codigoPais)) {
-            try {
+    if(pais) {
+        if(paises.includes(pais)) {
+            //-- Obtenemos el código del país.
+            const codigoPais = getCode(pais);
+            if(postcodeValidator(cp, codigoPais)) {
                 //-- Enviamos una solicitud HTTP a la API de Geonames.
                 const response = await axios.get('http://api.geonames.org/postalCodeLookupJSON', {
                     params: {
@@ -301,7 +298,7 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
                     },
                 });
                 const lugar = response.data.postalcodes[0];
-                if(region === lugar.adminName1) {
+                if(region === lugar.adminName1 || region === lugar.adminName2) {
                     if(poblacion === lugar.adminName3) {
                         const minLong = 5;
                         const maxLong = 48;
@@ -335,18 +332,21 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
                     // Redirigir al perfil del Cliente.
                     return res.redirect(`/sesion-cliente/${id}/perfil`);
                 }
-            }catch(error) {
-                console.log('Error de conexión con la API de GeoNames: ', error);
+            }else {
+                //-- Mostrar Alerta Emergente.
+                alerta('Código Postal incorrecto');
+                // Redirigir al perfil del Cliente.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
             }
         }else {
             //-- Mostrar Alerta Emergente.
-            alerta('Código Postal incorrecto');
+            alerta('País incorrecto');
             // Redirigir al perfil del Cliente.
             return res.redirect(`/sesion-cliente/${id}/perfil`);
         }
     }else {
         //-- Mostrar Alerta Emergente.
-        alerta('País incorrecto');
+        alerta('La localización del cliente no ha cambiado\nEl orden de localización importa\n1º País\n2º CP\n3º Región\n4º Población\n5º Dirección');
         // Redirigir al perfil del Cliente.
         return res.redirect(`/sesion-cliente/${id}/perfil`);
     }

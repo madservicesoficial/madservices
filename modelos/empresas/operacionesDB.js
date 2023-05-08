@@ -6,7 +6,7 @@ const {madservicesEmpresadb} = require('../../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
 //-- Importamos la función que genera el ID aleatoriamente.
-const generarIDrandom = require('../../randomIDs/generarIDRandom.js');
+const generarIDrandom = require('../generarIDRandom.js');
 //-- Importamos la función que comprueba que no se repita el ID aleatorio.
 const consultaID = require('./consultaID.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
