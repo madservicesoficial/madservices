@@ -17,7 +17,7 @@ block body
         div.row
             div.column
                 h3='Descripción: '
-                p
+                p='' + descripcion
             div.column
                 h3='Datos de la Empresa: '
                 div.subcolumn
@@ -46,9 +46,12 @@ block body
                         input(type='text', name='password', value=password, readonly)
             div.column
                 h3='Iconos de contacto:'
-                img(src="/images/whatsapp.png", alt="whatsapp")
-                img(src="/images/instagram.png", alt="instagram")
-                img(src="/images/twitter.png", alt="twitter")
+                a(href=whatsapp target="_blank")
+                    img(src="/images/whatsapp.png", alt="whatsapp")
+                a(href=instagram target="_blank")
+                    img(src="/images/instagram.png", alt="instagram")
+                a(href=twitter target="_blank")
+                    img(src="/images/twitter.png", alt="twitter")
         div.row
             div.column
                 h3='Actualización de los datos de la empresa: '
@@ -116,13 +119,13 @@ block body
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
                     label='URL Instagram: '
-                    input(type='text' name='urlInstagram' placeholder='Introduce la URL del Instagram de la empresa....')
+                    input(type='text' name='urlInstagram' placeholder='Introduce el Usuario de Instagram de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
                     label='URL Twitter: '
                     br
-                    input(type='text' name='urlTwitter' placeholder='Introduce la URL del Twitter de la empresa....')
+                    input(type='text' name='urlTwitter' placeholder='Introduce el Usuario de Twitter de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
         div.row

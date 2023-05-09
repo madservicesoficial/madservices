@@ -305,7 +305,45 @@ const ingresoDescripcionEmpresadb = (id, descripcion, res) => {
 
     //-- Verificación de la descripción.
     if(descripcion) {
-
+        const maxDescrip = 498;
+        if(descripcion > maxDescrip) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`La descripción no puede superar los ${maxDescrip}`);
+            //-- Redirigir a la interfaz de la empresa.
+            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+        }else {
+            //-- Comprobamos que no haya descripción en base de datos.
+            let instruccionComprobarDescripcion = 'SELECT * FROM companyd WHERE id = ?';
+            //-- Formato de la instrucción.
+            let formatoIinstruccionComprobarDescripcion = mysql.format(instruccionComprobarDescripcion, [id]);
+            //-- Establecemos la conexión.
+            madservicesEmpresadb.query(formatoIinstruccionComprobarDescripcion, (error, results) => {
+                if(error) throw error;
+                if(results[0].length === 0) {
+                    //-- Ingresamos la descripción en base de datos.
+                    let instruccionIngresarDescripcion = 'INSERT INTO companyd (id, descripcion) values (?, ?)';
+                    //-- Formato de la instrucción.
+                    let formatoInstruccionIngresarDescripcion = mysql.format(instruccionIngresarDescripcion, [id, descripcion]);
+                    //-- Establecemos la conexión.
+                    madservicesEmpresadb.query(formatoInstruccionIngresarDescripcion);
+                    //-- Mostrar Alerta Emergente.
+                    alerta('La descripción ha sido ingresada con éxito');
+                    //-- Redirigir a la interfaz de la empresa.
+                    return res.redirect(`/sesion-empresa/${id}/interfaz`);
+                }else {
+                    //-- Actualizamos la descripción en base de datos.
+                    let instruccionActualizarDescripcion = 'UPDATE companyd SET descripcion = ? WHERE id = ?';
+                    //-- Formato de la instrucción.
+                    let formatoInstruccionActualizarDescripcion = mysql.format(instruccionActualizarDescripcion, [descripcion, id]);
+                    //-- Establecemos la conexión.
+                    madservicesEmpresadb.query(formatoInstruccionActualizarDescripcion);
+                    //-- Mostrar Alerta Emergente.
+                    alerta('La descripción ha sido actualizada con éxito');
+                    //-- Redirigir a la interfaz de la empresa.
+                    return res.redirect(`/sesion-empresa/${id}/interfaz`);
+                }
+            });
+        }
     }else {
         //-- Mostrar Alerta Emergente.
         alerta('La descripción no ha cambiado');
@@ -318,7 +356,39 @@ const ingresoInstagramEmpresadb = (id, instagram, res) => {
 
     //-- Verificación del instagram.
     if(instagram) {
-
+        //-- Cte estructura de la URL de instagram.
+        const estructuraInstagram = `https://www.instagram.com/${instagram}/`;
+        //-- Comprobamos que no haya instagram en base de datos.
+        let instruccionComprobarInstagram = 'SELECT * FROM companyi WHERE id = ?';
+        //-- Formato de la instrucción.
+        let formatoInstruccionComprobarInstagram = mysql.format(instruccionComprobarInstagram, [id]);
+        //-- Establecemos la conexión.
+        madservicesEmpresadb.query(formatoInstruccionComprobarInstagram, (error, results) => {
+            if(error) throw error;
+            if(results[0].length === 0) {
+                //-- Ingresamos el instagram en base de datos.
+                let instruccionIngresarInstagram = 'INSERT INTO companyi (id, instagram) values (?, ?)';
+                //-- Formato de la instrucción.
+                let formatoInstruccionIngresarInstagram = mysql.format(instruccionIngresarInstagram, [id, estructuraInstagram]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionIngresarInstagram);
+                //-- Mostrar Alerta Emergente.
+                alerta('El instagram ha sido ingresado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Actualizamos el instagram en base de datos.
+                let instruccionActualizarInstagram = 'UPDATE companyi SET instagram = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarInstagram = mysql.format(instruccionActualizarInstagram, [instagram, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarInstagram);
+                //-- Mostrar Alerta Emergente.
+                alerta('El instagram ha sido actualizado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }
+        });
     }else {
         //-- Mostrar Alerta Emergente.
         alerta('El instagram no ha cambiado');
@@ -331,7 +401,39 @@ const ingresoTwitterEmpresadb = (id, twitter, res) => {
 
     //-- Verificación del twitter.
     if(twitter) {
-
+        //-- Cte estructura de la URL de twitter.
+        const estructuraTwitter = `https://twitter.com/${twitter}`;
+        //-- Comprobamos que no haya twitter en base de datos.
+        let instruccionComprobarTwitter = 'SELECT * FROM companyt WHERE id = ?';
+        //-- Formato de la instrucción.
+        let formatoInstruccionComprobarTwitter = mysql.format(instruccionComprobarTwitter, [id]);
+        //-- Establecemos la conexión.
+        madservicesEmpresadb.query(formatoInstruccionComprobarTwitter, (error, results) => {
+            if(error) throw error;
+            if(results[0].length === 0) {
+                //-- Ingresamos el twitter en base de datos.
+                let instruccionIngresarTwitter = 'INSERT INTO companyt (id, twitter) values (?, ?)';
+                //-- Formato de la instrucción.
+                let formatoInstruccionIngresarTwitter = mysql.format(instruccionIngresarTwitter, [id, estructuraTwitter]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionIngresarTwitter);
+                //-- Mostrar Alerta Emergente.
+                alerta('El twitter ha sido ingresado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Actualizamos el twitter en base de datos.
+                let instruccionActualizarTwitter = 'UPDATE companyt SET twitter = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarTwitter = mysql.format(instruccionActualizarTwitter, [twitter, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarTwitter);
+                //-- Mostrar Alerta Emergente.
+                alerta('El twitter ha sido actualizado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }
+        });
     }else {
         //-- Mostrar Alerta Emergente.
         alerta('El twitter no ha cambiado');
@@ -344,7 +446,37 @@ const ingresoWhatsAppEmpresadb = (id, whatsapp, res) => {
 
     //-- Verificación del whatsapp.
     if(whatsapp) {
-
+        //-- Comprobamos que no haya whatsapp en base de datos.
+        let instruccionComprobarWhatsapp = 'SELECT * FROM companyw WHERE id = ?';
+        //-- Formato de la instrucción.
+        let formatoInstruccionComprobarWhatsapp = mysql.format(instruccionComprobarWhatsapp, [id]);
+        //-- Establecemos la conexión.
+        madservicesEmpresadb.query(formatoInstruccionComprobarWhatsapp, (error, results) => {
+            if(error) throw error;
+            if(results[0].length === 0) {
+                //-- Ingresamos el whatsapp en base de datos.
+                let instruccionIngresarWhatsapp = 'INSERT INTO companyw (id, whatsapp) values (?, ?)';
+                //-- Formato de la instrucción.
+                let formatoInstruccionIngresarWhatsapp = mysql.format(instruccionIngresarWhatsapp, [id, whatsapp]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionIngresarWhatsapp);
+                //-- Mostrar Alerta Emergente.
+                alerta('El whatsapp ha sido ingresado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Actualizamos el whatsapp en base de datos.
+                let instruccionActualizarWhatsapp = 'UPDATE companyw SET whatsapp = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarWhatsapp = mysql.format(instruccionActualizarWhatsapp, [whatsapp, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarWhatsapp);
+                //-- Mostrar Alerta Emergente.
+                alerta('El whatsapp ha sido actualizado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }
+        });
     }else {
         //-- Mostrar Alerta Emergente.
         alerta('El whatsapp no ha cambiado');
