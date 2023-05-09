@@ -8,47 +8,135 @@ block body
     include ./componentes/cabecera.pug
     .interfazEmpresa
         br
-        ul
-            img.encabezadoEmpresa(src='/images/encabezadoPeluq.jpg' alt='encabezadoPeluq')
+        header
+            if tipo === 'PELUQUERIA'
+                img(src='/images/encabezadoPeluq.jpg' alt='encabezadoPeluq')
+            else if tipo === 'RESTAURANTE'
+                img(src='/images/encabezadoRestaurante.jpg' alt='encabezadoRestaurante')
             h1=`${tipo} ${marca}:`
-            li.descripcionEmpresa
+        div.row
+            div.column
                 h3='Descripción: '
                 p
-            h3='Datos de la Empresa: '
-            li.datosEmpresa
-                if id
-                    label='El identificador/ID oficial: ' + id
-                br
-                br
-                if marca
-                    label='Nombre de la empresa: ' + marca
-                br
-                br
-                if tipo
-                    label='Tipo de empresa: ' + tipo
-                br
-                br
-            li.datosEmpresa2
-                if nif
-                    label='Código CIF/NIF: ' + nif
-                br
-                br
-                if email
-                    label='E-mail: ' + email
-                br
-                br
-                if password
-                    label='Contraseña: '
-                    span(hidden)=password
-                    span='(oculta).'
-            li.iconosContactEmpresa
-                h3='Iconos de contacto: '
-                img.iconoRRSSempresa(src="/images/whatsapp.png", alt="whatsapp")
-                p
-                br
-                img.iconoRRSSempresa(src="/images/instagram.png", alt="instagram")
-                p
-                br
-                img.iconoRRSSempresa(src="/images/twitter.png", alt="twitter")
-                p
+            div.column
+                h3='Datos de la Empresa: '
+                div.subcolumn
+                    if id
+                        label='El identificador/ID oficial: ' + id
+                    br
+                    br
+                    if marca
+                        label='Nombre de la empresa: ' + marca
+                    br
+                    br
+                    if tipo
+                        label='Tipo de empresa: ' + tipo
+                    br
+                    br
+                    if nif
+                        label='Código CIF/NIF: ' + nif
+                    br
+                    br
+                    if email
+                        label='E-mail: ' + email
+                    br
+                    br
+                    if password
+                        label='Contraseña: '
+                        input(type='text', name='password', value=password, readonly)
+            div.column
+                h3='Iconos de contacto:'
+                img(src="/images/whatsapp.png", alt="whatsapp")
+                img(src="/images/instagram.png", alt="instagram")
+                img(src="/images/twitter.png", alt="twitter")
+        div.row
+            div.column
+                h3='Actualización de los datos de la empresa: '
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-marca`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Nombre de la Empresa: '
+                    input(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-tipo`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Tipo de empresa: '
+                        select(name='tipo')
+                            option(checked)=''
+                            option='RESTAURANTE'
+                            option='EDUCACION'
+                            option='VENTAS'
+                            option='PELUQUERIA'
+                            option='VIAJES'
+                            option='CINE'
+                            option='TEATRO'
+                            option='IPTV'
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Código CIF/NIF: '
+                    input(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-email`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='E-mail: '
+                    input(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-password`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Antigua contraseña: '
+                    input(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    label='Nueva contraseña: '
+                    input(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    label='Repite la contraseña: '
+                    input(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl
+            div.column
+                h3='Añadir descripción: '
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-descripcion`)
+                    textarea(name="descripCo", cols="45", rows="10" placeholder='Introduce una descripción para tu interfaz empresarial....')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+            div.column
+                h3='Añadir URLs de contacto: '
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-WhatsApp`)
+                    label='WhatsApp empresarial: '
+                    input(type='number' name='whatsapp' placeholder='Introduce el WhatsApp de la empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
+                    label='URL Instagram: '
+                    input(type='text' name='urlInstagram' placeholder='Introduce la URL del Instagram de la empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
+                    label='URL Twitter: '
+                    br
+                    input(type='text' name='urlTwitter' placeholder='Introduce la URL del Twitter de la empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+        div.row
+            div.column
+            div.column
+                h3='Darse de baja de MAD Services: '
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/darse-baja`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    label='¿Confirmas que quieres darte de baja de MAD Services?: '
+                    select(name="confirmarOpcion")
+                        option(checked)=''
+                        option='Sí'
+                        option='No' 
+                    button(type='submit')='Confirmo'
+            div.column
+        br
     include ./componentes/piepagina.pug

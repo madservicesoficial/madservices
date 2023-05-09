@@ -270,27 +270,21 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
 }
 
 //-- Creamos la función para Dar de Baja a la Empresa de la base de datos de MAD Services.
-const darseBajaEmpresadb = (id, siConfirmo, noConfirmo, req, res) => {
+const darseBajaEmpresadb = (id, confirmarOpcion, req, res) => {
     //-- Caso 1: dejar en blanco la confirmación.
-    if(!siConfirmo && !noConfirmo) {
+    if(!confirmarOpcion) {
         //-- Mostrar Alerta Emergente.
         alerta('Debes confirmar si quieres o no darte de baja');
         // Redirigir a la interfaz de la Empresa.
         return res.redirect(`/sesion-empresa/${id}/interfaz`);
-    //-- Caso 2: pulsar ambas confirmaciones.
-    }else if(siConfirmo && noConfirmo) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Debes elegir sólo una opción de confirmación');
-        // Redirigir a la interfaz de la Empresa.
-        return res.redirect(`/sesion-empresa/${id}/interfaz`);
-    //-- Caso 3: pulsar que no quieres darte de baja.
-    }else if(!siConfirmo && noConfirmo) {
+    //-- Caso 2: pulsar que no quieres darte de baja.
+    }else if(confirmarOpcion === 'No') {
         //-- Mostrar Alerta Emergente.
         alerta('Gracias por no querer darte de baja');
         // Redirigir a la interfaz de la Empresa.
         return res.redirect(`/sesion-empresa/${id}/interfaz`);
-    //-- Caso 4: pulsar que sí quieres darte de baja.
-    }else if(siConfirmo && !noConfirmo) {
+    //-- Caso 3: pulsar que sí quieres darte de baja.
+    }else if(confirmarOpcion === 'Sí') {
         //-- Instrucción para dar de baja.
         let instruccionDarDeBajaEmpresa = 'DELETE FROM empresas WHERE id = ?';
         //-- Configuración del formato de la instrucción dar de baja.
@@ -306,6 +300,59 @@ const darseBajaEmpresadb = (id, siConfirmo, noConfirmo, req, res) => {
     }
 }
 
+//-- Creamos las funciones para ingresar en la interfaz de empresa.
+const ingresoDescripcionEmpresadb = (id, descripcion, res) => {
+
+    //-- Verificación de la descripción.
+    if(descripcion) {
+
+    }else {
+        //-- Mostrar Alerta Emergente.
+        alerta('La descripción no ha cambiado');
+        //-- Redirigir a la interfaz de la empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    }
+}
+
+const ingresoInstagramEmpresadb = (id, instagram, res) => {
+
+    //-- Verificación del instagram.
+    if(instagram) {
+
+    }else {
+        //-- Mostrar Alerta Emergente.
+        alerta('El instagram no ha cambiado');
+        //-- Redirigir a la interfaz de la empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    }
+}
+
+const ingresoTwitterEmpresadb = (id, twitter, res) => {
+
+    //-- Verificación del twitter.
+    if(twitter) {
+
+    }else {
+        //-- Mostrar Alerta Emergente.
+        alerta('El twitter no ha cambiado');
+        //-- Redirigir a la interfaz de la empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    }
+}
+
+const ingresoWhatsAppEmpresadb = (id, whatsapp, res) => {
+
+    //-- Verificación del whatsapp.
+    if(whatsapp) {
+
+    }else {
+        //-- Mostrar Alerta Emergente.
+        alerta('El whatsapp no ha cambiado');
+        //-- Redirigir a la interfaz de la empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    }
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarEmpresaVerificadadb,
@@ -315,5 +362,9 @@ module.exports = {
     actualizarNIFVerificadodb,
     actualizarEmailVerificadodb,
     actualizarPasswordVerificadadb,
-    darseBajaEmpresadb
+    darseBajaEmpresadb,
+    ingresoDescripcionEmpresadb,
+    ingresoInstagramEmpresadb,
+    ingresoTwitterEmpresadb,
+    ingresoWhatsAppEmpresadb
 };

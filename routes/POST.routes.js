@@ -24,6 +24,11 @@ const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosM
 const multer = require('multer');
 //-- Importamos la función para ingresar al carrito de la compra.
 const ingresoCarrito = require('../modelos/miembros/ingresoCarrito.js');
+//-- Importamos la función para el ingreso empresarial de la Empresa.
+const ingresoDescripcionEmpresa = require('../controladores/empresas/ingresoDescripcionEmpresa.js');
+const ingresoWhatsAppEmpresa = require('../controladores/empresas/ingresoWhatsAppEmpresa.js');
+const ingresoInstagramEmpresa = require('../controladores/empresas/ingresoInstagramEmpresa.js');
+const ingresoTwitterEmpresa = require('../controladores/empresas/ingresoTwitterEmpresa.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -63,6 +68,11 @@ rutasPost.post('/sesion-empresa/:id/empleo');
 rutasPost.post('/sesion-miembro/:id/empleo');
 //-- Formulario para añadir artículos al carrito de la compra.
 rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/add-to-cart', ingresoCarrito);
+//-- Formulario ingresos de la interfaz de empresa.
+rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Instagram', ingresoInstagramEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Twitter', ingresoTwitterEmpresa);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

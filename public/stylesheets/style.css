@@ -886,58 +886,58 @@ canvas {
   width: 100%;
   min-height: 130vh;
   background-color: silver;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
-.interfazEmpresa ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.interfazEmpresa header {
+  text-align: center;
 }
-.encabezadoEmpresa {
-  border-color: black;
-  border-width: 7px;
+.interfazEmpresa header img {
+  width: 1300px;
+  height: 300px;
   border-style: double;
-  width: 1300;
-  height: 300;
-  display: block;
+  border-radius: 7px;
 }
-.interfazEmpresa ul h1 {
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+.column {
+  flex: 1;
+  margin: 0 1rem;
+}
+.subcolumn {
+  text-align: left;
+}
+.interfazEmpresa div img {
+  width: 40px;
+  height: 40px;
+  margin: 20;
+}
+.interfazEmpresa input {
+  width: 380;
+  background-color: silver;
+}
+.interfazEmpresa button {
+  margin-left: 10;
+  width: 30;
+  height: 30;
+  background-color: transparent;
+}
+.interfazEmpresa i {
   position: relative;
-  top: -190;
+  right: 5;
+  color: black;
 }
-.descripcionEmpresa {
-  position: relative;
-  right: 550;
-  top: 55;
+.interfazEmpresa select {
+  width: 200;
+  border-radius: 8px;
+  height: 20;
+  background-color: silver;
 }
-.interfazEmpresa ul h3 {
-  position: relative;
-  top: -107;
-}
-.datosEmpresa {
-  position: relative;
-  top: -107;
-  right: 200;
-}
-.datosEmpresa2 {
-  position: relative;
-  top: -225;
-  left: 200;
-}
-.iconosContactEmpresa {
-  position: relative;
-  top: -275;
-  left: 525;
-}
-.interfazEmpresa ul li label {
-  font-size: large;
-}
-.iconoRRSSempresa {
-  width: 40;
-  height: 40;
-  position: relative;
-  top: -110;
+.interfazEmpresa textarea {
+  background-color: silver;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/
