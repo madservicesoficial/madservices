@@ -10,14 +10,15 @@ block body
         br
         header
             if tipo === 'PELUQUERIA'
-                img(src='/images/encabezadoPeluq.jpg' alt='encabezadoPeluq')
+                img(src='/images/encabezadoPeluq.png' alt='encabezadoPeluq')
             else if tipo === 'RESTAURANTE'
                 img(src='/images/encabezadoRestaurante.jpg' alt='encabezadoRestaurante')
             h1=`${tipo} ${marca}:`
         div.row
             div.column
                 h3='Descripción: '
-                p='' + descripcion
+                if descripcion
+                    p=descripcion
             div.column
                 h3='Datos de la Empresa: '
                 div.subcolumn
@@ -45,13 +46,25 @@ block body
                         label='Contraseña: '
                         input(type='text', name='password', value=password, readonly)
             div.column
-                h3='Iconos de contacto:'
-                a(href=whatsapp target="_blank")
-                    img(src="/images/whatsapp.png", alt="whatsapp")
-                a(href=instagram target="_blank")
-                    img(src="/images/instagram.png", alt="instagram")
-                a(href=twitter target="_blank")
-                    img(src="/images/twitter.png", alt="twitter")
+                h3='Iconos Web:'
+                img.imgIcono(src="/images/whatsapp.png", alt="whatsapp")
+                if whatsapp !== 0
+                    p#numWhatsapp=whatsapp
+                if instagram !== 0
+                    a(href=instagram target="_blank")
+                        img.imgIcono(src="/images/instagram.png", alt="instagram")
+                else
+                    img.imgIcono(src="/images/instagram.png", alt="instagram")
+                if twitter !== 0
+                    a(href=twitter target="_blank")
+                        img.imgIcono(src="/images/twitter.png", alt="twitter")
+                else
+                    img.imgIcono(src="/images/twitter.png", alt="twitter")
+                if pagweb !== 0
+                    a(href=pagweb target="_blank")
+                        img.imgIcono(src="/images/pageWeb.png", alt="pageWeb")
+                else 
+                    img.imgIcono(src="/images/pageWeb.png", alt="pageWeb")
         div.row
             div.column
                 h3='Actualización de los datos de la empresa: '
@@ -67,13 +80,7 @@ block body
                         select(name='tipo')
                             option(checked)=''
                             option='RESTAURANTE'
-                            option='EDUCACION'
-                            option='VENTAS'
                             option='PELUQUERIA'
-                            option='VIAJES'
-                            option='CINE'
-                            option='TEATRO'
-                            option='IPTV'
                     button(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)
@@ -118,14 +125,20 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
-                    label='URL Instagram: '
+                    label='Usuario Instagram: '
                     input(type='text' name='urlInstagram' placeholder='Introduce el Usuario de Instagram de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
-                    label='URL Twitter: '
+                    label='Usuario Twitter: '
                     br
                     input(type='text' name='urlTwitter' placeholder='Introduce el Usuario de Twitter de la empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-PagWeb`)
+                    label='URL Página Web: '
+                    br
+                    input(type='text' name='urlPagWeb' placeholder='Introduce la URL de la Web de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
         div.row
@@ -140,6 +153,15 @@ block body
                         option='Sí'
                         option='No' 
                     button(type='submit')='Confirmo'
+            div.column
+        div.row
+            div.column
+            div.column
+                h3=`Plano ${tipo}: `
+                if tipo === 'PELUQUERIA'
+                    img.imgPlano(src='/images/PlanoPeluqueria.jpg' alt='PlanoPeluqueria')
+                else if tipo === 'RESTAURANTE'
+                    img.imgPlano(src='/images/PlanoPeluqueria.jpg' alt='PlanoPeluqueria')
             div.column
         br
     include ./componentes/piepagina.pug

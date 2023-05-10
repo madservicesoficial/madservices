@@ -16,11 +16,6 @@ const mostrarProductosMADclientes = require('../modelos/clientes/mostrarProducto
 const mostrarProductosMADempresas = require('../modelos/empresas/mostrarProductosMAD.js');
 //-- Importamos la función que muestra los productos MAD desde un miembro MAD.
 const mostrarProductosMADmiembros = require('../modelos/miembros/mostrarProductosMAD.js');
-//-- Importamos la función que muestra otros campos de la interfaz de la empresa.
-const mostrarDescripciondb = require('../modelos/empresas/mostrarDescripcion.js');
-const mostrarInstagramdb = require('../modelos/empresas/mostrarInstagram.js');
-const mostrarTwitterdb = require('../modelos/empresas/mostrarTwitter.js');
-const mostrarWhatsappdb = require('../modelos/empresas/mostrarWhatsapp.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -222,10 +217,6 @@ rutasGet.get('/sesion-cliente/:id/perfil', mostrarClientedb);
 
 //-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
 rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresadb);
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarDescripciondb);
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarInstagramdb);
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarTwitterdb);
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarWhatsappdb);
 
 //-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
 rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembrodb);

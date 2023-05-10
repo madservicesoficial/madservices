@@ -319,7 +319,7 @@ const ingresoDescripcionEmpresadb = (id, descripcion, res) => {
             //-- Establecemos la conexión.
             madservicesEmpresadb.query(formatoIinstruccionComprobarDescripcion, (error, results) => {
                 if(error) throw error;
-                if(results[0].length === 0) {
+                if(results[0] === undefined) {
                     //-- Ingresamos la descripción en base de datos.
                     let instruccionIngresarDescripcion = 'INSERT INTO companyd (id, descripcion) values (?, ?)';
                     //-- Formato de la instrucción.
@@ -365,7 +365,7 @@ const ingresoInstagramEmpresadb = (id, instagram, res) => {
         //-- Establecemos la conexión.
         madservicesEmpresadb.query(formatoInstruccionComprobarInstagram, (error, results) => {
             if(error) throw error;
-            if(results[0].length === 0) {
+            if(results[0] === undefined) {
                 //-- Ingresamos el instagram en base de datos.
                 let instruccionIngresarInstagram = 'INSERT INTO companyi (id, instagram) values (?, ?)';
                 //-- Formato de la instrucción.
@@ -380,7 +380,7 @@ const ingresoInstagramEmpresadb = (id, instagram, res) => {
                 //-- Actualizamos el instagram en base de datos.
                 let instruccionActualizarInstagram = 'UPDATE companyi SET instagram = ? WHERE id = ?';
                 //-- Formato de la instrucción.
-                let formatoInstruccionActualizarInstagram = mysql.format(instruccionActualizarInstagram, [instagram, id]);
+                let formatoInstruccionActualizarInstagram = mysql.format(instruccionActualizarInstagram, [estructuraInstagram, id]);
                 //-- Establecemos la conexión.
                 madservicesEmpresadb.query(formatoInstruccionActualizarInstagram);
                 //-- Mostrar Alerta Emergente.
@@ -410,7 +410,7 @@ const ingresoTwitterEmpresadb = (id, twitter, res) => {
         //-- Establecemos la conexión.
         madservicesEmpresadb.query(formatoInstruccionComprobarTwitter, (error, results) => {
             if(error) throw error;
-            if(results[0].length === 0) {
+            if(results[0] === undefined) {
                 //-- Ingresamos el twitter en base de datos.
                 let instruccionIngresarTwitter = 'INSERT INTO companyt (id, twitter) values (?, ?)';
                 //-- Formato de la instrucción.
@@ -425,7 +425,7 @@ const ingresoTwitterEmpresadb = (id, twitter, res) => {
                 //-- Actualizamos el twitter en base de datos.
                 let instruccionActualizarTwitter = 'UPDATE companyt SET twitter = ? WHERE id = ?';
                 //-- Formato de la instrucción.
-                let formatoInstruccionActualizarTwitter = mysql.format(instruccionActualizarTwitter, [twitter, id]);
+                let formatoInstruccionActualizarTwitter = mysql.format(instruccionActualizarTwitter, [estructuraTwitter, id]);
                 //-- Establecemos la conexión.
                 madservicesEmpresadb.query(formatoInstruccionActualizarTwitter);
                 //-- Mostrar Alerta Emergente.
@@ -453,7 +453,7 @@ const ingresoWhatsAppEmpresadb = (id, whatsapp, res) => {
         //-- Establecemos la conexión.
         madservicesEmpresadb.query(formatoInstruccionComprobarWhatsapp, (error, results) => {
             if(error) throw error;
-            if(results[0].length === 0) {
+            if(results[0] === undefined) {
                 //-- Ingresamos el whatsapp en base de datos.
                 let instruccionIngresarWhatsapp = 'INSERT INTO companyw (id, whatsapp) values (?, ?)';
                 //-- Formato de la instrucción.
@@ -485,6 +485,49 @@ const ingresoWhatsAppEmpresadb = (id, whatsapp, res) => {
     }
 }
 
+const ingresoPagWebEmpresadb = (id, pagweb, res) => {
+    
+    //-- Verificación de la Página Web.
+    if(pagweb) {
+        //-- Comprobamos que no haya Página Web en base de datos.
+        let instruccionComprobarPagWeb = 'SELECT * FROM companypg WHERE id = ?';
+        //-- Formato de la instrucción.
+        let formatoInstruccionComprobarPagWeb = mysql.format(instruccionComprobarPagWeb, [id]);
+        //-- Establecemos la conexión.
+        madservicesEmpresadb.query(formatoInstruccionComprobarPagWeb, (error, results) => {
+            if(error) throw error;
+            if(results[0] === undefined) {
+                //-- Ingresamos el whatsapp en base de datos.
+                let instruccionIngresarPagWeb = 'INSERT INTO companypg (id, pagweb) values (?, ?)';
+                //-- Formato de la instrucción.
+                let formatoInstruccionIngresarPagWeb = mysql.format(instruccionIngresarPagWeb, [id, pagweb]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionIngresarPagWeb);
+                //-- Mostrar Alerta Emergente.
+                alerta('La Página Web ha sido ingresada con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Actualizamos la Página Web en base de datos.
+                let instruccionActualizarPagWeb = 'UPDATE companypg SET pagweb = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarPagWeb = mysql.format(instruccionActualizarPagWeb, [pagweb, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarPagWeb);
+                //-- Mostrar Alerta Emergente.
+                alerta('La Página Web ha sido actualizada con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            }
+        });
+    }else {
+        //-- Mostrar Alerta Emergente.
+        alerta('La Página Web no ha cambiado');
+        //-- Redirigir a la interfaz de la empresa.
+        return res.redirect(`/sesion-empresa/${id}/interfaz`);
+    }
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarEmpresaVerificadadb,
@@ -498,5 +541,6 @@ module.exports = {
     ingresoDescripcionEmpresadb,
     ingresoInstagramEmpresadb,
     ingresoTwitterEmpresadb,
-    ingresoWhatsAppEmpresadb
+    ingresoWhatsAppEmpresadb,
+    ingresoPagWebEmpresadb
 };

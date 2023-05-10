@@ -29,6 +29,7 @@ const ingresoDescripcionEmpresa = require('../controladores/empresas/ingresoDesc
 const ingresoWhatsAppEmpresa = require('../controladores/empresas/ingresoWhatsAppEmpresa.js');
 const ingresoInstagramEmpresa = require('../controladores/empresas/ingresoInstagramEmpresa.js');
 const ingresoTwitterEmpresa = require('../controladores/empresas/ingresoTwitterEmpresa.js');
+const ingresoPagWebEmpresa = require('../controladores/empresas/ingresoPagWebEmpresa.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -73,6 +74,7 @@ rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcio
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Instagram', ingresoInstagramEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Twitter', ingresoTwitterEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/add-url-PagWeb', ingresoPagWebEmpresa);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

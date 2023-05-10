@@ -910,10 +910,9 @@ canvas {
 .subcolumn {
   text-align: left;
 }
-.interfazEmpresa div img {
-  width: 40px;
-  height: 40px;
-  margin: 20;
+#numWhatsapp {
+  position: relative;
+  top: -20;
 }
 .interfazEmpresa input {
   width: 380;
@@ -938,6 +937,15 @@ canvas {
 }
 .interfazEmpresa textarea {
   background-color: silver;
+}
+.imgIcono {
+  width: 40px;
+  height: 40px;
+  margin: 20;
+}
+.imgPlano {
+  width: 1000px;
+  height: 600px;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/

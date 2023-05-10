@@ -5,24 +5,24 @@ const mysql = require('mysql2');
 const {madservicesEmpresadb} = require('../../config/database.js');
 
 //-- Creamos la función que saca el Whatsapp de la base de datos de las Empresas.
-const mostrarWhatsappdb = (req, res) => {
+function mostrarWhatsappdb(id) {
 
-    //-- Leemos el ID de la Empresa en ese momento.
-    let id = req.params.id;
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM companyw WHERE id = ?';
     //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, id);
-    //-- Establecer la comunicación de consultar ID en la base de datos.
-    madservicesEmpresadb.query(formatoInstruccionID, (error, result) => {
-        if(error) throw error;
-        const tablaEmpresa = result[0];
-        res.status(201).render('paginas/empresas/interfaz', 
-        {
-            id: id,
-            whatsapp: tablaEmpresa.whatsapp
+    let formatoInstruccionID = mysql.format(instruccionID, [id]);
+    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
+    return new Promise((resolve) => {
+        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
+            if(error) throw error;
+            if(results[0] === undefined) {
+                const zero = 0;
+                resolve(zero);
+            }else {
+                const whatsapp = results[0].whatsapp;
+                resolve(whatsapp);
+            }
         });
-        return res.end();
     });
 }
 
