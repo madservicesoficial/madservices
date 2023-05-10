@@ -117,6 +117,9 @@ block body
                     textarea(name="descripCo", cols="45", rows="10" placeholder='Introduce una descripción para tu interfaz empresarial....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-descripcion`)
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
             div.column
                 h3='Añadir URLs de contacto: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-WhatsApp`)
@@ -124,23 +127,35 @@ block body
                     input(type='number' name='whatsapp' placeholder='Introduce el WhatsApp de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-WhatsApp`)
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
                     label='Usuario Instagram: '
                     input(type='text' name='urlInstagram' placeholder='Introduce el Usuario de Instagram de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Instagram`)
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
                     label='Usuario Twitter: '
                     br
                     input(type='text' name='urlTwitter' placeholder='Introduce el Usuario de Twitter de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Twitter`)
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-PagWeb`)
                     label='URL Página Web: '
                     br
                     input(type='text' name='urlPagWeb' placeholder='Introduce la URL de la Web de la empresa....')
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-PagWeb`)
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
         div.row
             div.column
             div.column
@@ -159,9 +174,9 @@ block body
             div.column
                 h3=`Plano ${tipo}: `
                 if tipo === 'PELUQUERIA'
-                    img.imgPlano(src='/images/PlanoPeluqueria.jpg' alt='PlanoPeluqueria')
+                    img.imgPlano(src='/images/planoPeluqueria.jpg' alt='planoPeluqueria')
                 else if tipo === 'RESTAURANTE'
-                    img.imgPlano(src='/images/PlanoPeluqueria.jpg' alt='PlanoPeluqueria')
+                    img.imgPlano(src='/images/planoRestaurante.jpg' alt='planoRestaurante')
             div.column
         br
     include ./componentes/piepagina.pug

@@ -68,7 +68,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: 15%;
 }
 .menu {
-  margin: 40 0 0 100;
+  margin: 40 0 0 160;
 }
 ul, ol {
   list-style: none;
@@ -104,16 +104,6 @@ ul, ol {
 }
 #iconosCab {
   color: white;
-}
-#menuIdiomas {
-  margin-left: 175px;
-}
-.eligeIdiomas {
-  width: 75px;
-  height: 35px;
-  margin-left: 5px;
-  color: white;
-  background-color: black;
 }
 #btnCarrito {
   position: relative;

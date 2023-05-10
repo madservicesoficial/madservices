@@ -96,13 +96,12 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
 const actualizarNombreVerificadodb = (id, nombre, res) => {
 
     //-- Declaración de ctes.
-    const minLong = 3;
     const maxLong = 48;
     //-- Actualizamos y validamos el campo.
     if(nombre) {
-        if(nombre.length < minLong || nombre.length > maxLong) {
+        if(nombre.length > maxLong) {
             //-- Mostrar Alerta Emergente.
-            alerta('El nombre del cliente no se ajusta al estándar MAD');
+            alerta(`El nombre no puede ser más largo de ${maxLong} caracteres`);
             // Redirigir al perfil del Cliente.
             return res.redirect(`/sesion-cliente/${id}/perfil`);
         }else {
@@ -129,13 +128,12 @@ const actualizarNombreVerificadodb = (id, nombre, res) => {
 const actualizarApellidosVerificadosdb = (id, apellidos, res) => {
 
     //-- Declaración de ctes.
-    const minLong = 3;
     const maxLong = 96;
     //-- Actualizamos y validamos el campo.
     if(apellidos) {
-        if(apellidos.length < minLong || apellidos.length > maxLong) {
+        if(apellidos.length > maxLong) {
             //-- Mostrar Alerta Emergente.
-            alerta('Los apellidos del cliente no se ajustan al estándar MAD');
+            alerta(`Los apellidos no pueden ser más largos de ${maxLong} caracteres`);
             // Redirigir al perfil del Cliente.
             return res.redirect(`/sesion-cliente/${id}/perfil`);
         }else {
@@ -283,7 +281,7 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
     //-- Declaración de la cte que saca todos los países del mundo en español.
     const paises = getCountries();
     //-- Proceso de verificación de la localización.
-    if(pais) {
+    if(pais && cp && region && poblacion && direccion) {
         if(paises.includes(pais)) {
             //-- Obtenemos el código del país.
             const codigoPais = getCode(pais);
@@ -346,7 +344,7 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
         }
     }else {
         //-- Mostrar Alerta Emergente.
-        alerta('La localización del cliente no ha cambiado\nEl orden de localización importa\n1º País\n2º CP\n3º Región\n4º Población\n5º Dirección');
+        alerta('No puedes dejar campos vacíos\nY debes saber que:\nEl orden de localización importa\n1º País\n2º CP\n3º Región\n4º Población\n5º Dirección');
         // Redirigir al perfil del Cliente.
         return res.redirect(`/sesion-cliente/${id}/perfil`);
     }

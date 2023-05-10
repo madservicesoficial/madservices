@@ -24,12 +24,18 @@ const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosM
 const multer = require('multer');
 //-- Importamos la función para ingresar al carrito de la compra.
 const ingresoCarrito = require('../modelos/miembros/ingresoCarrito.js');
-//-- Importamos la función para el ingreso empresarial de la Empresa.
+//-- Importamos la función para el ingreso de sitios de la interfaz de la Empresa.
 const ingresoDescripcionEmpresa = require('../controladores/empresas/ingresoDescripcionEmpresa.js');
 const ingresoWhatsAppEmpresa = require('../controladores/empresas/ingresoWhatsAppEmpresa.js');
 const ingresoInstagramEmpresa = require('../controladores/empresas/ingresoInstagramEmpresa.js');
 const ingresoTwitterEmpresa = require('../controladores/empresas/ingresoTwitterEmpresa.js');
 const ingresoPagWebEmpresa = require('../controladores/empresas/ingresoPagWebEmpresa.js');
+//-- Importamos la función para el borrado de sitios de la interfaz de la Empresa.
+const borrarDescripcionEmpresa = require('../controladores/empresas/borrarDescripcionEmpresa.js');
+const borrarWhatsAppEmpresa = require('../controladores/empresas/borrarWhatsAppEmpresa.js');
+const borrarInstagramEmpresa = require('../controladores/empresas/borrarInstagramEmpresa.js');
+const borrarTwitterEmpresa = require('../controladores/empresas/borrarTwitterEmpresa.js');
+const borrarPagWebEmpresa = require('../controladores/empresas/borrarPagWebEmpresa.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -69,12 +75,18 @@ rutasPost.post('/sesion-empresa/:id/empleo');
 rutasPost.post('/sesion-miembro/:id/empleo');
 //-- Formulario para añadir artículos al carrito de la compra.
 rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/add-to-cart', ingresoCarrito);
-//-- Formulario ingresos de la interfaz de empresa.
+//-- Formulario ingresar en interfaz de empresa.
 rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Instagram', ingresoInstagramEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Twitter', ingresoTwitterEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-PagWeb', ingresoPagWebEmpresa);
+//-- Formulario eliminar en interfaz de empresa.
+rutasPost.post('/sesion-empresa/:id/interfaz/borrar-descripcion', borrarDescripcionEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-WhatsApp', borrarWhatsAppEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-Instagram', borrarInstagramEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-Twitter', borrarTwitterEmpresa);
+rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-PagWeb', borrarPagWebEmpresa);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

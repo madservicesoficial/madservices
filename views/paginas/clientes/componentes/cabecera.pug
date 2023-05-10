@@ -6,7 +6,7 @@ div#cabecera
         button.btnMADServices
           img.logoMADServices(src='/images/madforclients.png' alt='madservices')
     li.menu
-      input(type='search' maxlength='50' placeholder='Busca el producto/servicio')
+      input(type='search' maxlength='50' placeholder='Buscar por título....')
       button(type='submit')='Buscar'
     li.menu
       form(method='GET' action=`/sesion-cliente/${id}/perfil`)
@@ -29,8 +29,3 @@ div#cabecera
         div.sumaArticulos
           p='Total: '
           span.precioTotal='3€'
-    li.menu#menuIdiomas
-      i.fa-solid.fa-earth-americas.fa-2xl#iconosCab
-      select.eligeIdiomas(name="Idiomas")
-        option(value="es" selected)='Español'
-        option(value="en")='Inglés'
