@@ -796,78 +796,37 @@ canvas {
   width: 100%;
   min-height: 130vh;
   background-color: silver;
-  padding-bottom: 100;
 }
-.tituloPerfil {
+.perfilCliente header {
   text-align: center;
-  margin: 40 400 0 0;
 }
-.perfilCliente div {
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.perfilCliente header img {
+  width: 1300px;
+  height: 300px;
+  border-style: double;
+  border-radius: 7px;
+}
+.inputCliente {
+  background-color: silver;
+}
+.perfilCliente button {
+  width: 30;
+  height: 30;
+  margin-left: 20;
+  background-color: transparent;
+}
+.perfilCliente select {
+  width: 200;
+  border-radius: 8px;
+  height: 20;
+  background-color: silver;
+}
+#btnBajaCliente {
   background-color: black;
   color: white;
-  place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  width: 650px;
-  border-radius: 20px;
-  border-color: goldenrod;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
-}
-#perfilClienteIzquierda {
-  margin: 50 0 0 100;
-  height: 800px;
-}
-#perfilClienteDerecha {
-  margin: -800 0 0 840;
-  height: 500px;
-}
-#perfilClienteAbajo {
-  margin: 100 0 0 840;
-  height: 200px;
-}
-.perfilCliente div form {
-  margin-top: 25;
-  float: left;
-  margin-left: 50;
-  text-align: left;
-}
-.mostrarPerfilCliente {
-  text-align: left;
-  margin-left: 50;
-  margin-top: 25;
-  float: left;
-}
-.entradasNoRadio {
-  width: 380;
-}
-.perfilCliente div form button {
   width: 100;
-  font-size: medium;
-  float: right;
-}
-#btnActualizarPerfil {
-  margin-right: 250;
-}
-#btnDarseBaja {
-  margin-top: 25;
-}
-.ConfirmarBaja {
-  margin-top: 20;
-  margin-left: 10;
-}
-#siConfirmar {
-  margin-left: 100;
-}
-#perfilClienteIzquierda button {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  left: 25px;
-  background-color: transparent;
+  height: 25;
+  margin-left: 30;
 }
 /*##################################################################################################*/
 /*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
@@ -940,78 +899,59 @@ canvas {
 /*##################################################################################################*/
 /*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/
 /*##################################################################################################*/
-#perfilMiembroMADIzquierda {
-  margin: 50 0 0 50;
-  height: 600px;
+.interfazMiembroMAD {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
 }
-#perfilMiembroMADDerecha {
-  margin: -600 0 0 840;
-  height: 325px;
+.interfazMiembroMAD header {
+  text-align: center;
 }
-#perfilMiembroMADDerecha2 {
-  margin: 75 0 0 840;
-  height: 200px;
+.interfazMiembroMAD header img {
+  width: 1300px;
+  height: 300px;
+  border-style: double;
+  border-radius: 7px;
 }
-#perfilMiembroMADAbajo {
-  margin: 100 0 0 100;
-  height: 600px;
-  width: 1340px;
-}
-#perfilMiembroMADAbajo h3 {
-  margin-top: 30;
-}
-#perfilMiembroMADAbajo ul {
-  text-align: left;
-  margin-left: 50;
-}
-#designTipoDept {
-  border-radius: 10px;
-  height: 25;
-}
-#perfilMiembroMADAbajo ul li {
-  margin-top: 30;
-}
-#perfilMiembroMADAbajo ul li input {
+.interfazMiembroMAD button {
+  width: 30;
+  height: 30;
   margin-left: 20;
-  width: 300;
-  height: 25;
-}
-#perfilMiembroMADAbajo ul li select {
-  margin-left: 20;
-  width: 200;
-  height: 25;
-  border-radius: 20px;
-}
-#euros {
-  margin-left: 10;
-  font-size: x-large;
-  position: relative;
-  top: 5;
-}
-#perfilMiembroMADAbajo ul button {
-  position: relative;
-  top: 375;
-  right: 400;
-}
-.imagenIngresoMAD {
-  position: relative;
-  top: -725;
-  left: 800;
-  width: 325;
-  height: 325;
-}
-#perfilMiembroMADAbajo button {
-  margin-top: 50;
-}
-#perfilMiembroMADIzquierda button {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  left: 25px;
   background-color: transparent;
 }
 #iconosActualizar {
+  position: relative;
+  right: 6;
+  color: black;
+}
+.interfazMiembroMAD select {
+  width: 200;
+  border-radius: 8px;
+  height: 20;
+  background-color: silver;
+}
+.subcolumn2 {
+  text-align: center;
+}
+.subcolumn2 input {
+  width: 460px;
+  background-color: silver;
+}
+.inputMiembroMAD {
+  background-color: silver;
+}
+#btnBajaMiembroMAD {
+  background-color: black;
   color: white;
+  width: 100;
+  height: 25;
+}
+#btnIngresarProductoMAD {
+  background-color: black;
+  color: white;
+  margin-top: 15;
+  width: 100;
+  height: 25;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/

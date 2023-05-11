@@ -351,27 +351,21 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
 }
 
 //-- Creamos la función para Dar de Baja al Cliente de la base de datos de MAD Services.
-const darseBajaClientedb = (id, siConfirmo, noConfirmo, req, res) => {
+const darseBajaClientedb = (id, dileAdios, req, res) => {
     //-- Caso 1: dejar en blanco la confirmación.
-    if(!siConfirmo && !noConfirmo) {
+    if(!dileAdios) {
         //-- Mostrar Alerta Emergente.
         alerta('Debes confirmar si quieres o no darte de baja');
         // Redirigir al perfil del Cliente.
         return res.redirect(`/sesion-cliente/${id}/perfil`);
-    //-- Caso 2: pulsar ambas confirmaciones.
-    }else if(siConfirmo && noConfirmo) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Debes elegir sólo una opción de confirmación');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    //-- Caso 3: pulsar que no quieres darte de baja.
-    }else if(!siConfirmo && noConfirmo) {
+    //-- Caso 2: pulsar que no quieres darte de baja.
+    }else if(dileAdios === 'No') {
         //-- Mostrar Alerta Emergente.
         alerta('Gracias por no querer darte de baja');
         // Redirigir al perfil del Cliente.
         return res.redirect(`/sesion-cliente/${id}/perfil`);
-    //-- Caso 4: pulsar que sí quieres darte de baja.
-    }else if(siConfirmo && !noConfirmo) {
+    //-- Caso 3: pulsar que sí quieres darte de baja.
+    }else if(dileAdios === 'Sí') {
         //-- Variables usadas para borrar los datos de la base de datos.
         let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
         let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);

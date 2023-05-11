@@ -6,86 +6,88 @@ block title
 
 block body
     include ./componentes/cabecera.pug
-    div.perfilCliente
+    .perfilCliente
         br
-        h1.tituloPerfil=`Hola ${nombre} ${apellidos}, éste es tu perfil:`
-        div#perfilClienteIzquierda
-            h3='Actualización de mi perfil: '
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-nombre`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Nombre: '
-                input.entradasNoRadio(type='text' name='nombre' placeholder='Escribe tu nombre....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-apellidos`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Apellidos: '
-                input.entradasNoRadio(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-genero`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Género: '
-                input(type='radio' name='genero' value='Hombre')
-                label='Hombre'
-                input(type='radio' name='genero' value='Mujer')
-                label='Mujer'
-                input(type='radio' name='genero' value='Otro')
-                label='Otro'
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-email`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='E-mail: '
-                input.entradasNoRadio(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-password`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='Antigua contraseña: '
-                input.entradasNoRadio(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                br
-                label='Nueva contraseña: '
-                input.entradasNoRadio(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                br
-                label='Repite la contraseña: '
-                input.entradasNoRadio(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-localizacion`)
-                input(type='hidden' name='_method' value='PATCH')
-                label='País: '
-                input.entradasNoRadio(type='text' name='pais' placeholder='Introduce un país válido....')
-                br
-                br
-                br
-                label='Código Postal: '
-                input.entradasNoRadio(type='number' name='cp' placeholder='Introduce un código postal válido....')
-                br
-                br
-                br
-                label='Región: '
-                input.entradasNoRadio(type='text' name='region' placeholder='Introduce una región válida....')
-                br
-                br
-                br
-                label='Población: '
-                input.entradasNoRadio(type='text' name='poblacion' placeholder='Introduce una población válida....')
-                br
-                br
-                br
-                label='Dirección: '
-                input.entradasNoRadio(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
-                button(type='submit')
-                    i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        div#perfilClienteDerecha
-            h3='Mi Información: '
-            ul 
-                li.mostrarPerfilCliente
+        header
+            img(src='/images/encabezadoCustomers.png' alt='encabezadoCustomers')
+            h1=`Hola ${nombre} ${apellidos}, éste es tu perfil:`
+        div.row
+            div.column
+                h3='Actualización de mi perfil: '
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-nombre`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Nombre: '
+                    input.entradasNoRadio.inputCliente(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-apellidos`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Apellidos: '
+                    input.entradasNoRadio.inputCliente(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-genero`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Género: '
+                    input(type='radio' name='genero' value='Hombre')
+                    label='Hombre'
+                    input(type='radio' name='genero' value='Mujer')
+                    label='Mujer'
+                    input(type='radio' name='genero' value='Otro')
+                    label='Otro'
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-email`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='E-mail: '
+                    input.entradasNoRadio.inputCliente(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-password`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Antigua contraseña: '
+                    input.entradasNoRadio.inputCliente(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    label='Nueva contraseña: '
+                    input.entradasNoRadio.inputCliente(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    label='Repite la contraseña: '
+                    input.entradasNoRadio.inputCliente(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-localizacion`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='País: '
+                    input.entradasNoRadio.inputCliente(type='text' name='pais' placeholder='Introduce un país válido....')
+                    br
+                    br
+                    br
+                    label='Código Postal: '
+                    input.entradasNoRadio.inputCliente(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                    br
+                    br
+                    br
+                    label='Región: '
+                    input.entradasNoRadio.inputCliente(type='text' name='region' placeholder='Introduce una región válida....')
+                    br
+                    br
+                    br
+                    label='Población: '
+                    input.entradasNoRadio.inputCliente(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    br
+                    br
+                    br
+                    label='Dirección: '
+                    input.entradasNoRadio.inputCliente(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            div.column
+                h3='Mi Información: '
+                div.subcolumn2
                     if id
                         label='El identificador/ID de mi perfil: ' + id
                         br
@@ -108,8 +110,7 @@ block body
                         br
                     if password
                         label='Mi contraseña: '
-                        span(hidden)=password
-                        span='(oculta).'
+                        input(type='text' name='password' value=password readonly)
                         br
                         br
                     if direccion
@@ -130,15 +131,20 @@ block body
                         br
                     if cp
                         label='Código Postal de mi domicilio: ' + cp
-        div#perfilClienteAbajo
-            h3='Darse de baja de MAD Services: '
-            form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)
-                input(type='hidden' name='_method' value='DELETE')
-                label='¿Confirmas que quieres darte de baja de MAD Services?: '
-                br
-                label.ConfirmarBaja#siConfirmar='Sí'
-                input.ConfirmarBaja(name="siConfirmar" type="checkbox")
-                label.ConfirmarBaja='No'
-                input.ConfirmarBaja(name="noConfirmar" type="checkbox")
-                button#btnDarseBaja(type='submit')='Confirmo'
+        div.row
+            div.column
+            div.column
+                h3='Darse de baja de MAD Services: '
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    label='¿Confirmas que quieres darte de baja de MAD Services?: '
+                    br
+                    br
+                    select(name="dileAdios")
+                        option(checked)=''
+                        option='Sí'
+                        option='No' 
+                    button#btnBajaCliente(type='submit')='Confirmo'
+            div.column
+        br
     include ./componentes/piepagina.pug

@@ -268,27 +268,21 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
 }
 
 //-- Creamos la función para Dar de Baja al Miembro MAD de la base de datos de MAD Services.
-const darseBajaMiembrodb = (id, siConfirmo, noConfirmo, req, res) => {
+const darseBajaMiembrodb = (id, decideConfirmar, req, res) => {
     //-- Caso 1: dejar en blanco la confirmación.
-    if(!siConfirmo && !noConfirmo) {
+    if(!decideConfirmar) {
         //-- Mostrar Alerta Emergente.
         alerta('Debes confirmar si decides dejar MAD Services o te quedas');
         // Redirigir a la interfaz del Miembro MAD.
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
-    //-- Caso 2: pulsar ambas confirmaciones.
-    }else if(siConfirmo && noConfirmo) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Sólo puedes optar por una opción: te quedas o te vas');
-        // Redirigir a la interfaz del Miembro MAD.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
-    //-- Caso 3: pulsar que no quieres darte de baja.
-    }else if(!siConfirmo && noConfirmo) {
+    //-- Caso 2: pulsar que no quieres darte de baja.
+    }else if(decideConfirmar === 'No') {
         //-- Mostrar Alerta Emergente.
         alerta('¡Tómatelo como una renovación!');
         // Redirigir a la interfaz del Miembro MAD.
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
-    //-- Caso 4: pulsar que sí quieres darte de baja.
-    }else if(siConfirmo && !noConfirmo) {
+    //-- Caso 3: pulsar que sí quieres darte de baja.
+    }else if(decideConfirmar === 'Sí') {
         //-- Instrucción para dar de baja.
         let instruccionDarDeBajaMiembro = 'DELETE FROM miembros WHERE id = ?';
         //-- Configuración del formato de la instrucción dar de baja.
