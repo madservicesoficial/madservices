@@ -6,22 +6,26 @@ block title
 
 block body
     include ./componentes/cabecera.pug
-    div.seccionProductosMAD
-        div.cuadroProductosMAD#cuadroFiltro
-            h3#tituloBusquedaMedida='Búsqueda a medida:'
-            ul 
-                li.seccionFiltrado='Por tipo de empresa:'
-                li.seccionFiltrado='Por nombre de empresa:'
-                li.seccionFiltrado='Por producto o servicio:'
-                li.seccionFiltrado='Por nombre del producto:'
-                li.seccionFiltrado='Por precio del producto:'
-        div.cuadroProductosMAD#contenidoProductos
-            each campo in cartaProducto
-                div.cartaProductoMAD
-                    img(src=`data:image/*;base64,${campo.portada}`)
-                    h3=campo.titulo
-                    h3='Cantidad: ' + campo.cantidad
-                    h3='Precio: ' + campo.precio + '€'
-                    h3='Envío: ' + campo.peso + ' Kg'
-                    button='Añadir al carrito'
+    .interfazProductosMAD
+        br
+        header
+            img(src='/images/anuncio.png' alt='anuncio')
+        div.row
+            div.columnIzq
+                h3='Búsqueda a medida'
+                p='Por tipo de empresa:'
+                p='Por nombre de empresa:'
+                p='Por producto o servicio:'
+                p='Por nombre del producto:'
+                p='Por precio del producto:'
+            div.columnDer
+                each campo in cartaProducto
+                    form(method='POST' action=`/sesion-empresa/${id}/empieza/productosmadservices/add-to-cart`)
+                        div.tarjetaProductosMAD
+                            h3=campo.titulo
+                            img(src=`data:image/*;base64,${campo.portada}`)
+                            h3=campo.cantidad + ' unidades quedan'
+                            h3=campo.precio + '€'
+                            button(type='submit')='Añadir al carrito'
+        br
     include ./componentes/piepagina.pug

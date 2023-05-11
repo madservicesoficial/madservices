@@ -1016,65 +1016,61 @@ canvas {
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
 /*##################################################################################################*/
-.seccionProductosMAD {
+.interfazProductosMAD {
   width: 100%;
   min-height: 130vh;
   background-color: silver;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
-.cuadroProductosMAD {
-  display: inline-block;
-  margin: 70 0 0 0;
-  font-size: medium;
+.interfazProductosMAD header {
+  text-align: center;
+}
+.interfazProductosMAD header img {
+  width: 1500px;
+  height: 150px;
+  border-style: double;
+  border-radius: 7px;
+}
+.columnIzq {
+  margin-top: 15;
+  flex: 1;
+  border-radius: 7px;
+  border-style: groove;
+  background-color: white;
+}
+.columnIzq p {
+  margin-top: 25;
+  text-align: left;
+  margin-left: 30;
+}
+.columnDer {
+  margin-top: 15;
+  flex: 5;
+}
+.tarjetaProductosMAD {
+  float: left;
+  width: 280px;
+  height: 400px;
+  margin-left: 30;
+  transform: perspective(1000px) rotateX(12deg);
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   text-align: center;
+  background-color: black;
+  color: white;
   place-items: center;
-  height: 800;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-radius: 20px;
-  border-color: goldenrod;
-  padding: 40px;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
-#cuadroFiltro {
+.tarjetaProductosMAD img {
+  height: 180px;
+  transform: perspective(1000px) rotateX(15deg);
+}
+.tarjetaProductosMAD button {
   background-color: white;
-  width: 300;
-  margin-left: -100;
-}
-#contenidoProductos {
-  background-color: black;
-  width: 1000;
-  margin-left: 100;
-}
-#tituloBusquedaMedida {
-  margin-bottom: 40;
-}
-.seccionFiltrado {
-  text-align: left;
-  position: relative;
-  right: 50;
-  width: 280;
-}
-.cartaProductoMAD {
-  border: 5px solid orange;
-  background-color: silver;
-  width: 275px;
-  height: 580px;
-	text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  float: left;
-  margin: 10px;
-}
-.cartaProductoMAD button {
-	background-color: orange;
-	color: black;
-  width: 160px;
-  height: 40px;
-	border: none;
-	border-radius: 5px;
+  color: black;
+  width: 150px;
 }

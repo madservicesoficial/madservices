@@ -326,7 +326,7 @@ const ingresarProductosMADdb = async (id, data, res) => {
         //-- Ruta del fichero redimensionado metido localmente.
         let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
         //-- Redimensión de la imagen de portada y almacenamiento localmente.
-        await sharp(rutaAlArchivo).resize(200).toFile(nuevaRuta);
+        await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
         //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
         let imagenBuffer = await readFile(nuevaRuta);
         //-- Almacenamiento de imagen de buffer en base64.
