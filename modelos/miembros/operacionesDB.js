@@ -348,6 +348,51 @@ const ingresarProductosMADdb = async (id, data, res) => {
     }
 }
 
+//-- Creamos la función para actualizar los productos MAD en la base de datos de MAD Services.
+const actualizarProductoMADdb = (id, data, res) => {
+    //-- Declaración de ctes.
+    const LONG_TITULO = 98;
+    const LONG_DESCRIPCION = 998;
+    const CANTIDAD_MIN = 1;
+    const COSTE_NULO = 1.0;
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [data.enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${data.enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            if(data.titulo.length > LONG_TITULO) {
+                //-- Mostrar Alerta Emergente.
+                alerta(`El título no puede tener más de ${LONG_TITULO} caracteres`);
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }else if(data.descripcion.length > LONG_DESCRIPCION) {
+                //-- Mostrar Alerta Emergente.
+                alerta(`La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`);
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }else if(data.cantidad < CANTIDAD_MIN) {
+                //-- Mostrar Alerta Emergente.
+                alerta(`No tiene sentido la cantidad ${data.cantidad}`);
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }else if(data.precio < COSTE_NULO) {
+                //-- Mostrar Alerta Emergente.
+                alerta(`No puedes vender por debajo de ${COSTE_NULO}€`);
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }else {
+                
+            }
+        }
+    });
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarMiembroVerificadodb,
@@ -358,5 +403,6 @@ module.exports = {
     actualizarEmailVerificadodb,
     actualizarPasswordVerificadadb,
     darseBajaMiembrodb,
-    ingresarProductosMADdb
+    ingresarProductosMADdb,
+    actualizarProductoMADdb
 };

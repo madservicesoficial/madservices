@@ -20,7 +20,8 @@ block body
                 p='Por precio del producto:'
             div.columnDer
                 each campo in cartaProducto
-                    form(method='POST' action=`/sesion-empresa/${id}/empieza/productosmadservices/add-to-cart`)
+                    form(method='POST' action=`/sesion-empresa/${id}/empieza/productosmadservices/borrar-producto`)
+                        input(type='hidden' name='_method' value='DELETE')
                         div.tarjetaProductosMAD
                             h3=campo.titulo
                             img(src=`data:image/*;base64,${campo.portada}`)
@@ -29,6 +30,7 @@ block body
                             else 
                                 h3=campo.cantidad + ' unidades quedan'
                             h3=campo.precio + '€'
-                            button(type='submit')='Añadir al carrito'
+                            button#btnBorrarProductoMAD(type='submit')
+                                i.fa-solid.fa-eraser.fa-2xl#iconoBorrarProductoMAD
         br
     include ./componentes/piepagina.pug

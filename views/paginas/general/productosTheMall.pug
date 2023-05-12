@@ -1,0 +1,29 @@
+//-- Contenido de la Sección Productos Multimarca del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title='El Centro Comercial MAD'
+
+block body
+    include ./componentes/cabecera.pug
+    .interfazProductosMAD
+        br
+        header
+            img(src='/images/anuncio.png' alt='anuncio')
+        div.row
+            div.columnIzq
+                h3='Búsqueda a medida'
+                p='Por tipo de empresa:'
+                p='Por nombre de empresa:'
+                p='Por producto o servicio:'
+                p='Por nombre del producto:'
+                p='Por precio del producto:'
+            div.columnDer
+                div.tarjetaProductosMAD
+                    h3='Producto o Servicio en venta'
+                    img.imagenEjemploMall(src='https://www.google.es/imgres?imgurl=https%3A%2F%2Fgcomercial.com%2Fwp-content%2Fuploads%2F2015%2F06%2Fgcomercial_productoservicios-2.jpg&tbnid=Y0p-M-3WxiA3jM&vet=12ahUKEwi4laHzre_-AhU3pycCHRsaA20QMygBegUIARDHAQ..i&imgrefurl=https%3A%2F%2Fgcomercial.com%2Fno-es-lo-mismo-vender-un-servicio-que-un-producto%2F&docid=OmoYUdaTs0ZG7M&w=3000&h=3000&q=producto%20o%20servicio%20en%20venta&hl=es&authuser=0&ved=2ahUKEwi4laHzre_-AhU3pycCHRsaA20QMygBegUIARDHAQ' alt='imagenEnVenta')
+                    h3='Cantidad de unidades que quedan por vender'
+                    h3='Precio del producto o servicio'
+                    button(type='submit')='Añadir al carrito'
+        br
+    include ./componentes/piepagina.pug

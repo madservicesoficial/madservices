@@ -1,33 +1,23 @@
-//-- Importamos la versión 2 de la Tecnología MySQL, que tiene mejores características y más rango de actuación,
-//-- para conectarnos a la base de datos de MAD Services.
-const mysql = require('mysql2');
-//-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesAdmindb} = require('../../config/database.js');
+//-- Importamos las funciones que muestran otros campos de la interfaz del Miembro MAD.
+const mostrarEmaildb = require('./mostrarEmail.js');
+const mostrarPassworddb = require('./mostrarPassword.js');
+const mostrarElMiembrodb = require('./mostrarMiembro.js');
+const mostrarDepartamentodb = require('./mostrarDepartamento.js');
+const mostrarGenerodb = require('./mostrarGenero.js');
+const mostrarDatosdb = require('./mostrarDatos.js');
 
 //-- Creamos la función que saca parámetros de la base de datos de los Miembros MAD.
-const mostrarMiembrodb = (req, res) => {
+const mostrarMiembrodb = async (req, res) => {
 
     //-- Leemos el ID del Miembro MAD en ese momento.
     let id = req.params.id;
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM miembros WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, id);
-    //-- Establecer la comunicación de consultar ID en la base de datos.
-    madservicesAdmindb.query(formatoInstruccionID, (error, result) => {
-        if(error) throw error;
-        const tablaMiembro = result[0];
-        res.render('paginas/miembros/interfaz', 
-        {
-            id: id,
-            email: tablaMiembro.email,
-            password: tablaMiembro.password,
-            miembro: tablaMiembro.miembro,
-            departamento: tablaMiembro.departamento,
-            genero: tablaMiembro.genero
-        });
-        return res.end();
-    });
+    //-- Leemos toda la información a sacar de la interfaz del Mimebro MAD.
+    const email = await mostrarEmaildb(id);
+    const password = await mostrarPassworddb(id);
+    const miembro = await mostrarElMiembrodb(id);
+    const departamento = await mostrarDepartamentodb(id);
+    const genero = await mostrarGenerodb(id);
+    mostrarDatosdb(id, email, password, miembro, departamento, genero, res);
 }
 
 //-- Exportamos las funciones.

@@ -21,6 +21,8 @@ const actualizarDepartamento = require('../controladores/miembros/actualizarDepa
 const actualizarGenero = require('../controladores/miembros/actualizarGenero.js');
 const actualizarEmail = require('../controladores/miembros/actualizarEmail.js');
 const actualizarPassword = require('../controladores/miembros/actualizarPassword.js');
+//-- Importamos la configuración del formulario de actualización de los productos MAD.
+const actualizarProductoMAD = require('../controladores/miembros/actualizarProductoMAD.js');
 
 //-- Formulario de actualización de datos del Perfil Cliente.
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-nombre', actualizarNombre);
@@ -41,6 +43,8 @@ rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-departamento', actualiz
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-genero', actualizarGenero);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-email', actualizarEmail);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-password', actualizarPassword);
+//-- Formulario de actualización de productos MAD.
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-producto', actualizarProductoMAD);
 
 //-- Exportamos las rutas con método PATCH.
 module.exports = rutasPatch;

@@ -20,7 +20,7 @@ block body
                 p='Por precio del producto:'
             div.columnDer
                 each campo in cartaProducto
-                    form(method='POST' action=`/sesion-empresa/${id}/empieza/productosmadservices/add-to-cart`)
+                    form(method='GET' action='/registrarse/cliente')
                         div.tarjetaProductosMAD
                             h3=campo.titulo
                             img(src=`data:image/*;base64,${campo.portada}`)

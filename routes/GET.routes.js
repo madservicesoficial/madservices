@@ -12,10 +12,16 @@ const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
 const mostrarProductosMAD = require('../modelos/general/mostrarProductosMAD.js');
 //-- Importamos la función que muestra los productos MAD desde el cliente.
 const mostrarProductosMADclientes = require('../modelos/clientes/mostrarProductosMAD.js');
-//-- Importamos la función que muestra los productos MAD desde la empresa.
-const mostrarProductosMADempresas = require('../modelos/empresas/mostrarProductosMAD.js');
 //-- Importamos la función que muestra los productos MAD desde un miembro MAD.
 const mostrarProductosMADmiembros = require('../modelos/miembros/mostrarProductosMAD.js');
+//-- Importamos la función que muestra los productos Multimarca o The Mall.
+const mostrarProductosTheMall = require('../modelos/general/mostrarProductosTheMall.js');
+//-- Importamos la función que muestra los productos Multimarca o The Mall desde el cliente.
+const mostrarProductosTheMallCliente = require('../modelos/clientes/mostrarProductosTheMallCliente.js');
+//-- Importamos la función que muestra los productos Multimarca o The Mall desde la empresa.
+const mostrarProductosTheMallEmpresa = require('../modelos/empresas/mostrarProductosTheMallEmpresa.js');
+//-- Importamos la función que muestra los productos Multimarca o The Mall desde un miembro MAD.
+const mostrarProductosTheMallMiembroMAD = require('../modelos/miembros/mostrarProductosTheMallMiembroMAD.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -199,11 +205,7 @@ rutasGet.get('/sesion-cliente/:id/empieza', (req,res) => {
 });
 
 //-- Ruta a la Sección de Entrada MAD Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id/empieza', (req,res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/entradaMAD', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-empresa/:id/empieza', mostrarProductosTheMallEmpresa);
 
 //-- Ruta a la Sección de Entrada MAD Autenticado del Miembro MAD de MAD Services.
 rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => {
@@ -227,11 +229,17 @@ rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
 rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
 
-//-- Ruta a la Sección de los Productos MAD a través de la sesión del empresa.
-rutasGet.get('/sesion-empresa/:id/empieza/productosmadservices', mostrarProductosMADempresas);
-
 //-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
 rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros);
+
+//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Cliente.
+rutasGet.get('/empieza/themall', mostrarProductosTheMall);
+
+//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Cliente.
+rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallCliente);
+
+//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Miembro MAD.
+rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiembroMAD);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {
