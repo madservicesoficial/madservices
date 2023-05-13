@@ -596,22 +596,38 @@ const borrarProductoMADdb = (ptoPartida) => {
     madservicesAdmindb.query(formatoInstruccionBorrarProductoMAD);
 }
 
-const reordenarProductosMADdb = () => {
+//-- Creamos la función para consultar la enumeración del producto MAD de la base de datos de MAD Services.
+const consultarEnumeraciondb = (i) => {
+
     //-- Consultamos los productos MAD en la base de datos.
     let instruccionConsultarProductoMAD = 'SELECT * FROM productos WHERE enumeracion = ?';
     let formatoInstruccionConsultarProductoMAD = mysql.format(instruccionConsultarProductoMAD, [i]);
-    madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, results) => {
-        if(error) throw error;
-        if(results.length === 0) {
-            const contador = ptoPartida - 1;
-        }else {
-            const insertar = i - 1;
-            //-- Cambiamos la enumeración a la anterior.
-            let instruccionCambioEnumeracion = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
-            let formatoInstruccionCambioEnumeracion = mysql.format(instruccionCambioEnumeracion, [insertar, i]);
-            madservicesAdmindb.query(formatoInstruccionCambioEnumeracion);
-        }
+    //-- Establecer la comunicación para sacarlo como variable.
+    return new Promise((resolve) => {
+        madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, results) => {
+            if(error) throw error;
+            let haySiguiente = results.length;
+            resolve(haySiguiente);
+        });
     });
+}
+
+//-- Creamos la función para actualizar la enumeración del producto MAD de la base de datos de MAD Services.
+const actualizarEnumeraciondb = (insertar, i) => {
+    
+    //-- Proceso de actualización de la enumeración del producto.
+    let instruccionCambioEnumeracion = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
+    let formatoInstruccionCambioEnumeracion = mysql.format(instruccionCambioEnumeracion, [insertar, i]);
+    madservicesAdmindb.query(formatoInstruccionCambioEnumeracion);
+}
+
+//-- Creamos la función para salir y acabar el proceso de borrado del producto MAD de la base de datos de MAD Services.
+const salidaProductoBorrado = (id, res) => {
+
+    //-- Mostrar Alerta Emergente.
+    alerta('Producto MAD borrado');
+    // Redirigir a la página de los Productos MAD.
+    return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
 }
 
 //-- Exportamos las funciones.
@@ -632,5 +648,8 @@ module.exports = {
     actualizarTitulodb,
     actualizarImagendb,
     actualizarPesodb,
-    borrarProductoMADdb
+    borrarProductoMADdb,
+    consultarEnumeraciondb,
+    actualizarEnumeraciondb,
+    salidaProductoBorrado
 };
