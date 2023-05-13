@@ -13,6 +13,8 @@ block body
                 img(src='/images/encabezadoPeluq.png' alt='encabezadoPeluq')
             else if tipo === 'RESTAURANTE'
                 img(src='/images/encabezadoRestaurante.jpg' alt='encabezadoRestaurante')
+            else if tipo === 'VENTAS'
+                img(src='/images/encabezadoVentas.png' alt='encabezadoVentas')
             h1=`${tipo} ${marca}:`
         div.row
             div.column
@@ -81,6 +83,7 @@ block body
                             option(checked)=''
                             option='RESTAURANTE'
                             option='PELUQUERIA'
+                            option='VENTAS'
                     button(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)
@@ -172,11 +175,73 @@ block body
         div.row
             div.column
             div.column
-                h3=`Plano ${tipo}: `
                 if tipo === 'PELUQUERIA'
+                    h3=`Plano ${tipo}: `
                     img.imgPlano(src='/images/planoPeluqueria.jpg' alt='planoPeluqueria')
                 else if tipo === 'RESTAURANTE'
+                    h3=`Plano ${tipo}: `
                     img.imgPlano(src='/images/planoRestaurante.jpg' alt='planoRestaurante')
+                else if tipo === 'VENTAS'
+                    h3='Ingreso de producto para su venta: '
+                    form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
+                        label='Imagen de portada: '
+                        input.inputMiembroMAD(type='file' name='portada' accept="image/*")
+                        br
+                        br
+                        label='Cantidad: '
+                        input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
+                        br
+                        br
+                        label='Tipo de producto:'
+                        select(name="categoria")='Categorias'
+                            option(checked)=''
+                            optgroup(label='Libros')
+                                option='Libros infantiles' 
+                                option='Libros juveniles'
+                                option='Libros de historia'
+                                option='Libros de naturaleza'
+                                option='Libros de economía'
+                                option='Libros escolares'
+                                option='Libros de misterio'
+                            optgroup(label='Juegos')
+                                option='Juegos de mesa'
+                                option='Juegos de calle'
+                                option='Videojuegos'    
+                            optgroup(label='Electrónica e Informática')
+                                option='Consolas'
+                                option='Altavoces'
+                                option='Ratones'
+                                option='Teclados'
+                                option='PCs'
+                                option='MACs'
+                                option='Portátiles'
+                                option='MacBooks'
+                        br
+                        br
+                        label='Título:'
+                        input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
+                        br
+                        br
+                        label='Precio:'
+                        input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
+                        span#euros='€'
+                        br
+                        br
+                        label='Peso (para el envío):'
+                        select(name="peso")
+                            option(checked)=''
+                            option='Hasta 2'
+                            option='Hasta 5'
+                            option='Hasta 7'
+                            option='Hasta 10'
+                            option='Hasta 15'
+                            option='> 15'
+                        span#euros='Kg'
+                        br
+                        br
+                        label='Descripción:'
+                        textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
+                        button#btnIngresarProductoMAD(type='submit')='Ingresar'
             div.column
         br
     include ./componentes/piepagina.pug

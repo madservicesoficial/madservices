@@ -6,13 +6,17 @@ var rutasDelete = servidor.Router();
 const darseBajaCliente = require('../controladores/clientes/darseBaja.js');
 const darseBajaEmpresa = require('../controladores/empresas/darseBaja.js');
 const darseBajaMiembro = require('../controladores/miembros/darseBaja.js');
+//-- Importamos la configuración para borrar el producto MAD.
+const borrarProductoMAD = require('../controladores/miembros/borrarProductoMAD.js');
 
-//---- Darse de baja de Clientes MAD Services.
+//-- Darse de baja de Clientes MAD Services.
 rutasDelete.post('/sesion-cliente/:id/perfil/darse-baja', darseBajaCliente);
-//---- Darse de baja de Empresas MAD Services.
+//-- Darse de baja de Empresas MAD Services.
 rutasDelete.post('/sesion-empresa/:id/interfaz/darse-baja', darseBajaEmpresa);
-//---- Darse de baja de Miembros MAD.
+//-- Darse de baja de Miembros MAD.
 rutasDelete.post('/sesion-miembro/:id/interfaz/darse-baja', darseBajaMiembro);
+//-- Borrar producto MAD.
+rutasDelete.post('/sesion-empresa/:id/empieza/productosmadservices/borrar-producto', borrarProductoMAD);
 
 //-- Exportamos las rutas con método DELETE.
 module.exports = rutasDelete;

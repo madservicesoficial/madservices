@@ -30,7 +30,7 @@ block body
                             else 
                                 h3=campo.cantidad + ' unidades quedan'
                             h3=campo.precio + '€'
-                            button#btnBorrarProductoMAD(type='submit')
+                            button#btnBorrarProductoMAD(type='submit' name='enumeracion' value=campo.enumeracion)
                                 i.fa-solid.fa-eraser.fa-2xl#iconoBorrarProductoMAD
         br
     include ./componentes/piepagina.pug

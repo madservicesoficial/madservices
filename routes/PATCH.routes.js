@@ -2,6 +2,8 @@
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasPatch = servidor.Router();
+//-- Importamos la Tecnología para almacenar las imágenes introducidas.
+const multer = require('multer');
 //-- Importamos la configuración de los formularios de actualización de los Clientes.
 const actualizarNombre = require('../controladores/clientes/actualizarNombre.js');
 const actualizarApellidos = require('../controladores/clientes/actualizarApellidos.js');
@@ -22,7 +24,13 @@ const actualizarGenero = require('../controladores/miembros/actualizarGenero.js'
 const actualizarEmail = require('../controladores/miembros/actualizarEmail.js');
 const actualizarPassword = require('../controladores/miembros/actualizarPassword.js');
 //-- Importamos la configuración del formulario de actualización de los productos MAD.
-const actualizarProductoMAD = require('../controladores/miembros/actualizarProductoMAD.js');
+const actualizarImagen = require('../controladores/miembros/actualizarImagen.js');
+const actualizarCantidad = require('../controladores/miembros/actualizarCantidad.js');
+const actualizarCategoria = require('../controladores/miembros/actualizarCategoria.js');
+const actualizarTitulo = require('../controladores/miembros/actualizarTitulo.js');
+const actualizarPrecio = require('../controladores/miembros/actualizarPrecio.js');
+const actualizarPeso = require('../controladores/miembros/actualizarPeso.js');
+const actualizarDescripcion = require('../controladores/miembros/actualizarDescripcion.js');
 
 //-- Formulario de actualización de datos del Perfil Cliente.
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-nombre', actualizarNombre);
@@ -44,7 +52,23 @@ rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-genero', actualizarGene
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-email', actualizarEmail);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-password', actualizarPassword);
 //-- Formulario de actualización de productos MAD.
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-producto', actualizarProductoMAD);
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, './imagenes');
+    },
+    filename: (req, file, callback) => {
+        const extension = file.originalname.split('.').pop();
+        callback(null, `${Date.now()}.${extension}`);
+    }
+});
+const upload = multer({ storage: storage });
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-imagen', upload.single('portada'), actualizarImagen);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-cantidad', actualizarCantidad);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-categoria', actualizarCategoria);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-titulo', actualizarTitulo);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-precio', actualizarPrecio);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-peso', actualizarPeso);
+rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-descripcion', actualizarDescripcion);
 
 //-- Exportamos las rutas con método PATCH.
 module.exports = rutasPatch;

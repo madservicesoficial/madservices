@@ -939,6 +939,10 @@ canvas {
 }
 .inputMiembroMAD {
   background-color: silver;
+  width: 275;
+}
+.interfazMiembroMAD textarea {
+  background-color: silver;
 }
 #btnBajaMiembroMAD {
   background-color: black;

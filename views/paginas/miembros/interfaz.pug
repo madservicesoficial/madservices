@@ -30,7 +30,7 @@ block body
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-miembro`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Miembro: '
-                    input.camposRegistro.inputMiembroMAD(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
+                    input.camposRegistro.inputMiembroMAD(type='text' name='miembro' placeholder='Introduce el nombre del Miembro MAD....')
                     button(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-departamento`)
@@ -182,23 +182,38 @@ block body
                     br
                     br
                     label='Descripción:'
-                    textarea.inputMiembroMAD(rows="20" cols="100" name='descripcion' placeholder='Describe el producto....')
+                    textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
                     button#btnIngresarProductoMAD(type='submit')='Ingresar'
             div.column
         div.row
             div.column
-                h3='Actualización del producto: '
-                    span
-                        input(type="number" name='enumeracion')
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-producto` enctype="multipart/form-data")
+                h3='Actualización del producto para su venta: '
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-imagen` enctype="multipart/form-data")
                     input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
+                    br
                     label='Imagen de portada: '
                     input.inputMiembroMAD(type='file' name='portada' accept="image/*")
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-cantidad`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Cantidad: '
                     input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-categoria`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Tipo de producto:'
                     select(name="categoria")='Categorias'
@@ -224,16 +239,37 @@ block body
                             option='MACs'
                             option='Portátiles'
                             option='MacBooks'
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-titulo`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Título:'
                     input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-precio`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Precio:'
                     input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
                     span#euros='€'
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-peso`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Peso (para el envío):'
                     select(name="peso")
@@ -245,11 +281,19 @@ block body
                         option='Hasta 15'
                         option='> 15'
                     span#euros='Kg'
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
                     br
+                    br
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-descripcion`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    label='Enumeración: '
+                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
                     br
                     label='Descripción:'
-                    textarea.inputMiembroMAD(rows="20" cols="100" name='descripcion' placeholder='Describe el producto....')
-                    button#btnIngresarProductoMAD(type='submit')='Actualizar'
+                    textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
             div.column
                 h3='Productos MAD en base de datos: '
                 each producto in todosProductosInterfaz

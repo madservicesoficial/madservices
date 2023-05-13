@@ -348,47 +348,268 @@ const ingresarProductosMADdb = async (id, data, res) => {
     }
 }
 
-//-- Creamos la función para actualizar los productos MAD en la base de datos de MAD Services.
-const actualizarProductoMADdb = (id, data, res) => {
+//-- Creamos la función para actualizar la cantidad del producto MAD en la base de datos de MAD Services.
+const actualizarCantidaddb = (id, enumeracion, cantidad, res) => {
     //-- Declaración de ctes.
-    const LONG_TITULO = 98;
-    const LONG_DESCRIPCION = 998;
     const CANTIDAD_MIN = 1;
-    const COSTE_NULO = 1.0;
     //-- Consultamos la enumeración del producto en la base de datos.
     let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
-    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [data.enumeracion]);
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
     madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
-            alerta(`No hay producto con la enumeración de ${data.enumeracion}`);
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
             // Redirigir a la página principal de la aplicación.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
         }else {
-            if(data.titulo.length > LONG_TITULO) {
+            if(cantidad < CANTIDAD_MIN) {
                 //-- Mostrar Alerta Emergente.
-                alerta(`El título no puede tener más de ${LONG_TITULO} caracteres`);
+                alerta(`No tiene sentido la cantidad ${cantidad}`);
                 // Redirigir a la página principal de la aplicación.
                 return res.redirect(`/sesion-miembro/${id}/interfaz`);
-            }else if(data.descripcion.length > LONG_DESCRIPCION) {
+            }else {
+                //-- Actualizamos la cantidad del producto MAD en base de datos.
+                let instruccionActualizarCantidad = 'UPDATE productos SET cantidad = ? WHERE enumeracion = ?';
+                let formatoInstruccionActualizarCantidad = mysql.format(instruccionActualizarCantidad, [cantidad, enumeracion]);
+                madservicesAdmindb.query(formatoInstruccionActualizarCantidad);
+                //-- Mostrar Alerta Emergente.
+                alerta('Cantidad actualizada con éxito');
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }
+        }
+    });
+}
+
+//-- Creamos la función para actualizar las categorias del producto MAD en la base de datos de MAD Services.
+const actualizarCategoriadb = (id, enumeracion, categoria, res) => {
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Actualizamos las categorias del producto MAD en base de datos.
+            let instruccionActualizarCategoria = 'UPDATE productos SET producto = ? WHERE enumeracion = ?';
+            let formatoInstruccionActualizarCategoria = mysql.format(instruccionActualizarCategoria, [categoria, enumeracion]);
+            madservicesAdmindb.query(formatoInstruccionActualizarCategoria);
+            //-- Mostrar Alerta Emergente.
+            alerta('Categoria actualizada con éxito');
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }
+    });
+}
+
+//-- Creamos la función para actualizar la descripción del producto MAD en la base de datos de MAD Services.
+const actualizarDescripciondb = (id, enumeracion, descripcion, res) => {
+    //-- Declaración de ctes.
+    const LONG_DESCRIPCION = 998;
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            if(descripcion.length > LONG_DESCRIPCION) {
                 //-- Mostrar Alerta Emergente.
                 alerta(`La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`);
                 // Redirigir a la página principal de la aplicación.
                 return res.redirect(`/sesion-miembro/${id}/interfaz`);
-            }else if(data.cantidad < CANTIDAD_MIN) {
+            }else {
+                //-- Actualizamos las categorias del producto MAD en base de datos.
+                let instruccionActualizarDescripcion = 'UPDATE productos SET descripcion = ? WHERE enumeracion = ?';
+                let formatoInstruccionActualizarDescripcion = mysql.format(instruccionActualizarDescripcion, [descripcion, enumeracion]);
+                madservicesAdmindb.query(formatoInstruccionActualizarDescripcion);
                 //-- Mostrar Alerta Emergente.
-                alerta(`No tiene sentido la cantidad ${data.cantidad}`);
+                alerta('Descripción actualizada con éxito');
                 // Redirigir a la página principal de la aplicación.
                 return res.redirect(`/sesion-miembro/${id}/interfaz`);
-            }else if(data.precio < COSTE_NULO) {
+            }
+        }
+    });
+}
+
+//-- Creamos la función para actualizar el precio del producto MAD en la base de datos de MAD Services.
+const actualizarPreciodb = (id, enumeracion, precio, res) => {
+    //-- Declaración de ctes.
+    const COSTE_NULO = 1.0;
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            if(precio < COSTE_NULO) {
                 //-- Mostrar Alerta Emergente.
                 alerta(`No puedes vender por debajo de ${COSTE_NULO}€`);
                 // Redirigir a la página principal de la aplicación.
                 return res.redirect(`/sesion-miembro/${id}/interfaz`);
             }else {
-                
+                //-- Actualizamos el precio del producto MAD en base de datos.
+                let instruccionActualizarPrecio = 'UPDATE productos SET precio = ? WHERE enumeracion = ?';
+                let formatoInstruccionActualizarPrecio = mysql.format(instruccionActualizarPrecio, [precio, enumeracion]);
+                madservicesAdmindb.query(formatoInstruccionActualizarPrecio);
+                //-- Mostrar Alerta Emergente.
+                alerta('Precio actualizado con éxito');
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
             }
+        }
+    });
+}
+
+//-- Creamos la función para actualizar el título del producto MAD en la base de datos de MAD Services.
+const actualizarTitulodb = (id, enumeracion, titulo, res) => {
+    //-- Declaración de ctes.
+    const LONG_TITULO = 98;
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            if(titulo.length > LONG_TITULO) {
+                //-- Mostrar Alerta Emergente.
+                alerta(`El título no puede tener más de ${LONG_TITULO} caracteres`);
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }else {
+                //-- Actualizamos el título del producto MAD en base de datos.
+                let instruccionActualizarTitulo = 'UPDATE productos SET titulo = ? WHERE enumeracion = ?';
+                let formatoInstruccionActualizarTitulo = mysql.format(instruccionActualizarTitulo, [titulo, enumeracion]);
+                madservicesAdmindb.query(formatoInstruccionActualizarTitulo);
+                //-- Mostrar Alerta Emergente.
+                alerta('Título actualizado con éxito');
+                // Redirigir a la página principal de la aplicación.
+                return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            }
+        }
+    });
+}
+
+//-- Creamos la función para actualizar la imagen de portada del producto MAD en la base de datos de MAD Services.
+const actualizarImagendb = (id, enumeracion, res) => {
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, async (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Ruta al directorio de las imágenes almacenadas localmente.
+            const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+            //-- Fichero asíncrono leer directorio.
+            const readdir = util.promisify(fs.readdir);
+            //-- Fichero asíncrono leer fichero.
+            const readFile = util.promisify(fs.readFile);
+            //-- Fichero asíncrono borrar fichero.
+            const unlink = util.promisify(fs.unlink);
+            //-- Procedimiento para subir la imagen de portada y el resto de campos del producto a la base de datos.
+
+            //-- Ruta donde está el archivo metido localmente.
+            const files = await readdir(rutaAlDirectorio);
+            const file = files[0];
+            //-- Ruta del fichero completa metido localmente.
+            let rutaAlArchivo = path.join(rutaAlDirectorio, file);
+            //-- Ruta del fichero redimensionado metido localmente.
+            let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
+            //-- Redimensión de la imagen de portada y almacenamiento localmente.
+            await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
+            //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
+            let imagenBuffer = await readFile(nuevaRuta);
+            //-- Almacenamiento de imagen de buffer en base64.
+            let imagen = imagenBuffer.toString('base64');
+            //-- Actualizamos la imagen de portada del producto MAD en base de datos.
+            let instruccionActualizarTitulo = 'UPDATE productos SET portada = ? WHERE enumeracion = ?';
+            let formatoInstruccionActualizarTitulo = mysql.format(instruccionActualizarTitulo, [imagen, enumeracion]);
+            madservicesAdmindb.query(formatoInstruccionActualizarTitulo);
+            //-- Eliminación de las imágenes locales.
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+            await unlink(eliminarArchivo);
+            await unlink(eliminarArchivoEdit);
+            //-- Mostrar Alerta Emergente.
+            alerta('Imagen actualizada con éxito');
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }
+    });
+}
+
+//-- Creamos la función para actualizar el peso del producto MAD en la base de datos de MAD Services.
+const actualizarPesodb = (id, enumeracion, peso, res) => {
+    //-- Consultamos la enumeración del producto en la base de datos.
+    let instruccionConsultaEnumeracion = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultaEnumeracion = mysql.format(instruccionConsultaEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta(`No hay producto con la enumeración de ${enumeracion}`);
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Actualizamos el peso del producto MAD en base de datos.
+            let instruccionActualizarPeso = 'UPDATE productos SET peso = ? WHERE enumeracion = ?';
+            let formatoInstruccionActualizarPeso = mysql.format(instruccionActualizarPeso, [peso, enumeracion]);
+            madservicesAdmindb.query(formatoInstruccionActualizarPeso);
+            //-- Mostrar Alerta Emergente.
+            alerta('Peso actualizado con éxito');
+            // Redirigir a la página principal de la aplicación.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }
+    });
+}
+
+//-- Creamos la función para borrar el producto MAD de la base de datos de MAD Services.
+const borrarProductoMADdb = (ptoPartida) => {
+
+    //-- Borramos el producto MAD de la base de datos.
+    let instruccionBorrarProductoMAD = 'DELETE FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionBorrarProductoMAD = mysql.format(instruccionBorrarProductoMAD, [ptoPartida]);
+    madservicesAdmindb.query(formatoInstruccionBorrarProductoMAD);
+}
+
+const reordenarProductosMADdb = () => {
+    //-- Consultamos los productos MAD en la base de datos.
+    let instruccionConsultarProductoMAD = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultarProductoMAD = mysql.format(instruccionConsultarProductoMAD, [i]);
+    madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            const contador = ptoPartida - 1;
+        }else {
+            const insertar = i - 1;
+            //-- Cambiamos la enumeración a la anterior.
+            let instruccionCambioEnumeracion = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
+            let formatoInstruccionCambioEnumeracion = mysql.format(instruccionCambioEnumeracion, [insertar, i]);
+            madservicesAdmindb.query(formatoInstruccionCambioEnumeracion);
         }
     });
 }
@@ -404,5 +625,12 @@ module.exports = {
     actualizarPasswordVerificadadb,
     darseBajaMiembrodb,
     ingresarProductosMADdb,
-    actualizarProductoMADdb
+    actualizarCantidaddb,
+    actualizarCategoriadb,
+    actualizarDescripciondb,
+    actualizarPreciodb,
+    actualizarTitulodb,
+    actualizarImagendb,
+    actualizarPesodb,
+    borrarProductoMADdb
 };
