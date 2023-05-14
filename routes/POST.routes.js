@@ -22,8 +22,6 @@ const autorizacionInicioSesionMiembros = require('../controladores/miembros/auto
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
 const multer = require('multer');
-//-- Importamos la función para ingresar al carrito de la compra.
-const ingresoCarrito = require('../modelos/miembros/ingresoCarrito.js');
 //-- Importamos la función para el ingreso de sitios de la interfaz de la Empresa.
 const ingresoDescripcionEmpresa = require('../controladores/empresas/ingresoDescripcionEmpresa.js');
 const ingresoWhatsAppEmpresa = require('../controladores/empresas/ingresoWhatsAppEmpresa.js');
@@ -38,8 +36,16 @@ const borrarTwitterEmpresa = require('../controladores/empresas/borrarTwitterEmp
 const borrarPagWebEmpresa = require('../controladores/empresas/borrarPagWebEmpresa.js');
 //-- Importamos las funciones de la configuración del filtro de búsqueda.
 const busquedaPorTitulo = require('../controladores/general/busquedaPorTitulo.js');
+const busquedaPorTituloEnCliente = require('../controladores/clientes/busquedaPorTituloEnCliente.js');
+const busquedaPorTituloEnMiembro = require('../controladores/miembros/busquedaPorTituloEnMiembro.js');
 const busquedaPorCategoria = require('../controladores/general/busquedaPorCategoria.js');
+const busquedaPorCategoriaEnCliente = require('../controladores/clientes/busquedaPorCategoriaEnCliente.js');
+const busquedaPorCategoriaEnMiembro = require('../controladores/miembros/busquedaPorCategoriaEnMiembro.js');
 const busquedaPorPrecio = require('../controladores/general/busquedaPorPrecio.js');
+const busquedaPorPrecioEnCliente = require('../controladores/clientes/busquedaPorPrecioEnCliente.js');
+const busquedaPorPrecioEnMiembro = require('../controladores/miembros/busquedaPorPrecioEnMiembro.js');
+//-- Importamos la función para ingresar al carrito de la compra.
+const ingresoCarrito = require('../controladores/clientes/ingresoCarrito.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -77,8 +83,6 @@ rutasPost.post('/sesion-cliente/:id/empleo');
 rutasPost.post('/sesion-empresa/:id/empleo');
 //-- Formulario de envío de datos del CV para miembros MAD.
 rutasPost.post('/sesion-miembro/:id/empleo');
-//-- Formulario para añadir artículos al carrito de la compra.
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/add-to-cart', ingresoCarrito);
 //-- Formulario ingresar en interfaz de empresa.
 rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
@@ -93,10 +97,18 @@ rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-Twitter', borrarTwitterE
 rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-PagWeb', borrarPagWebEmpresa);
 //-- Formulario que hace búsqueda del producto MAD por título.
 rutasPost.post('/empieza/productosmadservices/busqueda-titulo', busquedaPorTitulo);
+rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnCliente);
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnMiembro);
 //-- Formulario que hace búsqueda del producto MAD por tipo de producto.
 rutasPost.post('/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoria);
+rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoriaEnCliente);
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoriaEnMiembro);
 //-- Formulario que hace búsqueda del producto MAD por precio.
 rutasPost.post('/empieza/productosmadservices/busqueda-precio', busquedaPorPrecio);
+rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnCliente);
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnMiembro);
+//-- Formulario para añadir artículos al carrito de la compra.
+rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/carrito', ingresoCarrito);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

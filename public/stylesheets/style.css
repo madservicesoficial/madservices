@@ -1047,3 +1047,42 @@ canvas {
   float: left;
   margin-left: 30;
 }
+/*##################################################################################################*/
+/*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/
+/*##################################################################################################*/
+.interfazCarrito {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+}
+#alturaTituloCarrito {
+  margin-top: 50;
+}
+.interfazCarrito img {
+  width: 120px;
+  height: 100px;
+}
+.carrito {
+  text-align: left;
+  font-size: large;
+}
+#iconoBorrarDeCarrito {
+  color: red;
+  position: relative;
+  right: 7px;
+}
+#borrarDeCarrito {
+  width: 25;
+  height: 25;
+  background-color: transparent;
+}
+.interfazCarrito button {
+  float: right;
+}
+#btnComprar {
+  background-color: black;
+  color: white;
+  width: 100;
+  height: 30;
+  margin-top: 20;
+}

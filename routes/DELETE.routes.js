@@ -16,7 +16,7 @@ rutasDelete.post('/sesion-empresa/:id/interfaz/darse-baja', darseBajaEmpresa);
 //-- Darse de baja de Miembros MAD.
 rutasDelete.post('/sesion-miembro/:id/interfaz/darse-baja', darseBajaMiembro);
 //-- Borrar producto MAD.
-rutasDelete.post('/sesion-empresa/:id/empieza/productosmadservices/borrar-producto', borrarProductoMAD);
+rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/borrar-producto', borrarProductoMAD);
 
 //-- Exportamos las rutas con método DELETE.
 module.exports = rutasDelete;

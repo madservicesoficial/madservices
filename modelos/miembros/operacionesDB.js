@@ -300,6 +300,15 @@ const darseBajaMiembrodb = (id, decideConfirmar, req, res) => {
 
 //-- Creamos la función para ingresar los productos MAD en la base de datos de MAD Services.
 const ingresarProductosMADdb = async (id, data, res) => {
+
+    //-- Reiniciar la enumeración de productos.
+    madservicesAdmindb.query('SELECT * FROM productos', (error, results) => {
+        if(error) throw error;
+        let hayProductos = results.length;
+        hayProductos = hayProductos + 1;
+        madservicesAdmindb.query('ALTER TABLE productos AUTO_INCREMENT = ?', [hayProductos]);
+    });
+
     //-- Ruta al directorio de las imágenes almacenadas localmente.
     const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
     //-- Fichero asíncrono leer directorio.

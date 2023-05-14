@@ -380,6 +380,56 @@ const darseBajaClientedb = (id, dileAdios, req, res) => {
     }
 }
 
+//-- Creamos la función para ingresar el producto en el carrito de la compra de la base de datos y de la web de MAD Services.
+const ingresoCarritodb = (numProducto, res, id) => {
+
+    //-- Consulta producto MAD en base de datos.
+    let instruccionConsultaProductoMAD = 'SELECT * FROM productos WHERE enumeracion = ?'
+    let formatoInstruccionConsultaProductoMAD = mysql.format(instruccionConsultaProductoMAD, [numProducto]);
+    //-- Conexión para consultar.
+    madservicesClientedb.query(formatoInstruccionConsultaProductoMAD, (error, results) => {
+        if(error) throw error;
+        const cantidad = parseInt(results[0].cantidad, 10);
+        const titulo = results[0].titulo;
+        const precio = parseFloat(results[0].precio, 10);
+        //-- Comprobamos el nº de productos metidos en el carrito.
+        let instruccionConsultaCarrito = 'SELECT * FROM carrito WHERE titulo = ?'
+        let formatoInstruccionConsultaCarrito = mysql.format(instruccionConsultaCarrito, [titulo]);
+        //-- Conexión para consultar.
+        madservicesClientedb.query(formatoInstruccionConsultaCarrito, (error, salidas) => {
+            if(error) throw error;
+            if(salidas.length === 0) {
+                //-- Ingresamos en el carrito de la base de datos.
+                let instruccionIngresoCarrito = 'INSERT INTO carrito (id, cantidad, titulo, precio) VALUES (?, ?, ?, ?)';
+                let formatoInstruccionIngresoCarrito = mysql.format(instruccionIngresoCarrito, [id, 1, titulo, precio]);
+                madservicesClientedb.query(formatoInstruccionIngresoCarrito);
+                //-- Mostrar Alerta Emergente.
+                alerta('Producto añadido al carrito');
+                // Redirigir a la página de productos MAD.
+                return res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
+            }else {
+                if(cantidad === salidas[0].cantidad) {
+                    //-- Mostrar Alerta Emergente.
+                    alerta('No hay más productos que añadir');
+                    // Redirigir a la página de productos MAD.
+                    return res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
+                }else {
+                    //-- Convertimos a nº entero.
+                    let insertar = parseInt(salidas[0].cantidad, 10);
+                    //-- Actualizamos la cantidad en el carrito de la base de datos.
+                    let instruccionActualizarCarrito = 'UPDATE carrito SET cantidad = ? WHERE titulo = ?';
+                    let formatoInstruccionActualizarCarrito = mysql.format(instruccionActualizarCarrito, [insertar+1, titulo]);
+                    madservicesClientedb.query(formatoInstruccionActualizarCarrito);
+                    //-- Mostrar Alerta Emergente.
+                    alerta('Otro producto añadido al carrito');
+                    // Redirigir a la página de productos MAD.
+                    return res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
+                }
+            }
+        });
+    });
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarClienteVerificadodb,
@@ -390,5 +440,6 @@ module.exports = {
     actualizarEmailVerificadodb,
     actualizarPasswordVerificadadb,
     actualizarLocalizacionVerificadadb,
-    darseBajaClientedb
+    darseBajaClientedb,
+    ingresoCarritodb
 };

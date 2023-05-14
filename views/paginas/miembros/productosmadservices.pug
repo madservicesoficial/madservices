@@ -14,15 +14,123 @@ block body
             div.columnIzq
                 h3='Búsqueda a medida'
                 p='Por nombre del producto:'
-                    input(type='search' maxlength='50' placeholder='Buscar por título....')
+                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-titulo`)
+                    input(type='text' name='titulo' placeholder='Buscar por título....')
                     button(type='submit')='Buscar'
-                p='Por tipo de empresa:'
-                p='Por nombre de empresa:'
-                p='Por producto o servicio:'
+                p='Por tipo de producto:'
+                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-categoria`)
+                    select#filtroTipoProducto(name="categoria")='Categorias'
+                        option(checked)='Todo'
+                        optgroup(label='Libros')
+                            option='Libros infantiles' 
+                            option='Libros juveniles'
+                            option='Libros de historia'
+                            option='Libros de naturaleza'
+                            option='Libros de economía'
+                            option='Libros escolares'
+                            option='Libros de misterio'
+                        optgroup(label='Juegos')
+                            option='Juegos de mesa'
+                            option='Juegos de calle'
+                            option='Videojuegos'    
+                        optgroup(label='Electrónica e Informática')
+                            option='Consolas'
+                            option='Altavoces'
+                            option='Ratones'
+                            option='Teclados'
+                            option='PCs'
+                            option='MACs'
+                            option='Portátiles'
+                            option='MacBooks'
+                    button(type='submit')='Buscar'
                 p='Por precio del producto:'
+                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-precio`)
+                    .filtroRangoPrecio
+                        input(type="radio" name="busquedaPorPrecio" value='Todos' checked)
+                        label='Todos los precios'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='0')
+                        label='0 a 10€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='10')
+                        label='10 a 20€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='20')
+                        label='20 a 30€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='30')
+                        label='30 a 40€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='40')
+                        label='40 a 50€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='50')
+                        label='50 a 60€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='60')
+                        label='60 a 70€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='70')
+                        label='70 a 80€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='80')
+                        label='80 a 90€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='90')
+                        label='90 a 100€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='100')
+                        label='100 a 125€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='125')
+                        label='125 a 150€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='150')
+                        label='150 a 175€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='175')
+                        label='175 a 200€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='200')
+                        label='200 a 250€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='250')
+                        label='250 a 300€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='300')
+                        label='300 a 350€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='350')
+                        label='350 a 400€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='400')
+                        label='400 a 450€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='450')
+                        label='450 a 500€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='500')
+                        label='500 a 600€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='600')
+                        label='600 a 700€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='700')
+                        label='700 a 800€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='800')
+                        label='800 a 900€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='900')
+                        label='900 a 1000€'
+                        br
+                        input(type="radio" name="busquedaPorPrecio" value='1000')
+                        label='> 1000€'
+                        br
+                    button(type='submit')='Buscar'
             div.columnDer
                 each campo in cartaProducto
-                    form(method='POST' action=`/sesion-empresa/${id}/empieza/productosmadservices/borrar-producto`)
+                    form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/borrar-producto`)
                         input(type='hidden' name='_method' value='DELETE')
                         div.tarjetaProductosMAD
                             h3=campo.titulo

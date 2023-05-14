@@ -12,17 +12,7 @@ div#cabecera
       form(method='GET' action='/registrarse')
         button.btnOculto#btnsignup='Registrarse'
     li.menu#despliegue
-      button#btnCarrito
-        i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
-        span.contCarrito
-      div#carritoHaciaAbajo.menuHaciaAbajo
-        h4.cabeceraCarrito='Carrito de la compra'
-        //-- Contenido del carrito de la compra del Comercio Electrónico MAD Services.
-        ul.articulosCarrito
-            li.articuloCarrito
-              span.producto='Libro'
-              span.cantidad='5'
-              span.precio='3€'
-        div.sumaArticulos
-          p='Total: '
-          span.precioTotal='3€'
+      form(method='GET' action='/registrarse/cliente')
+        button#btnCarrito
+          i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
+          span.contCarrito

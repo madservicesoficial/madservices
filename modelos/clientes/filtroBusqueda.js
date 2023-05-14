@@ -5,45 +5,45 @@ const mysql = require('mysql2');
 const {madservicesClientedb} = require('../../config/database.js');
 
 //-- Función que consulta el título metido en la base de datos.
-const busquedaPorTitulodb = (titulo, res) => {
+const busquedaPorTituloEnClientedb = (titulo, res, id) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE titulo LIKE ?';
     let formatoInstruccionConsultaTitulo = mysql.format(instruccionConsultaTitulo, [incluir]);
     madservicesClientedb.query(formatoInstruccionConsultaTitulo, (error, results) => {
         if(error) throw error;
-        res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
+        res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id});
         return res.end();
     });
 }
 
 //-- Función que consulta la categoria metida en la base de datos.
-const busquedaPorCategoriadb = (categoria, res) => {
+const busquedaPorCategoriaEnClientedb = (categoria, res, id) => {
 
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE producto = ?';
     let formatoInstruccionConsultaTitulo = mysql.format(instruccionConsultaTitulo, [categoria]);
     madservicesClientedb.query(formatoInstruccionConsultaTitulo, (error, results) => {
         if(error) throw error;
-        res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
+        res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id});
         return res.end();
     });
 }
 
 //-- Función que consulta el precio metido en la base de datos.
-const busquedaPorPreciodb = (min, max, res) => {
+const busquedaPorPrecioEnClientedb = (min, max, res, id) => {
     
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ?';
     let formatoInstruccionConsultaTitulo = mysql.format(instruccionConsultaTitulo, [min, max]);
     madservicesClientedb.query(formatoInstruccionConsultaTitulo, (error, results) => {
         if(error) throw error;
-        res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
+        res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id});
         return res.end();
     });
 }
 
 //-- Exportamos.
 module.exports = {
-    busquedaPorTitulodb,
-    busquedaPorPreciodb,
-    busquedaPorCategoriadb
+    busquedaPorTituloEnClientedb,
+    busquedaPorPrecioEnClientedb,
+    busquedaPorCategoriaEnClientedb
 };

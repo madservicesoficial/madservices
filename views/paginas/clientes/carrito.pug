@@ -1,0 +1,28 @@
+//-- Contenido de la Sección Carrito de la Compra del Comercio Electrónico.
+extends ../../base.pug
+
+block title
+  title=`${id} en el Carrito de la Compra`
+
+block body
+    include ./componentes/cabecera.pug
+    .interfazCarrito 
+        br
+        div.row#alturaTituloCarrito
+            div.column
+                img(src='/images/carrito.png' alt='carrito')
+            div.column
+                h1='Carrito de la compra:'
+                form(method='POST' action='/eliminar-carrito')
+                    each producto in carrito
+                        .carrito
+                            p=producto.cantidad + 'x '
+                                span=producto.titulo + ' ========> '
+                                span=producto.precio + '€ '
+                                button#borrarDeCarrito(type='submit')
+                                    i.fa-solid.fa-eraser.fa-xl#iconoBorrarDeCarrito
+                button#btnComprar(type='submit')='Comprar'
+            div.column
+                img(src='/images/carrito.png' alt='carrito')
+        br
+    include ./componentes/piepagina.pug

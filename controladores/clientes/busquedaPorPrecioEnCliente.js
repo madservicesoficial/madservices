@@ -1,9 +1,11 @@
-//-- Importamos las funciones de operaciones de General para interactuar con la base de datos.
-const {busquedaPorPreciodb} = require('../../modelos/general/filtroBusqueda.js');
+//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
+const {busquedaPorPrecioEnClientedb} = require('../../modelos/clientes/filtroBusqueda.js');
 
-//-- Pto de control para la búsqueda por precio.
-const busquedaPorPrecio = (req, res) => {
+//-- Pto de control para la búsqueda por título.
+const busquedaPorPrecioEnCliente = (req, res) => {
 
+    //-- Obtenemos el parámetro del ID cliente.
+    let id = req.params.id;
     //-- Introducción del precio.
     const busquedaPorPrecio = req.body.busquedaPorPrecio;
     if(busquedaPorPrecio !== 'Todos') {
@@ -23,11 +25,11 @@ const busquedaPorPrecio = (req, res) => {
             max = precio;
         }
         //-- Proceso de búsqueda.
-        busquedaPorPreciodb(min, max, res);
+        busquedaPorPrecioEnClientedb(min, max, res, id);
     }else {
-        res.redirect('/empieza/productosmadservices');
+        res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
     }
 }
 
 //-- Exportamos a otras rutas.
-module.exports = busquedaPorPrecio;
+module.exports = busquedaPorPrecioEnCliente;
