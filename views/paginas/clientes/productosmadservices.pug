@@ -26,7 +26,10 @@ block body
                         div.tarjetaProductosMAD
                             h3=campo.titulo
                             img(src=`data:image/*;base64,${campo.portada}`)
-                            h3=campo.cantidad + ' unidades quedan'
+                            if campo.cantidad === 1
+                                h3=campo.cantidad + ' unidad queda'
+                            else 
+                                h3=campo.cantidad + ' unidades quedan'
                             h3=campo.precio + '€'
                             button(type='submit')='Añadir al carrito'
         br

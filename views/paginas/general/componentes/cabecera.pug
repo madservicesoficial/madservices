@@ -7,10 +7,10 @@ div#cabecera
           img.logoMADServices(src='/images/madservices.png' alt='madservices')
     li.menu
       form(method='GET' action='/login')
-        button.btnOculto='Iniciar Sesión'
+        button.btnOculto#btnLoginSesion='Iniciar Sesión'
     li.menu
       form(method='GET' action='/registrarse')
-        button.btnOculto='Registrarse'
+        button.btnOculto#btnsignup='Registrarse'
     li.menu#despliegue
       button#btnCarrito
         i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab

@@ -70,6 +70,12 @@ input[type=number]::-webkit-outer-spin-button {
 .menu {
   margin: 40 0 0 300;
 }
+#btnLoginSesion {
+  margin-left: 150;
+}
+#btnsignup {
+  margin-left: -175;
+}
 ul, ol {
   list-style: none;
 }
@@ -79,19 +85,17 @@ ul, ol {
 .nav > li {
   float: left;
 }
-.nav li ul li {
-  position: relative;
-  left: 100px;
-}
 .btnOculto {
   background-color: transparent;
   color: white;
 }
 #posMiInterfaz {
   width: 120px;
+  margin-left: 150;
 }
 #posCerrarSesion {
   width: 140px;
+  margin-left: -175;
 }
 .btnMADServices {
   background-color: transparent;
@@ -1034,4 +1038,12 @@ canvas {
   color: white;
   position: relative;
   right: 6px;
+}
+#filtroTipoProducto {
+  border-radius: 10px;
+  height: 25px;
+}
+.filtroRangoPrecio {
+  float: left;
+  margin-left: 30;
 }

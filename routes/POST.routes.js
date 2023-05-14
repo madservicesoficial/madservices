@@ -36,6 +36,10 @@ const borrarWhatsAppEmpresa = require('../controladores/empresas/borrarWhatsAppE
 const borrarInstagramEmpresa = require('../controladores/empresas/borrarInstagramEmpresa.js');
 const borrarTwitterEmpresa = require('../controladores/empresas/borrarTwitterEmpresa.js');
 const borrarPagWebEmpresa = require('../controladores/empresas/borrarPagWebEmpresa.js');
+//-- Importamos las funciones de la configuración del filtro de búsqueda.
+const busquedaPorTitulo = require('../controladores/general/busquedaPorTitulo.js');
+const busquedaPorCategoria = require('../controladores/general/busquedaPorCategoria.js');
+const busquedaPorPrecio = require('../controladores/general/busquedaPorPrecio.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -87,6 +91,12 @@ rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-WhatsApp', borrarWhatsAp
 rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-Instagram', borrarInstagramEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-Twitter', borrarTwitterEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/borrar-url-PagWeb', borrarPagWebEmpresa);
+//-- Formulario que hace búsqueda del producto MAD por título.
+rutasPost.post('/empieza/productosmadservices/busqueda-titulo', busquedaPorTitulo);
+//-- Formulario que hace búsqueda del producto MAD por tipo de producto.
+rutasPost.post('/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoria);
+//-- Formulario que hace búsqueda del producto MAD por precio.
+rutasPost.post('/empieza/productosmadservices/busqueda-precio', busquedaPorPrecio);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;
