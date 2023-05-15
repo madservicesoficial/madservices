@@ -244,7 +244,7 @@ rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallClien
 rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiembroMAD);
 
 //-- Ruta al carrito de la compra.
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/carrito', mostrarCarrito);
+rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {

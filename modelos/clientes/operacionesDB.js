@@ -393,8 +393,8 @@ const ingresoCarritodb = (numProducto, res, id) => {
         const titulo = results[0].titulo;
         const precio = parseFloat(results[0].precio, 10);
         //-- Comprobamos el nº de productos metidos en el carrito.
-        let instruccionConsultaCarrito = 'SELECT * FROM carrito WHERE titulo = ?'
-        let formatoInstruccionConsultaCarrito = mysql.format(instruccionConsultaCarrito, [titulo]);
+        let instruccionConsultaCarrito = 'SELECT * FROM carrito WHERE titulo = ? AND id = ?'
+        let formatoInstruccionConsultaCarrito = mysql.format(instruccionConsultaCarrito, [titulo, id]);
         //-- Conexión para consultar.
         madservicesClientedb.query(formatoInstruccionConsultaCarrito, (error, salidas) => {
             if(error) throw error;
@@ -416,17 +416,59 @@ const ingresoCarritodb = (numProducto, res, id) => {
                 }else {
                     //-- Convertimos a nº entero.
                     let insertar = parseInt(salidas[0].cantidad, 10);
+                    //-- Actualziamos el precio.
+                    let precioFinal = precio + parseFloat(salidas[0].precio, 10);
                     //-- Actualizamos la cantidad en el carrito de la base de datos.
-                    let instruccionActualizarCarrito = 'UPDATE carrito SET cantidad = ? WHERE titulo = ?';
-                    let formatoInstruccionActualizarCarrito = mysql.format(instruccionActualizarCarrito, [insertar+1, titulo]);
+                    let instruccionActualizarCarrito = 'UPDATE carrito SET cantidad = ?, precio = ? WHERE titulo = ? AND id = ?';
+                    let formatoInstruccionActualizarCarrito = mysql.format(instruccionActualizarCarrito, [insertar+1, precioFinal, titulo, id]);
                     madservicesClientedb.query(formatoInstruccionActualizarCarrito);
                     //-- Mostrar Alerta Emergente.
-                    alerta('Otro producto añadido al carrito');
+                    alerta(`${insertar+1}º producto de ${titulo} añadido al carrito`);
                     // Redirigir a la página de productos MAD.
                     return res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
                 }
             }
         });
+    });
+}
+
+//-- Creamos la función para quitar el producto del carrito de la compra de la base de datos y de la web de MAD Services.
+const quitarProductosdb = (id, titulo, res) => {
+
+    let instruccionConsultarCantidadCarrito = 'SELECT * FROM carrito WHERE id = ? AND titulo = ?';
+    let formatoInstruccionConsultarCantidadCarrito = mysql.format(instruccionConsultarCantidadCarrito, [id, titulo]);
+    madservicesClientedb.query(formatoInstruccionConsultarCantidadCarrito, (error, results) => {
+        if(error) throw error;
+        const cantidad = results[0].cantidad;
+        const precio = results[0].precio;
+        if(cantidad === 1) {
+            let instruccionEliminarDelCarrito = 'DELETE FROM carrito WHERE id = ? AND titulo = ?';
+            let formatoInstruccionEliminarDelCarrito = mysql.format(instruccionEliminarDelCarrito, [id, titulo]);
+            madservicesClientedb.query(formatoInstruccionEliminarDelCarrito);
+            //-- Mostrar Alerta Emergente.
+            alerta(`${titulo} eliminado del carrito`);
+            // Redirigir a la página de productos MAD.
+            return res.redirect(`/sesion-cliente/${id}/carrito`);
+        }else {
+            //-- Convertimos cantidad a entero para operarlo.
+            const cantidadINT = parseInt(cantidad, 10);
+            //-- Comprobar el precio del producto a quitar del carrito.
+            let instruccionConsultarPrecioBase = 'SELECT * FROM productos WHERE titulo = ?';
+            let formatoInstruccionConsultarPrecioBase = mysql.format(instruccionConsultarPrecioBase, [titulo]);
+            madservicesClientedb.query(formatoInstruccionConsultarPrecioBase, (error, salidas) => {
+                if(error) throw error;
+                const precioBase = salidas[0].precio;
+                let precioTotal = parseFloat(precio, 10) - parseFloat(precioBase, 10);
+                //-- Actualizar el carrito.
+                let instruccionActualizarProductoCarrito = 'UPDATE carrito SET cantidad = ?, precio = ? WHERE titulo = ? AND id = ?';
+                let formatoInstruccionActualizarProductoCarrito = mysql.format(instruccionActualizarProductoCarrito, [cantidadINT-1, precioTotal, titulo, id]);
+                madservicesClientedb.query(formatoInstruccionActualizarProductoCarrito);
+                //-- Mostrar Alerta Emergente.
+                alerta(`Hemos quitado un producto de los ${cantidadINT} que había en ${titulo}`);
+                // Redirigir a la página de productos MAD.
+                return res.redirect(`/sesion-cliente/${id}/carrito`);
+            });
+        }
     });
 }
 
@@ -441,5 +483,6 @@ module.exports = {
     actualizarPasswordVerificadadb,
     actualizarLocalizacionVerificadadb,
     darseBajaClientedb,
-    ingresoCarritodb
+    ingresoCarritodb,
+    quitarProductosdb
 };

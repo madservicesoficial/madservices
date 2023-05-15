@@ -13,16 +13,31 @@ block body
                 img(src='/images/carrito.png' alt='carrito')
             div.column
                 h1='Carrito de la compra:'
-                form(method='POST' action='/eliminar-carrito')
+                p='__________________________________________________________________________'
+                form(method='POST' action=`/sesion-cliente/${id}/carrito/quitar-producto`)
+                    input(type='hidden' name='_method' value='DELETE')
                     each producto in carrito
                         .carrito
                             p=producto.cantidad + 'x '
                                 span=producto.titulo + ' ========> '
                                 span=producto.precio + '€ '
-                                button#borrarDeCarrito(type='submit')
+                                button#borrarDeCarrito(type='submit' name='titulo' value=producto.titulo)
                                     i.fa-solid.fa-eraser.fa-xl#iconoBorrarDeCarrito
-                button#btnComprar(type='submit')='Comprar'
+                p='__________________________________________________________________________'
+                form(method='POST' action=`/sesion-cliente/${id}/carrito/comprar`)
+                    - var total = 0;
+                    - var cantidadTotal = 0;
+                    each producto in carrito
+                        - cantidadTotal += producto.cantidad
+                        - total += parseFloat(producto.precio)
+                    .carritoTotal
+                        p='Total: ' + cantidadTotal + 'x ' + total.toFixed(2) + '€'
+                    button#btnComprar(type='submit')='Comprar'
             div.column
                 img(src='/images/carrito.png' alt='carrito')
+        div.row
+            footer
+                img(src='/images/anuncio.png' alt='anuncio')
+                img(src='/images/anuncio.png' alt='anuncio')
         br
     include ./componentes/piepagina.pug

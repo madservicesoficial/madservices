@@ -1086,3 +1086,17 @@ canvas {
   height: 30;
   margin-top: 20;
 }
+.carritoTotal {
+  text-align: right;
+  font-size: x-large;
+}
+.interfazCarrito footer {
+  text-align: center;
+  background-color: silver;
+}
+.interfazCarrito footer img {
+  width: 1500px;
+  height: 150px;
+  border-style: double;
+  border-radius: 7px;
+}
