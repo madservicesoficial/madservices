@@ -4,6 +4,7 @@ const { registrarClienteVerificadodb } = require('../../modelos/clientes/operaci
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
 const { getCode, getCountries } = require('country-list-spanish');
+const countries = require('country-list');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
@@ -63,9 +64,14 @@ const registroClientes = async (req, res) => {
             }else {
                 //-- Declaración de la lista de países existentes en el mundo.
                 const paises = getCountries();
+                const paisesENG = countries.getNames();
                 //-- Proceso de verificación de la localización.
-                if(paises.includes(pais)) {
-                    const codigoPais = getCode(pais);
+                if(paises.includes(pais) || paisesENG.includes(pais)) {
+                    let codigoPais = getCode(pais);
+                    let countryCode = countries.getCode(pais);
+                    if(codigoPais === undefined) {
+                        codigoPais = countryCode;
+                    }
                     if(postcodeValidator(cp, codigoPais)) {
                         //-- Enviamos una solicitud HTTP a la API de Geonames.
                         const response = await axios.get('http://api.geonames.org/postalCodeLookupJSON', {
@@ -77,29 +83,36 @@ const registroClientes = async (req, res) => {
                             },
                         });
                         const lugar = response.data.postalcodes[0];
-                        if(region === lugar.adminName1) {
-                            if(poblacion === lugar.adminName3) {
-                                const minDir = 5;
-                                const maxDir= 48;
-                                if(direccion.length >= minDir && direccion.length <= maxDir) {
-                                    //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
-                                    registrarClienteVerificadodb
-                                    (
-                                        {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
-                                        region: region, pais: pais, cp: cp, genero: genero},
-                                        password,
-                                        res
-                                    );
+                        console.log(lugar);
+                        if(lugar || typeof lugar !== 'undefined') {
+
+                            if(region === lugar.adminName1 || region === lugar.adminName2) {
+                                if(poblacion === lugar.adminName3 || poblacion === placeName) {
+                                    const minDir = 5;
+                                    const maxDir= 48;
+                                    if(direccion.length >= minDir && direccion.length <= maxDir) {
+                                        //-- Registramos el Cliente en la base de datos de MAD Services, verificando que no existía ya.
+                                        registrarClienteVerificadodb
+                                        (
+                                            {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
+                                            region: region, pais: pais, cp: cp, genero: genero},
+                                            password,
+                                            res
+                                        );
+                                    }else {
+                                        res.status(401).render('paginas/clientes/registrarse', {mensaje: `Dirección de ${poblacion} incorrecta`});
+                                        return res.end();
+                                    }
                                 }else {
-                                    res.status(401).render('paginas/clientes/registrarse', {mensaje: `Dirección de ${poblacion} incorrecta`});
+                                    res.status(401).render('paginas/clientes/registrarse', {mensaje: `Población de ${region} incorrecta`});
                                     return res.end();
                                 }
                             }else {
-                                res.status(401).render('paginas/clientes/registrarse', {mensaje: `Población de ${region} incorrecta`});
+                                res.status(401).render('paginas/clientes/registrarse', {mensaje: `Región de ${pais} incorrecta`});
                                 return res.end();
                             }
                         }else {
-                            res.status(401).render('paginas/clientes/registrarse', {mensaje: `Región de ${pais} incorrecta`});
+                            res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal no encontrado'});
                             return res.end();
                         }
                     }else {
