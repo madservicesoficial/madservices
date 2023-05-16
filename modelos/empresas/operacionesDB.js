@@ -176,11 +176,9 @@ const actualizarNIFVerificadodb = (id, nif, res) => {
 //-- Creamos la función para actualizar el campo email de la Empresa de la base de datos de MAD Services.
 const actualizarEmailVerificadodb = (id, email, res) => {
 
-    //-- Declaración de la estructura correcta del Email.
-    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Actualizamos y validamos el campo.
     if(email) {
-        if(!validacion.isEmail(email) || !estructuraEmail.test(email)) {
+        if(!validacion.isEmail(email)) {
             //-- Mostrar Alerta Emergente.
             alerta(`${email} es un email no válido`);
             // Redirigir a la interfaz de la Empresa.

@@ -3,7 +3,7 @@ const { registrarClienteVerificadodb } = require('../../modelos/clientes/operaci
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
-const {getCountries, getCode } = require('country-list-spanish');
+const { getCode, getCountries } = require('country-list-spanish');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
@@ -31,8 +31,6 @@ const registroClientes = async (req, res) => {
     const minLong2 = 4 * minLong - 2;
     const maxLong = 48;
     const maxLong2 = 2 * maxLong;
-    //-- Declaración de la estructura correcta del Email.
-    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Comprobamos que no hay campos vacíos.
     if(!email || !password || !confirmPassword || !nombre || !apellidos || !genero || !direccion || !poblacion || !region || !pais || !cp) {
         res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Campos vacíos'});
@@ -50,7 +48,7 @@ const registroClientes = async (req, res) => {
             }else if(apellidos.length > maxLong2) {
                 res.status(401).render('paginas/clientes/registrarse', {mensaje: `Los apellidos no pueden ser más largos de ${maxLong2} caracteres`});
                 return res.end();
-            }else if(!validacion.isEmail(email) || !estructuraEmail.test(email)) {
+            }else if(!validacion.isEmail(email)) {
                 res.status(401).render('paginas/clientes/registrarse', { mensaje: `El Email: ${email} no es válido` });
                 return res.end();
             }else if(!validacion.isLength(password, { min: minLong2, max: maxLong2}) || !validacion.matches(password, /[a-z]/)
@@ -63,7 +61,7 @@ const registroClientes = async (req, res) => {
                 });
                 return res.end();
             }else {
-                //-- Declaración de la cte que saca todos los países del mundo en español.
+                //-- Declaración de la lista de países existentes en el mundo.
                 const paises = getCountries();
                 //-- Proceso de verificación de la localización.
                 if(paises.includes(pais)) {

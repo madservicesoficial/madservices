@@ -18,8 +18,6 @@ const registroMiembros = (req, res) => {
     const minLong2 = 4 * minLong - 2;
     const maxLong = 98;
     const maxLong2 = 50 + maxLong;
-    //-- Declaración de la estructura correcta del Email.
-    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Comprobamos que no hay campos vacíos.
     if(!email || !password || !confirmPassword || !miembro || !departamento || !genero) {
         res.status(401).render('paginas/miembros/registrarse', {mensaje: 'Campos vacíos'});
@@ -34,7 +32,7 @@ const registroMiembros = (req, res) => {
             if(miembro.length < minLong || miembro.length > maxLong2) {
                 res.status(401).render('paginas/miembros/registrarse', {mensaje: 'Nombre del Miembro MAD demasiado largo'});
                 return res.end();
-            }else if(!validacion.isEmail(email) && !estructuraEmail.test(email)) {
+            }else if(!validacion.isEmail(email)) {
                 res.status(401).render('paginas/miembros/registrarse', { mensaje: `El Email: ${email} no es válido`});
                 return res.end();
             }else if(!validacion.isLength(password, { min: minLong2, max: maxLong}) && !validacion.matches(password, /[a-z]/)

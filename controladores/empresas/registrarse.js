@@ -20,8 +20,6 @@ const registroEmpresas = (req, res) => {
     const minLong2 = 4 * minLong - 2;
     const maxLong = 98;
     const maxLong2 = 50 + maxLong;
-    //-- Declaración de la estructura correcta del Email.
-    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Comprobamos que no hay campos vacíos.
     if(!email || !password || !confirmPassword || !marca || !nif || !tipo) {
         res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Campos vacíos'});
@@ -39,7 +37,7 @@ const registroEmpresas = (req, res) => {
             }else if(!cifvalidacion.isValidCif(nif) || !cifvalidacion.isValidNif(nif)) {
                 res.status(401).render('paginas/empresas/registrarse', {mensaje: 'El CIF/NIF no es oficial'});
                 return res.end();
-            }else if(!validacion.isEmail(email) && !estructuraEmail.test(email)) {
+            }else if(!validacion.isEmail(email)) {
                 res.status(401).render('paginas/empresas/registrarse', { mensaje: `El Email: ${email} no es válido`});
                 return res.end();
             }else if(!validacion.isLength(password, { min: minLong2, max: maxLong}) && !validacion.matches(password, /[a-z]/)

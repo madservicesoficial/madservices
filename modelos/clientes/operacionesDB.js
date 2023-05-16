@@ -14,7 +14,7 @@ const alerta = require('alert');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
-const {getCountries, getCode} = require('country-list-spanish');
+const { getCode, getCountries } = require('country-list-spanish');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
@@ -182,11 +182,9 @@ const actualizarGeneroVerificadodb = (id, genero, res) => {
 //-- Creamos la función para actualizar el campo email del Cliente de la base de datos de MAD Services.
 const actualizarEmailVerificadodb = (id, email, res) => {
 
-    //-- Declaración de la estructura correcta del Email.
-    const estructuraEmail = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail)\.(com|es)$/;
     //-- Actualizamos y validamos el campo.
     if(email) {
-        if(!validacion.isEmail(email) || !estructuraEmail.test(email)) {
+        if(!validacion.isEmail(email)) {
             //-- Mostrar Alerta Emergente.
             alerta(`${email} es un email no válido`);
             // Redirigir al perfil del Cliente.
@@ -278,7 +276,7 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
 //-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
 const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacion, direccion, res) => {
 
-    //-- Declaración de la cte que saca todos los países del mundo en español.
+    //-- Declaración de la lista de países existentes en el mundo.
     const paises = getCountries();
     //-- Proceso de verificación de la localización.
     if(pais && cp && region && poblacion && direccion) {
