@@ -113,24 +113,10 @@ block body
                         input(type='text' name='password' value=password readonly)
                         br
                         br
-                    if direccion
-                        label='Mi dirección y nº: ' + direccion
-                        br
-                        br
-                    if poblacion
-                        label='Mi población: ' + poblacion
-                        br
-                        br
-                    if region
-                        label='Mi región: ' + region
-                        br
-                        br
-                    if pais
-                        label='Mi país: ' + pais
-                        br
-                        br
-                    if cp
-                        label='Código Postal de mi domicilio: ' + cp
+                i.fa-sharp.fa-solid.fa-location-dot.fa-2xl
+                h3#tituloLocalizacionCliente='Mi localización: '
+                div.subcolumn2
+                    label=direccion + ', ' + poblacion + ', ' + region + ', ' + pais + ', ' + cp + '.'
         div.row
             div.column
             div.column

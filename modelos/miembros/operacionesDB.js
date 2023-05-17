@@ -603,6 +603,21 @@ const borrarProductoMADdb = (ptoPartida) => {
     madservicesAdmindb.query(formatoInstruccionBorrarProductoMAD);
 }
 
+//-- Creamos la función para borrar el producto MAD del carrito de MAD Services.
+const borrarProductoMADcarritodb = (ptoPartida) => {
+
+    //-- Consultamos los productos MAD en la base de datos.
+    let instruccionConsultarProductoMAD = 'SELECT * FROM productos WHERE enumeracion = ?';
+    let formatoInstruccionConsultarProductoMAD = mysql.format(instruccionConsultarProductoMAD, [ptoPartida]);
+    madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, results) => {
+        if(error) throw error;
+        const titulo = results[0].titulo;
+        let instruccionBorrarProductoDeCarrito = 'DELETE FROM carrito WHERE titulo = ?';
+        let formatoInstruccionBorrarProductoDeCarrito = mysql.format(instruccionBorrarProductoDeCarrito, [titulo]);
+        madservicesAdmindb.query(formatoInstruccionBorrarProductoDeCarrito);
+    });
+}
+
 //-- Creamos la función para consultar la enumeración del producto MAD de la base de datos de MAD Services.
 const consultarEnumeraciondb = (i) => {
 
@@ -656,6 +671,7 @@ module.exports = {
     actualizarImagendb,
     actualizarPesodb,
     borrarProductoMADdb,
+    borrarProductoMADcarritodb,
     consultarEnumeraciondb,
     actualizarEnumeraciondb,
     salidaProductoBorrado

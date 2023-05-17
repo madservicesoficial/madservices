@@ -46,6 +46,8 @@ const busquedaPorPrecioEnCliente = require('../controladores/clientes/busquedaPo
 const busquedaPorPrecioEnMiembro = require('../controladores/miembros/busquedaPorPrecioEnMiembro.js');
 //-- Importamos la función para ingresar al carrito de la compra.
 const ingresoCarrito = require('../controladores/clientes/ingresoCarrito.js');
+//-- Importamos la función que confirma la compra por parte del cliente.
+const compraPagada = require('../controladores/clientes/compraPagada.js');
 
 //-- Formulario de envío de datos para Iniciar Sesión como Cliente.
 rutasPost.post('/login/cliente', iniciarSesionClientes);
@@ -109,6 +111,8 @@ rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-precio
 rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnMiembro);
 //-- Formulario para añadir artículos al carrito de la compra.
 rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/carrito', ingresoCarrito);
+//-- Formulario para confirmar la compra por parte del cliente.
+rutasPost.post('/sesion-cliente/id/carrito/comprar/pagado', compraPagada);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

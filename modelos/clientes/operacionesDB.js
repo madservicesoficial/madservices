@@ -15,6 +15,7 @@ const alerta = require('alert');
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el país introducido.
 const { getCode, getCountries } = require('country-list-spanish');
+const countries = require('country-list');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
@@ -278,11 +279,16 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
 
     //-- Declaración de la lista de países existentes en el mundo.
     const paises = getCountries();
+    const paisesENG = countries.getNames();
     //-- Proceso de verificación de la localización.
     if(pais && cp && region && poblacion && direccion) {
-        if(paises.includes(pais)) {
+        if(paises.includes(pais) || paisesENG.includes(pais)) {
             //-- Obtenemos el código del país.
-            const codigoPais = getCode(pais);
+            let codigoPais = getCode(pais);
+            let countryCode = countries.getCode(pais);
+            if(codigoPais === undefined) {
+                codigoPais = countryCode;
+            }
             if(postcodeValidator(cp, codigoPais)) {
                 //-- Enviamos una solicitud HTTP a la API de Geonames.
                 const response = await axios.get('http://api.geonames.org/postalCodeLookupJSON', {
@@ -294,37 +300,44 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
                     },
                 });
                 const lugar = response.data.postalcodes[0];
-                if(region === lugar.adminName1 || region === lugar.adminName2) {
-                    if(poblacion === lugar.adminName3) {
-                        const minLong = 5;
-                        const maxLong = 48;
-                        if(direccion.length >= minLong && direccion.length <= maxLong) {
-                            //-- Actualizamos la localización del Cliente en la base de datos de MAD Services.
-                            //-- Instrucción para actualizar en la base de datos.
-                            let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ?, poblacion = ?, region = ?, pais = ?, cp = ? WHERE id = ?';
-                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                            let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [direccion, poblacion, region, pais, cp, id]);
-                            //-- Proceso de actualización en base de datos.
-                            madservicesClientedb.query(formatoInstruccionActualizarDireccion);
-                            //-- Mostrar Alerta Emergente.
-                            alerta('Localización del Cliente actualizada');
-                            // Redirigir al perfil del Cliente.
-                            return res.redirect(`/sesion-cliente/${id}/perfil`);
+                if(lugar || typeof lugar !== 'undefined') {
+                    if(region === lugar.adminName1 || region === lugar.adminName2) {
+                        if(poblacion === lugar.adminName3 || poblacion === lugar.placeName) {
+                            const minLong = 5;
+                            const maxLong = 48;
+                            if(direccion.length >= minLong && direccion.length <= maxLong) {
+                                //-- Actualizamos la localización del Cliente en la base de datos de MAD Services.
+                                //-- Instrucción para actualizar en la base de datos.
+                                let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ?, poblacion = ?, region = ?, pais = ?, cp = ? WHERE id = ?';
+                                //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+                                let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [direccion, poblacion, region, pais, cp, id]);
+                                //-- Proceso de actualización en base de datos.
+                                madservicesClientedb.query(formatoInstruccionActualizarDireccion);
+                                //-- Mostrar Alerta Emergente.
+                                alerta('Localización del Cliente actualizada');
+                                // Redirigir al perfil del Cliente.
+                                return res.redirect(`/sesion-cliente/${id}/perfil`);
+                            }else {
+                                //-- Mostrar Alerta Emergente.
+                                alerta(`Dirección de ${poblacion} incorrecta`);
+                                // Redirigir al perfil del Cliente.
+                                return res.redirect(`/sesion-cliente/${id}/perfil`);
+                            }
                         }else {
                             //-- Mostrar Alerta Emergente.
-                            alerta(`Dirección de ${poblacion} incorrecta`);
+                            alerta(`Población de ${region} incorrecta`);
                             // Redirigir al perfil del Cliente.
                             return res.redirect(`/sesion-cliente/${id}/perfil`);
                         }
                     }else {
                         //-- Mostrar Alerta Emergente.
-                        alerta(`Población de ${region} incorrecta`);
+                        alerta(`Región de ${pais} incorrecta`);
                         // Redirigir al perfil del Cliente.
                         return res.redirect(`/sesion-cliente/${id}/perfil`);
                     }
                 }else {
                     //-- Mostrar Alerta Emergente.
-                    alerta(`Región de ${pais} incorrecta`);
+                    alerta('Código Postal no encontrado');
                     // Redirigir al perfil del Cliente.
                     return res.redirect(`/sesion-cliente/${id}/perfil`);
                 }
@@ -369,6 +382,11 @@ const darseBajaClientedb = (id, dileAdios, req, res) => {
         let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
         //-- Establecer la configuración de borrar los datos de la base de datos.
         madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
+        //-- Si tiene productos en el carrito, también se borran.
+        let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
+        let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [id]);
+        //-- Establecer la configuración de borrar los datos de la base de datos.
+        madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
         //-- Destruir la sesión.
         req.session.destroy();
         //-- Mostrar Alerta Emergente.
@@ -470,6 +488,22 @@ const quitarProductosdb = (id, titulo, res) => {
     });
 }
 
+//-- Creamos la función para adquirir el nombre y los apellidos del cliente y meterlos en la variable.
+const adquirirNombredb = (id) => {
+
+    let instruccionConsultaNombreApellidos = 'SELECT * FROM clientes WHERE id = ?';
+    let formatoInstruccionConsultaNombreApellidos = mysql.format(instruccionConsultaNombreApellidos, [id]);
+    return new Promise((resolve) => {
+        madservicesClientedb.query(formatoInstruccionConsultaNombreApellidos, (error, results) => {
+            if(error) throw error;
+            const nombre = results[0].nombre;
+            const apellidos = results[0].apellidos;
+            const cliente = nombre + ' ' + apellidos;
+            resolve(cliente);
+        });
+    });
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarClienteVerificadodb,
@@ -482,5 +516,6 @@ module.exports = {
     actualizarLocalizacionVerificadadb,
     darseBajaClientedb,
     ingresoCarritodb,
-    quitarProductosdb
+    quitarProductosdb,
+    adquirirNombredb
 };

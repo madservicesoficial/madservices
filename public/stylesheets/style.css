@@ -832,6 +832,13 @@ canvas {
   height: 25;
   margin-left: 30;
 }
+.perfilCliente i {
+  color: #f20202;
+}
+#tituloLocalizacionCliente {
+  display: inline-block;
+  margin-left: 10;
+}
 /*##################################################################################################*/
 /*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
 /*##################################################################################################*/
@@ -1099,4 +1106,34 @@ canvas {
   height: 150px;
   border-style: double;
   border-radius: 7px;
+}
+/*##################################################################################################*/
+/*################################### SECCIÓN VERIFICAR COMPRA #####################################*/
+/*##################################################################################################*/
+.interfazVerificarCompra {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+}
+.fa-sharp.fa-solid.fa-location-dot.fa-2xl {
+  color: red;
+}
+.fa-solid.fa-credit-card.fa-2xl {
+  color: #1d5cc9;
+}
+.fa-sharp.fa-solid.fa-cart-shopping.fa-2xl {
+  color: #1a4304;
+}
+.verificarCarrito {
+  text-align: center;
+  font-size: x-large;
+}
+.tarjetaBancaria {
+  text-align: center;
+  font-size: large;
+}
+.tarjetaBancariaEntradas {
+  width: 300;
+  background-color: blue;
+  color: white;
 }

@@ -83,11 +83,10 @@ const registroClientes = async (req, res) => {
                             },
                         });
                         const lugar = response.data.postalcodes[0];
-                        console.log(lugar);
                         if(lugar || typeof lugar !== 'undefined') {
 
                             if(region === lugar.adminName1 || region === lugar.adminName2) {
-                                if(poblacion === lugar.adminName3 || poblacion === placeName) {
+                                if(poblacion === lugar.adminName3 || poblacion === lugar.placeName) {
                                     const minDir = 5;
                                     const maxDir= 48;
                                     if(direccion.length >= minDir && direccion.length <= maxDir) {

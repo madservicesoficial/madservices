@@ -24,6 +24,8 @@ const mostrarProductosTheMallEmpresa = require('../modelos/empresas/mostrarProdu
 const mostrarProductosTheMallMiembroMAD = require('../modelos/miembros/mostrarProductosTheMallMiembroMAD.js');
 //-- Importamos la función que muestra los prodcutos MAD del carrito.
 const mostrarCarrito = require('../modelos/clientes/mostrarCarrito.js');
+//-- Importamos la función que muestra la compra del cliente.
+const mostrarCompraCliente = require('../modelos/clientes/mostrarCompraCliente.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -245,6 +247,9 @@ rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiemb
 
 //-- Ruta al carrito de la compra.
 rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
+
+//-- Ruta a la sección de verificar la compra.
+rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {

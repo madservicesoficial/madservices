@@ -1,0 +1,65 @@
+//-- Contenido de la Sección Comprar del Comercio Electrónico.
+extends ../../base.pug
+
+block title
+  title=`${id} verificando la Compra`
+
+block body
+    include ./componentes/cabecera.pug
+    .interfazVerificarCompra 
+        br
+        div.row#alturaTituloCarrito
+            div.column
+                i.fa-sharp.fa-solid.fa-location-dot.fa-2xl
+                h1#tituloLocalizacionCliente='Dirección de envío: '
+                p='__________________________________________________________________________'
+                div.subcolumn2
+                    label=direccion + ', ' + poblacion + ', ' + region + ', ' + pais + ', ' + cp + '.'
+                p='__________________________________________________________________________'
+        div.row
+            div.column
+                i.fa-sharp.fa-solid.fa-cart-shopping.fa-2xl
+                h1#tituloLocalizacionCliente='Compra final: '
+                p='__________________________________________________________________________'
+                div.verificarCarrito
+                    - var total = 0;
+                    - var cantidadTotal = 0;
+                    each producto in carrito
+                        - cantidadTotal += producto.cantidad
+                        - total += parseFloat(producto.precio)
+                    p='Total: ' + cantidadTotal + 'x ' + total.toFixed(2) + '€'
+                p='__________________________________________________________________________'
+        div.row
+            div.column
+                i.fa-solid.fa-credit-card.fa-2xl
+                h1#tituloLocalizacionCliente='Método de pago: '
+                p='__________________________________________________________________________'
+                div.tarjetaBancaria
+                    form(method='POST' action=`/sesion-cliente/${id}/carrito/comprar/pagado`)
+                        label='Nombre del propietario de la tarjeta: '
+                        input.tarjetaBancariaEntradas(type="text" name="nombreTarjeta")
+                        br
+                        br
+                        label='Número de tarjeta: '
+                        input.tarjetaBancariaEntradas(type="number" name="numeroTarjeta")
+                        br
+                        br
+                        label='Válida hasta: '
+                        input.tarjetaBancariaEntradas(type="month" name="fechaExpiracion")
+                        br
+                        br
+                        label='CVV: '
+                        input.tarjetaBancariaEntradas(type="number" name="cvv")
+                        br
+                        br
+                        input(type='checkbox' name='saveCard')
+                        label='Guardar tarjeta'
+                        br
+                        button#btnComprar(type='submit')='Pagar'
+                p='__________________________________________________________________________'
+        div.row
+            footer
+                img(src='/images/anuncio.png' alt='anuncio')
+                img(src='/images/anuncio.png' alt='anuncio')
+        br
+    include ./componentes/piepagina.pug

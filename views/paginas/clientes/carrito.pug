@@ -24,7 +24,7 @@ block body
                                 button#borrarDeCarrito(type='submit' name='titulo' value=producto.titulo)
                                     i.fa-solid.fa-eraser.fa-xl#iconoBorrarDeCarrito
                 p='__________________________________________________________________________'
-                form(method='POST' action=`/sesion-cliente/${id}/carrito/comprar`)
+                form(method='GET' action=`/sesion-cliente/${id}/carrito/comprar`)
                     - var total = 0;
                     - var cantidadTotal = 0;
                     each producto in carrito
