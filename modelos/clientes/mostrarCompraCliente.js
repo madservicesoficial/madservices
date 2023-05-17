@@ -23,18 +23,50 @@ const mostrarCompraCliente = (req, res) => {
         let formatoInstruccionConsultaCarrito = mysql.format(instruccionConsultaCarrito, [id]);
         madservicesClientedb.query(formatoInstruccionConsultaCarrito, (error, resultado) => {
             if(error) throw error;
-            //-- Sacarlo por pantalla.
-            res.status(201).render('paginas/clientes/comprar', 
-            { 
-                id: id, 
-                direccion: direccion, 
-                poblacion: poblacion,
-                region: region,
-                pais: pais,
-                cp: cp,
-                carrito: resultado 
+            let instruccionConsultaTarjeta = 'SELECT * FROM tarjeta WHERE id = ?';
+            let formatoInstruccionConsultaTarjeta = mysql.format(instruccionConsultaTarjeta, [id]);
+            madservicesClientedb.query(formatoInstruccionConsultaTarjeta, (error, salida) => {
+                if(error) throw error;
+                const formatoFecha = '%m/%Y';
+                let instruccionConsultaFechaExp = 'SELECT DATE_FORMAT(expiracion, ?) AS fechaFormateada FROM tarjeta WHERE id = ?';
+                let formatoInstruccionConsultaFechaExp = mysql.format(instruccionConsultaFechaExp, [formatoFecha, id]);
+                madservicesClientedb.query(formatoInstruccionConsultaFechaExp, (error, out) => {
+                    if(error) throw error;
+                    if(salida.length > 0) {
+                        //-- Sacarlo por pantalla.
+                        res.status(201).render('paginas/clientes/comprar', 
+                        { 
+                            id: id, 
+                            direccion: direccion, 
+                            poblacion: poblacion,
+                            region: region,
+                            pais: pais,
+                            cp: cp,
+                            carrito: resultado,
+                            cliente: salida[0].cliente,
+                            numcard: salida[0].numcard,
+                            cvv: salida[0].cvv,
+                            expiracion: out[0].fechaFormateada
+                        });
+                        return res.end();
+                    }else {
+                        let nohayTarjeta = true;
+                        //-- Sacarlo por pantalla.
+                        res.status(201).render('paginas/clientes/comprar', 
+                        { 
+                            id: id, 
+                            direccion: direccion, 
+                            poblacion: poblacion,
+                            region: region,
+                            pais: pais,
+                            cp: cp,
+                            carrito: resultado,
+                            nohayTarjeta: nohayTarjeta
+                        });
+                        return res.end();
+                    }
+                });
             });
-            return res.end();
         });
     });
 }

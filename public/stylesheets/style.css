@@ -839,6 +839,54 @@ canvas {
   display: inline-block;
   margin-left: 10;
 }
+.tarjetaBankPerfil img {
+  max-width: 25rem;
+}
+.tarjetaBankPerfil #caraA {
+  position: relative;
+  text-align: center;
+}
+.tarjetaBankPerfil #contenido {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+}
+.tarjetaBankPerfil #contenido img {
+  float: left;
+  position: relative;
+  right: 30;
+  top: 20;
+}
+.tarjetaBankPerfil #contenido #numTarjeta {
+  margin-top: 50;
+}
+.tarjetaBankPerfil #contenido #fechaexp {
+  text-align: right;
+}
+.tarjetaBankPerfil #contenido #nombrecard {
+  text-align: left;
+  width: 300;
+}
+.tarjetaBankPerfil #caraB {
+  position: relative;
+  text-align: center;
+}
+.tarjetaBankPerfil #caraB #contenido {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+}
+#iconoBorrarTarjetaBank {
+  color: black;
+}
+.actualizarTarjetaBank {
+  background-color: transparent;
+  width: 300;
+}
 /*##################################################################################################*/
 /*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
 /*##################################################################################################*/
@@ -1128,7 +1176,10 @@ canvas {
   text-align: center;
   font-size: x-large;
 }
-.tarjetaBancaria {
+.interfazVerificarCompra .subcolumn2 {
+  font-size: large;
+}
+.interfazVerificarCompra form {
   text-align: center;
   font-size: large;
 }

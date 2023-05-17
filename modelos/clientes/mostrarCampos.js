@@ -17,21 +17,53 @@ const mostrarClientedb = (req, res) => {
     madservicesClientedb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
         const tablaCliente = result[0];
-        res.status(201).render('paginas/clientes/perfil', 
-        {
-            id: id,
-            email: tablaCliente.email,
-            password: tablaCliente.password,
-            nombre: tablaCliente.nombre,
-            apellidos: tablaCliente.apellidos,
-            direccion: tablaCliente.direccion,
-            poblacion: tablaCliente.poblacion,
-            region: tablaCliente.region,
-            pais: tablaCliente.pais,
-            cp: tablaCliente.cp,
-            genero: tablaCliente.genero
+        madservicesClientedb.query('SELECT * FROM tarjeta WHERE id = ?', [id], (error, resultados) => {
+            if(error) throw error;
+            const tarjetaCliente = resultados[0];
+            const formatoFecha = '%m/%Y';
+            madservicesClientedb.query('SELECT DATE_FORMAT(expiracion, ?) AS fechaFormateada FROM tarjeta WHERE id = ?', [formatoFecha, id], (error, results) => {
+                if(error) throw error;
+                const vacio = '-';
+                if(resultados.length > 0) {
+                    res.status(201).render('paginas/clientes/perfil', 
+                    {
+                        id: id,
+                        email: tablaCliente.email,
+                        password: tablaCliente.password,
+                        nombre: tablaCliente.nombre,
+                        apellidos: tablaCliente.apellidos,
+                        direccion: tablaCliente.direccion,
+                        poblacion: tablaCliente.poblacion,
+                        region: tablaCliente.region,
+                        pais: tablaCliente.pais,
+                        cp: tablaCliente.cp,
+                        genero: tablaCliente.genero,
+                        cliente: tarjetaCliente.cliente,
+                        numcard: tarjetaCliente.numcard,
+                        expiracion: results[0].fechaFormateada,
+                        cvv: tarjetaCliente.cvv
+                    });
+                    return res.end();
+                }else {
+                    res.status(201).render('paginas/clientes/perfil', 
+                    {
+                        id: id,
+                        email: tablaCliente.email,
+                        password: tablaCliente.password,
+                        nombre: tablaCliente.nombre,
+                        apellidos: tablaCliente.apellidos,
+                        direccion: tablaCliente.direccion,
+                        poblacion: tablaCliente.poblacion,
+                        region: tablaCliente.region,
+                        pais: tablaCliente.pais,
+                        cp: tablaCliente.cp,
+                        genero: tablaCliente.genero,
+                        expiracion: vacio
+                    });
+                    return res.end();
+                }
+            });
         });
-        return res.end();
     });
 }
 

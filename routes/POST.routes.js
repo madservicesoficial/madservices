@@ -112,7 +112,7 @@ rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-precio
 //-- Formulario para añadir artículos al carrito de la compra.
 rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/carrito', ingresoCarrito);
 //-- Formulario para confirmar la compra por parte del cliente.
-rutasPost.post('/sesion-cliente/id/carrito/comprar/pagado', compraPagada);
+rutasPost.post('/sesion-cliente/:id/carrito/comprar/pagado', compraPagada);
 
 //-- Exportamos las rutas con método POST.
 module.exports = rutasPost;

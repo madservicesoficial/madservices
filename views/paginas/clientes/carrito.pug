@@ -2,7 +2,7 @@
 extends ../../base.pug
 
 block title
-  title=`${id} en el Carrito de la Compra`
+  title=`${id} en el carrito de la compra`
 
 block body
     include ./componentes/cabecera.pug
@@ -32,7 +32,8 @@ block body
                         - total += parseFloat(producto.precio)
                     .carritoTotal
                         p='Total: ' + cantidadTotal + 'x ' + total.toFixed(2) + '€'
-                    button#btnComprar(type='submit')='Comprar'
+                    if cantidadTotal >= 1
+                        button#btnComprar(type='submit')='Comprar'
             div.column
                 img(src='/images/carrito.png' alt='carrito')
         div.row

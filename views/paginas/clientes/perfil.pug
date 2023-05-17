@@ -119,6 +119,50 @@ block body
                     label=direccion + ', ' + poblacion + ', ' + region + ', ' + pais + ', ' + cp + '.'
         div.row
             div.column
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/borrar-tarjeta`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    input(type='checkbox' name='borraCard')
+                    label='Borrar Tarjeta'
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl#iconoBorrarTarjetaBank
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-numero`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    input.actualizarTarjetaBank(type='number' name='numtarjeta' placeholder='Introduce un nuevo nº de tarjeta....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-validez`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    input.actualizarTarjetaBank(type="month" name='validez' placeholder='Introduce una nueva fecha de expiración....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-nombre`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    input.actualizarTarjetaBank(type='text' name='namecard' placeholder='Introduce un nuevo nombre....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-cvv`)
+                    input(type='hidden' name='_method' value='PATCH')
+                    input.actualizarTarjetaBank(type='number' name='cvv' placeholder='Introduce un nuevo código CVV....')
+                    button(type='submit')
+                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+            div.column
+                div.tarjetaBankPerfil
+                    div#caraA
+                        img(src="/images/bg-card-front.png" alt="Frente de la tarjeta")
+                        div#contenido
+                            img(src="/images/card-logo.svg" alt="")
+                            br
+                            p#numTarjeta=numcard
+                            p#fechaexp='Válida hasta: ' + expiracion
+                            p#nombrecard=cliente
+            div.column
+                div.tarjetaBankPerfil
+                    div#caraB
+                        img(src="/images/bg-card-back.png" alt="Dorso de la tarjeta")
+                        div#contenido
+                            p=cvv
+        div.row
+            div.column
             div.column
                 h3='Darse de baja de MAD Services: '
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)

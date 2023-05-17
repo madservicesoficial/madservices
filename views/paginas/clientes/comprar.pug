@@ -2,7 +2,7 @@
 extends ../../base.pug
 
 block title
-  title=`${id} verificando la Compra`
+  title=`${id} verificando la compra`
 
 block body
     include ./componentes/cabecera.pug
@@ -34,29 +34,53 @@ block body
                 i.fa-solid.fa-credit-card.fa-2xl
                 h1#tituloLocalizacionCliente='Método de pago: '
                 p='__________________________________________________________________________'
-                div.tarjetaBancaria
-                    form(method='POST' action=`/sesion-cliente/${id}/carrito/comprar/pagado`)
+                form(method='POST' action=`/sesion-cliente/${id}/carrito/comprar/pagado`)
+                    if cliente
+                        label='Nombre del propietario de la tarjeta: '
+                        label=cliente
+                        br
+                        br
+                    else
                         label='Nombre del propietario de la tarjeta: '
                         input.tarjetaBancariaEntradas(type="text" name="nombreTarjeta")
                         br
                         br
+                    if numcard
+                        label='Número de tarjeta: '
+                        label=numcard
+                        br
+                        br
+                    else
                         label='Número de tarjeta: '
                         input.tarjetaBancariaEntradas(type="number" name="numeroTarjeta")
                         br
                         br
+                    if expiracion
+                        label='Válida hasta: '
+                        label=expiracion
+                        br
+                        br
+                    else
                         label='Válida hasta: '
                         input.tarjetaBancariaEntradas(type="month" name="fechaExpiracion")
                         br
                         br
+                    if cvv
+                        label='CVV: '
+                        label=cvv
+                        br
+                        br
+                    else
                         label='CVV: '
                         input.tarjetaBancariaEntradas(type="number" name="cvv")
                         br
                         br
+                    if !numcard
                         input(type='checkbox' name='saveCard')
                         label='Guardar tarjeta'
                         br
-                        button#btnComprar(type='submit')='Pagar'
-                p='__________________________________________________________________________'
+                    button#btnComprar(type='submit' name='nohayTarjeta' value=nohayTarjeta)='Pagar'
+                p='______________________________________________________________________'
         div.row
             footer
                 img(src='/images/anuncio.png' alt='anuncio')

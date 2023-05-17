@@ -504,6 +504,33 @@ const adquirirNombredb = (id) => {
     });
 }
 
+//-- Creamos la función para guardar la tarjeta bancaria del cliente si así lo ha querido.
+const guardaTarjetadb = (id, nombreTarjeta, numTarjeta, newExpiracion, cvv) => {
+
+    let instruccionComprobarExistenciaTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionComprobarExistenciaTarjetaBank = mysql.format(instruccionComprobarExistenciaTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionComprobarExistenciaTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            let instruccionIngresarTarjetaBank = 'INSERT INTO tarjeta (id, cliente, numcard, expiracion, cvv) VALUES (?, ?, ?, ?, ?)';
+            let formatoInstruccionIngresarTarjetaBank = mysql.format(instruccionIngresarTarjetaBank, [id, nombreTarjeta, numTarjeta, newExpiracion, cvv]);
+            madservicesClientedb.query(formatoInstruccionIngresarTarjetaBank);
+        }
+    });
+}
+
+//-- Creamos la función para confirmar que el/los producto/s ha/han sido vendidos con éxito.
+const confirmacionCompradb = (id) => {
+
+    
+    let instruccionConsultarProductoComprado = 'SELECT * FROM productos WHERE id = ?';
+    let formatoInstruccionConsultarProductoComprado = mysql.format(instruccionConsultarProductoComprado, [id]);
+    madservicesClientedb.query(formatoInstruccionConsultarProductoComprado, (error, results) => {
+        if(error) throw error;
+        const cantidad = results[0].cantidad;
+    });
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarClienteVerificadodb,
@@ -517,5 +544,7 @@ module.exports = {
     darseBajaClientedb,
     ingresoCarritodb,
     quitarProductosdb,
-    adquirirNombredb
+    adquirirNombredb,
+    guardaTarjetadb,
+    confirmacionCompradb
 };
