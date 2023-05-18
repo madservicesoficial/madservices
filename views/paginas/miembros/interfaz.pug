@@ -108,19 +108,84 @@ block body
                         input(type='text' name='password' value=password readonly)
         div.row
             div.column
+                h3='Nº de Clientes MAD:'
+                if numClientes === 1
+                    label=numClientes + ' cliente'
+                else 
+                    label=numClientes + ' clientes'
             div.column
-                h3='Confirmación de separación de MAD Services: '
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
-                    input(type='hidden' name='_method' value='DELETE')
-                    label='¿Confirmas separarte de MAD Services y seguir tu propio camino?: '
-                    br
-                    br
-                    select(name="decideConfirmar")
-                        option(checked)=''
-                        option='Sí'
-                        option='No' 
-                    button#btnBajaMiembroMAD(type='submit')='Confirmo'
+                h3='Nº de Empresas inscritas en MAD Services:'
+                if numEmpresas === 1
+                    label=numEmpresas + ' empresa'
+                else 
+                    label=numEmpresas + ' empresas'
             div.column
+                h3='Nº de Trabajadores por Departamento en MAD Services:'
+                if numMiembrosDireccion === 1  
+                    label='Dirección: ' + numMiembrosDireccion + ' trabajador'
+                    br
+                else 
+                    label='Dirección: ' + numMiembrosDireccion + ' trabajadores'
+                    br
+                if numMiembrosAdministracion === 1
+                    label='Administración: ' + numMiembrosAdministracion + ' trabajador'
+                    br
+                else 
+                    label='Administración: ' + numMiembrosAdministracion + ' trabajadores'
+                    br
+                if numMiembrosCiberseguridad === 1
+                    label='Ciberseguridad: ' + numMiembrosCiberseguridad + ' trabajador'
+                    br
+                else 
+                    label='Ciberseguridad: ' + numMiembrosCiberseguridad + ' trabajadores'
+                    br
+                if numMiembrosIngenieria === 1
+                    label='Ingeniería: ' + numMiembrosIngenieria + ' trabajador'
+                    br
+                else 
+                    label='Ingeniería: ' + numMiembrosIngenieria + ' trabajadores'
+                    br
+                if numMiembrosRRHH === 1
+                    label='RR.HH: ' + numMiembrosRRHH + ' trabajador'
+                    br
+                else
+                    label='RR.HH: ' + numMiembrosRRHH + ' trabajadores'
+                    br
+                if numMiembrosVentas === 1
+                    label='Ventas: ' + numMiembrosVentas + ' trabajador'
+                    br
+                else 
+                    label='Ventas: ' + numMiembrosVentas + ' trabajadores'
+                    br
+                if numMiembrosEconomia === 1
+                    label='Economía: ' + numMiembrosEconomia + ' trabajador'
+                    br
+                else
+                    label='Economía: ' + numMiembrosEconomia + ' trabajadores'
+                    br
+        div.row
+            div.column
+                h3='Clientes que guardan la tarjeta bancaria:'
+                if clientesGuardanCard === 1
+                    label=clientesGuardanCard + ' cliente'
+                else 
+                    label=clientesGuardanCard + ' clientes'
+            div.column
+                h3='Productos en el carrito de compra:'
+                table
+                    tr 
+                        th='Título del producto'
+                            span
+                        th='   Veces añadido'
+                            span
+                        th='    Precio total'
+                    each producto in fullCarrito
+                        tr 
+                            td=producto.titulo
+                                span
+                            td=producto.total_cantidad
+                                span
+                            td=producto.total_precio
         div.row
             div.column
             div.column
@@ -299,5 +364,20 @@ block body
                 each producto in todosProductosInterfaz
                     p=producto.enumeracion + ')'
                         span#separacionProductoEnumeracion=producto.titulo
+        div.row
+            div.column
+            div.column
+                h3='Confirmación de separación de MAD Services: '
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    label='¿Confirmas separarte de MAD Services y seguir tu propio camino?: '
+                    br
+                    br
+                    select(name="decideConfirmar")
+                        option(checked)=''
+                        option='Sí'
+                        option='No' 
+                    button#btnBajaMiembroMAD(type='submit')='Confirmo'
+            div.column
         br
     include ./componentes/piepagina.pug

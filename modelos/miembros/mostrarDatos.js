@@ -16,17 +16,92 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
     //-- Establecer la comunicación con los Productos MAD de la base de datos.
     madservicesAdmindb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
-        res.status(201).render('paginas/miembros/interfaz',
-        {
-            id: id,
-            email: email,
-            password: password,
-            miembro: miembro,
-            departamento: departamento,
-            genero: genero,
-            todosProductosInterfaz: result
+        //-- Instrucción del ID.
+        let instruccionID = 'SELECT * FROM clientes';
+        //-- Configuración de su formato en mysql.
+        let formatoInstruccionID = mysql.format(instruccionID);
+        //-- Establecer la comunicación con los Productos MAD de la base de datos.
+        madservicesAdmindb.query(formatoInstruccionID, (error, salida1) => {
+            if(error) throw error;
+            //-- Instrucción del ID.
+            let instruccionID = 'SELECT * FROM empresas';
+            //-- Configuración de su formato en mysql.
+            let formatoInstruccionID = mysql.format(instruccionID);
+            //-- Establecer la comunicación con los Productos MAD de la base de datos.
+            madservicesAdmindb.query(formatoInstruccionID, (error, salida2) => {
+                if(error) throw error;
+                //-- Instrucción del ID.
+                let instruccionID = 'SELECT * FROM miembros';
+                //-- Configuración de su formato en mysql.
+                let formatoInstruccionID = mysql.format(instruccionID);
+                //-- Establecer la comunicación con los Productos MAD de la base de datos.
+                madservicesAdmindb.query(formatoInstruccionID, (error, salida3) => {
+                    if(error) throw error;
+                    let miembrosDireccion = 0;
+                    let miembrosAdministracion = 0;
+                    let miembrosCiberseguridad = 0;
+                    let miembrosIngenieria = 0;
+                    let miembrosRRHH = 0;
+                    let miembrosVentas = 0;
+                    let miembrosEconomia = 0;
+                    for(let i=0; i<salida3.length; i++) {
+                        if(salida3[i].departamento === 'DIRECCION') {
+                            miembrosDireccion = miembrosDireccion + 1;
+                        }else if(salida3[i].departamento === 'ADMINISTRACION') {
+                            miembrosAdministracion = miembrosAdministracion + 1;
+                        }else if(salida3[i].departamento === 'CIBERSEGURIDAD') {
+                            miembrosCiberseguridad = miembrosCiberseguridad + 1;
+                        }else if(salida3[i].departamento === 'INGENIERIA') {
+                            miembrosIngenieria = miembrosIngenieria + 1;
+                        }else if(salida3[i].departamento === 'RRHH') {
+                            miembrosRRHH = miembrosRRHH + 1;
+                        }else if(salida3[i].departamento === 'VENTAS') {
+                            miembrosVentas = miembrosVentas + 1;
+                        }else if(salida3[i].departamento === 'ECONOMIA') {
+                            miembrosEconomia = miembrosEconomia + 1;
+                        }
+                    }
+                    //-- Instrucción del ID.
+                    let instruccionID = 'SELECT * FROM tarjeta';
+                    //-- Configuración de su formato en mysql.
+                    let formatoInstruccionID = mysql.format(instruccionID);
+                    //-- Establecer la comunicación con los Productos MAD de la base de datos.
+                    madservicesAdmindb.query(formatoInstruccionID, (error, salida4) => {
+                        if(error) throw error;
+                        //-- Instrucción del ID.
+                        let instruccionID = 'SELECT titulo, SUM(cantidad) AS total_cantidad, SUM(precio * cantidad) AS total_precio FROM carrito GROUP BY titulo';
+                        //-- Configuración de su formato en mysql.
+                        let formatoInstruccionID = mysql.format(instruccionID);
+                        //-- Establecer la comunicación con los Productos MAD de la base de datos.
+                        madservicesAdmindb.query(formatoInstruccionID, (error, salida5) => {
+                            if(error) throw error;
+                            res.status(201).render('paginas/miembros/interfaz',
+                            {
+                                id: id,
+                                email: email,
+                                password: password,
+                                miembro: miembro,
+                                departamento: departamento,
+                                genero: genero,
+                                todosProductosInterfaz: result,
+                                numClientes: salida1.length,
+                                numEmpresas: salida2.length,
+                                numMiembrosDireccion: miembrosDireccion,
+                                numMiembrosAdministracion: miembrosAdministracion,
+                                numMiembrosCiberseguridad: miembrosCiberseguridad,
+                                numMiembrosIngenieria: miembrosIngenieria,
+                                numMiembrosRRHH: miembrosRRHH,
+                                numMiembrosVentas: miembrosVentas,
+                                numMiembrosEconomia: miembrosEconomia,
+                                clientesGuardanCard: salida4.length,
+                                fullCarrito: salida5
+                            });
+                            return res.end();
+                        });
+                    });
+                });
+            });
         });
-        return res.end();
     });
 }
 

@@ -56,7 +56,7 @@ madservices.use(session({
 
 //##############################################################################################################//
 //-- MIDDLEWARES O SOFTWARES INTERMEDIOS => Para....                                                            
-//-- 1. Analizar y mostrar las solicitudes HTTP.                                                                                  
+//-- 1. Analizar y mostrar las solicitudes HTTP => madservices.use(analizadorSolicitudes('dev'));                                                                            
 //-- 2. Trabajar con los ficheros JSON de la conexión.                                                                      
 //-- 3. Analizar los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
 //-- coincida con la opción de tipo (para el Body y para la Tecnología Express en general).                    
@@ -68,8 +68,7 @@ madservices.use(session({
 //-- 9. Analizar el Control de Acceso HTTP de cada conexión.
 //-- 10. Configurar la Protección de Cabeceras HTTP.
 //-- 11. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.
-//-- 12. Poder usar los métodos PATCH y DELETE.                                                
-madservices.use(analizadorSolicitudes('dev'));                                                                 
+//-- 12. Poder usar los métodos PATCH y DELETE.                                                                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
 madservices.use(analizadorCookies('madserviceskey'));

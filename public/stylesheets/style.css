@@ -1022,6 +1022,13 @@ canvas {
 #separacionProductoEnumeracion {
   margin-left: 20;
 }
+.interfazMiembroMAD table {
+  margin-left: 50;
+  text-align: center;
+}
+.interfazMiembroMAD table span {
+  margin-left: 75;
+}
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
 /*##################################################################################################*/

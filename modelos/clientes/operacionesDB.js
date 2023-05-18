@@ -393,6 +393,19 @@ const darseBajaClientedb = (id, dileAdios, req, res) => {
                 madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
             }
         });
+        //-- Si tiene guardada la tarjeta bancaria, también se borra.
+        let instruccionVerTarjetasBank = "SELECT * FROM tarjeta WHERE id = ?";
+        let formatoInstruccionVerTarjetasBank = mysql.format(instruccionVerTarjetasBank, [id]);
+        //-- Establecer la configuración de ver los datos de la base de datos.
+        madservicesClientedb.query(formatoInstruccionVerTarjetasBank, (error, resultados) => {
+            if(error) throw error;
+            if(resultados.length > 0) {
+                let instruccionBorrarTarjetasBank = "DELETE FROM tarjeta WHERE id = ?";
+                let formatoInstruccionBorrarTarjetasBank = mysql.format(instruccionBorrarTarjetasBank, [id]);
+                //-- Establecer la configuración de borrar los datos de la base de datos.
+                madservicesClientedb.query(formatoInstruccionBorrarTarjetasBank);
+            }
+        });
         //-- Variables usadas para borrar los datos de la base de datos.
         let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
         let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);

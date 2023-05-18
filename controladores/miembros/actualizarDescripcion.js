@@ -12,7 +12,7 @@ const actualizarDescripcion = async (req, res) => {
     const descripcion = req.body.descripcion;
     if(!enumeracion) {
         //-- Mostrar Alerta Emergente.
-        alerta('Sin cambios en ningún producto');
+        alerta('Sin cambios en la descripción de ningún producto');
         // Redirigir a la página principal de la aplicación.
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
     }else {
