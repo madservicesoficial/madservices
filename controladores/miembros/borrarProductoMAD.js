@@ -14,8 +14,6 @@ const borrarProductoMAD = async (req, res) => {
     let insertar;
     //-- Borramos el producto MAD de la base de datos.
     borrarProductoMADdb(ptoPartida);
-    //-- También borramos el producto del carrito.
-    borrarProductoMADcarritodb(ptoPartida);
     //-- Realizamos el bucle para ajustar la enumeración después de borrar.
     for(i = ptoPartida+1; i > ptoPartida; i++) {
         //-- Consultamos la enumeración del Producto MAD.

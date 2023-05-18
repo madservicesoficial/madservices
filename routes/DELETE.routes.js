@@ -10,6 +10,8 @@ const darseBajaMiembro = require('../controladores/miembros/darseBaja.js');
 const borrarProductoMAD = require('../controladores/miembros/borrarProductoMAD.js');
 //-- Importamos la función para quitar productos del carrito de la compra.
 const quitarProductos = require('../controladores/clientes/quitarProductos.js');
+//-- Importamos la función que borra las tarjetas Bank.
+const borrarTarjetaBank = require('../controladores/clientes/borrarTarjetaBank.js');
 
 //-- Darse de baja de Clientes MAD Services.
 rutasDelete.post('/sesion-cliente/:id/perfil/darse-baja', darseBajaCliente);
@@ -21,6 +23,8 @@ rutasDelete.post('/sesion-miembro/:id/interfaz/darse-baja', darseBajaMiembro);
 rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/borrar-producto', borrarProductoMAD);
 //-- Formulario para quitar artículos al carrito de la compra.
 rutasDelete.post('/sesion-cliente/:id/carrito/quitar-producto', quitarProductos);
+//-- Formulario para que el cliente borre su tarjeta bancaria si quiere.
+rutasDelete.post('/sesion-cliente/:id/perfil/borrar-tarjeta', borrarTarjetaBank);
 
 //-- Exportamos las rutas con método DELETE.
 module.exports = rutasDelete;

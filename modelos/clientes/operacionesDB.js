@@ -22,6 +22,8 @@ const { postcodeValidator } = require('postcode-validator');
 require('../../config/env.js');
 //-- Importamos la Tecnología para solicitar URLs de Geolocalización.
 const axios = require('axios');
+//-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
+const validarCard = require('card-validator');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarClienteVerificadodb = async (data, password, res) => {
@@ -377,16 +379,25 @@ const darseBajaClientedb = (id, dileAdios, req, res) => {
         return res.redirect(`/sesion-cliente/${id}/perfil`);
     //-- Caso 3: pulsar que sí quieres darte de baja.
     }else if(dileAdios === 'Sí') {
+        //-- Si tiene productos en el carrito, también se borran.
+        let instruccionVerCarrito = "SELECT * FROM carrito WHERE id = ?";
+        let formatoInstruccionVerCarrito = mysql.format(instruccionVerCarrito, [id]);
+        //-- Establecer la configuración de ver los datos de la base de datos.
+        madservicesClientedb.query(formatoInstruccionVerCarrito, (error, results) => {
+            if(error) throw error;
+            if(results.length > 0) {
+                //-- Si tiene productos en el carrito, se borran.
+                let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
+                let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [id]);
+                //-- Establecer la configuración de borrar los datos de la base de datos.
+                madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
+            }
+        });
         //-- Variables usadas para borrar los datos de la base de datos.
         let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
         let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
         //-- Establecer la configuración de borrar los datos de la base de datos.
         madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
-        //-- Si tiene productos en el carrito, también se borran.
-        let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
-        let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [id]);
-        //-- Establecer la configuración de borrar los datos de la base de datos.
-        madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
         //-- Destruir la sesión.
         req.session.destroy();
         //-- Mostrar Alerta Emergente.
@@ -531,6 +542,170 @@ const confirmacionCompradb = (id) => {
     });
 }
 
+//-- Creamos la función para borrar la tarjeta bancaria del perfil.
+const borrarTarjetaBankdb = (id, res) => {
+
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('No hay ninguna tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            let instruccionBorrarTarjetaBank = 'DELETE FROM tarjeta WHERE id = ?';
+            let formatoInstruccionBorrarTarjetaBank = mysql.format(instruccionBorrarTarjetaBank, [id]);
+            madservicesClientedb.query(formatoInstruccionBorrarTarjetaBank);
+            //-- Mostrar alerta.
+            alerta('Tarjeta bancaria borrada de tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }
+    });
+}
+
+//-- Creamos las funciones para actualizar la tarjeta bancaria en el perfil.
+const editarNumTarjetaBankdb = (id, numtarjeta, res) => {
+
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('No hay ninguna tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            //-- Validamos el nº de tarjeta bancaria.
+            const validacionCard = validarCard.number(numtarjeta);
+            if(!validacionCard.isValid || numtarjeta.length > 18) {
+                //-- Mostrar alerta.
+                alerta(`${numtarjeta} no es un nº de tarjeta bancaria válido`);
+                //-- Redirigir.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }else {
+                let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET numcard = ? WHERE id = ?';
+                let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [numtarjeta, id]);
+                madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
+                //-- Mostrar alerta.
+                alerta('Nº de tarjeta bancaria actualizado en tu perfil');
+                //-- Redirigir.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }
+        }
+    });
+}
+const editarValidezTarjetaBankdb = (id, validez, res) => {
+
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('No hay ninguna tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            const newExpiracion = validez + '-01';
+            let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET expiracion = ? WHERE id = ?';
+            let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [newExpiracion, id]);
+            madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
+            //-- Mostrar alerta.
+            alerta('Fecha de validez de la tarjeta bancaria actualizada en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }
+    });
+}
+const editarNombreTarjetaBankdb = (id, namecard, res) => {
+
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('No hay ninguna tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            if(namecard > 148) {
+                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                alerta(`${namecard} demasiado largo`);
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }else {
+                let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET cliente = ? WHERE id = ?';
+                let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [namecard, id]);
+                madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
+                //-- Mostrar alerta.
+                alerta('Nombre de la tarjeta bancaria actualizado en tu perfil');
+                //-- Redirigir.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }
+        }
+    });
+}
+const editarCVVTarjetaBankdb = (id, cvv, res) => {
+
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('No hay ninguna tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            //-- Comprobar que el CVV es válido y actualizarlo.
+            const validacionCVV = validarCard.cvv(cvv);
+            if(!validacionCVV.isValid) {
+                //-- Mostrar alerta.
+                alerta(`${cvv} no es un CVV válido`);
+                //-- Redirigir.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }else {
+                let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET cvv = ? WHERE id = ?';
+                let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [cvv, id]);
+                madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
+                //-- Mostrar alerta.
+                alerta('CVV de la tarjeta bancaria actualizado en tu perfil');
+                //-- Redirigir.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
+            }
+        }
+    });
+}
+
+//-- Creamos las funciones para ingresar la tarjeta bancaria en el perfil.
+const ingresarTarjetaBankdb = (id, numtarjeta, newExpiracion, namecard, cvv, res) => {
+    
+    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
+    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            const numtarjetaBigInt = BigInt(numtarjeta);
+            let instruccionIngresarTarjetaBank = 'INSERT INTO tarjeta (id, cliente, numcard, expiracion, cvv) VALUES (?, ?, ?, ?, ?)';
+            let formatoInstruccionIngresarTarjetaBank = mysql.format(instruccionIngresarTarjetaBank, [id, numtarjetaBigInt, newExpiracion, namecard, cvv]);
+            madservicesClientedb.query(formatoInstruccionIngresarTarjetaBank);
+            //-- Mostrar alerta.
+            alerta('Tarjeta bancaria ingresada en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }else {
+            //-- Mostrar alerta.
+            alerta('Ya ingresaste una tarjeta bancaria en tu perfil');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }
+    });
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarClienteVerificadodb,
@@ -546,5 +721,11 @@ module.exports = {
     quitarProductosdb,
     adquirirNombredb,
     guardaTarjetadb,
-    confirmacionCompradb
+    confirmacionCompradb,
+    borrarTarjetaBankdb,
+    editarNumTarjetaBankdb,
+    editarValidezTarjetaBankdb,
+    editarNombreTarjetaBankdb,
+    editarCVVTarjetaBankdb,
+    ingresarTarjetaBankdb
 };

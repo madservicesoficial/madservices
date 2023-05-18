@@ -2,6 +2,8 @@
 const {adquirirNombredb, guardaTarjetadb, confirmacionCompradb} = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
+const validarCard = require('card-validator');
 
 //-- Pto de control del ajuste de la verificación de la compra.
 const compraPagada = async (req, res) => {
@@ -14,9 +16,8 @@ const compraPagada = async (req, res) => {
     let expiracion = req.body.fechaExpiracion;
     const cvv = req.body.cvv;
     let nohayTarjeta = req.body.nohayTarjeta;
+    //-- Comprobamos si hay o no tarjeta guardada.
     if(nohayTarjeta) {
-        //-- Comprobamos si quiere o no guardar la tarjeta en base de datos.
-        const guardarTarjeta = req.body.saveCard;
         if(!nombreTarjeta) {
             //-- Se adquiere el nombre del cliente de la base de datos.
             nombreTarjeta = await adquirirNombredb(id);
@@ -26,23 +27,46 @@ const compraPagada = async (req, res) => {
             alerta('Campos vacíos');
             return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
         }else {
-            if(guardarTarjeta) {
-                if(numTarjeta <= 16) {
+            //-- Comprobamos si quiere o no guardar la tarjeta en base de datos.
+            const guardarTarjeta = req.body.saveCard;
+            //-- Configuramos bien la fecha de expiración.
+            const newExpiracion = expiracion + '-01';
+            //-- Validamos el nº de tarjeta bancaria y el cvv.
+            const validacionCard = validarCard.number(numTarjeta);
+            const validacionCVV = validarCard.cvv(cvv);
+            if(nombreTarjeta > 148) {
+                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                alerta(`${nombreTarjeta} demasiado largo`);
+                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+            }else if(!validacionCard.isValid || numtarjeta.length > 18) {
+                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                alerta(`${numTarjeta} es un nº de tarjeta bancaria inválido`);
+                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+            }else if(!validacionCVV.isValid) {
+                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                alerta(`${cvv} es un código CVV inválido`);
+                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+            }else {
+                if(guardarTarjeta) {
                     //-- Guardamos la tarjeta en base de datos.
-                    const newExpiracion = expiracion + '-01';
                     guardaTarjetadb(id, nombreTarjeta, numTarjeta, newExpiracion, cvv);
-                }else {
-                    //-- Mostrar alerta y redirigir al mismo lugar.
-                    alerta('Nº de tarjeta demasiado largo');
-                    res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
                 }
+                //-- Proceso de compra.
+                confirmacionCompradb(id);
+                //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
+                alerta('¡Compra realizada con éxito!');
+                //-- Redirigir al perfil del cliente.
+                return res.redirect(`/sesion-cliente/${id}/perfil`);
             }
         }
+    }else {
+        //-- Proceso de compra.
+        confirmacionCompradb(id);
+        //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
+        alerta('¡Compra realizada con éxito!');
+        //-- Redirigir al perfil del cliente.
+        return res.redirect(`/sesion-cliente/${id}/perfil`);
     }
-    //-- Se confirma la compra.
-    /* confirmacionCompradb(id);
-    alerta('Producto comprado con éxito');
-    res.redirect(`/sesion-cliente/${id}/perfil`); */
 }
 
 //-- Exportamos para unir con el resto de rutas.

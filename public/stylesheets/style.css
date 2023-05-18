@@ -883,6 +883,9 @@ canvas {
 #iconoBorrarTarjetaBank {
   color: black;
 }
+#iconoIngresarTarjetaBank {
+  color: #691db4;
+}
 .actualizarTarjetaBank {
   background-color: transparent;
   width: 300;

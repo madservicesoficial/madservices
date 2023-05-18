@@ -31,6 +31,11 @@ const actualizarTitulo = require('../controladores/miembros/actualizarTitulo.js'
 const actualizarPrecio = require('../controladores/miembros/actualizarPrecio.js');
 const actualizarPeso = require('../controladores/miembros/actualizarPeso.js');
 const actualizarDescripcion = require('../controladores/miembros/actualizarDescripcion.js');
+//-- Importamos las funciones que actualizan las tarjetas bank.
+const editarNumTarjetaBank = require('../controladores/clientes/editarNumTarjetaBank.js');
+const editarValidezTarjetaBank = require('../controladores/clientes/editarValidezTarjetaBank.js');
+const editarNombreTarjetaBank = require('../controladores/clientes/editarNombreTarjetaBank.js');
+const editarCVVTarjetaBank = require('../controladores/clientes/editarCVVTarjetaBank.js');
 
 //-- Formulario de actualización de datos del Perfil Cliente.
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-nombre', actualizarNombre);
@@ -69,6 +74,11 @@ rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-titulo', actualizarTitu
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-precio', actualizarPrecio);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-peso', actualizarPeso);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-descripcion', actualizarDescripcion);
+//-- Formulario de actualización de tarjetas bancarias.
+rutasPatch.post('/sesion-cliente/:id/perfil/editar-numero', editarNumTarjetaBank);
+rutasPatch.post('/sesion-cliente/:id/perfil/editar-validez', editarValidezTarjetaBank);
+rutasPatch.post('/sesion-cliente/:id/perfil/editar-nombre', editarNombreTarjetaBank);
+rutasPatch.post('/sesion-cliente/:id/perfil/editar-cvv', editarCVVTarjetaBank);
 
 //-- Exportamos las rutas con método PATCH.
 module.exports = rutasPatch;

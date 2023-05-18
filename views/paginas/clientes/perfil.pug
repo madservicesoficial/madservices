@@ -163,6 +163,23 @@ block body
                             p=cvv
         div.row
             div.column
+                form(method='POST' action=`/sesion-cliente/${id}/perfil/ingresar-tarjeta`)
+                    input(type='checkbox' name='ingresaCard')
+                    label='Ingresar Tarjeta'
+                    br
+                    br
+                    input.actualizarTarjetaBank(type='number' name='tarjetab' placeholder='Introduce un nº de tarjeta....')
+                    br
+                    br
+                    input.actualizarTarjetaBank(type="month" name='fvalidez' placeholder='Introduce una fecha de expiración....')
+                    br
+                    br
+                    input.actualizarTarjetaBank(type='text' name='nombrecard' placeholder='Introduce un nombre....')
+                    br
+                    br
+                    input.actualizarTarjetaBank(type='number' name='cvvcod' placeholder='Introduce un código CVV....')
+                    button(type='submit')
+                        i.fa-solid.fa-plus.fa-2xl#iconoIngresarTarjetaBank
             div.column
                 h3='Darse de baja de MAD Services: '
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)
@@ -175,6 +192,5 @@ block body
                         option='Sí'
                         option='No' 
                     button#btnBajaCliente(type='submit')='Confirmo'
-            div.column
         br
     include ./componentes/piepagina.pug

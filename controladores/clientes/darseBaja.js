@@ -2,7 +2,7 @@
 const { darseBajaClientedb } = require('../../modelos/clientes/operacionesDB.js');
 
 //-- Creamos el Punto de Control para configurar el darse de baja del cliente.
-const darseBajaCliente = async (req, res) => {
+const darseBajaCliente = (req, res) => {
 
     //-- Obtenemos el parámetro del ID cliente.
     let id = req.params.id;
