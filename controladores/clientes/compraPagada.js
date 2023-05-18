@@ -38,7 +38,7 @@ const compraPagada = async (req, res) => {
                 //-- Mostrar alerta y redirigir a donde estaba de nuevo.
                 alerta(`${nombreTarjeta} demasiado largo`);
                 return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
-            }else if(!validacionCard.isValid || numtarjeta.length > 18) {
+            }else if(!validacionCard.isValid || numTarjeta.length > 18) {
                 //-- Mostrar alerta y redirigir a donde estaba de nuevo.
                 alerta(`${numTarjeta} es un nº de tarjeta bancaria inválido`);
                 return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);

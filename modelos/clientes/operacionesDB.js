@@ -532,14 +532,13 @@ const guardaTarjetadb = (id, nombreTarjeta, numTarjeta, newExpiracion, cvv) => {
 
 //-- Creamos la función para confirmar que el/los producto/s ha/han sido vendidos con éxito.
 const confirmacionCompradb = (id) => {
-
     
-    let instruccionConsultarProductoComprado = 'SELECT * FROM productos WHERE id = ?';
+    /* let instruccionConsultarProductoComprado = 'SELECT * FROM productos WHERE id = ?';
     let formatoInstruccionConsultarProductoComprado = mysql.format(instruccionConsultarProductoComprado, [id]);
     madservicesClientedb.query(formatoInstruccionConsultarProductoComprado, (error, results) => {
         if(error) throw error;
         const cantidad = results[0].cantidad;
-    });
+    }); */
 }
 
 //-- Creamos la función para borrar la tarjeta bancaria del perfil.
@@ -689,9 +688,8 @@ const ingresarTarjetaBankdb = (id, numtarjeta, newExpiracion, namecard, cvv, res
     madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
-            const numtarjetaBigInt = BigInt(numtarjeta);
             let instruccionIngresarTarjetaBank = 'INSERT INTO tarjeta (id, cliente, numcard, expiracion, cvv) VALUES (?, ?, ?, ?, ?)';
-            let formatoInstruccionIngresarTarjetaBank = mysql.format(instruccionIngresarTarjetaBank, [id, numtarjetaBigInt, newExpiracion, namecard, cvv]);
+            let formatoInstruccionIngresarTarjetaBank = mysql.format(instruccionIngresarTarjetaBank, [id, namecard, numtarjeta, newExpiracion, cvv]);
             madservicesClientedb.query(formatoInstruccionIngresarTarjetaBank);
             //-- Mostrar alerta.
             alerta('Tarjeta bancaria ingresada en tu perfil');
