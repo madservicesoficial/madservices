@@ -1,5 +1,5 @@
 //-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {adquirirNombredb, guardaTarjetadb, confirmacionCompradb} = require('../../modelos/clientes/operacionesDB.js');
+const {adquirirNombredb, guardaTarjetadb, confirmacionCompradb, borrarCarritoSegunIDdb} = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
 //-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
@@ -52,12 +52,40 @@ const compraPagada = async (req, res) => {
                     guardaTarjetadb(id, nombreTarjeta, numTarjeta, newExpiracion, cvv);
                 }
                 //-- Proceso de compra.
-                confirmacionCompradb(id);
+                let fallo = false;
+                fallo = await confirmacionCompradb(id);
+                if(fallo === true) {
+                    //-- Mostrar alerta.
+                    alerta('No puedes comprar más productos de los que hay');
+                    //-- Redirigir.
+                    return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                }else {
+                    //-- Borrar el carrito según el ID cliente que ha comprado.
+                    borrarCarritoSegunIDdb(id);
+                    //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
+                    alerta('¡Compra realizada con éxito!');
+                    //-- Redirigir al perfil del cliente.
+                    return res.redirect(`/sesion-cliente/${id}/perfil`);
+                }
             }
         }
     }else {
         //-- Proceso de compra.
-        confirmacionCompradb(id);
+        let fallo = false;
+        fallo = await confirmacionCompradb(id);
+        if(fallo === true) {
+            //-- Mostrar alerta.
+            alerta('No puedes comprar más productos de los que hay');
+            //-- Redirigir.
+            return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+        }else {
+            //-- Borrar el carrito según el ID cliente que ha comprado.
+            borrarCarritoSegunIDdb(id);
+            //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
+            alerta('¡Compra realizada con éxito!');
+            //-- Redirigir al perfil del cliente.
+            return res.redirect(`/sesion-cliente/${id}/perfil`);
+        }
     }
 }
 

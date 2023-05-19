@@ -79,14 +79,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
-//-- Formulario de envío de datos del CV.
-rutasPost.post('/empleo');
-//-- Formulario de envío de datos del CV para clientes.
-rutasPost.post('/sesion-cliente/:id/empleo');
-//-- Formulario de envío de datos del CV para empresas.
-rutasPost.post('/sesion-empresa/:id/empleo');
-//-- Formulario de envío de datos del CV para miembros MAD.
-rutasPost.post('/sesion-miembro/:id/empleo');
 //-- Formulario ingresar en interfaz de empresa.
 rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);

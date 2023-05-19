@@ -192,5 +192,24 @@ block body
                         option='Sí'
                         option='No' 
                     button#btnBajaCliente(type='submit')='Confirmo'
+        div.row
+            div.column
+                h3='Mis compras: '
+                each compra in miscompras
+                    - var cantidades = parseInt(compra.cantidades, 10)
+                    if cantidades === 1
+                        .vistaCliente
+                            p=compra.fecha
+                            img(src=`data:image/*;base64,${compra.imagen}`)
+                            p=compra.titulo 
+                            p=cantidades + ' unidad'
+                            p=compra.preciototal + '€'
+                    else 
+                        .vistaCliente
+                            p=compra.fecha
+                            img(src=`data:image/*;base64,${compra.imagen}`)
+                            p=compra.titulo 
+                            p=cantidades + ' unidades'
+                            p=compra.preciototal + '€'
         br
     include ./componentes/piepagina.pug

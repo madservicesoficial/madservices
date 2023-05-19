@@ -109,16 +109,57 @@ block body
         div.row
             div.column
                 h3='Nº de Clientes MAD:'
-                if numClientes === 1
-                    label=numClientes + ' cliente'
-                else 
-                    label=numClientes + ' clientes'
+                table
+                    tr 
+                        th='Hombres'
+                            span
+                        th='Mujeres'
+                            span
+                        th='Otros'
+                    tr 
+                        td=numHombres
+                        td=numMujeres
+                        td=numOtros
+                h3='Clientes que guardan la tarjeta bancaria:'
+                table
+                    tr 
+                        th='Hombres'
+                            span
+                        th='Mujeres'
+                            span
+                        th='Otros'
+                    tr 
+                        td=cardH
+                        td=cardM
+                        td=cardO
             div.column
                 h3='Nº de Empresas inscritas en MAD Services:'
-                if numEmpresas === 1
-                    label=numEmpresas + ' empresa'
-                else 
-                    label=numEmpresas + ' empresas'
+                table
+                    tr 
+                        th='Restaurantes'
+                            span
+                        th='Academias'
+                            span
+                        th='Comercios'
+                            span 
+                        th='Peluquerías'
+                    tr 
+                        if sumaRest === 1
+                            td=sumaRest + ' empresa'
+                        else
+                            td=sumaRest + ' empresas'
+                        if sumaAca === 1
+                            td=sumaAca + ' empresa'
+                        else
+                            td=sumaAca + ' empresas'
+                        if sumaCom === 1
+                            td=sumaCom + ' empresa'
+                        else
+                            td=sumaCom + ' empresas'
+                        if sumaPeluq === 1
+                            td=sumaPeluq + ' empresa'
+                        else
+                            td=sumaPeluq + ' empresas'
             div.column
                 h3='Nº de Trabajadores por Departamento en MAD Services:'
                 if numMiembrosDireccion === 1  
@@ -165,27 +206,32 @@ block body
                     br
         div.row
             div.column
-                h3='Clientes que guardan la tarjeta bancaria:'
-                if clientesGuardanCard === 1
-                    label=clientesGuardanCard + ' cliente'
-                else 
-                    label=clientesGuardanCard + ' clientes'
+                h3='Productos comprados:'
             div.column
                 h3='Productos en el carrito de compra:'
                 table
                     tr 
                         th='Título del producto'
                             span
-                        th='   Veces añadido'
+                        th='Veces añadido'
                             span
-                        th='    Precio total'
+                        th='Precio total'
                     each producto in fullCarrito
-                        tr 
-                            td=producto.titulo
-                                span
-                            td=producto.total_cantidad
-                                span
-                            td=producto.total_precio
+                        - var cantidadInt = parseInt(producto.total_cantidad, 10)
+                        if cantidadInt === 1
+                            tr
+                                td=producto.titulo
+                                    span
+                                td=producto.total_cantidad + ' unidad'
+                                    span
+                                td=producto.total_precio + '€'
+                        else 
+                            tr
+                                td=producto.titulo
+                                    span
+                                td=producto.total_cantidad + ' unidades'
+                                    span
+                                td=producto.total_precio + '€'
         div.row
             div.column
             div.column
@@ -362,10 +408,26 @@ block body
             div.column
                 h3='Productos MAD en base de datos: '
                 each producto in todosProductosInterfaz
-                    p=producto.enumeracion + ')'
-                        span#separacionProductoEnumeracion=producto.titulo
+                    - var cantidad = parseInt(producto.cantidad, 10)
+                    if cantidad === 1
+                        .vistaMiembro
+                            img(src=`data:image/*;base64,${producto.portada}`)
+                            p#NumEnGrande=producto.enumeracion
+                            p=producto.titulo
+                            p=producto.cantidad + ' unidad'
+                            p=producto.precio + '€'
+                            p=producto.peso + 'Kg'
+                            p=producto.producto
+                    else
+                        .vistaMiembro
+                            img(src=`data:image/*;base64,${producto.portada}`)
+                            p#NumEnGrande=producto.enumeracion    
+                            p=producto.titulo
+                            p=producto.cantidad + ' unidades'
+                            p=producto.precio + '€'
+                            p=producto.peso + 'Kg'
+                            p=producto.producto
         div.row
-            div.column
             div.column
                 h3='Confirmación de separación de MAD Services: '
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
@@ -379,5 +441,9 @@ block body
                         option='No' 
                     button#btnBajaMiembroMAD(type='submit')='Confirmo'
             div.column
+                h3='Descripción de cada Producto MAD en base de datos: '
+                each producto in todosProductosInterfaz
+                    p=producto.enumeracion + ') '
+                        span=producto.descripcion
         br
     include ./componentes/piepagina.pug

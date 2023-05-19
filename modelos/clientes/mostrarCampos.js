@@ -12,7 +12,7 @@ const mostrarClientedb = (req, res) => {
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM clientes WHERE id = ?';
     //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, id);
+    let formatoInstruccionID = mysql.format(instruccionID, [id]);
     //-- Establecer la comunicación de consultar ID en la base de datos.
     madservicesClientedb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
@@ -24,44 +24,54 @@ const mostrarClientedb = (req, res) => {
             madservicesClientedb.query('SELECT DATE_FORMAT(expiracion, ?) AS fechaFormateada FROM tarjeta WHERE id = ?', [formatoFecha, id], (error, results) => {
                 if(error) throw error;
                 const vacio = '-';
-                if(resultados.length > 0) {
-                    res.status(201).render('paginas/clientes/perfil', 
-                    {
-                        id: id,
-                        email: tablaCliente.email,
-                        password: tablaCliente.password,
-                        nombre: tablaCliente.nombre,
-                        apellidos: tablaCliente.apellidos,
-                        direccion: tablaCliente.direccion,
-                        poblacion: tablaCliente.poblacion,
-                        region: tablaCliente.region,
-                        pais: tablaCliente.pais,
-                        cp: tablaCliente.cp,
-                        genero: tablaCliente.genero,
-                        cliente: tarjetaCliente.cliente,
-                        numcard: tarjetaCliente.numcard,
-                        expiracion: results[0].fechaFormateada,
-                        cvv: tarjetaCliente.cvv
-                    });
-                    return res.end();
-                }else {
-                    res.status(201).render('paginas/clientes/perfil', 
-                    {
-                        id: id,
-                        email: tablaCliente.email,
-                        password: tablaCliente.password,
-                        nombre: tablaCliente.nombre,
-                        apellidos: tablaCliente.apellidos,
-                        direccion: tablaCliente.direccion,
-                        poblacion: tablaCliente.poblacion,
-                        region: tablaCliente.region,
-                        pais: tablaCliente.pais,
-                        cp: tablaCliente.cp,
-                        genero: tablaCliente.genero,
-                        expiracion: vacio
-                    });
-                    return res.end();
-                }
+                //-- Instrucción del ID.
+                let instruccionID = 'SELECT * FROM comprados WHERE email = ?';
+                //-- Configuración de su formato en mysql.
+                let formatoInstruccionID = mysql.format(instruccionID, [tablaCliente.email]);
+                //-- Establecer la comunicación de consultar ID en la base de datos.
+                madservicesClientedb.query(formatoInstruccionID, (error, salida) => {
+                    if(error) throw error;
+                    if(resultados.length > 0) {
+                        res.status(201).render('paginas/clientes/perfil', 
+                        {
+                            id: id,
+                            email: tablaCliente.email,
+                            password: tablaCliente.password,
+                            nombre: tablaCliente.nombre,
+                            apellidos: tablaCliente.apellidos,
+                            direccion: tablaCliente.direccion,
+                            poblacion: tablaCliente.poblacion,
+                            region: tablaCliente.region,
+                            pais: tablaCliente.pais,
+                            cp: tablaCliente.cp,
+                            genero: tablaCliente.genero,
+                            cliente: tarjetaCliente.cliente,
+                            numcard: tarjetaCliente.numcard,
+                            expiracion: results[0].fechaFormateada,
+                            cvv: tarjetaCliente.cvv,
+                            miscompras: salida
+                        });
+                        return res.end();
+                    }else {
+                        res.status(201).render('paginas/clientes/perfil', 
+                        {
+                            id: id,
+                            email: tablaCliente.email,
+                            password: tablaCliente.password,
+                            nombre: tablaCliente.nombre,
+                            apellidos: tablaCliente.apellidos,
+                            direccion: tablaCliente.direccion,
+                            poblacion: tablaCliente.poblacion,
+                            region: tablaCliente.region,
+                            pais: tablaCliente.pais,
+                            cp: tablaCliente.cp,
+                            genero: tablaCliente.genero,
+                            expiracion: vacio,
+                            miscompras: salida
+                        });
+                        return res.end();
+                    }
+                });
             });
         });
     });

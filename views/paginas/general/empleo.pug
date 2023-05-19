@@ -10,7 +10,7 @@ block body
     div.cuadro
       h1='¡Envíanos tu CV!'
       img.logoEmpleo(src='/images/empleo.png' alt='empleo')
-      form.datosEmpleo(method='POST' action='/empleo')
+      .datosEmpleo
         label='Nombre: '
           span
             input.cajaRellenoCV#nombreCV(type='text')

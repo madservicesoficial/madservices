@@ -82,8 +82,9 @@ block body
                         select(name='tipo')
                             option(checked)=''
                             option='RESTAURANTE'
+                            option='ACADEMIA'
+                            option='COMERCIO'
                             option='PELUQUERIA'
-                            option='VENTAS'
                     button(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)

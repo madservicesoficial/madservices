@@ -890,6 +890,17 @@ canvas {
   background-color: transparent;
   width: 300;
 }
+.vistaCliente {
+  background-color: black;
+  font-size: xx-small;
+  color: white;
+  margin-left: 10;
+  margin-top: 20;
+  display: inline-block;
+}
+.vistaCliente img {
+  width: 80;
+}
 /*##################################################################################################*/
 /*################################### SECCIÓN INTERFAZ: EMPRESA ####################################*/
 /*##################################################################################################*/
@@ -1019,15 +1030,30 @@ canvas {
   width: 100;
   height: 25;
 }
-#separacionProductoEnumeracion {
-  margin-left: 20;
-}
 .interfazMiembroMAD table {
-  margin-left: 50;
+  margin-left: 75;
   text-align: center;
 }
+.interfazMiembroMAD table td {
+  margin-left: 20;
+  text-align: left;
+}
 .interfazMiembroMAD table span {
-  margin-left: 75;
+  margin-left: 50;
+}
+.vistaMiembro {
+  background-color: black;
+  font-size: xx-small;
+  color: white;
+  margin-left: 10;
+  margin-top: 20;
+  display: inline-block;
+}
+.vistaMiembro img {
+  width: 80;
+}
+#NumEnGrande {
+  font-size: xx-large;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/

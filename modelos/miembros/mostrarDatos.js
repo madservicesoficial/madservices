@@ -3,8 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesAdmindb} = require('../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 
 //-- Creamos la función que saca los Productos MAD de la base de datos para verlos en la Interfaz del Miembro MAD.
 const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res) => {
@@ -23,6 +21,33 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
         //-- Establecer la comunicación con los Productos MAD de la base de datos.
         madservicesAdmindb.query(formatoInstruccionID, (error, salida1) => {
             if(error) throw error;
+            let cardH = 0;
+            let cardM = 0;
+            let cardO = 0;
+            for(let cont=0; cont<salida1.length; cont++) {
+                if(salida1[cont].genero === 'Hombre') {
+                    madservicesAdmindb.query('SELECT * FROM tarjeta WHERE id = ?', [salida1[cont].id], (error, salida6) => {
+                        if(error) throw error;
+                        if(salida6.length !== 0) {
+                            cardH = cardH + 1;
+                        }
+                    });
+                }else if(salida1[cont].genero === 'Mujer') {
+                    madservicesAdmindb.query('SELECT * FROM tarjeta WHERE id = ?', [salida1[cont].id], (error, salida6) => {
+                        if(error) throw error;
+                        if(salida6.length !== 0) {
+                            cardM = cardM + 1;
+                        }
+                    });
+                }else {
+                    madservicesAdmindb.query('SELECT * FROM tarjeta WHERE id = ?', [salida1[cont].id], (error, salida6) => {
+                        if(error) throw error;
+                        if(salida6.length !== 0) {
+                            cardO = cardO + 1;
+                        }
+                    });
+                }
+            }
             //-- Instrucción del ID.
             let instruccionID = 'SELECT * FROM empresas';
             //-- Configuración de su formato en mysql.
@@ -30,6 +55,21 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
             //-- Establecer la comunicación con los Productos MAD de la base de datos.
             madservicesAdmindb.query(formatoInstruccionID, (error, salida2) => {
                 if(error) throw error;
+                let sumaRest = 0;
+                let sumaAca = 0;
+                let sumaCom = 0;
+                let sumaPeluq = 0;
+                for(let k=0; k<salida2.length; k++) {
+                    if(salida2[k].tipo === 'RESTAURANTE') {
+                        sumaRest = sumaRest + 1;
+                    }else if(salida2[k].tipo === 'ACADEMIA') {
+                        sumaAca = sumaAca + 1;
+                    }else if(salida2[k].tipo === 'COMERCIO') {
+                        sumaCom = sumaCom + 1;
+                    }else {
+                        sumaPeluq = sumaPeluq + 1;
+                    }
+                }
                 //-- Instrucción del ID.
                 let instruccionID = 'SELECT * FROM miembros';
                 //-- Configuración de su formato en mysql.
@@ -75,6 +115,18 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
                         //-- Establecer la comunicación con los Productos MAD de la base de datos.
                         madservicesAdmindb.query(formatoInstruccionID, (error, salida5) => {
                             if(error) throw error;
+                            let sumaH = 0;
+                            let sumaM = 0;
+                            let sumaO = 0;
+                            for(let j=0; j<salida1.length; j++) {
+                                if(salida1[j].genero === 'Hombre') {
+                                    sumaH = sumaH + 1;
+                                }else if(salida1[j].genero === 'Mujer') {
+                                    sumaM = sumaM + 1;
+                                }else {
+                                    sumaO = sumaO + 1;
+                                }
+                            }
                             res.status(201).render('paginas/miembros/interfaz',
                             {
                                 id: id,
@@ -84,7 +136,16 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
                                 departamento: departamento,
                                 genero: genero,
                                 todosProductosInterfaz: result,
-                                numClientes: salida1.length,
+                                numHombres: sumaH,
+                                numMujeres: sumaM,
+                                numOtros: sumaO,
+                                cardH: cardH,
+                                cardM: cardM,
+                                cardO: cardO,
+                                sumaRest: sumaRest,
+                                sumaAca: sumaAca,
+                                sumaCom: sumaCom,
+                                sumaPeluq: sumaPeluq,
                                 numEmpresas: salida2.length,
                                 numMiembrosDireccion: miembrosDireccion,
                                 numMiembrosAdministracion: miembrosAdministracion,
@@ -93,7 +154,6 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
                                 numMiembrosRRHH: miembrosRRHH,
                                 numMiembrosVentas: miembrosVentas,
                                 numMiembrosEconomia: miembrosEconomia,
-                                clientesGuardanCard: salida4.length,
                                 fullCarrito: salida5
                             });
                             return res.end();

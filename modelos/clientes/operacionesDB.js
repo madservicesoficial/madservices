@@ -545,60 +545,47 @@ const guardaTarjetadb = (id, nombreTarjeta, numTarjeta, newExpiracion, cvv) => {
     });
 }
 
+//-- Creamos la función para borrar el carrito según el ID del cliente que está comprando.
+const borrarCarritoSegunIDdb = (id) => {
+
+    let instruccionEliminarCarritoPorID = 'DELETE FROM carrito WHERE id = ?';
+    let formatoInstruccionEliminarCarritoPorID = mysql.format(instruccionEliminarCarritoPorID, [id]);
+    madservicesClientedb.query(formatoInstruccionEliminarCarritoPorID);
+}
+
 //-- Creamos la función para confirmar que el/los producto/s ha/han sido vendidos con éxito.
 const confirmacionCompradb = (id) => {
     
     let instruccionConsultarProductoComprado = 'SELECT titulo, SUM(cantidad) AS total_cantidad, SUM(precio) AS total_precio FROM carrito WHERE id = ? GROUP BY titulo';
     let formatoInstruccionConsultarProductoComprado = mysql.format(instruccionConsultarProductoComprado, [id]);
-    madservicesClientedb.query(formatoInstruccionConsultarProductoComprado, (error, results) => {
-        if(error) throw error;
-        let instruccionConsultarLocalizacionCliente = 'SELECT * FROM clientes WHERE id = ?';
-        let formatoInstruccionConsultarLocalizacionCliente = mysql.format(instruccionConsultarLocalizacionCliente, [id]);
-        madservicesClientedb.query(formatoInstruccionConsultarLocalizacionCliente, (error, sacar1) => {
+    return new Promise((resolve) => {
+        madservicesClientedb.query(formatoInstruccionConsultarProductoComprado, (error, results) => {
             if(error) throw error;
-            let tiempo = DateTime.now().setZone('Europe/Madrid');
-            let fechaCompra = `${tiempo.c.year}-${tiempo.c.month}-${tiempo.c.day} ${tiempo.c.hour}:${tiempo.c.minute}:${tiempo.c.second}`;
-            const email = sacar1[0].email;
-            const direccion = sacar1[0].direccion;
-            const poblacion = sacar1[0].poblacion;
-            const region = sacar1[0].region;
-            const pais = sacar1[0].pais;
-            const cp = sacar1[0].cp;
-            for(let i=0; i<results.length; i++) {
-                let instruccionSacar = 'SELECT * FROM productos WHERE titulo = ?';
-                let formatoInstruccionSacar = mysql.format(instruccionSacar, [results[i].titulo]);
-                madservicesClientedb.query(formatoInstruccionSacar, (error, sacar2) => {
-                    if(error) throw error;
-                    let enumeracion = sacar2[0].enumeracion;
-                    let cantidad = sacar2[0].cantidad;
-                    if(cantidad >= results[i].total_cantidad) {
-                        let imagen = sacar2[0].portada;
-                        let instruccionIngresarCompra = 'INSERT INTO comprados (email, direccion, poblacion, region, pais, cp, imagen, titulo, cantidades, preciototal, fecha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-                        let formatoInstruccionIngresarCompra = mysql.format(instruccionIngresarCompra, [email, direccion, poblacion, region, pais, cp, imagen, results[i].titulo, results[i].total_cantidad, results[i].total_precio, fechaCompra]);
-                        madservicesClientedb.query(formatoInstruccionIngresarCompra);
-                        if(cantidad === 1) {
-                            let instruccionEliminarProducto = 'DELETE FROM productos WHERE titulo = ?';
-                            let formatoInstruccionEliminarProducto = mysql.format(instruccionEliminarProducto, [results[i].titulo]);
-                            madservicesClientedb.query(formatoInstruccionEliminarProducto);
-                            let enumeracionSig = enumeracion + 1;
-                            for(let j=enumeracionSig; j > enumeracion; j++) {
-                                let instruccionConsultarEnumeracionSig = 'SELECT * FROM productos WHERE enumeracion = ?';
-                                let formatoInstruccionConsultarEnumeracionSig = mysql.format(instruccionConsultarEnumeracionSig, [enumeracionSig]);
-                                madservicesClientedb.query(formatoInstruccionConsultarEnumeracionSig, (error, sacar3) => {
-                                    if(error) throw error;
-                                    if(sacar3.length === 0) {
-                                        j = enumeracion - 1;
-                                    }else {
-                                        let insertar = j - 1;
-                                        let instruccionActualizarOrden = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
-                                        let formatoInstruccionActualizarOrden = mysql.format(instruccionActualizarOrden, [insertar, j]);
-                                        madservicesClientedb.query(formatoInstruccionActualizarOrden);
-                                    }
-                                });
-                            }
-                        }else {
-                            let cantidadRestante = cantidad - results[i].total_cantidad;
-                            if(cantidadRestante === 0) {
+            let instruccionConsultarLocalizacionCliente = 'SELECT * FROM clientes WHERE id = ?';
+            let formatoInstruccionConsultarLocalizacionCliente = mysql.format(instruccionConsultarLocalizacionCliente, [id]);
+            madservicesClientedb.query(formatoInstruccionConsultarLocalizacionCliente, (error, sacar1) => {
+                if(error) throw error;
+                let tiempo = DateTime.now().setZone('Europe/Madrid');
+                let fechaCompra = `${tiempo.c.year}-${tiempo.c.month}-${tiempo.c.day} ${tiempo.c.hour}:${tiempo.c.minute}:${tiempo.c.second}`;
+                const email = sacar1[0].email;
+                const direccion = sacar1[0].direccion;
+                const poblacion = sacar1[0].poblacion;
+                const region = sacar1[0].region;
+                const pais = sacar1[0].pais;
+                const cp = sacar1[0].cp;
+                for(let i=0; i<results.length; i++) {
+                    let instruccionSacar = 'SELECT * FROM productos WHERE titulo = ?';
+                    let formatoInstruccionSacar = mysql.format(instruccionSacar, [results[i].titulo]);
+                    madservicesClientedb.query(formatoInstruccionSacar, (error, sacar2) => {
+                        if(error) throw error;
+                        let enumeracion = sacar2[0].enumeracion;
+                        let cantidad = sacar2[0].cantidad;
+                        if(cantidad >= results[i].total_cantidad) {
+                            let imagen = sacar2[0].portada;
+                            let instruccionIngresarCompra = 'INSERT INTO comprados (email, direccion, poblacion, region, pais, cp, imagen, titulo, cantidades, preciototal, fecha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                            let formatoInstruccionIngresarCompra = mysql.format(instruccionIngresarCompra, [email, direccion, poblacion, region, pais, cp, imagen, results[i].titulo, results[i].total_cantidad, results[i].total_precio, fechaCompra]);
+                            madservicesClientedb.query(formatoInstruccionIngresarCompra);
+                            if(cantidad === 1) {
                                 let instruccionEliminarProducto = 'DELETE FROM productos WHERE titulo = ?';
                                 let formatoInstruccionEliminarProducto = mysql.format(instruccionEliminarProducto, [results[i].titulo]);
                                 madservicesClientedb.query(formatoInstruccionEliminarProducto);
@@ -619,26 +606,46 @@ const confirmacionCompradb = (id) => {
                                     });
                                 }
                             }else {
-                                let instruccionReducirProducto = 'UPDATE productos SET cantidad = ? WHERE titulo = ?';
-                                let formatoInstruccionReducirProducto = mysql.format(instruccionReducirProducto, [cantidadRestante, results[i].titulo]);
-                                madservicesClientedb.query(formatoInstruccionReducirProducto);
+                                let cantidadRestante = cantidad - results[i].total_cantidad;
+                                if(cantidadRestante === 0) {
+                                    let instruccionEliminarProducto = 'DELETE FROM productos WHERE titulo = ?';
+                                    let formatoInstruccionEliminarProducto = mysql.format(instruccionEliminarProducto, [results[i].titulo]);
+                                    madservicesClientedb.query(formatoInstruccionEliminarProducto);
+                                    let enumeracionSig = enumeracion + 1;
+                                    for(let j=enumeracionSig; j > enumeracion; j++) {
+                                        let instruccionConsultarEnumeracionSig = 'SELECT * FROM productos WHERE enumeracion = ?';
+                                        let formatoInstruccionConsultarEnumeracionSig = mysql.format(instruccionConsultarEnumeracionSig, [enumeracionSig]);
+                                        madservicesClientedb.query(formatoInstruccionConsultarEnumeracionSig, (error, sacar3) => {
+                                            if(error) throw error;
+                                            if(sacar3.length === 0) {
+                                                j = enumeracion - 1;
+                                            }else {
+                                                let insertar = j - 1;
+                                                let instruccionActualizarOrden = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
+                                                let formatoInstruccionActualizarOrden = mysql.format(instruccionActualizarOrden, [insertar, j]);
+                                                madservicesClientedb.query(formatoInstruccionActualizarOrden);
+                                            }
+                                        });
+                                    }
+                                }else {
+                                    let instruccionReducirProducto = 'UPDATE productos SET cantidad = ? WHERE titulo = ?';
+                                    let formatoInstruccionReducirProducto = mysql.format(instruccionReducirProducto, [cantidadRestante, results[i].titulo]);
+                                    madservicesClientedb.query(formatoInstruccionReducirProducto);
+                                }
                             }
+                            let fallo = false;
+                            resolve(fallo);
+                        }else {
+                            let instruccionEliminarComprados = 'DELETE FROM comprados WHERE email = ?';
+                            let formatoInstruccionEliminarComprados = mysql.format(instruccionEliminarComprados, [email]);
+                            madservicesClientedb.query(formatoInstruccionEliminarComprados);
+                            let fallo = true;
+                            i = results.length + 1;
+                            resolve(fallo);
                         }
-                        let instruccionEliminarCarritoPorID = 'DELETE FROM carrito WHERE id = ?';
-                        let formatoInstruccionEliminarCarritoPorID = mysql.format(instruccionEliminarCarritoPorID, [id]);
-                        madservicesClientedb.query(formatoInstruccionEliminarCarritoPorID);
-                        //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-                        alerta('¡Compra realizada con éxito!');
-                        //-- Redirigir al perfil del cliente.
-                        return res.redirect(`/sesion-cliente/${id}/perfil`);
-                    }else {
-                        //-- Mostrar alerta.
-                        alerta(`No puedes comprar más productos de los que hay de: ${results[i].titulo}`);
-                        //-- Redirigir.
-                        return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     });
 }
@@ -821,6 +828,7 @@ module.exports = {
     quitarProductosdb,
     adquirirNombredb,
     guardaTarjetadb,
+    borrarCarritoSegunIDdb,
     confirmacionCompradb,
     borrarTarjetaBankdb,
     editarNumTarjetaBankdb,
