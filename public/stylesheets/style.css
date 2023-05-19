@@ -1198,3 +1198,13 @@ canvas {
   background-color: blue;
   color: white;
 }
+#btnEditarUbicaEnCompra {
+  width: 30;
+  height: 25;
+  margin-left: 20;
+  background-color: transparent;
+}
+#iconoEditarUbicaEnCompra {
+  position: relative;
+  right: 5;
+}

@@ -13,8 +13,11 @@ block body
                 i.fa-sharp.fa-solid.fa-location-dot.fa-2xl
                 h1#tituloLocalizacionCliente='Dirección de envío: '
                 p='__________________________________________________________________________'
-                div.subcolumn2
-                    label=direccion + ', ' + poblacion + ', ' + region + ', ' + pais + ', ' + cp + '.'
+                form(method='GET' action=`/sesion-cliente/${id}/perfil`)
+                    div.subcolumn2
+                        label=direccion + ', ' + poblacion + ', ' + region + ', ' + pais + ', ' + cp + '.'
+                        button#btnEditarUbicaEnCompra(type='submit')
+                            i.fa-solid.fa-square-pen.fa-2xl#iconoEditarUbicaEnCompra
                 p='__________________________________________________________________________'
         div.row
             div.column

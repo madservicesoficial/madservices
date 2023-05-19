@@ -53,19 +53,11 @@ const compraPagada = async (req, res) => {
                 }
                 //-- Proceso de compra.
                 confirmacionCompradb(id);
-                //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-                alerta('¡Compra realizada con éxito!');
-                //-- Redirigir al perfil del cliente.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
             }
         }
     }else {
         //-- Proceso de compra.
         confirmacionCompradb(id);
-        //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-        alerta('¡Compra realizada con éxito!');
-        //-- Redirigir al perfil del cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
     }
 }
 

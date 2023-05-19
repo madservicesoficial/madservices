@@ -1,12 +1,12 @@
 //-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { ingresarTarjetaBankdb } = require('../../modelos/clientes/operacionesDB.js');
+const { ingresarTarjetaBankdb, adquirirNombredb } = require('../../modelos/clientes/operacionesDB.js');
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
 //-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
 const validarCard = require('card-validator');
 
 //-- Creamos el Punto de Control para configurar el ingreso de la tarjeta bancaria del cliente.
-const ingresarTarjetaBank = (req, res) => {
+const ingresarTarjetaBank = async (req, res) => {
 
     //-- Obtenemos el parámetro del ID cliente.
     let id = req.params.id;
@@ -14,10 +14,14 @@ const ingresarTarjetaBank = (req, res) => {
     const ingresaCard = req.body.ingresaCard;
     const numtarjeta = req.body.tarjetab;
     const validez = req.body.fvalidez;
-    const namecard = req.body.nombrecard;
+    let namecard = req.body.nombrecard;
     const cvv = req.body.cvvcod;
+    //-- Si no pone nombre, se pone el de su perfil.
+    if(!namecard) {
+        namecard = await adquirirNombredb(id);
+    }
     //-- Proceso de comprobar que no haya campos vacíos.
-    if(!numtarjeta || !validez || !namecard || !cvv) {
+    if(!numtarjeta || !validez || !cvv) {
         //-- Mostrar alerta.
         alerta('Campos vacíos');
         //-- Redirigir.
@@ -31,7 +35,7 @@ const ingresarTarjetaBank = (req, res) => {
         const validacionCVV = validarCard.cvv(cvv);
         if(namecard > 148) {
             //-- Mostrar alerta y redirigir a donde estaba de nuevo.
-            alerta(`${nombreTarjeta} demasiado largo`);
+            alerta(`${namecard} demasiado largo`);
             return res.redirect(`/sesion-cliente/${id}/perfil`);
         }else if(!validacionCard.isValid || numtarjeta.length > 18) {
             //-- Mostrar alerta y redirigir a donde estaba de nuevo.
