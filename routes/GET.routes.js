@@ -154,17 +154,31 @@ rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => {
   return res.end();
 });
 
-//-- Ruta a la Sección de Trabaja con Nosotros Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/empleo', (req, res) => {
+//-- Ruta a la Sección de Términos y Condiciones.
+rutasGet.get('/terminos-condiciones', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/empresas/empleo', {id: id});
+  res.render('paginas/general/terminosCondiciones', {id: id});
   return res.end();
 });
 
-//-- Ruta a la Sección de Trabaja con Nosotros Autenticado del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empleo', (req, res) => {
+//-- Ruta a la Sección de Términos y Condiciones Autenticado del Cliente.
+rutasGet.get('/sesion-cliente/:id/terminos-condiciones', (req, res) => {
   let id = req.params.id;
-  res.render('paginas/miembros/empleo', {id: id});
+  res.render('paginas/clientes/terminosCondiciones', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la Sección de Términos y Condiciones Autenticado de la Empresa.
+rutasGet.get('/sesion-empresa/:id/terminos-condiciones', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/empresas/terminosCondiciones', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la Sección de Términos y Condiciones Autenticado del Miembro MAD.
+rutasGet.get('/sesion-miembro/:id/terminos-condiciones', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/miembros/terminosCondiciones', {id: id});
   return res.end();
 });
 

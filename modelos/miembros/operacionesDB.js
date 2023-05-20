@@ -615,28 +615,25 @@ const borrarProductoMADdb = (ptoPartida) => {
 }
 
 //-- Creamos la función para consultar la enumeración del producto MAD de la base de datos de MAD Services.
-const consultarEnumeraciondb = (i) => {
+const consultarEnumeracionAndActualizardb = (enumeracionSig) => {
 
     //-- Consultamos los productos MAD en la base de datos.
     let instruccionConsultarProductoMAD = 'SELECT * FROM productos WHERE enumeracion = ?';
-    let formatoInstruccionConsultarProductoMAD = mysql.format(instruccionConsultarProductoMAD, [i]);
+    let formatoInstruccionConsultarProductoMAD = mysql.format(instruccionConsultarProductoMAD, [enumeracionSig]);
     //-- Establecer la comunicación para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, results) => {
-            if(error) throw error;
-            let haySiguiente = results.length;
-            resolve(haySiguiente);
-        });
+    madservicesAdmindb.query(formatoInstruccionConsultarProductoMAD, (error, salida) => {
+        if(error) throw error;
+        if(salida.length > 0) {
+            let enumeracionAnt = enumeracionSig - 1;
+            //-- Proceso de actualización de la enumeración del producto.
+            let instruccionCambioEnumeracion = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
+            let formatoInstruccionCambioEnumeracion = mysql.format(instruccionCambioEnumeracion, [enumeracionAnt, enumeracionSig]);
+            madservicesAdmindb.query(formatoInstruccionCambioEnumeracion);
+            enumeracionSig = enumeracionSig + 1;
+            //-- Llamamos de nuevo a la función.
+            consultarEnumeracionAndActualizardb(enumeracionSig);
+        }
     });
-}
-
-//-- Creamos la función para actualizar la enumeración del producto MAD de la base de datos de MAD Services.
-const actualizarEnumeraciondb = (insertar, i) => {
-    
-    //-- Proceso de actualización de la enumeración del producto.
-    let instruccionCambioEnumeracion = 'UPDATE productos SET enumeracion = ? WHERE enumeracion = ?';
-    let formatoInstruccionCambioEnumeracion = mysql.format(instruccionCambioEnumeracion, [insertar, i]);
-    madservicesAdmindb.query(formatoInstruccionCambioEnumeracion);
 }
 
 //-- Creamos la función para salir y acabar el proceso de borrado del producto MAD de la base de datos de MAD Services.
@@ -667,7 +664,6 @@ module.exports = {
     actualizarImagendb,
     actualizarPesodb,
     borrarProductoMADdb,
-    consultarEnumeraciondb,
-    actualizarEnumeraciondb,
+    consultarEnumeracionAndActualizardb,
     salidaProductoBorrado
 };

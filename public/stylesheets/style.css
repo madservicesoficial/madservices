@@ -195,8 +195,11 @@ footer {
   display: inline-block;
   font-size: large;
 }
-#exceptoCopyright {
+#exceptoCopyrightME {
   margin-left: 130px;
+}
+#exceptoCopyrightCG {
+  margin-left: 75px;
 }
 .botonesPiePagina {
   background-color: transparent;
@@ -211,6 +214,9 @@ footer {
 }
 #btnEmpleo {
   width: 190px;
+}
+#btnTermsConds {
+  width: 220px;
 }
 .redesSociales{
   width: 20px;
@@ -744,6 +750,29 @@ textarea {
 }
 #enviarCV {
   margin-top: 20px;
+}
+/*##################################################################################################*/
+/*################################# SECCIÓN TÉRMINOS Y CONDICIONES #################################*/
+/*##################################################################################################*/
+.interfazTermsConds {
+  width: 100%;
+  min-height: 130vh;
+  background-color: silver;
+}
+.interfazTermsConds ul {
+  text-align: left;
+  margin-left: 250;
+}
+.interfazTermsConds ul li {
+  display: inline-block;
+}
+.interfazTermsConds a {
+  text-decoration: none;
+  color: black;
+  margin-left: 20;
+}
+.interfazTermsConds span {
+  margin-left: 20;
 }
 /*##################################################################################################*/
 /*####################################### SECCIÓN CATEGORIAS #######################################*/

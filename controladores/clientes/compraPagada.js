@@ -52,38 +52,14 @@ const compraPagada = async (req, res) => {
                     guardaTarjetadb(id, nombreTarjeta, numTarjeta, newExpiracion, cvv);
                 }
                 //-- Proceso de compra.
-                let fallo = await confirmacionCompradb(id);
-                if(fallo === true) {
-                    //-- Mostrar alerta.
-                    alerta('No puedes comprar más productos de los que hay');
-                    //-- Redirigir.
-                    return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
-                }else {
-                    //-- Borrar el carrito según el ID cliente que ha comprado.
-                    borrarCarritoSegunIDdb(id);
-                    //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-                    alerta('¡Compra realizada con éxito!');
-                    //-- Redirigir al perfil del cliente.
-                    return res.redirect(`/sesion-cliente/${id}/perfil`);
-                }
+                let cont = 0;
+                confirmacionCompradb(id, cont, res);
             }
         }
     }else {
         //-- Proceso de compra.
-        let fallo = await confirmacionCompradb(id);
-        if(fallo === true) {
-            //-- Mostrar alerta.
-            alerta('No puedes comprar más productos de los que hay');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
-        }else {
-            //-- Borrar el carrito según el ID cliente que ha comprado.
-            borrarCarritoSegunIDdb(id);
-            //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-            alerta('¡Compra realizada con éxito!');
-            //-- Redirigir al perfil del cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
+        let cont = 0;
+        confirmacionCompradb(id, cont, res);
     }
 }
 
