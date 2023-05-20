@@ -130,15 +130,19 @@ block body
                     button(type='submit')='Buscar'
             div.columnDer
                 each campo in cartaProducto
-                    form(method='GET' action='/registrarse/cliente')
-                        div.tarjetaProductosMAD
-                            h3=campo.titulo
-                            img(src=`data:image/*;base64,${campo.portada}`)
-                            if campo.cantidad === 1
-                                h3=campo.cantidad + ' unidad queda'
-                            else 
-                                h3=campo.cantidad + ' unidades quedan'
-                            h3=campo.precio + '€'
-                            button(type='submit')='Añadir al carrito'
+                    div.tarjetaProductosMAD
+                        h3=campo.titulo
+                        img(src=`data:image/*;base64,${campo.portada}`)
+                        if campo.cantidad === 1
+                            h3=campo.cantidad + ' unidad queda'
+                        else 
+                            h3=campo.cantidad + ' unidades quedan'
+                        h3=campo.precio + '€'
+                        div.btnsContainer
+                            form(method='GET' action='/registrarse/cliente')
+                                button(type='submit')='Añadir al carrito'
+                            form(method='GET' action='/empieza/productosmadservices/expandir')
+                                button#btnExpandirProductoMAD(type='submit')
+                                    i.fa-solid.fa-up-right-and-down-left-from-center.fa-lg#iconoExpandirProductoMAD
         br
     include ./componentes/piepagina.pug

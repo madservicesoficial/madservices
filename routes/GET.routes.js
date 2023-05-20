@@ -273,6 +273,26 @@ rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeraci
   return res.end();
 });
 
+//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo.
+rutasGet.get('/empieza/productosmadservices/expandir', (req, res) => {
+  res.render('paginas/general/expansion');
+  return res.end();
+});
+
+//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Cliente.
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/clientes/expansion', {id: id});
+  return res.end();
+});
+
+//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Miembro MAD.
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir', (req, res) => {
+  let id = req.params.id;
+  res.render('paginas/miembros/expansion', {id: id});
+  return res.end();
+});
+
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {
   return req.session.destroy();

@@ -146,5 +146,8 @@ block body
                             form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${campo.enumeracion}`)
                                 button#btnEditarProductoMAD(type='submit')
                                     i.fa-solid.fa-square-pen.fa-2xl#iconoBorrarProductoMAD
+                            form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir`)
+                                button#btnExpandirProductoMAD(type='submit')
+                                    i.fa-solid.fa-up-right-and-down-left-from-center.fa-lg#iconoExpandirProductoMAD
         br
     include ./componentes/piepagina.pug

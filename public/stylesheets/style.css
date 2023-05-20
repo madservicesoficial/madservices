@@ -1165,10 +1165,19 @@ canvas {
   background-color: transparent;
   margin-left: 30;
 }
+#btnExpandirProductoMAD {
+  width: 35;
+  height: 35;
+  background-color: transparent;
+  margin-left: 30;
+}
 #iconoBorrarProductoMAD {
   color: white;
   position: relative;
   right: 6px;
+}
+#iconoExpandirProductoMAD {
+  color: white;
 }
 #filtroTipoProducto {
   border-radius: 10px;
