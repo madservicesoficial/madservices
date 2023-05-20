@@ -444,6 +444,6 @@ block body
                 h3='Descripción de cada Producto MAD en base de datos: '
                 each producto in todosProductosInterfaz
                     p=producto.enumeracion + ') '
-                        span=producto.descripcion
+                        span#SalidaDescripciones=producto.descripcion
         br
     include ./componentes/piepagina.pug

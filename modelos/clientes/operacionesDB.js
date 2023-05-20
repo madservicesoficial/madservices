@@ -580,7 +580,7 @@ const confirmacionCompradb = (id) => {
                         if(error) throw error;
                         let enumeracion = sacar2[0].enumeracion;
                         let cantidad = sacar2[0].cantidad;
-                        if(cantidad >= results[i].total_cantidad) {
+                        if(cantidad >= 4) {
                             let imagen = sacar2[0].portada;
                             let instruccionIngresarCompra = 'INSERT INTO comprados (email, direccion, poblacion, region, pais, cp, imagen, titulo, cantidades, preciototal, fecha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
                             let formatoInstruccionIngresarCompra = mysql.format(instruccionIngresarCompra, [email, direccion, poblacion, region, pais, cp, imagen, results[i].titulo, results[i].total_cantidad, results[i].total_precio, fechaCompra]);
@@ -636,8 +636,8 @@ const confirmacionCompradb = (id) => {
                             let fallo = false;
                             resolve(fallo);
                         }else {
-                            let instruccionEliminarComprados = 'DELETE FROM comprados WHERE email = ?';
-                            let formatoInstruccionEliminarComprados = mysql.format(instruccionEliminarComprados, [email]);
+                            let instruccionEliminarComprados = 'DELETE FROM comprados WHERE fecha = ?';
+                            let formatoInstruccionEliminarComprados = mysql.format(instruccionEliminarComprados, [fechaCompra]);
                             madservicesClientedb.query(formatoInstruccionEliminarComprados);
                             let fallo = true;
                             i = results.length + 1;

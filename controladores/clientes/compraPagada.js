@@ -52,8 +52,7 @@ const compraPagada = async (req, res) => {
                     guardaTarjetadb(id, nombreTarjeta, numTarjeta, newExpiracion, cvv);
                 }
                 //-- Proceso de compra.
-                let fallo = false;
-                fallo = await confirmacionCompradb(id);
+                let fallo = await confirmacionCompradb(id);
                 if(fallo === true) {
                     //-- Mostrar alerta.
                     alerta('No puedes comprar más productos de los que hay');
@@ -71,8 +70,7 @@ const compraPagada = async (req, res) => {
         }
     }else {
         //-- Proceso de compra.
-        let fallo = false;
-        fallo = await confirmacionCompradb(id);
+        let fallo = await confirmacionCompradb(id);
         if(fallo === true) {
             //-- Mostrar alerta.
             alerta('No puedes comprar más productos de los que hay');
