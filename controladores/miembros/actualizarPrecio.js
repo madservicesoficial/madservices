@@ -8,23 +8,16 @@ const actualizarPrecio = async (req, res) => {
 
     //-- Introducción de los campos para actualizar el precio del producto.
     let id = req.params.id;
-    const enumeracion = req.body.enumeracion;
+    let enumeracion = req.params.enumeracion;
     const precio = req.body.precio;
-    if(!enumeracion) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Sin cambios en el precio de ningún producto');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+    if(precio) {
+        //-- Actualizamos el precio del producto en la base de datos.
+        actualizarPreciodb(id, enumeracion, precio, res);
     }else {
-        if(precio) {
-            //-- Actualizamos el precio del producto en la base de datos.
-            actualizarPreciodb(id, enumeracion, precio, res);
-        }else {
-            //-- Mostrar Alerta Emergente.
-            alerta('Precio no actualizado');
-            // Redirigir a la página de la interfaz del Miembro MAD.
-            return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }
+        //-- Mostrar Alerta Emergente.
+        alerta('Precio no actualizado');
+        // Redirigir a la página de la interfaz del Miembro MAD.
+        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
 

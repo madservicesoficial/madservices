@@ -1070,7 +1070,7 @@ canvas {
 .interfazMiembroMAD table span {
   margin-left: 50;
 }
-.vistaMiembro {
+.cuadroProductoCompradoEnInterfaz {
   background-color: black;
   font-size: xx-small;
   color: white;
@@ -1078,14 +1078,12 @@ canvas {
   margin-top: 20;
   display: inline-block;
 }
-.vistaMiembro img {
+.cuadroProductoCompradoEnInterfaz img {
   width: 80;
 }
-#NumEnGrande {
-  font-size: xx-large;
-}
-#SalidaDescripciones {
-  font-size: x-small;
+#numProductosComprados {
+  font-size: large;
+  margin-left: 20;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
@@ -1148,6 +1146,10 @@ canvas {
   color: black;
   width: 150px;
 }
+.btnsContainer {
+  display: flex;
+  justify-content: center;
+}
 .imagenEjemploMall {
   width: 260px;
   width: 180px;
@@ -1156,6 +1158,12 @@ canvas {
   width: 40;
   height: 40;
   background-color: transparent;
+}
+#btnEditarProductoMAD {
+  width: 40;
+  height: 40;
+  background-color: transparent;
+  margin-left: 30;
 }
 #iconoBorrarProductoMAD {
   color: white;
@@ -1265,4 +1273,49 @@ canvas {
 #iconoEditarUbicaEnCompra {
   position: relative;
   right: 5;
+}
+/*##################################################################################################*/
+/*################################# SECCIÓN EDITAR PRODUCTO MAD ####################################*/
+/*##################################################################################################*/
+.interfazEdicionProductoMAD {
+  float: center;
+  width: 800px;
+  height: 500px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: silver;
+  color: black;
+  place-items: center;
+  border-radius: 20px;
+  border-color: burlywood;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
+  margin-left: 350;
+  margin-top: 75;
+}
+#tituloEdicionProductoMAD {
+  color: white;
+  text-align: center;
+  margin-top: 50;
+}
+.interfazEdicionProductoMAD select {
+  width: 200;
+  border-radius: 8px;
+  height: 20;
+  background-color: silver;
+}
+.interfazEdicionProductoMAD button {
+  width: 30;
+  height: 30;
+  margin-left: 20;
+  background-color: transparent;
+}
+.interfazEdicionProductoMAD textarea {
+  background-color: silver;
+}
+.interfazEdicionProductoMAD form {
+  margin-top: 50;
 }

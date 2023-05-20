@@ -206,35 +206,6 @@ block body
                     br
         div.row
             div.column
-                h3='Productos comprados:'
-            div.column
-                h3='Productos en el carrito de compra:'
-                table
-                    tr 
-                        th='Título del producto'
-                            span
-                        th='Veces añadido'
-                            span
-                        th='Precio total'
-                    each producto in fullCarrito
-                        - var cantidadInt = parseInt(producto.total_cantidad, 10)
-                        if cantidadInt === 1
-                            tr
-                                td=producto.titulo
-                                    span
-                                td=producto.total_cantidad + ' unidad'
-                                    span
-                                td=producto.total_precio + '€'
-                        else 
-                            tr
-                                td=producto.titulo
-                                    span
-                                td=producto.total_cantidad + ' unidades'
-                                    span
-                                td=producto.total_precio + '€'
-        div.row
-            div.column
-            div.column
                 h3='Ingreso de producto para su venta: '
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
                     label='Imagen de portada: '
@@ -296,139 +267,6 @@ block body
                     textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
                     button#btnIngresarProductoMAD(type='submit')='Ingresar'
             div.column
-        div.row
-            div.column
-                h3='Actualización del producto para su venta: '
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-imagen` enctype="multipart/form-data")
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Imagen de portada: '
-                    input.inputMiembroMAD(type='file' name='portada' accept="image/*")
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-cantidad`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Cantidad: '
-                    input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-categoria`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Tipo de producto:'
-                    select(name="categoria")='Categorias'
-                        option(checked)=''
-                        optgroup(label='Libros')
-                            option='Libros infantiles' 
-                            option='Libros juveniles'
-                            option='Libros de historia'
-                            option='Libros de naturaleza'
-                            option='Libros de economía'
-                            option='Libros escolares'
-                            option='Libros de misterio'
-                        optgroup(label='Juegos')
-                            option='Juegos de mesa'
-                            option='Juegos de calle'
-                            option='Videojuegos'    
-                        optgroup(label='Electrónica e Informática')
-                            option='Consolas'
-                            option='Altavoces'
-                            option='Ratones'
-                            option='Teclados'
-                            option='PCs'
-                            option='MACs'
-                            option='Portátiles'
-                            option='MacBooks'
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-titulo`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Título:'
-                    input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-precio`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Precio:'
-                    input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
-                    span#euros='€'
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-peso`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Peso (para el envío):'
-                    select(name="peso")
-                        option(checked)=''
-                        option='Hasta 2'
-                        option='Hasta 5'
-                        option='Hasta 7'
-                        option='Hasta 10'
-                        option='Hasta 15'
-                        option='> 15'
-                    span#euros='Kg'
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-                    br
-                    br
-                form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-descripcion`)
-                    input(type='hidden' name='_method' value='PATCH')
-                    label='Enumeración: '
-                    input.inputMiembroMAD(type="number" name='enumeracion' placeholder='Escribe la enumeración del producto....')
-                    br
-                    label='Descripción:'
-                    textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
-                    button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-            div.column
-                h3='Productos MAD en base de datos: '
-                each producto in todosProductosInterfaz
-                    - var cantidad = parseInt(producto.cantidad, 10)
-                    if cantidad === 1
-                        .vistaMiembro
-                            img(src=`data:image/*;base64,${producto.portada}`)
-                            p#NumEnGrande=producto.enumeracion
-                            p=producto.titulo
-                            p=producto.cantidad + ' unidad'
-                            p=producto.precio + '€'
-                            p=producto.peso + 'Kg'
-                            p=producto.producto
-                    else
-                        .vistaMiembro
-                            img(src=`data:image/*;base64,${producto.portada}`)
-                            p#NumEnGrande=producto.enumeracion    
-                            p=producto.titulo
-                            p=producto.cantidad + ' unidades'
-                            p=producto.precio + '€'
-                            p=producto.peso + 'Kg'
-                            p=producto.producto
-        div.row
-            div.column
                 h3='Confirmación de separación de MAD Services: '
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
                     input(type='hidden' name='_method' value='DELETE')
@@ -440,10 +278,46 @@ block body
                         option='Sí'
                         option='No' 
                     button#btnBajaMiembroMAD(type='submit')='Confirmo'
+        div.row
             div.column
-                h3='Descripción de cada Producto MAD en base de datos: '
-                each producto in todosProductosInterfaz
-                    p=producto.enumeracion + ') '
-                        span#SalidaDescripciones=producto.descripcion
+                h3='Productos comprados:'
+                    if totalComprados === 1
+                        span#numProductosComprados=totalComprados + ' producto'
+                    else
+                        span#numProductosComprados=totalComprados + ' productos'
+                each compra in productosMadComprados
+                    .cuadroProductoCompradoEnInterfaz
+                        p=compra.fecha
+                        img(src=`data:image/*;base64,${compra.imagen}`)
+                        p=compra.titulo
+                        p=compra.cantidades
+                        p=compra.preciototal
+                        p='País de la compra: ' + compra.pais
+                        p='Región de la compra: ' + compra.region
+            div.column
+                h3='Productos en el carrito de compra:'
+                table
+                    tr 
+                        th='Título del producto'
+                            span
+                        th='Veces añadido'
+                            span
+                        th='Precio total'
+                    each producto in fullCarrito
+                        - var cantidadInt = parseInt(producto.total_cantidad, 10)
+                        if cantidadInt === 1
+                            tr
+                                td=producto.titulo
+                                    span
+                                td=producto.total_cantidad + ' unidad'
+                                    span
+                                td=producto.total_precio + '€'
+                        else 
+                            tr
+                                td=producto.titulo
+                                    span
+                                td=producto.total_cantidad + ' unidades'
+                                    span
+                                td=producto.total_precio + '€'
         br
     include ./componentes/piepagina.pug

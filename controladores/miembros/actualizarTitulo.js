@@ -8,23 +8,16 @@ const actualizarTitulo = async (req, res) => {
 
     //-- Introducción de los campos para actualizar el título del producto.
     let id = req.params.id;
-    const enumeracion = req.body.enumeracion;
+    let enumeracion = req.params.enumeracion;
     const titulo = req.body.titulo;
-    if(!enumeracion) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Sin cambios en el título de ningún producto');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+    if(titulo) {
+        //-- Actualizamos el título del producto en la base de datos.
+        actualizarTitulodb(id, enumeracion, titulo, res);
     }else {
-        if(titulo) {
-            //-- Actualizamos el título del producto en la base de datos.
-            actualizarTitulodb(id, enumeracion, titulo, res);
-        }else {
-            //-- Mostrar Alerta Emergente.
-            alerta('Título no actualizado');
-            // Redirigir a la página de la interfaz del Miembro MAD.
-            return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }
+        //-- Mostrar Alerta Emergente.
+        alerta('Título no actualizado');
+        // Redirigir a la página de la interfaz del Miembro MAD.
+        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
 

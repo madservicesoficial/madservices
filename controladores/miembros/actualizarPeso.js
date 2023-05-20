@@ -8,23 +8,16 @@ const actualizarPeso = async (req, res) => {
 
     //-- Introducción de los campos para actualizar el peso del producto.
     let id = req.params.id;
-    const enumeracion = req.body.enumeracion;
+    let enumeracion = req.params.enumeracion;
     const peso = req.body.peso;
-    if(!enumeracion) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Sin cambios en el peso de ningún producto');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+    if(peso) {
+        //-- Actualizamos el peso del producto en la base de datos.
+        actualizarPesodb(id, enumeracion, peso, res);
     }else {
-        if(peso) {
-            //-- Actualizamos el peso del producto en la base de datos.
-            actualizarPesodb(id, enumeracion, peso, res);
-        }else {
-            //-- Mostrar Alerta Emergente.
-            alerta('Peso no actualizado');
-            // Redirigir a la página de la interfaz del Miembro MAD.
-            return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }
+        //-- Mostrar Alerta Emergente.
+        alerta('Peso no actualizado');
+        // Redirigir a la página de la interfaz del Miembro MAD.
+        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
 

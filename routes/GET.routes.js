@@ -265,6 +265,14 @@ rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
 //-- Ruta a la sección de verificar la compra.
 rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
 
+//-- Ruta a la sección de edición del Producto MAD por parte del Miembro MAD.
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion', (req, res) => {
+  let id = req.params.id;
+  let enumeracion = req.params.enumeracion;
+  res.render('paginas/miembros/edicion', {id: id, enumeracion: enumeracion});
+  return res.end();
+});
+
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {
   return req.session.destroy();

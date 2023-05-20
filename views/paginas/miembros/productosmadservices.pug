@@ -130,17 +130,21 @@ block body
                     button(type='submit')='Buscar'
             div.columnDer
                 each campo in cartaProducto
-                    form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/borrar-producto`)
-                        input(type='hidden' name='_method' value='DELETE')
-                        div.tarjetaProductosMAD
-                            h3=campo.titulo
-                            img(src=`data:image/*;base64,${campo.portada}`)
-                            if campo.cantidad === 1
-                                h3=campo.cantidad + ' unidad queda'
-                            else 
-                                h3=campo.cantidad + ' unidades quedan'
-                            h3=campo.precio + '€'
-                            button#btnBorrarProductoMAD(type='submit' name='enumeracion' value=campo.enumeracion)
-                                i.fa-solid.fa-eraser.fa-2xl#iconoBorrarProductoMAD
+                    div.tarjetaProductosMAD
+                        h3=campo.titulo
+                        img(src=`data:image/*;base64,${campo.portada}`)
+                        if campo.cantidad === 1
+                            h3=campo.cantidad + ' unidad queda'
+                        else 
+                            h3=campo.cantidad + ' unidades quedan'
+                        h3=campo.precio + '€'
+                        div.btnsContainer
+                            form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/borrar-producto`)
+                                input(type='hidden' name='_method' value='DELETE')
+                                button#btnBorrarProductoMAD(type='submit' name='enumeracion' value=campo.enumeracion)
+                                    i.fa-solid.fa-eraser.fa-2xl#iconoBorrarProductoMAD
+                            form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${campo.enumeracion}`)
+                                button#btnEditarProductoMAD(type='submit')
+                                    i.fa-solid.fa-square-pen.fa-2xl#iconoBorrarProductoMAD
         br
     include ./componentes/piepagina.pug

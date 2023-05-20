@@ -20,7 +20,7 @@ const busquedaPorPrecio = (req, res) => {
         }else if(precio >= 500 && precio <= 900) {
             max = precio + 100;
         }else {
-            max = precio;
+            max = 900000000000000;
         }
         //-- Proceso de búsqueda.
         busquedaPorPreciodb(min, max, res);

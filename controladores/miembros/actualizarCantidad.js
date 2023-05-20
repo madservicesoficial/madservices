@@ -8,23 +8,16 @@ const actualizarCantidad = async (req, res) => {
 
     //-- Introducción de los campos para actualizar la cantidad del producto.
     let id = req.params.id;
-    const enumeracion = req.body.enumeracion;
+    let enumeracion = req.params.enumeracion;
     const cantidad = req.body.cantidad;
-    if(!enumeracion) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Sin cambios en la cantidad de ningún producto');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+    if(cantidad) {
+        //-- Actualizamos la cantidad del producto en la base de datos.
+        actualizarCantidaddb(id, enumeracion, cantidad, res);
     }else {
-        if(cantidad) {
-            //-- Actualizamos la cantidad del producto en la base de datos.
-            actualizarCantidaddb(id, enumeracion, cantidad, res);
-        }else {
-            //-- Mostrar Alerta Emergente.
-            alerta('Cantidad no actualizada');
-            // Redirigir a la página de la interfaz del Miembro MAD.
-            return res.redirect(`/sesion-miembro/${id}/interfaz`);
-        }
+        //-- Mostrar Alerta Emergente.
+        alerta('Cantidad no actualizada');
+        // Redirigir a la página de la interfaz del Miembro MAD.
+        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
 

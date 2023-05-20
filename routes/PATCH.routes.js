@@ -67,13 +67,13 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-imagen', upload.single('portada'), actualizarImagen);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-cantidad', actualizarCantidad);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-categoria', actualizarCategoria);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-titulo', actualizarTitulo);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-precio', actualizarPrecio);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-peso', actualizarPeso);
-rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-descripcion', actualizarDescripcion);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-imagen', upload.single('portada'), actualizarImagen);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-cantidad', actualizarCantidad);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-categoria', actualizarCategoria);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-titulo', actualizarTitulo);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-precio', actualizarPrecio);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-peso', actualizarPeso);
+rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-descripcion', actualizarDescripcion);
 //-- Formulario de actualización de tarjetas bancarias.
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-numero', editarNumTarjetaBank);
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-validez', editarValidezTarjetaBank);

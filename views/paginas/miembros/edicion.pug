@@ -1,0 +1,82 @@
+//-- Contenido de la Sección Edición de Productos MAD por parte de los Miembros MAD del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title=`${id} editando un Producto MAD`
+
+block body
+    h1#tituloEdicionProductoMAD=`Edición del Producto MAD ${enumeracion}: `
+    .interfazEdicionProductoMAD
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-imagen` enctype="multipart/form-data")
+            input(type='hidden' name='_method' value='PATCH')
+            label='Imagen de portada: '
+            input.inputMiembroMAD(type='file' name='portada' accept="image/*")
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-cantidad`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Cantidad: '
+            input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-categoria`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Tipo de producto:'
+            select(name="categoria")='Categorias'
+                option(checked)=''
+                optgroup(label='Libros')
+                    option='Libros infantiles' 
+                    option='Libros juveniles'
+                    option='Libros de historia'
+                    option='Libros de naturaleza'
+                    option='Libros de economía'
+                    option='Libros escolares'
+                    option='Libros de misterio'
+                optgroup(label='Juegos')
+                    option='Juegos de mesa'
+                    option='Juegos de calle'
+                    option='Videojuegos'    
+                optgroup(label='Electrónica e Informática')
+                    option='Consolas'
+                    option='Altavoces'
+                    option='Ratones'
+                    option='Teclados'
+                    option='PCs'
+                    option='MACs'
+                    option='Portátiles'
+                    option='MacBooks'
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-titulo`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Título:'
+            input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-precio`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Precio:'
+            input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
+            span#euros='€'
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-peso`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Peso (para el envío):'
+            select(name="peso")
+                option(checked)=''
+                option='Hasta 2'
+                option='Hasta 5'
+                option='Hasta 7'
+                option='Hasta 10'
+                option='Hasta 15'
+                option='> 15'
+            span#euros='Kg'
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-descripcion`)
+            input(type='hidden' name='_method' value='PATCH')
+            label='Descripción:'
+            textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
+            button(type='submit')
+                i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
