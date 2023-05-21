@@ -19,7 +19,7 @@ var path = require('path');
 var analizadorCookies = require('cookie-parser');
 //-- Importamos la Tecnología basada en un middleware o módulo que controla y registra solicitudes HTTP en producción
 //-- para Node JS, mostrándolas por consola.
-var analizadorSolicitudes = require('morgan');
+/* var analizadorSolicitudes = require('morgan'); */
 //-- Importamos la Tecnología basada, exclusivamente, en servir el favicon implícito predeterminado.
 //-- Para iconos adicionales específicos del proveedor que requieren Marcado HTML, se requiere middleware adicional para servir los archivos relevantes.
 var analizadorFavicon = require('serve-favicon');

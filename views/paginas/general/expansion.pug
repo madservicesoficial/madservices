@@ -2,6 +2,35 @@
 extends ../../base.pug
 
 block title
-    title='Visión completa del Producto MAD'
+    title=`Visión completa del Producto MAD ${enumeracion}`
 
 block body
+    .interfazExpansionProductosMAD 
+        .rowExp
+            .columnExp
+                img(src=`data:image/*;base64,${imagenPortada}`)
+            .columnExp
+                .subrowExp
+                    h1=titulo
+                .subrowExp
+                    h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
+                    h2#verdeExpansion='¡Date prisa y no esperes más!'
+                .subrowExp
+                    h3='Categoria: '
+                    p.seccionesExpansion=categoria
+                .subrowExp
+                    h3='Peso para envío: '
+                    p.seccionesExpansion=peso + ' Kg/unidad'
+                .subrowExp
+                    h3='Precio: '
+                    p.seccionesExpansion=precio + ' €/unidad'
+                br
+                br
+                .subrowExp
+                    form(method='GET' action='/registrarse/cliente')
+                        button#btnExpansion(type='submit' style='cursor: pointer')='Añadir al carrito'
+                br
+                br
+                .subrowExp
+                    h3='Descripción: '
+                    p.seccionesExpansion=descripcion

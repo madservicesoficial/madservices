@@ -2,6 +2,36 @@
 extends ../../base.pug
 
 block title
-    title=`${id} viendo completamente el Producto MAD`
+    title=`${id} viendo completamente el Producto MAD ${enumeracion}`
 
 block body
+    .interfazExpansionProductosMAD 
+        .rowExp
+            .columnExp
+                img(src=`data:image/*;base64,${imagenPortada}`)
+            .columnExp
+                .subrowExp
+                    h1=titulo
+                .subrowExp
+                    h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
+                    h2#verdeExpansion='¡Date prisa y no esperes más!'
+                .subrowExp
+                    h3='Categoria: '
+                    p.seccionesExpansion=categoria
+                .subrowExp
+                    h3='Peso para envío: '
+                    p.seccionesExpansion=peso + ' Kg/unidad'
+                .subrowExp
+                    h3='Precio: '
+                    p.seccionesExpansion=precio + ' €/unidad'
+                .subrowExp
+                    h3='Descripción: '
+                    p.seccionesExpansion=descripcion
+                br
+                br
+                .subrowExp
+                    h1='Añadir imágenes/vídeos: '
+                        span='(Máx: 9 archivos multimedia)'
+                    form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}` enctype="multipart/form-data")
+                        input(type='file' name='multimedia' accept='image/*, video/*' multiple)
+                        button#btnAddMultimedia(type='submit')='Añadir'

@@ -26,6 +26,12 @@ const mostrarProductosTheMallMiembroMAD = require('../modelos/miembros/mostrarPr
 const mostrarCarrito = require('../modelos/clientes/mostrarCarrito.js');
 //-- Importamos la función que muestra la compra del cliente.
 const mostrarCompraCliente = require('../modelos/clientes/mostrarCompraCliente.js');
+//-- Importamos la función que muestra la expansión para ver el producto MAD completamente.
+const mostrarExpansion = require('../modelos/general/mostrarExpansion.js');
+//-- Importamos la función que muestra la expansión para ver el producto MAD completamente por parte de los clientes.
+const mostrarExpansionClientes = require('../modelos/clientes/mostrarExpansion.js');
+//-- Importamos la función que muestra la expansión para ver el producto MAD completamente por parte de los Mimebros MAD.
+const mostrarExpansionMiembros = require('../modelos/miembros/mostrarExpansion.js');
 
 //-- Ruta al Inicio de MAD Services.
 rutasGet.get('/', (req, res) => {
@@ -274,24 +280,13 @@ rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeraci
 });
 
 //-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo.
-rutasGet.get('/empieza/productosmadservices/expandir', (req, res) => {
-  res.render('paginas/general/expansion');
-  return res.end();
-});
+rutasGet.get('/empieza/productosmadservices/expandir:enumeracion', mostrarExpansion);
 
 //-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Cliente.
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/expansion', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionClientes);
 
 //-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/expansion', {id: id});
-  return res.end();
-});
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionMiembros);
 
 //-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
 rutasGet.get('/', (req, res) => {

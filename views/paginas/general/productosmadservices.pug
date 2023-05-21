@@ -141,7 +141,7 @@ block body
                         div.btnsContainer
                             form(method='GET' action='/registrarse/cliente')
                                 button(type='submit')='Añadir al carrito'
-                            form(method='GET' action='/empieza/productosmadservices/expandir')
+                            form(method='GET' action=`/empieza/productosmadservices/expandir${campo.enumeracion}`)
                                 button#btnExpandirProductoMAD(type='submit')
                                     i.fa-solid.fa-up-right-and-down-left-from-center.fa-lg#iconoExpandirProductoMAD
         br

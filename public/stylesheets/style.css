@@ -1328,3 +1328,66 @@ canvas {
 .interfazEdicionProductoMAD form {
   margin-top: 50;
 }
+/*##################################################################################################*/
+/*################################ SECCIÓN EXPANDIR PRODUCTO MAD ###################################*/
+/*##################################################################################################*/
+.interfazExpansionProductosMAD {
+  background-image: url('../images/fondoExpandir.jpg');
+  width: 100%;
+  min-height: 130vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.rowExp {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  width: 1500;
+}
+.columnExp {
+  flex: 1;
+  margin: 0 1rem;
+  width: 750;
+  margin-top: 60;
+  margin-left: 50;
+}
+.columnExp img {
+  width: 400;
+  margin-left: 100;
+  border-style: groove;
+  border-width: 10px;
+  border-radius: 10px;
+}
+.subrowExp p {
+  width: 450;
+}
+.seccionesExpansion {
+  font-size: medium;
+  margin-left: 20px;
+  text-align: left;
+}
+#rojoExpansion {
+  color: red;
+}
+#verdeExpansion {
+  color: green;
+}
+#btnExpansion {
+  width: 150px;
+  height: 40px;
+  background-color: black;
+  color: white;
+  margin-left: 125;
+}
+.interfazExpansionProductosMAD input {
+  background-color: transparent;
+}
+#btnAddMultimedia {
+  width: 80px;
+  height: 35px;
+  background-color: black;
+  color: white;
+}
+.subrowExp span {
+  font-size: medium;
+}

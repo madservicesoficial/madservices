@@ -20,6 +20,8 @@ const autorizacionRegistroMiembros = require('../controladores/miembros/autoriza
 const autorizacionInicioSesionMiembros = require('../controladores/miembros/autorizacionInicioSesion.js');
 //-- Importamos la función para ingresar productos MAD en la base de datos.
 const ingresoProductosMAD = require('../controladores/miembros/ingresoProductosMAD.js');
+//-- Importamos la función para ingresar más archivos multimedia en la base de datos.
+const ingresarArchivosMultimediaMAD = require('../controladores/miembros/ingresarArchivosMultimediaMAD.js');
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
 const multer = require('multer');
 //-- Importamos la función para el ingreso de sitios de la interfaz de la Empresa.
@@ -79,6 +81,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
+//-- Formulario de ingreso de más archivos multimedia: imágenes y vídeos.
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', upload.array('multimedia'), ingresarArchivosMultimediaMAD);
 //-- Formulario ingresar en interfaz de empresa.
 rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
 rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
