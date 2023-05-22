@@ -1,297 +1,202 @@
+//############################## PARTE GENERAL DE LAS RUTAS DE ACCESO ##############################//
 //-- Importamos la Tecnología Express para crear el servidor de MAD Services basado en Express.
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
-//-- Importamos la función que comprueba el ID de los clientes y saca los parámetros.
+//##################################################################################################//
+
+
+
+
+
+//######################################## ACCESO AL INICIO ########################################//
+rutasGet.get('/', (req, res) => { res.render('paginas/general/inicio'); return res.end(); });
+rutasGet.get('/sesion-cliente/:id', (req, res) => { let id = req.params.id; res.render('paginas/clientes/inicio', {id: id}); return res.end(); });
+rutasGet.get('/sesion-empresa/:id', (req, res) => { let id = req.params.id; res.render('paginas/empresas/inicio', {id: id}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id', (req, res) => { let id = req.params.id; res.render('paginas/miembros/inicio', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//######################## ACCESO A ELECCIÓN DEL INICIO DE SESIÓN/REGISTRO #########################//
+rutasGet.get('/login', (req, res) => { res.render('paginas/general/login'); return res.end(); });
+rutasGet.get('/registrarse', (req, res) => { res.render('paginas/general/registrarse'); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//############################# ACCESO A AUTORIZACIÓN PARA MIEMBROS MAD ############################//
+rutasGet.get('/login/autorizar', (req, res) => { res.render('paginas/miembros/autorizacionInicioSesion'); return res.end(); });
+rutasGet.get('/registrarse/autorizar', (req, res) => { res.render('paginas/miembros/autorizacionRegistro'); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//########################### ACCESO A TIPO DE INICIO DE SESIÓN/REGISTRO ###########################//
+rutasGet.get('/login/cliente', (req, res) => { res.render('paginas/clientes/login'); return res.end(); });
+rutasGet.get('/login/empresa', (req, res) => { res.render('paginas/empresas/login'); return res.end(); });
+rutasGet.get('/login/autorizar/miembro', (req, res) => { res.render('paginas/miembros/login'); return res.end(); });
+rutasGet.get('/registrarse/cliente', (req, res) => { res.render('paginas/clientes/registrarse'); return res.end(); });
+rutasGet.get('/registrarse/empresa', (req, res) => { res.render('paginas/empresas/registrarse'); return res.end(); });
+rutasGet.get('/registrarse/autorizar/miembro', (req, res) => { res.render('paginas/miembros/registrarse'); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//######################################## ACCESO A CONTACTO #######################################//
+rutasGet.get('/contacto', (req, res) => { res.render('paginas/general/contacto'); return res.end(); });
+rutasGet.get('/sesion-cliente/:id/contacto', (req, res) => { let id = req.params.id; res.render('paginas/clientes/contacto', {id: id}); return res.end(); });
+rutasGet.get('/sesion-empresa/:id/contacto', (req, res) => { let id = req.params.id; res.render('paginas/empresas/contacto', {id: id}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id/contacto', (req, res) => { let id = req.params.id; res.render('paginas/miembros/contacto', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//####################################### ACCESO A CONOCE MAD ######################################//
+rutasGet.get('/conocenos', (req, res) => { res.render('paginas/general/conocemadservices'); return res.end(); });
+rutasGet.get('/sesion-cliente/:id/conocenos', (req, res) => { let id = req.params.id; res.render('paginas/clientes/conocemadservices', {id: id}); return res.end(); });
+rutasGet.get('/sesion-empresa/:id/conocenos', (req, res) => { let id = req.params.id; res.render('paginas/empresas/conocemadservices', {id: id}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id/conocenos', (req, res) => { let id = req.params.id; res.render('paginas/miembros/conocemadservices', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//################################# ACCESO A TÉRMINOS Y CONDICIONES ################################//
+rutasGet.get('/terminos-condiciones', (req, res) => { let id = req.params.id; res.render('paginas/general/terminosCondiciones', {id: id}); return res.end(); });
+rutasGet.get('/sesion-cliente/:id/terminos-condiciones', (req, res) => { let id = req.params.id; res.render('paginas/clientes/terminosCondiciones', {id: id}); return res.end(); });
+rutasGet.get('/sesion-empresa/:id/terminos-condiciones', (req, res) => { let id = req.params.id; res.render('paginas/empresas/terminosCondiciones', {id: id}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id/terminos-condiciones', (req, res) => { let id = req.params.id; res.render('paginas/miembros/terminosCondiciones', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//################################## ACCESO A TRABAJA CON NOSOTROS #################################//
+rutasGet.get('/empleo', (req, res) => { res.render('paginas/general/empleo'); return res.end(); });
+rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => { let id = req.params.id; res.render('paginas/clientes/empleo', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//#################################### ACCESO AL PERFIL/INTERFAZ ###################################//
 const mostrarClientedb = require('../modelos/clientes/mostrarCampos.js');
-//-- Importamos la función que comprueba el ID de las empresas y saca los parámetros.
 const mostrarEmpresadb = require('../modelos/empresas/mostrarCampos.js');
-//-- Importamos la función que comprueba el ID de los Miembros MAD y saca los parámetros.
 const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
-//-- Importamos la función que muestra los productos MAD.
+
+rutasGet.get('/sesion-cliente/:id/perfil', mostrarClientedb);
+rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresadb);
+rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembrodb);
+//##################################################################################################//
+
+
+
+
+
+//########################################## CERRAR SESIÓN #########################################//
+rutasGet.get('/', (req, res) => { return req.session.destroy(); });
+//##################################################################################################//
+
+
+
+
+
+//######################### ACCESO A ELECCIÓN DE PRODUCTOS MAD O MULTIMARCA ########################//
+rutasGet.get('/empieza', (req,res) => { res.render('paginas/general/entradaMAD'); return res.end(); });
+rutasGet.get('/sesion-cliente/:id/empieza', (req,res) => { let id = req.params.id; res.render('paginas/clientes/entradaMAD', {id: id}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => { let id = req.params.id; res.render('paginas/miembros/entradaMAD', {id: id}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//#################################### ACCESO A LOS PRODUCTOS MAD ##################################//
 const mostrarProductosMAD = require('../modelos/general/mostrarProductosMAD.js');
-//-- Importamos la función que muestra los productos MAD desde el cliente.
 const mostrarProductosMADclientes = require('../modelos/clientes/mostrarProductosMAD.js');
-//-- Importamos la función que muestra los productos MAD desde un miembro MAD.
 const mostrarProductosMADmiembros = require('../modelos/miembros/mostrarProductosMAD.js');
-//-- Importamos la función que muestra los productos Multimarca o The Mall.
+
+rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
+rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros);
+//##################################################################################################//
+
+
+
+
+
+//################################ ACCESO A LOS PRODUCTOS MULTIMARCA ###############################//
 const mostrarProductosTheMall = require('../modelos/general/mostrarProductosTheMall.js');
-//-- Importamos la función que muestra los productos Multimarca o The Mall desde el cliente.
 const mostrarProductosTheMallCliente = require('../modelos/clientes/mostrarProductosTheMallCliente.js');
-//-- Importamos la función que muestra los productos Multimarca o The Mall desde la empresa.
 const mostrarProductosTheMallEmpresa = require('../modelos/empresas/mostrarProductosTheMallEmpresa.js');
-//-- Importamos la función que muestra los productos Multimarca o The Mall desde un miembro MAD.
 const mostrarProductosTheMallMiembroMAD = require('../modelos/miembros/mostrarProductosTheMallMiembroMAD.js');
-//-- Importamos la función que muestra los prodcutos MAD del carrito.
+
+rutasGet.get('/empieza/themall', mostrarProductosTheMall);
+rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallCliente);
+rutasGet.get('/sesion-empresa/:id/empieza', mostrarProductosTheMallEmpresa);
+rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiembroMAD);
+//##################################################################################################//
+
+
+
+
+
+//################################ ACCESO AL CARRITO POR EL CLIENTE ################################//
 const mostrarCarrito = require('../modelos/clientes/mostrarCarrito.js');
-//-- Importamos la función que muestra la compra del cliente.
+
+rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
+//##################################################################################################//
+
+
+
+
+
+//################################ ACCESO A LA COMPRA POR EL CLIENTE ###############################//
 const mostrarCompraCliente = require('../modelos/clientes/mostrarCompraCliente.js');
-//-- Importamos la función que muestra la expansión para ver el producto MAD completamente.
+
+rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
+//##################################################################################################//
+
+
+
+
+
+//############################### ACCESO A EXPANDIR LOS PRODUCTOS MAD ##############################//
 const mostrarExpansion = require('../modelos/general/mostrarExpansion.js');
-//-- Importamos la función que muestra la expansión para ver el producto MAD completamente por parte de los clientes.
 const mostrarExpansionClientes = require('../modelos/clientes/mostrarExpansion.js');
-//-- Importamos la función que muestra la expansión para ver el producto MAD completamente por parte de los Mimebros MAD.
 const mostrarExpansionMiembros = require('../modelos/miembros/mostrarExpansion.js');
 
-//-- Ruta al Inicio de MAD Services.
-rutasGet.get('/', (req, res) => {
-  res.render('paginas/general/inicio');
-  return res.end();
-});
-
-//-- Ruta al Inicio Autenticado del Cliente de MAD Services.
-rutasGet.get('/sesion-cliente/:id', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/inicio', {id: id});
-  return res.end();
-});
-
-//-- Ruta al Inicio Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/inicio', {id: id});
-  return res.end();
-});
-
-//-- Ruta al Inicio Autenticado del Miembro MAD de MAD Services.
-rutasGet.get('/sesion-miembro/:id', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/inicio', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Iniciar Sesión como Cliente, Empresa o Miembro MAD.
-rutasGet.get('/login', (req, res) => {
-  res.render('paginas/general/login');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Iniciar Sesión como Cliente.
-rutasGet.get('/login/cliente', (req, res) => {
-  res.render('paginas/clientes/login');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Iniciar Sesión como Empresa.
-rutasGet.get('/login/empresa', (req, res) => {
-  res.render('paginas/empresas/login');
-  return res.end();
-});
-
-//-- Ruta a autorizar al miembro MAD para Iniciar Sesión.
-rutasGet.get('/login/autorizar', (req, res) => {
-  res.render('paginas/miembros/autorizacionInicioSesion');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Iniciar Sesión como Miembro MAD.
-rutasGet.get('/login/autorizar/miembro', (req, res) => {
-  res.render('paginas/miembros/login');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Registrarse como Cliente, Empresa o Miembro MAD.
-rutasGet.get('/registrarse', (req, res) => {
-  res.render('paginas/general/registrarse');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Registrarse como Cliente.
-rutasGet.get('/registrarse/cliente', (req, res) => {
-  res.render('paginas/clientes/registrarse');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Registrarse como Empresa.
-rutasGet.get('/registrarse/empresa', (req, res) => {
-  res.render('paginas/empresas/registrarse');
-  return res.end();
-});
-
-//-- Ruta a autorizar al miembro MAD para Registrarse.
-rutasGet.get('/registrarse/autorizar', (req, res) => {
-  res.render('paginas/miembros/autorizacionRegistro');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Registrarse como Miembro MAD.
-rutasGet.get('/registrarse/autorizar/miembro', (req, res) => {
-  res.render('paginas/miembros/registrarse');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Contacto.
-rutasGet.get('/contacto', (req, res) => {
-  res.render('paginas/general/contacto');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Contacto Autenticado del Cliente.
-rutasGet.get('/sesion-cliente/:id/contacto', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/contacto', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Contacto Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/contacto', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/contacto', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Contacto Autenticado del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/contacto', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/contacto', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Trabaja con Nosotros.
-rutasGet.get('/empleo', (req, res) => {
-  res.render('paginas/general/empleo');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Trabaja con Nosotros Autenticado del Cliente.
-rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/empleo', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Términos y Condiciones.
-rutasGet.get('/terminos-condiciones', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/general/terminosCondiciones', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Términos y Condiciones Autenticado del Cliente.
-rutasGet.get('/sesion-cliente/:id/terminos-condiciones', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/terminosCondiciones', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Términos y Condiciones Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/terminos-condiciones', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/terminosCondiciones', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Términos y Condiciones Autenticado del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/terminos-condiciones', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/terminosCondiciones', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Sobre MAD Services.
-rutasGet.get('/conocenos', (req, res) => {
-  res.render('paginas/general/conocemadservices');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Sobre MAD Services Autenticado del Cliente.
-rutasGet.get('/sesion-cliente/:id/conocenos', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/conocemadservices', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Sobre MAD Services Autenticado de la Empresa.
-rutasGet.get('/sesion-empresa/:id/conocenos', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/empresas/conocemadservices', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Sobre MAD Services Autenticado del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/conocenos', (req, res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/conocemadservices', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Entrada MAD de MAD Services.
-rutasGet.get('/empieza', (req,res) => {
-  res.render('paginas/general/entradaMAD');
-  return res.end();
-});
-
-//-- Ruta a la Sección de Entrada MAD Autenticado del Cliente de MAD Services.
-rutasGet.get('/sesion-cliente/:id/empieza', (req,res) => {
-  let id = req.params.id;
-  res.render('paginas/clientes/entradaMAD', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección de Entrada MAD Autenticado de la Empresa de MAD Services.
-rutasGet.get('/sesion-empresa/:id/empieza', mostrarProductosTheMallEmpresa);
-
-//-- Ruta a la Sección de Entrada MAD Autenticado del Miembro MAD de MAD Services.
-rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => {
-  let id = req.params.id;
-  res.render('paginas/miembros/entradaMAD', {id: id});
-  return res.end();
-});
-
-//-- Ruta a la Sección del Perfil de los Clientes de MAD Services.
-rutasGet.get('/sesion-cliente/:id/perfil', mostrarClientedb);
-
-//-- Ruta a la Sección de la Interfaz de las Empresas de MAD Services.
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresadb);
-
-//-- Ruta a la Sección de la Interfaz de los Miembros MAD de MAD Services.
-rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembrodb);
-
-//-- Ruta a la Sección de los Productos MAD.
-rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
-
-//-- Ruta a la Sección de los Productos MAD a través de la sesión del cliente.
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
-
-//-- Ruta a la Sección de los Productos MAD a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros);
-
-//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Cliente.
-rutasGet.get('/empieza/themall', mostrarProductosTheMall);
-
-//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Cliente.
-rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallCliente);
-
-//-- Ruta a la Sección de los Productos Multimarca o ruta al Centro Comercial - The Mall a través de la sesión del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiembroMAD);
-
-//-- Ruta al carrito de la compra.
-rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
-
-//-- Ruta a la sección de verificar la compra.
-rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
-
-//-- Ruta a la sección de edición del Producto MAD por parte del Miembro MAD.
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion', (req, res) => {
-  let id = req.params.id;
-  let enumeracion = req.params.enumeracion;
-  res.render('paginas/miembros/edicion', {id: id, enumeracion: enumeracion});
-  return res.end();
-});
-
-//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo.
 rutasGet.get('/empieza/productosmadservices/expandir:enumeracion', mostrarExpansion);
-
-//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Cliente.
 rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionClientes);
-
-//-- Ruta a la sección de expandir para ver el producto MAD con más información y más completo por parte del Miembro MAD.
 rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionMiembros);
+//##################################################################################################//
 
-//-- Cerrar Sesión como Cliente, Empresa o Miembro MAD.
-rutasGet.get('/', (req, res) => {
-  return req.session.destroy();
-});
 
-//-- Exportamos las rutas con método GET.
+
+
+
+//############################## ACCESO A ACTUALIZAR LOS PRODUCTOS MAD #############################//
+rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion', (req, res) => { let id = req.params.id; let enumeracion = req.params.enumeracion; res.render('paginas/miembros/edicion', {id: id, enumeracion: enumeracion}); return res.end(); });
+//##################################################################################################//
+
+
+
+
+
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = rutasGet;
+//#######################################################################################################//

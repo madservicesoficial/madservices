@@ -1,62 +1,81 @@
+//############################ PARTE GENERAL DE LAS RUTAS DE ACTUALIZACIÓN ##############################//
 //-- Importamos la Tecnología Express para crear el servidor de MAD Services basado en Express.
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasPatch = servidor.Router();
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
 const multer = require('multer');
-//-- Importamos la configuración de los formularios de actualización de los Clientes.
-const actualizarNombre = require('../controladores/clientes/actualizarNombre.js');
-const actualizarApellidos = require('../controladores/clientes/actualizarApellidos.js');
-const actualizarGeneroCliente = require('../controladores/clientes/actualizarGenero.js');
-const actualizarEmailCliente = require('../controladores/clientes/actualizarEmail.js');
-const actualizarPasswordCliente = require('../controladores/clientes/actualizarPassword.js');
-const actualizarLocalizacion = require('../controladores/clientes/actualizarLocalizacion.js');
-//-- Importamos la configuración de los formularios de actualización de las Empresas.
-const actualizarMarca = require('../controladores/empresas/actualizarMarca.js');
-const actualizarTipo = require('../controladores/empresas/actualizarTipo.js');
-const actualizarNIF = require('../controladores/empresas/actualizarNIF.js');
-const actualizarEmailEmpresa = require('../controladores/empresas/actualizarEmailEmpresa.js');
-const actualizarPasswordEmpresa = require('../controladores/empresas/actualizarPasswordEmpresa.js');
-//-- Importamos la configuración de los formularios de actualización de los Miembros MAD.
-const actualizarMiembro = require('../controladores/miembros/actualizarMiembro.js');
-const actualizarDepartamento = require('../controladores/miembros/actualizarDepartamento.js');
-const actualizarGenero = require('../controladores/miembros/actualizarGenero.js');
-const actualizarEmail = require('../controladores/miembros/actualizarEmail.js');
-const actualizarPassword = require('../controladores/miembros/actualizarPassword.js');
-//-- Importamos la configuración del formulario de actualización de los productos MAD.
-const actualizarImagen = require('../controladores/miembros/actualizarImagen.js');
-const actualizarCantidad = require('../controladores/miembros/actualizarCantidad.js');
-const actualizarCategoria = require('../controladores/miembros/actualizarCategoria.js');
-const actualizarTitulo = require('../controladores/miembros/actualizarTitulo.js');
-const actualizarPrecio = require('../controladores/miembros/actualizarPrecio.js');
-const actualizarPeso = require('../controladores/miembros/actualizarPeso.js');
-const actualizarDescripcion = require('../controladores/miembros/actualizarDescripcion.js');
-//-- Importamos las funciones que actualizan las tarjetas bank.
-const editarNumTarjetaBank = require('../controladores/clientes/editarNumTarjetaBank.js');
-const editarValidezTarjetaBank = require('../controladores/clientes/editarValidezTarjetaBank.js');
-const editarNombreTarjetaBank = require('../controladores/clientes/editarNombreTarjetaBank.js');
-const editarCVVTarjetaBank = require('../controladores/clientes/editarCVVTarjetaBank.js');
+//#######################################################################################################//
 
-//-- Formulario de actualización de datos del Perfil Cliente.
+
+
+
+
+//############################ ACTUALIZACIÓN DE DATOS EN EL PERFIL CLIENTE ##############################//
+const actualizarNombre = require('../controladores/clientes/actualizar/perfil/nombre.js');
+const actualizarApellidos = require('../controladores/clientes/actualizar/perfil/apellidos.js');
+const actualizarGeneroCliente = require('../controladores/clientes/actualizar/perfil/genero.js');
+const actualizarEmailCliente = require('../controladores/clientes/actualizar/perfil/email.js');
+const actualizarPasswordCliente = require('../controladores/clientes/actualizar/perfil/password.js');
+const actualizarLocalizacion = require('../controladores/clientes/actualizar/perfil/localizacion.js');
+
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-nombre', actualizarNombre);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-apellidos', actualizarApellidos);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-genero', actualizarGeneroCliente);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-email', actualizarEmailCliente);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-password', actualizarPasswordCliente);
 rutasPatch.post('/sesion-cliente/:id/perfil/actualizar-localizacion', actualizarLocalizacion);
-//-- Formulario de actualización de datos de la Interfaz Empresa.
+//#######################################################################################################//
+
+
+
+
+
+//########################### ACTUALIZACIÓN DE DATOS EN LA INTERFAZ EMPRESA #############################//
+const actualizarMarca = require('../controladores/empresas/actualizar/interfaz/marca.js');
+const actualizarTipo = require('../controladores/empresas/actualizar/interfaz/categoria.js');
+const actualizarCIF = require('../controladores/empresas/actualizar/interfaz/cif.js');
+const actualizarEmailEmpresa = require('../controladores/empresas/actualizar/interfaz/email.js');
+const actualizarPasswordEmpresa = require('../controladores/empresas/actualizar/interfaz/password.js');
+
 rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-marca', actualizarMarca);
 rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-tipo', actualizarTipo);
-rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-nif', actualizarNIF);
+rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-nif', actualizarCIF);
 rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-email', actualizarEmailEmpresa);
 rutasPatch.post('/sesion-empresa/:id/interfaz/actualizar-password', actualizarPasswordEmpresa);
-//-- Formulario de actualización de datos de la Interfaz Miembro MAD.
+//#######################################################################################################//
+
+
+
+
+
+//######################### ACTUALIZACIÓN DE DATOS EN LA INTERFAZ MIEMBRO MAD ###########################//
+const actualizarMiembro = require('../controladores/miembros/actualizar/interfaz/miembro.js');
+const actualizarDepartamento = require('../controladores/miembros/actualizar/interfaz/departamento.js');
+const actualizarGenero = require('../controladores/miembros/actualizar/interfaz/genero.js');
+const actualizarEmail = require('../controladores/miembros/actualizar/interfaz/email.js');
+const actualizarPassword = require('../controladores/miembros/actualizar/interfaz/password.js');
+
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-miembro', actualizarMiembro);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-departamento', actualizarDepartamento);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-genero', actualizarGenero);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-email', actualizarEmail);
 rutasPatch.post('/sesion-miembro/:id/interfaz/actualizar-password', actualizarPassword);
-//-- Formulario de actualización de productos MAD.
+//#######################################################################################################//
+
+
+
+
+
+//################################# ACTUALIZACIÓN DE LOS PRODUCTOS MAD ##################################//
+const actualizarImagen = require('../controladores/miembros/actualizar/productos/imagen.js');
+const actualizarCantidad = require('../controladores/miembros/actualizar/productos/cantidad.js');
+const actualizarCategoria = require('../controladores/miembros/actualizar/productos/categoria.js');
+const actualizarTitulo = require('../controladores/miembros/actualizar/productos/titulo.js');
+const actualizarPrecio = require('../controladores/miembros/actualizar/productos/precio.js');
+const actualizarPeso = require('../controladores/miembros/actualizar/productos/peso.js');
+const actualizarDescripcion = require('../controladores/miembros/actualizar/productos/descripcion.js');
+
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, './imagenes');
@@ -74,11 +93,28 @@ rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumer
 rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-precio', actualizarPrecio);
 rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-peso', actualizarPeso);
 rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-descripcion', actualizarDescripcion);
-//-- Formulario de actualización de tarjetas bancarias.
+//#######################################################################################################//
+
+
+
+
+
+//########################## ACTUALIZACIÓN DE LA TARJETA BANCARIA DEL CLIENTE ###########################//
+const editarNumTarjetaBank = require('../controladores/clientes/actualizar/tarjeta/identificativo.js');
+const editarValidezTarjetaBank = require('../controladores/clientes/actualizar/tarjeta/validez.js');
+const editarNombreTarjetaBank = require('../controladores/clientes/actualizar/tarjeta/persona.js');
+const editarCVVTarjetaBank = require('../controladores/clientes/actualizar/tarjeta/cvv.js');
+
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-numero', editarNumTarjetaBank);
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-validez', editarValidezTarjetaBank);
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-nombre', editarNombreTarjetaBank);
 rutasPatch.post('/sesion-cliente/:id/perfil/editar-cvv', editarCVVTarjetaBank);
+//#######################################################################################################//
 
-//-- Exportamos las rutas con método PATCH.
+
+
+
+
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = rutasPatch;
+//#######################################################################################################//

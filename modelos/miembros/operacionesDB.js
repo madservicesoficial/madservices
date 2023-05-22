@@ -554,6 +554,12 @@ const salidaProductoBorrado = (id, res) => {
     return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
 }
 
+//-- Creamos la función para ingresar más imágenes/vídeos en los productos MAD.
+const ingresarArchivosMultimediaMADdb = () => {
+
+    
+}
+
 //-- Exportamos las funciones.
 module.exports = {
     registrarMiembroVerificadodb,
@@ -574,5 +580,6 @@ module.exports = {
     actualizarPesodb,
     borrarProductoMADdb,
     consultarEnumeracionAndActualizardb,
-    salidaProductoBorrado
+    salidaProductoBorrado,
+    ingresarArchivosMultimediaMADdb
 };

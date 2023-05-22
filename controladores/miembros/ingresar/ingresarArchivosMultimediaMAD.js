@@ -15,7 +15,15 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
     //-- Obtenemos el ID del Miembro MAD y la enumeración del Producto MAD.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
-    
+    //-- Ruta al directorio de las imágenes almacenadas localmente.
+    const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+    //-- Fichero asíncrono leer directorio.
+    const readdir = util.promisify(fs.readdir);
+    //-- Fichero asíncrono borrar fichero.
+    const unlink = util.promisify(fs.unlink);
+    //-- Ruta donde está el archivo metido localmente.
+    const files = await readdir(rutaAlDirectorio);
+    const file = files[0];
 }
 
 //-- Exportamos la configuración del ingreso de productos MAD para unificarlo con el resto de rutas.
