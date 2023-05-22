@@ -122,6 +122,7 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-descripcion`)
+                    input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
             div.column
@@ -132,6 +133,7 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-WhatsApp`)
+                    input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
@@ -140,6 +142,7 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Instagram`)
+                    input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
@@ -149,6 +152,7 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Twitter`)
+                    input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-PagWeb`)
@@ -158,6 +162,7 @@ block body
                     button(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-PagWeb`)
+                    input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
         div.row
