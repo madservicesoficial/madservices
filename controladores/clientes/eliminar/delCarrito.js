@@ -1,16 +1,18 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {quitarProductosdb} = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { quitarProductosdb } = require('../../../modelos/clientes/eliminar/eliminar.js');
+//#######################################################################################################//
 
-//-- Pto de control del ajuste del carrito de compra.
+//############################################# DESARROLLO ##############################################//
 const quitarProductos = (req, res) => {
-    
-    //-- Obtenemos el ID del Cliente.
+
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Obtenemos el título del producto a eliminar del carrito.
     const titulo = req.body.titulo;
-    //-- Proceso de quitar el producto del carrito.
+    //-- Llamada a función.
     quitarProductosdb(id, titulo, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos para unir con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = quitarProductos;
+//#######################################################################################################//

@@ -1,16 +1,18 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { darseBajaClientedb } = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { darseBajaClientedb } = require('../../../modelos/clientes/eliminar/eliminar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar el darse de baja del cliente.
+//############################################# DESARROLLO ##############################################//
 const darseBajaCliente = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Obtenemos las ctes que confirman si quieren darse de baja o no.
     const dileAdios = req.body.dileAdios;
-    //-- Procedemos a dar de baja al Cliente definitivamente, siguiendo los requisitos.
+    //-- Llamada a función.
     darseBajaClientedb(id, dileAdios, req, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración del darse de baja del cliente para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = darseBajaCliente;
+//#######################################################################################################//  

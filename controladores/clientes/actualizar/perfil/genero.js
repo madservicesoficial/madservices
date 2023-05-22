@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarGeneroVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarGeneroVerificadodb } = require('../../../../modelos/clientes/actualizar/perfil/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización del campo género del perfil del cliente.
+//############################################# DESARROLLO ##############################################//
 const actualizarGeneroCliente = (req, res) => {
 
-    //-- Introducción del campo género del perfil del cliente para actualizarlo en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const genero = req.body.genero;
-    //-- Función actualizar el campo.
+    //-- Llamada a función.
     actualizarGeneroVerificadodb(id, genero, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización del campo género del perfil del cliente para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarGeneroCliente;
+//#######################################################################################################//

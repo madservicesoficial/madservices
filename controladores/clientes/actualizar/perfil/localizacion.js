@@ -1,19 +1,22 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarLocalizacionVerificadadb } = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarLocalizacionVerificadadb } = require('../../../../modelos/clientes/actualizar/perfil/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización del campo país del perfil del cliente.
+//############################################# DESARROLLO ##############################################//
 const actualizarLocalizacion = (req, res) => {
 
-    //-- Introducción del campo país del perfil del cliente para actualizarlo en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const pais = req.body.pais;
     const cp = req.body.cp;
     const region = req.body.region;
     const poblacion = req.body.poblacion;
     const direccion = req.body.direccion;
-    //-- Función actualizar el campo.
+    //-- Llamada a función.
     actualizarLocalizacionVerificadadb(id, pais, cp, region, poblacion, direccion, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización del campo país del perfil del cliente para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarLocalizacion;
+//#######################################################################################################//

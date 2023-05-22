@@ -1,21 +1,25 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {busquedaPorTituloEnClientedb} = require('../../modelos/clientes/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorTituloEnClientedb } = require('../../../modelos/clientes/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por título.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorTituloEnCliente = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción del título.
     const titulo = req.body.titulo;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(titulo) {
+        //-- Llamada a función.
         busquedaPorTituloEnClientedb(titulo, res, id);
     }
     else {
+        //-- Redirigir.
         res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorTituloEnCliente;
+//#######################################################################################################//

@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { actualizarTipoVerificadodb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarTipoVerificadodb } = require('../../../../modelos/empresas/actualizar/interfaz/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para actualizar el campo tipo de la interfaz de la Empresa.
+//############################################# DESARROLLO ##############################################//
 const actualizarTipo = (req, res) => {
 
-    //-- Introducción del campo tipo de la interfaz de la Empresa para actualizar en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const tipo = req.body.tipo;
-    //-- Función actualizar el campo.
+    //-- Llamada a función.
     actualizarTipoVerificadodb(id, tipo, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de actualizar el campo tipo de la interfaz de la Empresa para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarTipo;
+//#######################################################################################################//

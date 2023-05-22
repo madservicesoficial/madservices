@@ -1,17 +1,21 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { editarValidezTarjetaBankdb } = require('../../modelos/clientes/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización de la tarjeta bancaria del cliente.
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { editarValidezTarjetaBankdb } = require('../../../../modelos/clientes/actualizar/tarjeta/actualizar.js');
+//#######################################################################################################//
+
+//############################################# DESARROLLO ##############################################//
 const editarValidezTarjetaBank = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Obtenemos las ctes que confirman la actualización o no la tarjeta bancaria.
     const validez = req.body.validez;
-    //-- Proceso de actualizar la tarjeta bancaria.
+    //-- Proceso de validación.
     if(validez) {
+        //-- Llamada a función.
         editarValidezTarjetaBankdb(id, validez, res);
     }else {
         //-- Mostrar alerta.
@@ -20,6 +24,8 @@ const editarValidezTarjetaBank = (req, res) => {
         return res.redirect(`/sesion-cliente/${id}/perfil`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = editarValidezTarjetaBank;
+//#######################################################################################################//

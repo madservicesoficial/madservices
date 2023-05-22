@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de los Clientes para interactuar con la base de datos.
-const { actualizarNombreVerificadodb } = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarNombreVerificadodb } = require('../../../../modelos/clientes/actualizar/perfil/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización del campo nombre del perfil del cliente.
+//############################################# DESARROLLO ##############################################//
 const actualizarNombre = (req, res) => {
 
-    //-- Introducción del campo nombre del perfil del cliente para actualizarlo en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const nombre = req.body.nombre;
-    //-- Función actualizar el campo.
+    //-- Llamada a función.
     actualizarNombreVerificadodb(id, nombre, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización del campo nombre del perfil del cliente para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarNombre;
+//#######################################################################################################//

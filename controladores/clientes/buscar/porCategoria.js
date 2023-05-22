@@ -1,20 +1,24 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {busquedaPorCategoriaEnClientedb} = require('../../modelos/clientes/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorCategoriaEnClientedb } = require('../../../modelos/clientes/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por título.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorCategoriaEnCliente = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción de la categoria.
     const categoria = req.body.categoria;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(categoria === 'Todo') {
+        //-- Redirigir.
         res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
     }else {
+        //-- Llamada a función.
         busquedaPorCategoriaEnClientedb(categoria, res, id);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorCategoriaEnCliente;
+//#######################################################################################################//

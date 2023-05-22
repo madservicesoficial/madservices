@@ -31,5 +31,10 @@ const madservicesEmpresadb = mysql.createPool({
     port: process.env.PUERTO_DB
 });
 
-//-- Exportamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-module.exports = {madservicesAdmindb, madservicesClientedb, madservicesEmpresadb};
+//########################################### PUNTO DE UNIÓN ############################################//
+module.exports = {
+    madservicesAdmindb,
+    madservicesClientedb,
+    madservicesEmpresadb
+};
+//#######################################################################################################//

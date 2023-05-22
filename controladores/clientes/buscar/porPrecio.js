@@ -1,16 +1,16 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {busquedaPorPrecioEnClientedb} = require('../../modelos/clientes/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorPrecioEnClientedb } = require('../../../modelos/clientes/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por título.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorPrecioEnCliente = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción del precio.
     const busquedaPorPrecio = req.body.busquedaPorPrecio;
+    //-- Proceso de validación.
     if(busquedaPorPrecio !== 'Todos') {
-        const precio = parseInt(busquedaPorPrecio, 10);;
-        //-- Declaración de variable mínima y máxima.
+        const precio = parseInt(busquedaPorPrecio, 10);
         let min = precio;
         let max;
         if(precio >= 0 && precio <= 90) {
@@ -24,12 +24,15 @@ const busquedaPorPrecioEnCliente = (req, res) => {
         }else {
             max = 900000000000000;
         }
-        //-- Proceso de búsqueda.
+        //-- Llamada a función.
         busquedaPorPrecioEnClientedb(min, max, res, id);
     }else {
+        //-- Redirigir.
         res.redirect(`/sesion-cliente/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorPrecioEnCliente;
+//#######################################################################################################//
