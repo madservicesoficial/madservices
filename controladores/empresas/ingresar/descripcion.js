@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { ingresoDescripcionEmpresadb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { ingresoDescripcionEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para ingresar la descripción en la interfaz de la Empresa.
+//############################################# DESARROLLO ##############################################//
 const ingresoDescripcionEmpresa = (req, res) => {
 
-    //-- Introducción de la descripción en la interfaz de la Empresa para ingresar en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const descripcion = req.body.descripCo;
-    //-- Función ingresar el campo.
+    //-- Llamada a función.
     ingresoDescripcionEmpresadb(id, descripcion, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de ingresar la descripción en la interfaz de la Empresa para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = ingresoDescripcionEmpresa;
+//#######################################################################################################//

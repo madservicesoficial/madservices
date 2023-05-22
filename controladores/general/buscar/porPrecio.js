@@ -1,16 +1,17 @@
-//-- Importamos las funciones de operaciones de General para interactuar con la base de datos.
-const {busquedaPorPreciodb} = require('../../modelos/general/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorPreciodb } = require('../../../modelos/general/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por precio.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorPrecio = (req, res) => {
 
-    //-- Introducción del precio.
+    //-- Variables y Ctes.
     const busquedaPorPrecio = req.body.busquedaPorPrecio;
+    const precio = parseInt(busquedaPorPrecio, 10);;
+    let min = precio;
+    let max;
+    //-- Proceso de validación.
     if(busquedaPorPrecio !== 'Todos') {
-        const precio = parseInt(busquedaPorPrecio, 10);;
-        //-- Declaración de variable mínima y máxima.
-        let min = precio;
-        let max;
         if(precio >= 0 && precio <= 90) {
             max = precio + 10;
         }else if(precio >= 100 && precio <= 175) {
@@ -22,12 +23,15 @@ const busquedaPorPrecio = (req, res) => {
         }else {
             max = 900000000000000;
         }
-        //-- Proceso de búsqueda.
+        //-- Llamada a función.
         busquedaPorPreciodb(min, max, res);
     }else {
+        //-- Redirigir.
         res.redirect('/empieza/productosmadservices');
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorPrecio;
+//#######################################################################################################//

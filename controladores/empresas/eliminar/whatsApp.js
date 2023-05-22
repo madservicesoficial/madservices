@@ -1,14 +1,17 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { borrarWhatsAppEmpresadb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { borrarWhatsAppEmpresadb } = require('../../../modelos/empresas/eliminar/eliminar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para borrar el WhatsApp en la interfaz de la Empresa.
+//############################################# DESARROLLO ##############################################//
 const borrarWhatsAppEmpresa = (req, res) => {
 
-    //-- Introducción del WhatsApp en la interfaz de la Empresa para borrar en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Función borrar el campo.
+    //-- Llamada a función.
     borrarWhatsAppEmpresadb(id, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de borrar el WhatsApp en la interfaz de la Empresa para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = borrarWhatsAppEmpresa;
+//#######################################################################################################//

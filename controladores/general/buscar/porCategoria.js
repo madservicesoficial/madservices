@@ -1,18 +1,23 @@
-//-- Importamos las funciones de operaciones de General para interactuar con la base de datos.
-const {busquedaPorCategoriadb} = require('../../modelos/general/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorCategoriadb } = require('../../../modelos/general/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por categoria.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorCategoria = (req, res) => {
 
-    //-- Introducción de la categoria.
+    //-- Variables y Ctes.
     const categoria = req.body.categoria;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(categoria === 'Todo') {
+        //-- Redirigir.
         res.redirect('/empieza/productosmadservices');
     }else {
+        //-- Llamada a función.
         busquedaPorCategoriadb(categoria, res);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorCategoria;
+//#######################################################################################################//

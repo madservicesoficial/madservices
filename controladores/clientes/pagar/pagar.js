@@ -1,67 +1,74 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {adquirirNombredb, guardaTarjetadb, confirmacionCompradb, borrarCarritoSegunIDdb} = require('../../modelos/clientes/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
 //-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
 const validarCard = require('card-validator');
+//#######################################################################################################//
 
-//-- Pto de control del ajuste de la verificación de la compra.
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { confirmacionCompradb } = require('../../../modelos/clientes/pagar/pagar.js');
+const { adquirirNombredb, guardaTarjetadb } = require('../../../modelos/clientes/guardar/guardar.js');
+//#######################################################################################################//
+
+//############################################# DESARROLLO ##############################################//
 const compraPagada = async (req, res) => {
     
-    //-- Obtenemos el ID del Cliente.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Obtenemos el resto de variables.
     let nombreTarjeta = req.body.nombreTarjeta;
     const numTarjeta = req.body.numeroTarjeta;
     let expiracion = req.body.fechaExpiracion;
     const cvv = req.body.cvv;
     let nohayTarjeta = req.body.nohayTarjeta;
-    //-- Comprobamos si hay o no tarjeta guardada.
+    const guardarTarjeta = req.body.saveCard;
+    const newExpiracion = expiracion + '-01';
+    const validacionCard = validarCard.number(numTarjeta);
+    const validacionCVV = validarCard.cvv(cvv);
+    //-- Proceso de validación.
     if(nohayTarjeta) {
         if(!nombreTarjeta) {
-            //-- Se adquiere el nombre del cliente de la base de datos.
+            //-- Llamada a función con retorno.
             nombreTarjeta = await adquirirNombredb(id);
         }
         if(!numTarjeta || !expiracion || !cvv) {
-            //-- Campos vacíos.
+            //-- Mostrar alerta.
             alerta('Campos vacíos');
+            //-- Redirigir.
             return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
         }else {
-            //-- Comprobamos si quiere o no guardar la tarjeta en base de datos.
-            const guardarTarjeta = req.body.saveCard;
-            //-- Configuramos bien la fecha de expiración.
-            const newExpiracion = expiracion + '-01';
-            //-- Validamos el nº de tarjeta bancaria y el cvv.
-            const validacionCard = validarCard.number(numTarjeta);
-            const validacionCVV = validarCard.cvv(cvv);
             if(nombreTarjeta > 148) {
-                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                //-- Mostrar alerta.
                 alerta(`${nombreTarjeta} demasiado largo`);
+                //-- Redirigir.
                 return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
             }else if(!validacionCard.isValid || numTarjeta.length > 18) {
-                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                //-- Mostrar alerta.
                 alerta(`${numTarjeta} es un nº de tarjeta bancaria inválido`);
+                //-- Redirigir.
                 return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
             }else if(!validacionCVV.isValid) {
-                //-- Mostrar alerta y redirigir a donde estaba de nuevo.
+                //-- Mostrar alerta.
                 alerta(`${cvv} es un código CVV inválido`);
+                //-- Redirigir.
                 return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
             }else {
                 if(guardarTarjeta) {
-                    //-- Guardamos la tarjeta en base de datos.
+                    //-- Llamada a función.
                     guardaTarjetadb(id, nombreTarjeta, numTarjeta, newExpiracion, cvv);
                 }
-                //-- Proceso de compra.
                 let cont = 0;
+                //-- Llamada a función.
                 confirmacionCompradb(id, cont, res);
             }
         }
     }else {
-        //-- Proceso de compra.
         let cont = 0;
+        //-- Llamada a función.
         confirmacionCompradb(id, cont, res);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos para unir con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = compraPagada;
+//#######################################################################################################//

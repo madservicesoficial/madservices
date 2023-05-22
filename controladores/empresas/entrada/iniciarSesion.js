@@ -1,18 +1,20 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { iniciarSesionEmpresaVerificadadb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { iniciarSesionEmpresaVerificadadb } = require('../../../modelos/empresas/entrada/entrada.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar el inicio de sesión de las Empresas.
+//############################################# DESARROLLO ##############################################//
 const iniciarSesionEmpresas = (req, res) => {
 
-    //-- Introducimos los campos para Iniciar Sesión como Empresa.
+    //-- Variables y Ctes.
     const email = req.body.email;
     const password = req.body.password;
-    //-- Comprobamos que ningún campo está vacío.
+    //-- Proceso de validación.
     if(!email || !password) {
+        //-- Renderizar y mostrar mensaje.
         res.status(401).render('paginas/empresas/login', {mensaje: 'Campos vacíos'});
         return res.end();
     }else {
-        //-- Llamamos a la función para Iniciar Sesión de forma verificada.
+        //-- Llamada a función.
         iniciarSesionEmpresaVerificadadb
         (
             email,
@@ -22,6 +24,8 @@ const iniciarSesionEmpresas = (req, res) => {
         );
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de inicio de sesión de las Empresas para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = iniciarSesionEmpresas;
+//#######################################################################################################//

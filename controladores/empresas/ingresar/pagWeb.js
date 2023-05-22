@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { ingresoPagWebEmpresadb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { ingresoPagWebEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para ingresar la Página Web en la interfaz de la Empresa.
+//############################################# DESARROLLO ##############################################//
 const ingresoPagWebEmpresa = (req, res) => {
 
-    //-- Introducción de la Página Web en la interfaz de la Empresa para ingresar en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const pagweb = req.body.urlPagWeb;
-    //-- Función ingresar el campo.
+    //-- Llamada a función.
     ingresoPagWebEmpresadb(id, pagweb, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de ingresar la Página Web en la interfaz de la Empresa para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = ingresoPagWebEmpresa;
+//#######################################################################################################//

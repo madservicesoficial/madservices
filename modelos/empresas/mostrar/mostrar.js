@@ -4,8 +4,8 @@ const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesEmpresadb} = require('../../../config/database.js');
 
-//-- Creamos la función que saca los datos de la base de datos de las Empresas.
-const mostrarDatosdb = (id, callback) => {
+//-- Creamos la función que saca todos los datos de la base de datos de las Empresas hacia su interfaz.
+const mostrarDatosdb = (id) => {
 
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM empresas WHERE id = ?';
@@ -14,116 +14,46 @@ const mostrarDatosdb = (id, callback) => {
     //-- Establecer la comunicación de consultar ID en la base de datos.
     madservicesEmpresadb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
-        const tablaEmpresa = result[0];
-        callback(tablaEmpresa);
-    });
-}
-
-//-- Creamos la función que saca la Descripción de la base de datos de las Empresas.
-function mostrarDescripciondb(id) {
-
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM companyd WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, [id]);
-    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
+        //-- Instrucción del ID.
+        let instruccionID2 = 'SELECT * FROM mktingcom WHERE id = ?';
+        //-- Configuración de su formato en mysql.
+        let formatoInstruccionID2 = mysql.format(instruccionID2, [id]);
+        //-- Establecer la comunicación de consultar ID en la base de datos.
+        madservicesEmpresadb.query(formatoInstruccionID2, (error, result2) => {
             if(error) throw error;
-            if(results[0] === undefined) {
-                const zero = 0;
-                resolve(zero);
+            if(result2.length === 0) {
+                const VACIO = '';
+                res.status(201).render('paginas/empresas/interfaz', 
+                {
+                    id: id,
+                    email: result[0].email,
+                    password: result[0].password,
+                    marca: result[0].marca,
+                    nif: result[0].nif,
+                    tipo: result[0].tipo,
+                    descripcion: VACIO,
+                    instagram: VACIO,
+                    twitter: VACIO,
+                    whatsapp: VACIO,
+                    pagweb: VACIO
+                });
+                return res.end();
             }else {
-                const descripcion = results[0].descripcion;
-                resolve(descripcion);
-            }
-        });
-    });
-}
-
-//-- Creamos la función que saca el Instagram de la base de datos de las Empresas.
-function mostrarInstagramdb(id) {
-
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM companyi WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, [id]);
-    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
-            if(error) throw error;
-            if(results[0] === undefined) {
-                const zero = 0;
-                resolve(zero);
-            }else {
-                const instagram = results[0].instagram;
-                resolve(instagram);
-            }
-        });
-    });
-}
-
-//-- Creamos la función que saca la Descripción de la base de datos de las Empresas.
-function mostrarPagWebdb(id) {
-
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM companypg WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, [id]);
-    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
-            if(error) throw error;
-            if(results[0] === undefined) {
-                const zero = 0;
-                resolve(zero);
-            }else {
-                const pagweb = results[0].pagweb;
-                resolve(pagweb);
-            }
-        });
-    });
-}
-
-//-- Creamos la función que saca el Twitter de la base de datos de las Empresas.
-function mostrarTwitterdb(id) {
-
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM companyt WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, [id]);
-    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
-            if(error) throw error;
-            if(results[0] === undefined) {
-                const zero = 0;
-                resolve(zero);
-            }else {
-                const twitter = results[0].twitter;
-                resolve(twitter);
-            }
-        });
-    });
-}
-
-//-- Creamos la función que saca el Whatsapp de la base de datos de las Empresas.
-function mostrarWhatsappdb(id) {
-
-    //-- Instrucción del ID.
-    let instruccionID = 'SELECT * FROM companyw WHERE id = ?';
-    //-- Configuración de su formato en mysql.
-    let formatoInstruccionID = mysql.format(instruccionID, [id]);
-    //-- Establecer la comunicación de consultar ID en la base de datos para sacarlo como variable.
-    return new Promise((resolve) => {
-        madservicesEmpresadb.query(formatoInstruccionID, (error, results) => {
-            if(error) throw error;
-            if(results[0] === undefined) {
-                const zero = 0;
-                resolve(zero);
-            }else {
-                const whatsapp = results[0].whatsapp;
-                resolve(whatsapp);
+                res.status(201).render('paginas/empresas/interfaz', 
+                {
+                    id: id,
+                    email: result[0].email,
+                    password: result[0].password,
+                    marca: result[0].marca,
+                    nif: result[0].nif,
+                    tipo: result[0].tipo,
+                    descripcion: result2[0].descripcion,
+                    instagram: result2[0].instagram,
+                    twitter: result2[0].twitter,
+                    whatsapp: result2[0].whatsapp,
+                    pagweb: result2[0].pagweb
+                });
+                return res.end();
             }
         });
     });
@@ -141,11 +71,6 @@ const mostrarProductosTheMallEmpresa = (req, res) => {
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     mostrarDatosdb,
-    mostrarDescripciondb,
-    mostrarInstagramdb,
-    mostrarPagWebdb,
-    mostrarTwitterdb,
-    mostrarWhatsappdb,
     mostrarProductosTheMallEmpresa
 };
 //#######################################################################################################//

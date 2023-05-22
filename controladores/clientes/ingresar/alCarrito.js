@@ -1,17 +1,19 @@
-//-- Importamos las funciones de operaciones de Clientes para interactuar con la base de datos.
-const {ingresoCarritodb} = require('../../modelos/clientes/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { ingresoCarritodb } = require('../../../modelos/clientes/ingresar/ingresar.js');
+//#######################################################################################################//
 
-//-- Pto de control del ajuste del carrito de compra.
+//############################################# DESARROLLO ##############################################//
 const ingresoCarrito = (req, res) => {
-    
-    //-- Obtenemos el ID del Cliente.
+
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Guardamos el valor del producto MAD que se ha clickado.
     const enumeracion = req.body.enumeracion;
     const numProducto = parseInt(enumeracion, 10);
-    //-- Consultar nº en base de datos.
+    //-- Llamada a función.
     ingresoCarritodb(numProducto, res, id);
 }
+//#######################################################################################################//
 
-//-- Exportamos para unir con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = ingresoCarrito;
+//#######################################################################################################//

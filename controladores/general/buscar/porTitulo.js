@@ -1,19 +1,24 @@
-//-- Importamos las funciones de operaciones de General para interactuar con la base de datos.
-const {busquedaPorTitulodb} = require('../../modelos/general/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorTitulodb } = require('../../../modelos/general/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por título.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorTitulo = (req, res) => {
 
-    //-- Introducción del título.
+    //-- Variables y Ctes.
     const titulo = req.body.titulo;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(titulo) {
+        //-- Llamada a función.
         busquedaPorTitulodb(titulo, res);
     }
     else {
+        //-- Redirigir.
         res.redirect('/empieza/productosmadservices');
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorTitulo;
+//#######################################################################################################//

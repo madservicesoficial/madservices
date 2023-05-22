@@ -1,14 +1,17 @@
-//-- Importamos las funciones de operaciones de las Empresas para interactuar con la base de datos.
-const { borrarPagWebEmpresadb } = require('../../modelos/empresas/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { borrarPagWebEmpresadb } = require('../../../modelos/empresas/eliminar/eliminar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para borrar la Página Web en la interfaz de la Empresa.
+//############################################# DESARROLLO ##############################################//
 const borrarPagWebEmpresa = (req, res) => {
 
-    //-- Introducción de la Página Web en la interfaz de la Empresa para borrar en base de datos.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Función borrar el campo.
+    //-- Llamada a función.
     borrarPagWebEmpresadb(id, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de borrar la Página Web en la interfaz de la Empresa para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = borrarPagWebEmpresa;
+//#######################################################################################################//
