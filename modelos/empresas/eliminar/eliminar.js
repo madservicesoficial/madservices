@@ -41,18 +41,18 @@ const darseBajaEmpresadb = (id, confirmarOpcion, req, res) => {
 const borrarDescripcionEmpresadb = (id, res) => {
 
     //-- Consultar si hay descripción para poder borrarla.
-    let instruccionConsultaDescripcion = 'SELECT * FROM companyd WHERE id = ?';
+    let instruccionConsultaDescripcion = 'SELECT descripcion FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaDescripcion = mysql.format(instruccionConsultaDescripcion, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaDescripcion, (error, results) => {
         if(error) throw error;
-        if(results[0] === undefined) {
+        if(results[0] === "") {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
             return res.redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
             //-- Proceso para borrar la descripción.
-            let instruccionBorrarDescripcion = 'DELETE FROM companyd WHERE id = ?';
+            let instruccionBorrarDescripcion = 'UPDATE mktingcom SET descripcion = NULL WHERE id = ?';
             let formatoInstruccionBorrarDescripcion = mysql.format(instruccionBorrarDescripcion, [id]);
             madservicesEmpresadb.query(formatoInstruccionBorrarDescripcion);
             //-- Mostrar Alerta Emergente.
