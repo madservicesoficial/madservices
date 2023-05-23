@@ -1,17 +1,17 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { mostrarDatosdb } = require('../../../modelos/general/buscar/buscar.js');
+const { mostrarClientedb } = require('../../../modelos/clientes/mostrar/mostrar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const mostrarMiembro = (req, res) => {
+const mostrarCliente = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
     //-- Llamada a función.
-    mostrarDatosdb(id, res);
+    mostrarClientedb(id, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = mostrarMiembro;
+module.exports = mostrarCliente;
 //#######################################################################################################//

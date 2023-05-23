@@ -14,7 +14,7 @@ const { ingresarProductosMADdb } = require('../../../modelos/miembros/ingresar/i
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresoProductosMAD = (req, res) => {
+const ingresoProductosMAD = async (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;

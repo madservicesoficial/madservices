@@ -41,24 +41,31 @@ const darseBajaEmpresadb = (id, confirmarOpcion, req, res) => {
 const borrarDescripcionEmpresadb = (id, res) => {
 
     //-- Consultar si hay descripción para poder borrarla.
-    let instruccionConsultaDescripcion = 'SELECT descripcion FROM mktingcom WHERE id = ?';
+    let instruccionConsultaDescripcion = 'SELECT * FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaDescripcion = mysql.format(instruccionConsultaDescripcion, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaDescripcion, (error, results) => {
         if(error) throw error;
-        if(results[0] === "") {
+        if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarDescripcion = 'UPDATE mktingcom SET descripcion = NULL WHERE id = ?';
-            let formatoInstruccionBorrarDescripcion = mysql.format(instruccionBorrarDescripcion, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarDescripcion);
-            //-- Mostrar Alerta Emergente.
-            alerta('Descripción borrada con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            if(results[0].descripcion === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Proceso para borrar la descripción.
+                let instruccionBorrarDescripcion = 'UPDATE mktingcom SET descripcion = NULL WHERE id = ?';
+                let formatoInstruccionBorrarDescripcion = mysql.format(instruccionBorrarDescripcion, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarDescripcion);
+                //-- Mostrar Alerta Emergente.
+                alerta('Descripción borrada con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
         }
     });
 }
@@ -66,24 +73,31 @@ const borrarDescripcionEmpresadb = (id, res) => {
 const borrarInstagramEmpresadb = (id, res) => {
     
     //-- Consultar si hay instagram para poder borrarlo.
-    let instruccionConsultaInstagram = 'SELECT * FROM companyi WHERE id = ?';
+    let instruccionConsultaInstagram = 'SELECT * FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
         if(error) throw error;
-        if(results[0] === undefined) {
+        if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarInstagram = 'DELETE FROM companyi WHERE id = ?';
-            let formatoInstruccionBorrarInstagram = mysql.format(instruccionBorrarInstagram, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarInstagram);
-            //-- Mostrar Alerta Emergente.
-            alerta('Usuario de instagram borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            if(results[0].instagram === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Proceso para borrar el instagram.
+                let instruccionBorrarInstagram = 'UPDATE mktingcom SET instagram = NULL WHERE id = ?';
+                let formatoInstruccionBorrarInstagram = mysql.format(instruccionBorrarInstagram, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarInstagram);
+                //-- Mostrar Alerta Emergente.
+                alerta('Instagram borrado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
         }
     });
 }
@@ -91,24 +105,31 @@ const borrarInstagramEmpresadb = (id, res) => {
 const borrarPagWebEmpresadb = (id, res) => {
     
     //-- Consultar si hay página web para poder borrarla.
-    let instruccionConsultaPagWeb = 'SELECT * FROM companypg WHERE id = ?';
+    let instruccionConsultaPagWeb = 'SELECT * FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaPagWeb = mysql.format(instruccionConsultaPagWeb, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaPagWeb, (error, results) => {
         if(error) throw error;
-        if(results[0] === undefined) {
+        if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarPagWeb = 'DELETE FROM companypg WHERE id = ?';
-            let formatoInstruccionBorrarPagWeb = mysql.format(instruccionBorrarPagWeb, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarPagWeb);
-            //-- Mostrar Alerta Emergente.
-            alerta('URL de la Página Web borrada con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            if(results[0].pagweb === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Proceso para borrar el instagram.
+                let instruccionBorrarPagWeb = 'UPDATE mktingcom SET pagweb = NULL WHERE id = ?';
+                let formatoInstruccionBorrarPagWeb = mysql.format(instruccionBorrarPagWeb, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarPagWeb);
+                //-- Mostrar Alerta Emergente.
+                alerta('Página Web borrada con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
         }
     });
 }
@@ -116,24 +137,31 @@ const borrarPagWebEmpresadb = (id, res) => {
 const borrarTwitterEmpresadb = (id, res) => {
     
     //-- Consultar si hay twitter para poder borrarlo.
-    let instruccionConsultaTwitter = 'SELECT * FROM companyt WHERE id = ?';
+    let instruccionConsultaTwitter = 'SELECT * FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaTwitter = mysql.format(instruccionConsultaTwitter, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaTwitter, (error, results) => {
         if(error) throw error;
-        if(results[0] === undefined) {
+        if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarTwitter = 'DELETE FROM companyt WHERE id = ?';
-            let formatoInstruccionBorrarTwitter = mysql.format(instruccionBorrarTwitter, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarTwitter);
-            //-- Mostrar Alerta Emergente.
-            alerta('Usuario de twitter borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            if(results[0].twitter === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Proceso para borrar el instagram.
+                let instruccionBorrarTwitter = 'UPDATE mktingcom SET twitter = NULL WHERE id = ?';
+                let formatoInstruccionBorrarTwitter = mysql.format(instruccionBorrarTwitter, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarTwitter);
+                //-- Mostrar Alerta Emergente.
+                alerta('Twitter borrado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
         }
     });
 }
@@ -141,24 +169,31 @@ const borrarTwitterEmpresadb = (id, res) => {
 const borrarWhatsAppEmpresadb = (id, res) => {
     
     //-- Consultar si hay whatsapp para poder borrarlo.
-    let instruccionConsultaWhatsApp = 'SELECT * FROM companyw WHERE id = ?';
+    let instruccionConsultaWhatsApp = 'SELECT * FROM mktingcom WHERE id = ?';
     let formatoInstruccionConsultaWhatsApp = mysql.format(instruccionConsultaWhatsApp, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaWhatsApp, (error, results) => {
         if(error) throw error;
-        if(results[0] === undefined) {
+        if(results.length === 0) {
             //-- Mostrar Alerta Emergente.
             alerta('No se puede borrar lo que no existe');
             //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarWhatsApp = 'DELETE FROM companyw WHERE id = ?';
-            let formatoInstruccionBorrarWhatsApp = mysql.format(instruccionBorrarWhatsApp, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarWhatsApp);
-            //-- Mostrar Alerta Emergente.
-            alerta('whatsapp/teléfono borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.redirect(`/sesion-empresa/${id}/interfaz`);
+            if(results[0].whatsapp === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                //-- Proceso para borrar el instagram.
+                let instruccionBorrarWhatsApp = 'UPDATE mktingcom SET whatsapp = NULL WHERE id = ?';
+                let formatoInstruccionBorrarWhatsApp = mysql.format(instruccionBorrarWhatsApp, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarWhatsApp);
+                //-- Mostrar Alerta Emergente.
+                alerta('WhatsApp borrado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
         }
     });
 }

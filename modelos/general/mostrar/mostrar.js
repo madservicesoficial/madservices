@@ -5,10 +5,8 @@ const mysql = require('mysql2');
 const {madservicesClientedb} = require('../../../config/database.js');
 
 //-- Función que muestra los productos MAD de forma completa e individualmente.
-const mostrarExpansiondb = (req, res) => {
-
-    //-- Obtenemos la variable de enumeración del Producto MAD por parámetro.
-    let enumeracion = req.params.enumeracion;
+const mostrarExpansiondb = (enumeracion, res) => {
+    
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraExpansionGeneral = 'SELECT * FROM productos WHERE enumeracion = ?';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -32,7 +30,7 @@ const mostrarExpansiondb = (req, res) => {
 }
 
 //-- Función que muestra los productos MAD.
-const mostrarProductosMADdb = (req, res) => {
+const mostrarProductosMADdb = (res) => {
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraProductosMAD = 'SELECT * FROM productos';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -46,7 +44,7 @@ const mostrarProductosMADdb = (req, res) => {
 }
 
 //-- Función que muestra los productos Multimarca o The Mall.
-const mostrarProductosTheMalldb = (req, res) => {
+const mostrarProductosTheMalldb = (res) => {
     
     //-- Renderizar la Página de The Mall.
     res.status(201).render('paginas/general/productosTheMall');

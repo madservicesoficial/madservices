@@ -76,9 +76,19 @@ const ingresarProductosMADdb = async (id, data, res) => {
 }
 
 //-- Creamos la función para ingresar más imágenes/vídeos en los productos MAD.
-const ingresarArchivosMultimediaMADdb = () => {
+const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
 
-    
+    //-- Comprobar si existe dicha enumeración.
+    let instruccionConsultarEnumeracion = 'SELECT * FROM multimedia WHERE enumeracion = ?';
+    let formatoInstruccionConsultarEnumeracion = mysql.format(instruccionConsultarEnumeracion, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionConsultarEnumeracion, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            
+        }else {
+
+        }
+    });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//

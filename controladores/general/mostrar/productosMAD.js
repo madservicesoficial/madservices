@@ -1,17 +1,15 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { mostrarDatosdb } = require('../../../modelos/empresas/mostrar/mostrar.js');
+const { mostrarProductosMADdb } = require('../../../modelos/general/mostrar/mostrar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const mostrarEmpresa = (req, res) => {
+const mostrarProductosMAD = (req, res) => {
 
-    //-- Variables y Ctes.
-    let id = req.params.id;
     //-- Llamada a función.
-    mostrarDatosdb(id);
+    mostrarProductosMADdb(res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = mostrarEmpresa;
+module.exports = mostrarProductosMAD;
 //#######################################################################################################//

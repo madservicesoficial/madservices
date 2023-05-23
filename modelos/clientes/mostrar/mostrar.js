@@ -5,10 +5,8 @@ const mysql = require('mysql2');
 const {madservicesClientedb} = require('../../../config/database.js');
 
 //-- Pto de control de sacar por pantalla los productos agregados al carrito.
-const mostrarCarritodb = (req, res) => {
+const mostrarCarritodb = (id, res) => {
     
-    //-- Obtenemos el ID del Cliente.
-    let id = req.params.id;
     //-- Sacar los productos MAD del carrito de la base de datos.
     let instruccionConsultaCarrito = 'SELECT * FROM carrito WHERE id = ?'
     let formatoInstruccionConsultaCarrito = mysql.format(instruccionConsultaCarrito, [id]);
@@ -21,10 +19,8 @@ const mostrarCarritodb = (req, res) => {
 }
 
 //-- Pto de control de sacar por pantalla los productos agregados al carrito.
-const mostrarCompraClientedb = (req, res) => {
+const mostrarCompraClientedb = (id, res) => {
     
-    //-- Obtenemos el ID del Cliente.
-    let id = req.params.id;
     //-- Sacar los productos MAD del carrito de la base de datos.
     let instruccionConsultaCliente = 'SELECT * FROM clientes WHERE id = ?';
     let formatoInstruccionConsultaCliente = mysql.format(instruccionConsultaCliente, [id]);
@@ -88,10 +84,8 @@ const mostrarCompraClientedb = (req, res) => {
 }
 
 //-- Creamos la función que muestra los parámetros de la base de datos de los Clientes.
-const mostrarClientedb = (req, res) => {
-
-    //-- Leemos el ID del cliente en ese momento.
-    let id = req.params.id;
+const mostrarClientedb = (id, res) => {
+    
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM clientes WHERE id = ?';
     //-- Configuración de su formato en mysql.
@@ -161,11 +155,8 @@ const mostrarClientedb = (req, res) => {
 }
 
 //-- Función que muestra los productos MAD de forma completa e individualmente.
-const mostrarExpansionClientesdb = (req, res) => {
+const mostrarExpansionClientesdb = (id, enumeracion, res) => {
 
-    //-- Obtenemos la variable ID del Cliente y la de enumeración del Producto MAD por parámetros.
-    let id = req.params.id;
-    let enumeracion = req.params.enumeracion;
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraExpansionGeneral = 'SELECT * FROM productos WHERE enumeracion = ?';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -190,9 +181,8 @@ const mostrarExpansionClientesdb = (req, res) => {
 }
 
 //-- Función que muestra todos los productos MAD.
-const mostrarProductosMADclientesdb = (req, res) => {
-    //-- Captar el ID cliente.
-    let id = req.params.id;
+const mostrarProductosMADclientesdb = (id, res) => {
+    
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraProductosMAD = 'SELECT * FROM productos';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -206,10 +196,8 @@ const mostrarProductosMADclientesdb = (req, res) => {
 }
 
 //-- Función que muestra los productos Multimarca o The Mall.
-const mostrarProductosTheMallClientedb = (req, res) => {
+const mostrarProductosTheMallClientedb = (id, res) => {
     
-    //-- Variable ID del Cliente.
-    let id = req.params.id;
     //-- Renderizar la Página de The Mall.
     res.status(201).render('paginas/clientes/productosTheMall', {id: id});
 }

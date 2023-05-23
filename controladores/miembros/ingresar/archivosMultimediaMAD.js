@@ -14,17 +14,26 @@ const { ingresarArchivosMultimediaMADdb } = require('../../../modelos/miembros/i
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresarArchivosMultimediaMAD = (req, res) => {
+const ingresarArchivosMultimediaMAD = async (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
-    const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../imagenes');
     const readdir = util.promisify(fs.readdir);
     const unlink = util.promisify(fs.unlink);
     const files = await readdir(rutaAlDirectorio);
     const file = files[0];
     //-- Proceso de validación.
+    if(typeof file !== 'string') {
+        //-- Mostrar alerta.
+        alerta('Ningun archivo subido');
+        //-- Redirigir.
+        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
+    }else {
+        //-- Llamada a la función.
+        ingresarArchivosMultimediaMADdb(id, enumeracion, res);
+    }
 }
 //#######################################################################################################//
 

@@ -13,8 +13,10 @@ block body
                 img(src='/images/encabezadoPeluq.png' alt='encabezadoPeluq')
             else if tipo === 'RESTAURANTE'
                 img(src='/images/encabezadoRestaurante.jpg' alt='encabezadoRestaurante')
-            else if tipo === 'VENTAS'
+            else if tipo === 'COMERCIO'
                 img(src='/images/encabezadoVentas.png' alt='encabezadoVentas')
+            else if tipo === 'ACADEMIA'
+                img(src='/images/encabezadoAcademia.png' alt='encabezadoAcademia')
             h1=`${tipo} ${marca}:`
         div.row
             div.column
@@ -50,19 +52,19 @@ block body
             div.column
                 h3='Iconos Web:'
                 img.imgIcono(src="/images/whatsapp.png", alt="whatsapp")
-                if whatsapp !== 0
+                if whatsapp
                     p#numWhatsapp=whatsapp
-                if instagram !== 0
+                if instagram
                     a(href=instagram target="_blank")
                         img.imgIcono(src="/images/instagram.png", alt="instagram")
                 else
                     img.imgIcono(src="/images/instagram.png", alt="instagram")
-                if twitter !== 0
+                if twitter
                     a(href=twitter target="_blank")
                         img.imgIcono(src="/images/twitter.png", alt="twitter")
                 else
                     img.imgIcono(src="/images/twitter.png", alt="twitter")
-                if pagweb !== 0
+                if pagweb
                     a(href=pagweb target="_blank")
                         img.imgIcono(src="/images/pageWeb.png", alt="pageWeb")
                 else 

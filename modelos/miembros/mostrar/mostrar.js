@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const {madservicesAdmindb} = require('../../../config/database.js');
 
 //-- Creamos la función que saca los Productos MAD de la base de datos para verlos en la Interfaz del Miembro MAD.
-const mostrarDatosdb = (id, res) => {
+const mostrarMiembrodb = (id, res) => {
 
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM comprados';
@@ -158,11 +158,8 @@ const mostrarDatosdb = (id, res) => {
 }
 
 //-- Función que muestra los productos MAD.
-const mostrarExpansionMiembros = (req, res) => {
-
-    //-- Obtenemos la variable ID del Miembro MAD y la de enumeración del Producto MAD por parámetros.
-    let id = req.params.id;
-    let enumeracion = req.params.enumeracion;
+const mostrarExpansionMiembrosdb = (id, enumeracion, res) => {
+    
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraExpansionGeneral = 'SELECT * FROM productos WHERE enumeracion = ?';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -187,9 +184,8 @@ const mostrarExpansionMiembros = (req, res) => {
 }
 
 //-- Función que muestra los productos MAD.
-const mostrarProductosMADmiembros = (req, res) => {
-    //-- Captar el ID del Miembro MAD.
-    let id = req.params.id;
+const mostrarProductosMADmiembrosdb = (id, res) => {
+    
     //-- Instrucción que muestra productos MAD.
     let instruccionMuestraProductosMAD = 'SELECT * FROM productos';
     //-- Formato de la instrucción que muestra productos MAD.
@@ -203,19 +199,17 @@ const mostrarProductosMADmiembros = (req, res) => {
 }
 
 //-- Función que muestra los productos Multimarca o The Mall.
-const mostrarProductosTheMallMiembroMAD = (req, res) => {
+const mostrarProductosTheMallMiembroMADdb = (id, res) => {
     
-    //-- Variable ID del Miembro MAD.
-    let id = req.params.id;
     //-- Renderizar la Página de The Mall.
     res.status(201).render('paginas/miembros/productosTheMall', {id: id});
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
-    mostrarDatosdb,
-    mostrarExpansionMiembros,
-    mostrarProductosMADmiembros,
-    mostrarProductosTheMallMiembroMAD
+    mostrarMiembrodb,
+    mostrarExpansionMiembrosdb,
+    mostrarProductosMADmiembrosdb,
+    mostrarProductosTheMallMiembroMADdb
 };
 //#######################################################################################################//

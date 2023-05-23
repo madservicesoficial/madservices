@@ -7,7 +7,7 @@ const countries = require('country-list');
 //-- Importamos la Tecnología para validar el Código Postal introducido.
 const { postcodeValidator } = require('postcode-validator');
 //-- Importamos la configuración del entorno ENV para poder usar su información.
-require('../../config/env.js');
+require('../../../config/env.js');
 //-- Importamos la Tecnología para solicitar URLs de Geolocalización.
 const axios = require('axios');
 //#######################################################################################################//

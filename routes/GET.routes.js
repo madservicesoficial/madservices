@@ -94,13 +94,13 @@ rutasGet.get('/sesion-cliente/:id/empleo', (req, res) => { let id = req.params.i
 
 
 //#################################### ACCESO AL PERFIL/INTERFAZ ###################################//
-const mostrarClientedb = require('../modelos/clientes/mostrarCampos.js');
-const mostrarEmpresadb = require('../modelos/empresas/mostrarCampos.js');
-const mostrarMiembrodb = require('../modelos/miembros/mostrarCampos.js');
+const mostrarCliente = require('../controladores/clientes/mostrar/cliente.js');
+const mostrarEmpresa = require('../controladores/empresas/mostrar/empresa.js');
+const mostrarMiembro = require('../controladores/miembros/mostrar/miembro.js');
 
-rutasGet.get('/sesion-cliente/:id/perfil', mostrarClientedb);
-rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresadb);
-rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembrodb);
+rutasGet.get('/sesion-cliente/:id/perfil', mostrarCliente);
+rutasGet.get('/sesion-empresa/:id/interfaz', mostrarEmpresa);
+rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembro);
 //##################################################################################################//
 
 
@@ -126,9 +126,9 @@ rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => { let id = req.params.i
 
 
 //#################################### ACCESO A LOS PRODUCTOS MAD ##################################//
-const mostrarProductosMAD = require('../modelos/general/mostrarProductosMAD.js');
-const mostrarProductosMADclientes = require('../modelos/clientes/mostrarProductosMAD.js');
-const mostrarProductosMADmiembros = require('../modelos/miembros/mostrarProductosMAD.js');
+const mostrarProductosMAD = require('../controladores/general/mostrar/productosMAD.js');
+const mostrarProductosMADclientes = require('../controladores/clientes/mostrar/productosMAD.js');
+const mostrarProductosMADmiembros = require('../controladores/miembros/mostrar/productosMAD.js');
 
 rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
 rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
@@ -140,10 +140,10 @@ rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProducto
 
 
 //################################ ACCESO A LOS PRODUCTOS MULTIMARCA ###############################//
-const mostrarProductosTheMall = require('../modelos/general/mostrarProductosTheMall.js');
-const mostrarProductosTheMallCliente = require('../modelos/clientes/mostrarProductosTheMallCliente.js');
-const mostrarProductosTheMallEmpresa = require('../modelos/empresas/mostrarProductosTheMallEmpresa.js');
-const mostrarProductosTheMallMiembroMAD = require('../modelos/miembros/mostrarProductosTheMallMiembroMAD.js');
+const mostrarProductosTheMall = require('../controladores/general/mostrar/productosTheMall.js');
+const mostrarProductosTheMallCliente = require('../controladores/clientes/mostrar/productosTheMall.js');
+const mostrarProductosTheMallEmpresa = require('../controladores/empresas/mostrar/productosTheMall.js');
+const mostrarProductosTheMallMiembroMAD = require('../controladores/miembros/mostrar/productosTheMall.js');
 
 rutasGet.get('/empieza/themall', mostrarProductosTheMall);
 rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallCliente);
@@ -156,7 +156,7 @@ rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiemb
 
 
 //################################ ACCESO AL CARRITO POR EL CLIENTE ################################//
-const mostrarCarrito = require('../modelos/clientes/mostrarCarrito.js');
+const mostrarCarrito = require('../controladores/clientes/mostrar/carrito.js');
 
 rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
 //##################################################################################################//
@@ -166,7 +166,7 @@ rutasGet.get('/sesion-cliente/:id/carrito', mostrarCarrito);
 
 
 //################################ ACCESO A LA COMPRA POR EL CLIENTE ###############################//
-const mostrarCompraCliente = require('../modelos/clientes/mostrarCompraCliente.js');
+const mostrarCompraCliente = require('../controladores/clientes/mostrar/compra.js');
 
 rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
 //##################################################################################################//
@@ -176,9 +176,9 @@ rutasGet.get('/sesion-cliente/:id/carrito/comprar', mostrarCompraCliente);
 
 
 //############################### ACCESO A EXPANDIR LOS PRODUCTOS MAD ##############################//
-const mostrarExpansion = require('../modelos/general/mostrarExpansion.js');
-const mostrarExpansionClientes = require('../modelos/clientes/mostrarExpansion.js');
-const mostrarExpansionMiembros = require('../modelos/miembros/mostrarExpansion.js');
+const mostrarExpansion = require('../controladores/general/mostrar/expansion.js');
+const mostrarExpansionClientes = require('../controladores/clientes/mostrar/expansion.js');
+const mostrarExpansionMiembros = require('../controladores/miembros/mostrar/expansion.js');
 
 rutasGet.get('/empieza/productosmadservices/expandir:enumeracion', mostrarExpansion);
 rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionClientes);
