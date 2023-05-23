@@ -5,7 +5,9 @@ block title
     title=`Visión completa del Producto MAD ${enumeracion}`
 
 block body
+    include ./componentes/cabecera.pug
     .interfazExpansionProductosMAD 
+        br
         .rowExp
             .columnExp
                 img(src=`data:image/*;base64,${imagenPortada}`)
@@ -34,3 +36,6 @@ block body
                 .subrowExp
                     h3='Descripción: '
                     p.seccionesExpansion=descripcion
+        br
+        br
+    include ./componentes/piepagina.pug

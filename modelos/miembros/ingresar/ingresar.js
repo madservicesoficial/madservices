@@ -28,7 +28,7 @@ const ingresarProductosMADdb = async (id, data, res) => {
     });
 
     //-- Ruta al directorio de las imágenes almacenadas localmente.
-    const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../imagenes');
     //-- Fichero asíncrono leer directorio.
     const readdir = util.promisify(fs.readdir);
     //-- Fichero asíncrono leer fichero.
@@ -76,7 +76,7 @@ const ingresarProductosMADdb = async (id, data, res) => {
 }
 
 //-- Creamos la función para ingresar más imágenes/vídeos en los productos MAD.
-const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
+const ingresarArchivosMultimediaMADdb =  (id, enumeracion, res) => {
 
     //-- Comprobar si existe dicha enumeración.
     let instruccionConsultarEnumeracion = 'SELECT * FROM multimedia WHERE enumeracion = ?';
@@ -84,7 +84,37 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
     madservicesAdmindb.query(formatoInstruccionConsultarEnumeracion, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
+            const rutaAlDirectorio = path.join(__dirname, '../../../imagenes');
             
+            try {
+                const files = fs.readdirSync(rutaAlDirectorio);
+
+                let archivos = new Array(files.length);
+        
+                for(let i=0; i<files.length; i++) {
+                    let file = files[i];
+                    let rutaAlArchivo = path.join(rutaAlDirectorio, file);
+                    let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
+                    sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
+                    let imagenBuffer = fs.readFileSync(nuevaRuta);
+                    archivos[i] = imagenBuffer.toString('base64');
+                }
+
+                //-- Insertamos todas en la base de datos.
+                let solicitud = 'INSERT INTO multimedia (enumeracion, fileuno, filedos, filetres, filecuatro, filecinco, fileseis, filesiete, fileocho) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                madservicesAdmindb.query(solicitud, [enumeracion, archivos[0], archivos[1], archivos[2], archivos[3], archivos[4], archivos[5], archivos[6], archivos[7]]);
+                
+                //-- Eliminación de los archivos en local.
+                for(let j=0; j<files.length; j++) {
+                    let file = files[j];
+                    let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                    let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                    fs.unlinkSync(eliminarArchivo);
+                    fs.unlinkSync(eliminarArchivoEdit);
+                }
+            }catch (error) {
+                console.log('Error al procesar los archivos: ', error);
+            }
         }else {
 
         }

@@ -5,7 +5,9 @@ block title
     title=`${id} viendo completamente el Producto MAD ${enumeracion}`
 
 block body
+    include ./componentes/cabecera.pug
     .interfazExpansionProductosMAD 
+        br
         .rowExp
             .columnExp
                 img(src=`data:image/*;base64,${imagenPortada}`)
@@ -31,7 +33,15 @@ block body
                 br
                 .subrowExp
                     h1='Añadir imágenes/vídeos: '
-                        span='(Máx: 9 archivos multimedia)'
+                        span='(Máx: 8 archivos multimedia)'
                     form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}` enctype="multipart/form-data")
-                        input(type='file' name='multimedia' accept='image/*, video/*' multiple)
+                        input(type='file' name='multimedia' accept='image/png, image/jpeg, video/mp4' multiple)
                         button#btnAddMultimedia(type='submit')='Añadir'
+                br
+                br
+                .subrowExp
+                    form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices`)
+                        button#btnGoBackProductosMAD(type='submit')='Volver a productos MAD'
+        br
+        br
+    include ./componentes/piepagina.pug

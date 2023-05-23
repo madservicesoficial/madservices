@@ -1391,3 +1391,9 @@ canvas {
 .subrowExp span {
   font-size: medium;
 }
+#btnGoBackProductosMAD {
+  width: 175;
+  height: 50;
+  background-color: black;
+  color: white;
+}
