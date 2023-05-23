@@ -1,25 +1,32 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarPesodb } = require('../../modelos/miembros/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización del peso del producto MAD.
-const actualizarPeso = async (req, res) => {
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarPesodb } = require('../../../../modelos/miembros/actualizar/productos/actualizar.js');
+//#######################################################################################################//
 
-    //-- Introducción de los campos para actualizar el peso del producto.
+//############################################# DESARROLLO ##############################################//
+const actualizarPeso = (req, res) => {
+
+    //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
     const peso = req.body.peso;
+    //-- Proceso de validación.
     if(peso) {
-        //-- Actualizamos el peso del producto en la base de datos.
+        //-- Llamada a función.
         actualizarPesodb(id, enumeracion, peso, res);
     }else {
-        //-- Mostrar Alerta Emergente.
+        //-- Mostrar alerta.
         alerta('Peso no actualizado');
-        // Redirigir a la página de la interfaz del Miembro MAD.
+        //-- Redirigir.
         return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización del peso del producto MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarPeso;
+//#######################################################################################################//

@@ -1,22 +1,28 @@
-//-- Importamos la configuración del entorno ENV para poder usar su información.
+//###################################### ENTORNO DE VARIABLES ENV #######################################//
 require('../../config/env.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la autorización de los miembros MAD para Registro.
-const autorizacionRegistroMiembros = async (req, res) => {
+//############################################# DESARROLLO ##############################################//
+const autorizacionRegistroMiembros = (req, res) => {
 
-    //-- Introducir correctamente la contraseña para poder acceder.
+    //-- Variables y Ctes.
     const password = req.body.password;
-    //-- Condición de haber metido correctamente la contraseña.
+    //-- Proceso de validación.
     if(password === process.env.MYSQL_PASSWORD_ADMIN) {
+        //-- Redirigir.
         return res.status(201).redirect('/registrarse/autorizar/miembro');
     }else if(!password) {
+        //-- Renderizar y mostrar mensaje.
         res.status(401).render('paginas/miembros/autorizacionRegistro', {msjError: 'Campo vacío'});
         return res.end();
     }else {
+        //-- Renderizar y mostrar mensaje.
         res.status(401).render('paginas/miembros/autorizacionRegistro', {msjError: 'Contraseña incorrecta'});
         return res.end();
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de autorizar a miembros MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = autorizacionRegistroMiembros;
+//#######################################################################################################//

@@ -2,7 +2,7 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesAdmindb} = require('../../config/database.js');
+const {madservicesAdmindb} = require('../../../config/database.js');
 
 //-- Creamos la función que comprueba el ID de la base de datos para no repetir.
 function consultaID(idMiembro, callback) {
@@ -19,5 +19,6 @@ function consultaID(idMiembro, callback) {
     });
 }
 
-//-- Exportamos las funciones.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = consultaID;
+//#######################################################################################################//

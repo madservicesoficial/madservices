@@ -2,10 +2,10 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesAdmindb} = require('../../config/database.js');
+const {madservicesAdmindb} = require('../../../config/database.js');
 
 //-- Creamos la función que saca los Productos MAD de la base de datos para verlos en la Interfaz del Miembro MAD.
-const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res) => {
+const mostrarDatosdb = (id, res) => {
 
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM comprados';
@@ -123,11 +123,11 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
                         res.status(201).render('paginas/miembros/interfaz',
                         {
                             id: id,
-                            email: email,
-                            password: password,
-                            miembro: miembro,
-                            departamento: departamento,
-                            genero: genero,
+                            email: salida3[0].email,
+                            password: salida3[0].password,
+                            miembro: salida3[0].miembro,
+                            departamento: salida3[0].departamento,
+                            genero: salida3[0].genero,
                             productosMadComprados: result,
                             totalComprados: result.length,
                             numHombres: sumaH,
@@ -157,5 +157,65 @@ const mostrarDatosdb = (id, email, password, miembro, departamento, genero, res)
     });
 }
 
-//-- Exportamos las funciones.
-module.exports = mostrarDatosdb;
+//-- Función que muestra los productos MAD.
+const mostrarExpansionMiembros = (req, res) => {
+
+    //-- Obtenemos la variable ID del Miembro MAD y la de enumeración del Producto MAD por parámetros.
+    let id = req.params.id;
+    let enumeracion = req.params.enumeracion;
+    //-- Instrucción que muestra productos MAD.
+    let instruccionMuestraExpansionGeneral = 'SELECT * FROM productos WHERE enumeracion = ?';
+    //-- Formato de la instrucción que muestra productos MAD.
+    let formatoInstruccionMuestraExpansionGeneral = mysql.format(instruccionMuestraExpansionGeneral, [enumeracion]);
+    //-- Establecemos la conexión con la base de datos.
+    madservicesAdmindb.query(formatoInstruccionMuestraExpansionGeneral, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/expansion', 
+        { 
+            id: id,
+            enumeracion: enumeracion,
+            imagenPortada: results[0].portada,
+            titulo: results[0].titulo,
+            precio: results[0].precio,
+            peso: results[0].peso,
+            cantidad: results[0].cantidad,
+            categoria: results[0].producto,
+            descripcion: results[0].descripcion
+        });
+        return res.end();
+    });
+}
+
+//-- Función que muestra los productos MAD.
+const mostrarProductosMADmiembros = (req, res) => {
+    //-- Captar el ID del Miembro MAD.
+    let id = req.params.id;
+    //-- Instrucción que muestra productos MAD.
+    let instruccionMuestraProductosMAD = 'SELECT * FROM productos';
+    //-- Formato de la instrucción que muestra productos MAD.
+    let formatoInstruccionMuestraProductosMAD = mysql.format(instruccionMuestraProductosMAD);
+    //-- Establecemos la conexión con la base de datos.
+    madservicesAdmindb.query(formatoInstruccionMuestraProductosMAD, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id });
+        return res.end();
+    });
+}
+
+//-- Función que muestra los productos Multimarca o The Mall.
+const mostrarProductosTheMallMiembroMAD = (req, res) => {
+    
+    //-- Variable ID del Miembro MAD.
+    let id = req.params.id;
+    //-- Renderizar la Página de The Mall.
+    res.status(201).render('paginas/miembros/productosTheMall', {id: id});
+}
+
+//########################################### PUNTO DE UNIÓN ############################################//
+module.exports = {
+    mostrarDatosdb,
+    mostrarExpansionMiembros,
+    mostrarProductosMADmiembros,
+    mostrarProductosTheMallMiembroMAD
+};
+//#######################################################################################################//

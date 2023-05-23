@@ -1,18 +1,17 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { darseBajaMiembrodb } = require('../../../modelos/miembros/eliminar/eliminar.js');
+const { mostrarDatosdb } = require('../../../modelos/general/buscar/buscar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const darseBajaMiembro = (req, res) => {
+const mostrarMiembro = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
-    const decideConfirmar = req.body.decideConfirmar;
     //-- Llamada a función.
-    darseBajaMiembrodb(id, decideConfirmar, req, res);
+    mostrarDatosdb(id, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = darseBajaMiembro;
+module.exports = mostrarMiembro;
 //#######################################################################################################//

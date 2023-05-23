@@ -1,18 +1,18 @@
-//-- Importamos las funciones de operaciones de Miembros MAD para interactuar con la base de datos.
-const {busquedaPorPrecioEnMiembrodb} = require('../../modelos/miembros/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorPrecioEnMiembrodb } = require('../../../modelos/miembros/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por precio.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorPrecioEnMiembro = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID miembro MAD.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción del precio.
     const busquedaPorPrecio = req.body.busquedaPorPrecio;
+    const precio = parseInt(busquedaPorPrecio, 10);;
+    let min = precio;
+    let max;
+    //-- Proceso de validación.
     if(busquedaPorPrecio !== 'Todos') {
-        const precio = parseInt(busquedaPorPrecio, 10);;
-        //-- Declaración de variable mínima y máxima.
-        let min = precio;
-        let max;
         if(precio >= 0 && precio <= 90) {
             max = precio + 10;
         }else if(precio >= 100 && precio <= 175) {
@@ -24,12 +24,15 @@ const busquedaPorPrecioEnMiembro = (req, res) => {
         }else {
             max = 900000000000000;
         }
-        //-- Proceso de búsqueda.
+        //-- Llamada a función.
         busquedaPorPrecioEnMiembrodb(min, max, res, id);
     }else {
+        //-- Redirigir.
         res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorPrecioEnMiembro;
+//#######################################################################################################//

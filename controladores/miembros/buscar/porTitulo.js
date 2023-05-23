@@ -1,21 +1,25 @@
-//-- Importamos las funciones de operaciones de Miembros MAD para interactuar con la base de datos.
-const {busquedaPorTituloEnMiembrodb} = require('../../modelos/miembros/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorTituloEnMiembrodb } = require('../../../modelos/miembros/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por título.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorTituloEnMiembro = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID miembro MAD.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción del título.
     const titulo = req.body.titulo;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(titulo) {
+        //-- Llamada a función.
         busquedaPorTituloEnMiembrodb(titulo, res, id);
     }
     else {
+        //-- Redirigir.
         res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorTituloEnMiembro;
+//#######################################################################################################//

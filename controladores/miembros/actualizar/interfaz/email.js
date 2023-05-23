@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarEmailVerificadodb } = require('../../modelos/miembros/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarEmailVerificadodb } = require('../../../../modelos/miembros/actualizar/interfaz/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para actualizar el campo email del Miembro MAD.
+//############################################# DESARROLLO ##############################################//
 const actualizarEmail = (req, res) => {
 
-    //-- Introducimos los campos a actualizar.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const email = req.body.email;
-    //-- Función actualizar el campo email del Miembro MAD.
+    //-- Llamada a función.
     actualizarEmailVerificadodb(id, email, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de actualizar el campo email del Miembro MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarEmail;
+//#######################################################################################################//

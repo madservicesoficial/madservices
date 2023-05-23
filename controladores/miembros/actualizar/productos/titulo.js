@@ -1,25 +1,32 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarTitulodb } = require('../../modelos/miembros/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización del título del producto MAD.
-const actualizarTitulo = async (req, res) => {
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarTitulodb } = require('../../../../modelos/miembros/actualizar/productos/actualizar.js');
+//#######################################################################################################//
 
-    //-- Introducción de los campos para actualizar el título del producto.
+//############################################# DESARROLLO ##############################################//
+const actualizarTitulo = (req, res) => {
+
+    //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
     const titulo = req.body.titulo;
+    //-- Proceso de validación.
     if(titulo) {
-        //-- Actualizamos el título del producto en la base de datos.
+        //-- Llamada a función.
         actualizarTitulodb(id, enumeracion, titulo, res);
     }else {
-        //-- Mostrar Alerta Emergente.
+        //-- Mostrar alerta.
         alerta('Título no actualizado');
-        // Redirigir a la página de la interfaz del Miembro MAD.
+        //-- Redirigir.
         return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización del título del producto MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarTitulo;
+//#######################################################################################################//

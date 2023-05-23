@@ -2,7 +2,7 @@
 //-- para conectarnos a la base de datos de MAD Services.
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
-const {madservicesAdmindb} = require('../../config/database.js');
+const {madservicesAdmindb} = require('../../../config/database.js');
 
 //-- Función que consulta el título metido en la base de datos.
 const busquedaPorTituloEnMiembrodb = (titulo, res, id) => {
@@ -41,9 +41,10 @@ const busquedaPorPrecioEnMiembrodb = (min, max, res, id) => {
     });
 }
 
-//-- Exportamos.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     busquedaPorTituloEnMiembrodb,
     busquedaPorPrecioEnMiembrodb,
     busquedaPorCategoriaEnMiembrodb
 };
+//#######################################################################################################//

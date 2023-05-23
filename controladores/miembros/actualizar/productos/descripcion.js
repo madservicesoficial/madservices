@@ -1,25 +1,32 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarDescripciondb } = require('../../modelos/miembros/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización de la descripcion del producto MAD.
-const actualizarDescripcion = async (req, res) => {
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarDescripciondb } = require('../../../../modelos/miembros/actualizar/productos/actualizar.js');
+//#######################################################################################################//
 
-    //-- Introducción de los campos para actualizar la descripcion del producto.
+//############################################# DESARROLLO ##############################################//
+const actualizarDescripcion = (req, res) => {
+
+    //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
     const descripcion = req.body.descripcion;
+    //-- Proceso de validación.
     if(descripcion) {
-        //-- Actualizamos la descripcion del producto en la base de datos.
+        //-- Llamada a función.
         actualizarDescripciondb(id, enumeracion, descripcion, res);
     }else {
-        //-- Mostrar Alerta Emergente.
+        //-- Mostrar alerta.
         alerta('Descripción no actualizada');
-        // Redirigir a la página de la interfaz del Miembro MAD.
+        //-- Redirigir.
         return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización de la descripcion del producto MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarDescripcion;
+//#######################################################################################################//

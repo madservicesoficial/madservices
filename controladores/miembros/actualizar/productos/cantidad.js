@@ -1,25 +1,32 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarCantidaddb } = require('../../modelos/miembros/operacionesDB.js');
+//######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
 const alerta = require('alert');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para configurar la actualización de la cantidad del producto MAD.
-const actualizarCantidad = async (req, res) => {
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarCantidaddb } = require('../../../../modelos/miembros/actualizar/productos/actualizar.js');
+//#######################################################################################################//
 
-    //-- Introducción de los campos para actualizar la cantidad del producto.
+//############################################# DESARROLLO ##############################################//
+const actualizarCantidad = (req, res) => {
+
+    //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
     const cantidad = req.body.cantidad;
+    //-- Proceso de validación.
     if(cantidad) {
-        //-- Actualizamos la cantidad del producto en la base de datos.
+        //-- Llamada a función.
         actualizarCantidaddb(id, enumeracion, cantidad, res);
     }else {
-        //-- Mostrar Alerta Emergente.
+        //-- Mostrar alerta.
         alerta('Cantidad no actualizada');
-        // Redirigir a la página de la interfaz del Miembro MAD.
+        //-- Redirigir.
         return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de la actualización de la cantidad del producto MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarCantidad;
+//#######################################################################################################//

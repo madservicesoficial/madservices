@@ -1,20 +1,24 @@
-//-- Importamos las funciones de operaciones de Miembros MAD para interactuar con la base de datos.
-const {busquedaPorCategoriaEnMiembrodb} = require('../../modelos/miembros/filtroBusqueda.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { busquedaPorCategoriaEnMiembrodb } = require('../../../modelos/miembros/buscar/buscar.js');
+//#######################################################################################################//
 
-//-- Pto de control para la búsqueda por categoria.
+//############################################# DESARROLLO ##############################################//
 const busquedaPorCategoriaEnMiembro = (req, res) => {
 
-    //-- Obtenemos el parámetro del ID miembro MAD.
+    //-- Variables y Ctes.
     let id = req.params.id;
-    //-- Introducción de la categoria.
     const categoria = req.body.categoria;
-    //-- Proceso de búsqueda.
+    //-- Proceso de validación.
     if(categoria === 'Todo') {
-        res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+        //-- Redirigir.
+        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     }else {
+        //-- Llamada a función.
         busquedaPorCategoriaEnMiembrodb(categoria, res, id);
     }
 }
+//#######################################################################################################//
 
-//-- Exportamos a otras rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = busquedaPorCategoriaEnMiembro;
+//#######################################################################################################//

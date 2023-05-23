@@ -1,15 +1,18 @@
-//-- Importamos las funciones de operaciones de los Miembros MAD para interactuar con la base de datos.
-const { actualizarMiembroVerificadodb } = require('../../modelos/miembros/operacionesDB.js');
+//##################################### FUNCIONES EN BASE DE DATOS ######################################//
+const { actualizarMiembroVerificadodb } = require('../../../../modelos/miembros/actualizar/interfaz/actualizar.js');
+//#######################################################################################################//
 
-//-- Creamos el Punto de Control para actualizar el campo miembro del Miembro MAD.
+//############################################# DESARROLLO ##############################################//
 const actualizarMiembro = (req, res) => {
 
-    //-- Introducimos los campos a actualizar.
+    //-- Variables y Ctes.
     let id = req.params.id;
     const miembro = req.body.miembro;
-    //-- Función actualizar el campo miembro del Miembro MAD.
+    //-- Llamada a función.
     actualizarMiembroVerificadodb(id, miembro, res);
 }
+//#######################################################################################################//
 
-//-- Exportamos la configuración de actualizar el campo miembro del Miembro MAD para unificarlo con el resto de rutas.
+//########################################### PUNTO DE UNIÓN ############################################//
 module.exports = actualizarMiembro;
+//#######################################################################################################//
