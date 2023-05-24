@@ -10,7 +10,16 @@ block body
         br
         .rowExp
             .columnExp
-                img(src=`data:image/*;base64,${imagenPortada}`)
+                div.image-container
+                    div.carousel
+                        if multimedia
+                            each imagen in multimedia
+                                if imagen
+                                    img.bucleImages(src=`data:image/*;base64,${imagen}`)
+                        else 
+                            img.bucleImages(src=`data:image/*;base64,${imagenPortada}`)
+                    i.fa-solid.fa-chevron-left.cambiarImagen#prev
+                    i.fa-solid.fa-chevron-right.cambiarImagen#next
             .columnExp
                 .subrowExp
                     h1=titulo
@@ -33,9 +42,11 @@ block body
                 br
                 .subrowExp
                     h1='Añadir imágenes/vídeos: '
-                        span='(Máx: 8 archivos multimedia)'
+                    p='Requisitos: '
+                    p='1. Sube de 1 en 1 hasta 9 archivos.'
+                    p='2. Formatos válidos: PNG, JPEG/JPG, MP4.'
                     form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}` enctype="multipart/form-data")
-                        input(type='file' name='multimedia' accept='image/png, image/jpeg, video/mp4' multiple)
+                        input(type='file' name='multimedia' accept='image/png, image/jpg, image/jpeg, video/mp4')
                         button#btnAddMultimedia(type='submit')='Añadir'
                 br
                 br

@@ -28,7 +28,7 @@ const ingresarProductosMADdb = async (id, data, res) => {
     });
 
     //-- Ruta al directorio de las imágenes almacenadas localmente.
-    const rutaAlDirectorio = path.join(__dirname, '../../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../archivos');
     //-- Fichero asíncrono leer directorio.
     const readdir = util.promisify(fs.readdir);
     //-- Fichero asíncrono leer fichero.
@@ -42,31 +42,43 @@ const ingresarProductosMADdb = async (id, data, res) => {
     const file = files[0];
 
     if(typeof file === 'string') {
-        //-- Ruta del fichero completa metido localmente.
-        let rutaAlArchivo = path.join(rutaAlDirectorio, file);
-        //-- Ruta del fichero redimensionado metido localmente.
-        let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
-        //-- Redimensión de la imagen de portada y almacenamiento localmente.
-        await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
-        //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
-        let imagenBuffer = await readFile(nuevaRuta);
-        //-- Almacenamiento de imagen de buffer en base64.
-        let imagen = imagenBuffer.toString('base64');
-        //-- Instrucción para ingresar productos.
-        let instruccionIngresaProductos = 'INSERT INTO productos (portada, cantidad, producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        //-- Establecimiento de la conexión con base de datos.
-        madservicesAdmindb.query(instruccionIngresaProductos, [imagen, data.cantidad, data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
+        let fullFile = path.parse(file);
+        let extension = fullFile.ext;
+        if(extension === '.png' || extension === '.jpg' || extension === '.jpeg' || extension === '.mp4') {
+            //-- Ruta del fichero completa metido localmente.
+            let rutaAlArchivo = path.join(rutaAlDirectorio, file);
+            //-- Ruta del fichero redimensionado metido localmente.
+            let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
+            //-- Redimensión de la imagen de portada y almacenamiento localmente.
+            await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
+            //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
+            let imagenBuffer = await readFile(nuevaRuta);
+            //-- Almacenamiento de imagen de buffer en base64.
+            let imagen = imagenBuffer.toString('base64');
+            //-- Instrucción para ingresar productos.
+            let instruccionIngresaProductos = 'INSERT INTO productos (portada, cantidad, producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            //-- Establecimiento de la conexión con base de datos.
+            madservicesAdmindb.query(instruccionIngresaProductos, [imagen, data.cantidad, data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
 
-        //-- Eliminación de las imágenes locales.
-        let eliminarArchivo = path.join(rutaAlDirectorio, file);
-        let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
-        await unlink(eliminarArchivo);
-        await unlink(eliminarArchivoEdit);
+            //-- Eliminación de las imágenes locales.
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+            await unlink(eliminarArchivo);
+            await unlink(eliminarArchivoEdit);
 
-        //-- Mostrar Alerta Emergente.
-        alerta('Producto ingresado con éxito');
-        // Redirigir a la página de la interfaz del Miembro MAD.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            //-- Mostrar Alerta Emergente.
+            alerta('Producto ingresado con éxito');
+            // Redirigir a la página de la interfaz del Miembro MAD.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Eliminar localmente.
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
+            //-- Mostrar alerta.
+            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG, MP4');
+            //-- Redirigir.
+            return res.status(201).redirect(`/sesion-miembro/${id}/interfaz`);
+        }
     }else {
         //-- Mostrar Alerta Emergente.
         alerta('Debes introducir una imagen de portada');
@@ -76,48 +88,133 @@ const ingresarProductosMADdb = async (id, data, res) => {
 }
 
 //-- Creamos la función para ingresar más imágenes/vídeos en los productos MAD.
-const ingresarArchivosMultimediaMADdb =  (id, enumeracion, res) => {
+const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
 
     //-- Comprobar si existe dicha enumeración.
     let instruccionConsultarEnumeracion = 'SELECT * FROM multimedia WHERE enumeracion = ?';
     let formatoInstruccionConsultarEnumeracion = mysql.format(instruccionConsultarEnumeracion, [enumeracion]);
-    madservicesAdmindb.query(formatoInstruccionConsultarEnumeracion, (error, results) => {
+    madservicesAdmindb.query(formatoInstruccionConsultarEnumeracion, async (error, results) => {
         if(error) throw error;
+        const rutaAlDirectorio = path.join(__dirname, '../../../archivos');
+        const readdir = util.promisify(fs.readdir);
+        const readFile = util.promisify(fs.readFile);
+        const unlink = util.promisify(fs.unlink);
+        const files = await readdir(rutaAlDirectorio);
+        const file = files[0];
+        let rutaAlArchivo = path.join(rutaAlDirectorio, file);
+        let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
+        await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
+        let imagenBuffer = await readFile(nuevaRuta);
+        let imagen = imagenBuffer.toString('base64');
         if(results.length === 0) {
-            const rutaAlDirectorio = path.join(__dirname, '../../../imagenes');
-            
-            try {
-                const files = fs.readdirSync(rutaAlDirectorio);
-
-                let archivos = new Array(files.length);
-        
-                for(let i=0; i<files.length; i++) {
-                    let file = files[i];
-                    let rutaAlArchivo = path.join(rutaAlDirectorio, file);
-                    let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
-                    sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
-                    let imagenBuffer = fs.readFileSync(nuevaRuta);
-                    archivos[i] = imagenBuffer.toString('base64');
-                }
-
-                //-- Insertamos todas en la base de datos.
-                let solicitud = 'INSERT INTO multimedia (enumeracion, fileuno, filedos, filetres, filecuatro, filecinco, fileseis, filesiete, fileocho) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-                madservicesAdmindb.query(solicitud, [enumeracion, archivos[0], archivos[1], archivos[2], archivos[3], archivos[4], archivos[5], archivos[6], archivos[7]]);
-                
-                //-- Eliminación de los archivos en local.
-                for(let j=0; j<files.length; j++) {
-                    let file = files[j];
-                    let eliminarArchivo = path.join(rutaAlDirectorio, file);
-                    let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
-                    fs.unlinkSync(eliminarArchivo);
-                    fs.unlinkSync(eliminarArchivoEdit);
-                }
-            }catch (error) {
-                console.log('Error al procesar los archivos: ', error);
-            }
+            let solicitudIngresar = 'INSERT INTO multimedia (enumeracion, fileuno, filedos, filetres, filecuatro, filecinco, fileseis, filesiete, fileocho, filenueve) VALUES (?, ?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)';
+            madservicesAdmindb.query(solicitudIngresar, [enumeracion, imagen]);
+            //-- Eliminación de los archivos en local.
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+            await unlink(eliminarArchivo);
+            await unlink(eliminarArchivoEdit);
+            //-- Mostrar alerta.
+            alerta(`Imagen 1 introducida`);
         }else {
-
+            let solicitudActualizar = 'UPDATE multimedia SET';
+            let solicitudVariable;
+            let solicitudFinal = 'WHERE enumeracion = ?';
+            if(results[0].filedos === null) {
+                solicitudVariable = solicitudActualizar + ' filedos = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Imagen 2 introducida`);
+            }else if(results[0].filetres === null) {
+                solicitudVariable = solicitudActualizar + ' filetres = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Imagen 3 introducida`);
+            }else if(results[0].filecuatro === null) {
+                solicitudVariable = solicitudActualizar + ' filecuatro = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Imagen 4 introducida`);
+            }else if(results[0].filecinco === null) {
+                solicitudVariable = solicitudActualizar + ' filecinco = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Imagen 5 introducida`);
+            }else if(results[0].fileseis === null) {
+                solicitudVariable = solicitudActualizar + ' fileseis = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Imagen 6 introducida`);
+            }else if(results[0].filesiete === null) {
+                solicitudVariable = solicitudActualizar + ' filesiete = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Antepenúltima imagen introducida`);
+            }else if(results[0].fileocho === null) {
+                solicitudVariable = solicitudActualizar + ' fileocho = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Penúltima imagen introducida`);
+            }else if(results[0].filenueve === null) {
+                solicitudVariable = solicitudActualizar + ' filenueve = ? ' + solicitudFinal;
+                let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudActualizar);
+                //-- Eliminación de los archivos en local.
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+                await unlink(eliminarArchivo);
+                await unlink(eliminarArchivoEdit);
+                //-- Mostrar alerta.
+                alerta(`Última imagen introducida`);
+            }else {
+                //-- Mostrar alerta.
+                alerta(`No puedes introducir más imágenes`);
+            }
         }
+        //-- Redirigir.
+        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
     });
 }
 

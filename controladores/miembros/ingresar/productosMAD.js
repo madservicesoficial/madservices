@@ -28,7 +28,7 @@ const ingresoProductosMAD = async (req, res) => {
     const LONG_DESCRIPCION = 998;
     const CANTIDAD_MIN = 1;
     const COSTE_NULO = 1.0;
-    const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../archivos');
     const readdir = util.promisify(fs.readdir);
     const unlink = util.promisify(fs.unlink);
     const files = await readdir(rutaAlDirectorio);

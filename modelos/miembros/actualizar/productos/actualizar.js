@@ -123,8 +123,7 @@ const actualizarImagendb = async (id, enumeracion, res) => {
     //-- Procedimiento para subir la imagen de portada y el resto de campos del producto a la base de datos.
 
     //-- Ruta donde está el archivo metido localmente.
-    const files = await readdir(rutaAlDirectorio);
-    const file = files[0];
+    const file = await readdir(rutaAlDirectorio);
     //-- Ruta del fichero completa metido localmente.
     let rutaAlArchivo = path.join(rutaAlDirectorio, file);
     //-- Ruta del fichero redimensionado metido localmente.

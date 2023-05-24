@@ -57,7 +57,7 @@ const ingresarArchivosMultimediaMAD = require('../controladores/miembros/ingresa
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, './imagenes');
+        callback(null, './archivos');
     },
     filename: (req, file, callback) => {
         const extension = file.originalname.split('.').pop();
@@ -65,8 +65,9 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
+const cargas = multer({ storage: storage });
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', upload.array('multimedia', 8), ingresarArchivosMultimediaMAD);
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', cargas.single('multimedia'), ingresarArchivosMultimediaMAD);
 //#######################################################################################################//
 
 

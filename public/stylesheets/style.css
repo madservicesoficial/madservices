@@ -1351,13 +1351,6 @@ canvas {
   margin-top: 60;
   margin-left: 50;
 }
-.columnExp img {
-  width: 400;
-  margin-left: 100;
-  border-style: groove;
-  border-width: 10px;
-  border-radius: 10px;
-}
 .subrowExp p {
   width: 450;
 }
@@ -1388,12 +1381,51 @@ canvas {
   background-color: black;
   color: white;
 }
-.subrowExp span {
-  font-size: medium;
-}
 #btnGoBackProductosMAD {
   width: 175;
   height: 50;
   background-color: black;
   color: white;
+}
+i.cambiarImagen {
+  position: absolute;
+  top: 19%;
+  transform: translateY(-50%);
+  height: 35px;
+  width: 35px;
+  background-color: #343f4f;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s linear;
+  z-index: 100;
+  cursor: pointer;
+}
+i.cambiarImagen:active {
+  transform: scale(0.94) translateY(-50%);
+}
+i#prev {
+  left: 10px;
+}
+i#next {
+  right: 10px;
+}
+.image-container {
+  overflow: hidden;
+  width: 37%;
+  margin-left: 200;
+}
+.image-container .carousel {
+  display: flex;
+  transition: all 0.4s ease;
+  flex-wrap: nowrap;
+}
+.carousel img {
+  width: 800;
+  border-style: groove;
+  border-width: 10px;
+  border-radius: 10px;
+  transition: all 0.4s ease;
 }

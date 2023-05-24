@@ -19,14 +19,24 @@ const actualizarImagen = async (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
-    const rutaAlDirectorio = path.join(__dirname, '../../../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../../archivos');
     const readdir = util.promisify(fs.readdir);
-    const files = await readdir(rutaAlDirectorio);
-    const file = files[0];
+    const unlink = util.promisify(fs.unlink);
+    const file = await readdir(rutaAlDirectorio);
     //-- Proceso de validación.
     if(typeof file === 'string') {
-        //-- Llamada a función.
-        actualizarImagendb(id, enumeracion, res);
+        if(file.split('.').pop() === 'png' || file.split('.').pop() === 'jpg' || file.split('.').pop() === 'jpeg' || file.split('.').pop() === 'mp4') {
+            //-- Llamada a función.
+            actualizarImagendb(id, enumeracion, res);
+        }else {
+            //-- Eliminar localmente.
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
+            //-- Mostrar alerta.
+            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG, MP4');
+            //-- Redirigir.
+            return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+        }
     }else {
         //-- Mostrar alerta.
         alerta('Imagen no actualizada');
