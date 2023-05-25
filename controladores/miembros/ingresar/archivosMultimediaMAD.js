@@ -29,11 +29,11 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
         //-- Mostrar alerta.
         alerta('Ningun archivo subido');
         //-- Redirigir.
-        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
     }else {
         let fullFile = path.parse(file);
         let extension = fullFile.ext;
-        if(extension === '.png' || extension === '.jpg' || extension === '.jpeg' || extension === '.mp4') {
+        if(extension === '.png' || extension === '.jpg' || extension === '.jpeg') {
             //-- Llamada a la función.
             ingresarArchivosMultimediaMADdb(id, enumeracion, res);
         }else {
@@ -41,9 +41,9 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
             let eliminarArchivo = path.join(rutaAlDirectorio, file);
             await unlink(eliminarArchivo);
             //-- Mostrar alerta.
-            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG, MP4');
+            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG');
             //-- Redirigir.
-            return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+            return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
         }
     }
 }

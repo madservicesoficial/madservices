@@ -115,7 +115,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
             await unlink(eliminarArchivo);
             await unlink(eliminarArchivoEdit);
             //-- Mostrar alerta.
-            alerta(`Imagen 1 introducida`);
+            alerta(`Imagen 2 introducida`);
         }else {
             let solicitudActualizar = 'UPDATE multimedia SET';
             let solicitudVariable;
@@ -130,7 +130,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
                 //-- Mostrar alerta.
-                alerta(`Imagen 2 introducida`);
+                alerta(`Imagen 3 introducida`);
             }else if(results[0].filetres === null) {
                 solicitudVariable = solicitudActualizar + ' filetres = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -141,7 +141,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
                 //-- Mostrar alerta.
-                alerta(`Imagen 3 introducida`);
+                alerta(`Imagen 4 introducida`);
             }else if(results[0].filecuatro === null) {
                 solicitudVariable = solicitudActualizar + ' filecuatro = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -152,7 +152,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
                 //-- Mostrar alerta.
-                alerta(`Imagen 4 introducida`);
+                alerta(`Imagen 5 introducida`);
             }else if(results[0].filecinco === null) {
                 solicitudVariable = solicitudActualizar + ' filecinco = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -163,7 +163,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
                 //-- Mostrar alerta.
-                alerta(`Imagen 5 introducida`);
+                alerta(`Imagen 6 introducida`);
             }else if(results[0].fileseis === null) {
                 solicitudVariable = solicitudActualizar + ' fileseis = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -174,7 +174,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
                 //-- Mostrar alerta.
-                alerta(`Imagen 6 introducida`);
+                alerta(`Imagen 7 introducida`);
             }else if(results[0].filesiete === null) {
                 solicitudVariable = solicitudActualizar + ' filesiete = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -214,7 +214,7 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
             }
         }
         //-- Redirigir.
-        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
     });
 }
 

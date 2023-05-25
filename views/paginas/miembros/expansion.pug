@@ -24,8 +24,12 @@ block body
                 .subrowExp
                     h1=titulo
                 .subrowExp
-                    h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
-                    h2#verdeExpansion='¡Date prisa y no esperes más!'
+                    if cantidad === 1
+                        h2#rojoExpansion=`¡Sólo queda ${cantidad} producto!`
+                        h2#verdeExpansion='¡Date prisa y no esperes más!'
+                    else 
+                        h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
+                        h2#verdeExpansion='¡Date prisa y no esperes más!'
                 .subrowExp
                     h3='Categoria: '
                     p.seccionesExpansion=categoria
@@ -41,13 +45,18 @@ block body
                 br
                 br
                 .subrowExp
-                    h1='Añadir imágenes/vídeos: '
+                    h1='Añadir imágenes/Borrar imágenes: '
                     p='Requisitos: '
-                    p='1. Sube de 1 en 1 hasta 9 archivos.'
-                    p='2. Formatos válidos: PNG, JPEG/JPG, MP4.'
-                    form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}` enctype="multipart/form-data")
-                        input(type='file' name='multimedia' accept='image/png, image/jpg, image/jpeg, video/mp4')
+                    p='1. Sube de 1 en 1 hasta máximo 9.'
+                    p='2. Formatos válidos: PNG, JPEG/JPG.'
+                    p='3. Las imágenes se borran desde la última subida de 1 en 1.'
+                    form.formularioAddBorrarMultimedia(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}/add-multimedia` enctype="multipart/form-data")
+                        input(type='file' name='multimedia' accept='image/png, image/jpg, image/jpeg')
                         button#btnAddMultimedia(type='submit')='Añadir'
+                    form.formularioAddBorrarMultimedia(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}/borra-multimedia`)
+                        input(type='hidden' name='_method' value='DELETE')
+                        button#btnBorrarMultimediaMAD(type='submit')
+                            i.fa-solid.fa-eraser.fa-2xl#iconoBorrarMultimediaMAD
                 br
                 br
                 .subrowExp

@@ -10,13 +10,26 @@ block body
         br
         .rowExp
             .columnExp
-                img(src=`data:image/*;base64,${imagenPortada}`)
+                div.image-container
+                    div.carousel
+                        if multimedia
+                            each imagen in multimedia
+                                if imagen
+                                    img.bucleImages(src=`data:image/*;base64,${imagen}`)
+                        else 
+                            img.bucleImages(src=`data:image/*;base64,${imagenPortada}`)
+                    i.fa-solid.fa-chevron-left.cambiarImagen#prev
+                    i.fa-solid.fa-chevron-right.cambiarImagen#next
             .columnExp
                 .subrowExp
                     h1=titulo
                 .subrowExp
-                    h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
-                    h2#verdeExpansion='¡Date prisa y no esperes más!'
+                    if cantidad === 1
+                        h2#rojoExpansion=`¡Sólo queda ${cantidad} producto!`
+                        h2#verdeExpansion='¡Date prisa y no esperes más!'
+                    else 
+                        h2#rojoExpansion=`¡Sólo quedan ${cantidad} productos!`
+                        h2#verdeExpansion='¡Date prisa y no esperes más!'
                 .subrowExp
                     h3='Categoria: '
                     p.seccionesExpansion=categoria
@@ -36,6 +49,11 @@ block body
                 .subrowExp
                     h3='Descripción: '
                     p.seccionesExpansion=descripcion
+                br
+                br
+                .subrowExp
+                    form(method='GET' action=`/empieza/productosmadservices`)
+                        button#btnGoBackProductosMAD(type='submit')='Volver a productos MAD'
         br
         br
     include ./componentes/piepagina.pug

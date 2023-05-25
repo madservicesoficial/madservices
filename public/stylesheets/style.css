@@ -1182,6 +1182,7 @@ canvas {
 #filtroTipoProducto {
   border-radius: 10px;
   height: 25px;
+  width: 150;
 }
 .filtroRangoPrecio {
   float: left;
@@ -1389,8 +1390,7 @@ canvas {
 }
 i.cambiarImagen {
   position: absolute;
-  top: 19%;
-  transform: translateY(-50%);
+  top: 50%;
   height: 35px;
   width: 35px;
   background-color: #343f4f;
@@ -1400,17 +1400,16 @@ i.cambiarImagen {
   color: #fff;
   font-size: 15px;
   transition: all 0.3s linear;
-  z-index: 100;
   cursor: pointer;
 }
 i.cambiarImagen:active {
   transform: scale(0.94) translateY(-50%);
 }
 i#prev {
-  left: 10px;
+  left: 175px;
 }
 i#next {
-  right: 10px;
+  right: 950px;
 }
 .image-container {
   overflow: hidden;
@@ -1423,9 +1422,23 @@ i#next {
   flex-wrap: nowrap;
 }
 .carousel img {
-  width: 800;
+  min-width: 260px;
   border-style: groove;
   border-width: 10px;
   border-radius: 10px;
   transition: all 0.4s ease;
+}
+#btnBorrarMultimediaMAD {
+  width: 40;
+  height: 40;
+  background-color: transparent;
+  margin-left: 30;
+}
+#iconoBorrarMultimediaMAD {
+  color: black;
+  position: relative;
+  right: 6px;
+}
+.formularioAddBorrarMultimedia {
+  display: inline-block;
 }

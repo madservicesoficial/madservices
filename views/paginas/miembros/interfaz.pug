@@ -227,19 +227,14 @@ block body
                             option='Libros de economía'
                             option='Libros escolares'
                             option='Libros de misterio'
+                            option='Libros de salud y bienestar'
+                            option='Libros religiosos'
+                            option='Libros en inglés'
                         optgroup(label='Juegos')
                             option='Juegos de mesa'
-                            option='Juegos de calle'
                             option='Videojuegos'    
                         optgroup(label='Electrónica e Informática')
                             option='Consolas'
-                            option='Altavoces'
-                            option='Ratones'
-                            option='Teclados'
-                            option='PCs'
-                            option='MACs'
-                            option='Portátiles'
-                            option='MacBooks'
                     br
                     br
                     label='Título:'
@@ -278,6 +273,14 @@ block body
                         option='Sí'
                         option='No' 
                     button#btnBajaMiembroMAD(type='submit')='Confirmo'
+                br
+                br
+                br
+                br
+                if cantidadQueHay === 1
+                    h3='Productos MAD que hay a la venta: ' + cantidadQueHay + ' producto.'
+                else 
+                    h3='Productos MAD que hay a la venta: ' + cantidadQueHay + ' productos.'
         div.row
             div.column
                 h3='Productos MAD comprados por los Clientes:'
@@ -295,7 +298,7 @@ block body
                         p='País de la compra: ' + compra.pais
                         p='Región de la compra: ' + compra.region
             div.column
-                h3='Productos en el carrito de compra:'
+                h3='Productos MAD en el carrito de compra:'
                 table
                     tr 
                         th='Título del producto'

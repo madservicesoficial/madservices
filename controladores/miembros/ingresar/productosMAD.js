@@ -45,21 +45,29 @@ const ingresoProductosMAD = async (req, res) => {
         return res.redirect(`/sesion-miembro/${id}/interfaz`);
     }else {
         if(titulo.length > LONG_TITULO) {
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
             //-- Mostrar alerta.
             alerta(`El título no puede tener más de ${LONG_TITULO} caracteres`);
             // Redirigir.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
         }else if(descripcion.length > LONG_DESCRIPCION) {
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
             //-- Mostrar alerta.
             alerta(`La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`);
             // Redirigir.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
         }else if(cantidad < CANTIDAD_MIN) {
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
             //-- Mostrar alerta.
             alerta(`No tiene sentido la cantidad ${cantidad}`);
             // Redirigir.
             return res.redirect(`/sesion-miembro/${id}/interfaz`);
         }else if(precio < COSTE_NULO) {
+            let eliminarArchivo = path.join(rutaAlDirectorio, file);
+            await unlink(eliminarArchivo);
             //-- Mostrar alerta.
             alerta(`No puedes vender por debajo de ${COSTE_NULO}€`);
             // Redirigir.

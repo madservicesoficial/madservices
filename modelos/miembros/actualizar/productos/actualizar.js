@@ -113,7 +113,7 @@ const actualizarTitulodb = (id, enumeracion, titulo, res) => {
 //-- Creamos la función para actualizar la imagen de portada del producto MAD en la base de datos de MAD Services.
 const actualizarImagendb = async (id, enumeracion, res) => {
     //-- Ruta al directorio de las imágenes almacenadas localmente.
-    const rutaAlDirectorio = path.join(__dirname, '../../imagenes');
+    const rutaAlDirectorio = path.join(__dirname, '../../../../archivos');
     //-- Fichero asíncrono leer directorio.
     const readdir = util.promisify(fs.readdir);
     //-- Fichero asíncrono leer fichero.
@@ -123,7 +123,8 @@ const actualizarImagendb = async (id, enumeracion, res) => {
     //-- Procedimiento para subir la imagen de portada y el resto de campos del producto a la base de datos.
 
     //-- Ruta donde está el archivo metido localmente.
-    const file = await readdir(rutaAlDirectorio);
+    const files = await readdir(rutaAlDirectorio);
+    const file = files[0];
     //-- Ruta del fichero completa metido localmente.
     let rutaAlArchivo = path.join(rutaAlDirectorio, file);
     //-- Ruta del fichero redimensionado metido localmente.

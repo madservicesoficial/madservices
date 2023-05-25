@@ -49,6 +49,16 @@ rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/borrar-produc
 
 
 
+//##################### ELIMINACIÓN DE IMÁGENES DEL PRODUCTO MAD POR EL MIEMBRO MAD #####################//
+const borrarArchivosMultimediaMAD = require('../controladores/miembros/eliminar/archivosMultimediaMAD.js');
+
+rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion/borra-multimedia', borrarArchivosMultimediaMAD);
+//#######################################################################################################//
+
+
+
+
+
 //##################### ELIMINACIÓN DE LOS PRODUCTOS MAD DEL CARRITO POR EL CLIENTE #####################//
 const quitarProductos = require('../controladores/clientes/eliminar/delCarrito.js');
 

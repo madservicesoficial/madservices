@@ -57,9 +57,85 @@ const borrarProductoMADdb = (ptoPartida) => {
     });
 }
 
+//-- Creamos la función para borrar los archivos multimedia MAD de la base de datos.
+const borrarArchivosMultimediaMADdb = (id, enumeracion, res) => {
+
+    let instruccionBorrarMultimediadb = 'SELECT * FROM multimedia WHERE enumeracion = ?';
+    let formatoInstruccionBorrarMultimediadb = mysql.format(instruccionBorrarMultimediadb, [enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionBorrarMultimediadb, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar alerta.
+            alerta('Sólo queda por borrar 1 imagen');
+        }else {
+            let instruccionBorrarImagenAimagen = 'DELETE FROM multimedia WHERE enumeracion = ?';
+            let instruccionCambioAnuloUno = 'UPDATE multimedia SET ';
+            let instruccionCambioAnuloDos = ' = NULL WHERE enumeracion = ?'
+            if(results[0].filenueve !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filenueve' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 10 borrada');
+            }else if(results[0].fileocho !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'fileocho' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 9 borrada');
+            }else if(results[0].filesiete !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filesiete' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 8 borrada');
+            }else if(results[0].fileseis !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'fileseis' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 7 borrada');
+            }else if(results[0].filecinco !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filecinco' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 6 borrada');
+            }else if(results[0].filecuatro !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filecuatro' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 5 borrada');
+            }else if(results[0].filetres !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filetres' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 4 borrada');
+            }else if(results[0].filedos !== null) {
+                let solicitudDelBorradoImagenes = instruccionCambioAnuloUno + 'filedos' + instruccionCambioAnuloDos;
+                let formatoSolicitudDelBorradoImagenes = mysql.format(solicitudDelBorradoImagenes, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 3 borrada');
+            }else {
+                let formatoSolicitudDelBorradoImagenes = mysql.format(instruccionBorrarImagenAimagen, [enumeracion]);
+                madservicesAdmindb.query(formatoSolicitudDelBorradoImagenes);
+                //-- Mostrar alerta.
+                alerta('Imagen 2 borrada');
+            }
+
+        }
+    });
+    //-- Redirigir.
+    return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     darseBajaMiembrodb,
-    borrarProductoMADdb
+    borrarProductoMADdb,
+    borrarArchivosMultimediaMADdb
 };
 //#######################################################################################################//

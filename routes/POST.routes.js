@@ -67,7 +67,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const cargas = multer({ storage: storage });
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', cargas.single('multimedia'), ingresarArchivosMultimediaMAD);
+rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion/add-multimedia', cargas.single('multimedia'), ingresarArchivosMultimediaMAD);
 //#######################################################################################################//
 
 

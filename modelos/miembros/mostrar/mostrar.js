@@ -108,48 +108,57 @@ const mostrarMiembrodb = (id, res) => {
                     //-- Establecer la comunicación con los Productos MAD de la base de datos.
                     madservicesAdmindb.query(formatoInstruccionID, (error, salida5) => {
                         if(error) throw error;
-                        let sumaH = 0;
-                        let sumaM = 0;
-                        let sumaO = 0;
-                        for(let j=0; j<salida1.length; j++) {
-                            if(salida1[j].genero === 'Hombre') {
-                                sumaH = sumaH + 1;
-                            }else if(salida1[j].genero === 'Mujer') {
-                                sumaM = sumaM + 1;
-                            }else {
-                                sumaO = sumaO + 1;
+                        //-- Instrucción del ID.
+                        let instruccionID = 'SELECT * FROM productos';
+                        //-- Configuración de su formato en mysql.
+                        let formatoInstruccionID = mysql.format(instruccionID);
+                        //-- Establecer la comunicación con los Productos MAD de la base de datos.
+                        madservicesAdmindb.query(formatoInstruccionID, (error, salida6) => {
+                            if(error) throw error;
+                            let sumaH = 0;
+                            let sumaM = 0;
+                            let sumaO = 0;
+                            for(let j=0; j<salida1.length; j++) {
+                                if(salida1[j].genero === 'Hombre') {
+                                    sumaH = sumaH + 1;
+                                }else if(salida1[j].genero === 'Mujer') {
+                                    sumaM = sumaM + 1;
+                                }else {
+                                    sumaO = sumaO + 1;
+                                }
                             }
-                        }
-                        res.status(201).render('paginas/miembros/interfaz',
-                        {
-                            id: id,
-                            email: salida3[0].email,
-                            password: salida3[0].password,
-                            miembro: salida3[0].miembro,
-                            departamento: salida3[0].departamento,
-                            genero: salida3[0].genero,
-                            productosMadComprados: result,
-                            totalComprados: result.length,
-                            numHombres: sumaH,
-                            numMujeres: sumaM,
-                            numOtros: sumaO,
-                            cardH: cardH,
-                            cardM: cardM,
-                            cardO: cardO,
-                            sumaRest: sumaRest,
-                            sumaAca: sumaAca,
-                            sumaCom: sumaCom,
-                            sumaPeluq: sumaPeluq,
-                            numMiembrosDireccion: miembrosDireccion,
-                            numMiembrosAdministracion: miembrosAdministracion,
-                            numMiembrosCiberseguridad: miembrosCiberseguridad,
-                            numMiembrosIngenieria: miembrosIngenieria,
-                            numMiembrosRRHH: miembrosRRHH,
-                            numMiembrosVentas: miembrosVentas,
-                            numMiembrosEconomia: miembrosEconomia,
-                            fullCarrito: salida5
+                            res.status(201).render('paginas/miembros/interfaz',
+                            {
+                                id: id,
+                                email: salida3[0].email,
+                                password: salida3[0].password,
+                                miembro: salida3[0].miembro,
+                                departamento: salida3[0].departamento,
+                                genero: salida3[0].genero,
+                                productosMadComprados: result,
+                                totalComprados: result.length,
+                                numHombres: sumaH,
+                                numMujeres: sumaM,
+                                numOtros: sumaO,
+                                cardH: cardH,
+                                cardM: cardM,
+                                cardO: cardO,
+                                sumaRest: sumaRest,
+                                sumaAca: sumaAca,
+                                sumaCom: sumaCom,
+                                sumaPeluq: sumaPeluq,
+                                numMiembrosDireccion: miembrosDireccion,
+                                numMiembrosAdministracion: miembrosAdministracion,
+                                numMiembrosCiberseguridad: miembrosCiberseguridad,
+                                numMiembrosIngenieria: miembrosIngenieria,
+                                numMiembrosRRHH: miembrosRRHH,
+                                numMiembrosVentas: miembrosVentas,
+                                numMiembrosEconomia: miembrosEconomia,
+                                fullCarrito: salida5,
+                                cantidadQueHay: salida6.length
+                            });
+                            return res.end();
                         });
-                        return res.end();
                     });
                 });
             });

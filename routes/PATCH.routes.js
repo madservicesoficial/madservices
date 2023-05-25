@@ -78,7 +78,7 @@ const actualizarDescripcion = require('../controladores/miembros/actualizar/prod
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, './imagenes');
+        callback(null, './archivos');
     },
     filename: (req, file, callback) => {
         const extension = file.originalname.split('.').pop();
