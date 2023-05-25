@@ -230,6 +230,7 @@ block body
                             option='Libros de salud y bienestar'
                             option='Libros religiosos'
                             option='Libros en inglés'
+                            option='Poesía'
                         optgroup(label='Juegos')
                             option='Juegos de mesa'
                             option='Videojuegos'    
@@ -298,7 +299,10 @@ block body
                         p='País de la compra: ' + compra.pais
                         p='Región de la compra: ' + compra.region
             div.column
-                h3='Productos MAD en el carrito de compra:'
+                if cantidadCarrito === 1
+                    h3='Productos MAD en el carrito de compra: ' + cantidadCarrito + ' producto.'
+                else
+                    h3='Productos MAD en el carrito de compra: ' + cantidadCarrito + ' productos.'
                 table
                     tr 
                         th='Título del producto'

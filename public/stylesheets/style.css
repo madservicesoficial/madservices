@@ -1105,6 +1105,7 @@ canvas {
   border-radius: 7px;
 }
 .columnIzq {
+  max-height: 1150;
   margin-top: 15;
   flex: 1;
   border-radius: 7px;
@@ -1388,6 +1389,20 @@ canvas {
   background-color: black;
   color: white;
 }
+#btnBorrarMultimediaMAD {
+  width: 40;
+  height: 40;
+  background-color: transparent;
+  margin-left: 30;
+}
+#iconoBorrarMultimediaMAD {
+  color: black;
+  position: relative;
+  right: 6px;
+}
+.formularioAddBorrarMultimedia {
+  display: inline-block;
+}
 i.cambiarImagen {
   position: absolute;
   top: 50%;
@@ -1411,34 +1426,21 @@ i#prev {
 i#next {
   right: 950px;
 }
-.image-container {
+.contenedorImagenes {
   overflow: hidden;
   width: 37%;
   margin-left: 200;
 }
-.image-container .carousel {
+.carousel {
   display: flex;
   transition: all 0.4s ease;
   flex-wrap: nowrap;
 }
 .carousel img {
   min-width: 260px;
+  max-height: 300px;
   border-style: groove;
   border-width: 10px;
   border-radius: 10px;
   transition: all 0.4s ease;
-}
-#btnBorrarMultimediaMAD {
-  width: 40;
-  height: 40;
-  background-color: transparent;
-  margin-left: 30;
-}
-#iconoBorrarMultimediaMAD {
-  color: black;
-  position: relative;
-  right: 6px;
-}
-.formularioAddBorrarMultimedia {
-  display: inline-block;
 }

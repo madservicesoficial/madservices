@@ -127,6 +127,12 @@ const mostrarMiembrodb = (id, res) => {
                                     sumaO = sumaO + 1;
                                 }
                             }
+                            let numTotalCarrito = 0;
+                            let cantidadCarrito = 0;
+                            for(let m=0; m<salida5.length; m++) {
+                                numTotalCarrito = parseInt(salida5[m].total_cantidad, 10);
+                                cantidadCarrito = cantidadCarrito + numTotalCarrito;
+                            }
                             res.status(201).render('paginas/miembros/interfaz',
                             {
                                 id: id,
@@ -155,6 +161,7 @@ const mostrarMiembrodb = (id, res) => {
                                 numMiembrosVentas: miembrosVentas,
                                 numMiembrosEconomia: miembrosEconomia,
                                 fullCarrito: salida5,
+                                cantidadCarrito: cantidadCarrito,
                                 cantidadQueHay: salida6.length
                             });
                             return res.end();
