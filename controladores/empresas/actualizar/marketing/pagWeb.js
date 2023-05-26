@@ -1,18 +1,18 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { ingresoDescripcionEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+const { actualizarPagWebEmpresadb } = require('../../../../modelos/empresas/actualizar/marketing/actualizar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresoDescripcionEmpresa = (req, res) => {
+const actualizarPagWebEmpresa = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
-    const descripcion = req.body.descripCo;
+    const pagweb = req.body.urlPagWeb;
     //-- Llamada a función.
-    ingresoDescripcionEmpresadb(id, descripcion, res);
+    actualizarPagWebEmpresadb(id, pagweb, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = ingresoDescripcionEmpresa;
+module.exports = actualizarPagWebEmpresa;
 //#######################################################################################################//

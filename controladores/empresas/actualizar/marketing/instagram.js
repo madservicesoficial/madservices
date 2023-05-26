@@ -1,18 +1,18 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { ingresoTwitterEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+const { actualizarInstagramEmpresadb } = require('../../../../modelos/empresas/actualizar/marketing/actualizar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresoTwitterEmpresa = (req, res) => {
+const actualizarInstagramEmpresa = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
-    const twitter = req.body.urlTwitter;
+    const instagram = req.body.urlInstagram;
     //-- Llamada a función.
-    ingresoTwitterEmpresadb(id, twitter, res);
+    actualizarInstagramEmpresadb(id, instagram, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = ingresoTwitterEmpresa;
+module.exports = actualizarInstagramEmpresa;
 //#######################################################################################################//

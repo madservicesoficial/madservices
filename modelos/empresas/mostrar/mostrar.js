@@ -43,8 +43,33 @@ const mostrarEmpresadb = (id, res) => {
 //-- Función que muestra los productos Multimarca o The Mall.
 const mostrarProductosTheMallEmpresadb = (id, res) => {
     
-    //-- Renderizar la Página de The Mall.
-    res.status(201).render('paginas/empresas/productosTheMall', {id: id});
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas WHERE id = ?';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        let instruccionMarketingEmpresa = 'SELECT * FROM mktingcom WHERE id = ?';
+        let formatoInstruccionMarketingEmpresa = mysql.format(instruccionMarketingEmpresa, [id]);
+        madservicesEmpresadb.query(formatoInstruccionMarketingEmpresa, (error, results1) => {
+            if(error) throw error;
+            if(results.length > 0) {
+                //-- Renderizar la Página de The Mall.
+                res.status(201).render('paginas/empresas/productosTheMall',
+                {
+                    id: id,
+                    email: results[0].email,
+                    marca: results[0].marca,
+                    tipo: results[0].tipo,
+                    descripcion: results1[0].descripcion,
+                    instagram: results1[0].instagram,
+                    pagweb: results1[0].pagweb,
+                    twitter: results1[0].twitter,
+                    whatsapp: results1[0].whatsapp,
+                    logo: results1[0].logo
+                });
+                return res.end();
+            }
+        });
+    });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//

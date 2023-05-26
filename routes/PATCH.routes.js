@@ -115,6 +115,27 @@ rutasPatch.post('/sesion-cliente/:id/perfil/editar-cvv', editarCVVTarjetaBank);
 
 
 
+//############################# PROCESAMIENTO DEL MARKETING DE LA EMPRESA ###############################//
+const actualizarDescripcionEmpresa = require('../controladores/empresas/actualizar/marketing/descripcion.js');
+const actualizarWhatsAppEmpresa = require('../controladores/empresas/actualizar/marketing/whatsApp.js');
+const actualizarInstagramEmpresa = require('../controladores/empresas/actualizar/marketing/instagram.js');
+const actualizarTwitterEmpresa = require('../controladores/empresas/actualizar/marketing/twitter.js');
+const actualizarPagWebEmpresa = require('../controladores/empresas/actualizar/marketing/pagWeb.js');
+const actualizarLogoEmpresa = require('../controladores/empresas/actualizar/marketing/logo.js');
+
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-descripcion', actualizarDescripcionEmpresa);
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', actualizarWhatsAppEmpresa);
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-url-Instagram', actualizarInstagramEmpresa);
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-url-Twitter', actualizarTwitterEmpresa);
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-url-PagWeb', actualizarPagWebEmpresa);
+const subida = multer({ storage: storage });
+rutasPatch.post('/sesion-empresa/:id/interfaz/add-logo', subida.single('logo'), actualizarLogoEmpresa);
+//#######################################################################################################//
+
+
+
+
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = rutasPatch;
 //#######################################################################################################//

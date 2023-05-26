@@ -1077,9 +1077,10 @@ canvas {
 .cuadroProductoCompradoEnInterfaz img {
   width: 80;
 }
-#numProductosComprados {
-  font-size: large;
-  margin-left: 20;
+.bajaPorMiembros input {
+  background-color: silver;
+  margin-right: 20;
+  width: 200;
 }
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
@@ -1191,19 +1192,25 @@ canvas {
 .tarjetaProductosMALL {
   float: left;
   width: 1200px;
-  height: 400px;
+  height: 300px;
   margin-left: 30;
   transform: perspective(1000px) rotateX(12deg);
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: black;
-  color: white;
   place-items: center;
   overflow-x: hidden;
   overflow-y: scroll;
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
+}
+#colorServiciosRestaurante {
+  background-color: #c57979;
+  color: black;
+}
+.tarjetaProductosMALL img {
+  height: 180px;
+  transform: perspective(1000px) rotateX(15deg);
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/

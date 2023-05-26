@@ -133,6 +133,16 @@ const mostrarMiembrodb = (id, res) => {
                                 numTotalCarrito = parseInt(salida5[m].total_cantidad, 10);
                                 cantidadCarrito = cantidadCarrito + numTotalCarrito;
                             }
+                            let ganancias = 0;
+                            for(let n=0; n<result.length; n++) {
+                                let preciototalInt = parseInt(result[n].preciototal, 10);
+                                ganancias = ganancias + preciototalInt;
+                            }
+                            let cantidadQueHay = 0;
+                            for(let h=0; h<salida6.length; h++) {
+                                let cantidadInt = parseInt(salida6[h].cantidad, 10);
+                                cantidadQueHay = cantidadQueHay + cantidadInt;
+                            }
                             res.status(201).render('paginas/miembros/interfaz',
                             {
                                 id: id,
@@ -143,6 +153,7 @@ const mostrarMiembrodb = (id, res) => {
                                 genero: salida3[0].genero,
                                 productosMadComprados: result,
                                 totalComprados: result.length,
+                                ganancias: ganancias,
                                 numHombres: sumaH,
                                 numMujeres: sumaM,
                                 numOtros: sumaO,
@@ -162,7 +173,7 @@ const mostrarMiembrodb = (id, res) => {
                                 numMiembrosEconomia: miembrosEconomia,
                                 fullCarrito: salida5,
                                 cantidadCarrito: cantidadCarrito,
-                                cantidadQueHay: salida6.length
+                                cantidadQueHay: cantidadQueHay
                             });
                             return res.end();
                         });

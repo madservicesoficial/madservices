@@ -164,19 +164,54 @@ const mostrarExpansionClientesdb = (id, enumeracion, res) => {
     //-- Establecemos la conexión con la base de datos.
     madservicesClientedb.query(formatoInstruccionMuestraExpansionGeneral, (error, results) => {
         if(error) throw error;
-        res.status(201).render('paginas/clientes/expansion', 
-        { 
-            id: id,
-            enumeracion: enumeracion,
-            imagenPortada: results[0].portada,
-            titulo: results[0].titulo,
-            precio: results[0].precio,
-            peso: results[0].peso,
-            cantidad: results[0].cantidad,
-            categoria: results[0].producto,
-            descripcion: results[0].descripcion
+        let instruccionMuestraMasArchivos = 'SELECT * FROM multimedia WHERE enumeracion = ?';
+        let formatoInstruccionMuestraMasArchivos = mysql.format(instruccionMuestraMasArchivos, [enumeracion]);
+        madservicesClientedb.query(formatoInstruccionMuestraMasArchivos, (error, results1) => {
+            if(error) throw error;
+            if(results1.length !== 0) {
+                let imagenes = new Array(10);
+                imagenes = {
+                    imagenPortada: results[0].portada,
+                    imagen1: results1[0].fileuno,
+                    imagen2: results1[0].filedos,
+                    imagen3: results1[0].filetres,
+                    imagen4: results1[0].filecuatro,
+                    imagen5: results1[0].filecinco,
+                    imagen6: results1[0].fileseis,
+                    imagen7: results1[0].filesiete,
+                    imagen8: results1[0].fileocho,
+                    imagen9: results1[0].filenueve
+                };
+                res.status(201).render('paginas/clientes/expansion', 
+                { 
+                    id: id,
+                    enumeracion: enumeracion,
+                    imagenPortada: results[0].portada,
+                    titulo: results[0].titulo,
+                    precio: results[0].precio,
+                    peso: results[0].peso,
+                    cantidad: results[0].cantidad,
+                    categoria: results[0].producto,
+                    descripcion: results[0].descripcion,
+                    multimedia: imagenes
+                });
+                return res.end();
+            }else {
+                res.status(201).render('paginas/clientes/expansion', 
+                { 
+                    id: id,
+                    enumeracion: enumeracion,
+                    imagenPortada: results[0].portada,
+                    titulo: results[0].titulo,
+                    precio: results[0].precio,
+                    peso: results[0].peso,
+                    cantidad: results[0].cantidad,
+                    categoria: results[0].producto,
+                    descripcion: results[0].descripcion
+                });
+                return res.end();
+            }
         });
-        return res.end();
     });
 }
 

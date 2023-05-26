@@ -198,6 +198,36 @@ const borrarWhatsAppEmpresadb = (id, res) => {
     });
 }
 
+const borrarLogoEmpresadb = (id, res) => {
+
+    let instruccionConsultarLogo = 'SELECT * FROM mktingcom WHERE id = ?';
+    let formatoInstruccionConsultarLogo = mysql.format(instruccionConsultarLogo, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultarLogo, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            //-- Mostrar Alerta Emergente.
+            alerta('No se puede borrar lo que no existe');
+            //-- Redirigir a la interfaz de la empresa.
+            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+        }else {
+            if(results[0].logo === null) {
+                //-- Mostrar Alerta Emergente.
+                alerta('No se puede borrar lo que no existe');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
+            }else {
+                let instruccionBorrarLogo = 'UPDATE mktingcom SET logo = NULL WHERE id = ?';
+                let formatoInstruccionBorrarLogo = mysql.format(instruccionBorrarLogo, [id]);
+                madservicesEmpresadb.query(formatoInstruccionBorrarLogo);
+                //-- Mostrar Alerta Emergente.
+                alerta('Logo borrado con éxito');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
+            }
+        }
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     darseBajaEmpresadb,
@@ -205,6 +235,7 @@ module.exports = {
     borrarInstagramEmpresadb,
     borrarPagWebEmpresadb,
     borrarTwitterEmpresadb,
-    borrarWhatsAppEmpresadb
+    borrarWhatsAppEmpresadb,
+    borrarLogoEmpresadb
 };
 //#######################################################################################################//

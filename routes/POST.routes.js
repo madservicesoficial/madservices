@@ -74,24 +74,6 @@ rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumer
 
 
 
-//############################# PROCESAMIENTO DEL MARKETING DE LA EMPRESA ###############################//
-const ingresoDescripcionEmpresa = require('../controladores/empresas/ingresar/descripcion.js');
-const ingresoWhatsAppEmpresa = require('../controladores/empresas/ingresar/whatsApp.js');
-const ingresoInstagramEmpresa = require('../controladores/empresas/ingresar/instagram.js');
-const ingresoTwitterEmpresa = require('../controladores/empresas/ingresar/twitter.js');
-const ingresoPagWebEmpresa = require('../controladores/empresas/ingresar/pagWeb.js');
-
-rutasPost.post('/sesion-empresa/:id/interfaz/add-descripcion', ingresoDescripcionEmpresa);
-rutasPost.post('/sesion-empresa/:id/interfaz/add-url-WhatsApp', ingresoWhatsAppEmpresa);
-rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Instagram', ingresoInstagramEmpresa);
-rutasPost.post('/sesion-empresa/:id/interfaz/add-url-Twitter', ingresoTwitterEmpresa);
-rutasPost.post('/sesion-empresa/:id/interfaz/add-url-PagWeb', ingresoPagWebEmpresa);
-//#######################################################################################################//
-
-
-
-
-
 //################################ PROCESAMIENTO DEL FILTRO DE BÚSQUEDA #################################//
 const busquedaPorTitulo = require('../controladores/general/buscar/porTitulo.js');
 const busquedaPorTituloEnCliente = require('../controladores/clientes/buscar/porTitulo.js');

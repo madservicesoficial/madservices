@@ -1,18 +1,18 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { ingresoPagWebEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+const { actualizarWhatsAppEmpresadb } = require('../../../../modelos/empresas/actualizar/marketing/actualizar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresoPagWebEmpresa = (req, res) => {
+const actualizarWhatsAppEmpresa = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
-    const pagweb = req.body.urlPagWeb;
+    const whatsapp = req.body.whatsapp;
     //-- Llamada a función.
-    ingresoPagWebEmpresadb(id, pagweb, res);
+    actualizarWhatsAppEmpresadb(id, whatsapp, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = ingresoPagWebEmpresa;
+module.exports = actualizarWhatsAppEmpresa;
 //#######################################################################################################//

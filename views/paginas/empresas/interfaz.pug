@@ -127,6 +127,17 @@ block body
                     input(type='hidden' name='_method' value='DELETE')
                     button(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
+                br
+                br
+                h3='Añadir logo de la empresa: '
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-logo` enctype="multipart/form-data")
+                    input(type='file' name='logo' accept='image/png, image/jpg, image/jpeg')
+                    button(type='submit')
+                        i.fa-solid.fa-floppy-disk.fa-2xl
+                form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-logo`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    button(type='submit')
+                        i.fa-solid.fa-eraser.fa-2xl
             div.column
                 h3='Añadir URLs de contacto: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-WhatsApp`)
@@ -177,82 +188,10 @@ block body
                     select(name="confirmarOpcion")
                         option(checked)=''
                         option='Sí'
-                        option='No' 
+                        option='No'
+                    br
+                    br
                     button(type='submit')='Confirmo'
             div.column
-        div.row
-            div.column
-                if tipo === 'RESTAURANTE'
-                    h3='Publicar un servicio de menús: '
-                    label='Nombre del servicio a ofertar: '
-                    input(type='text' name='nomserv' placeholder='Introduce el título del servicio que ofreces....')
-                    label='Nº de menús que ofertas: '
-                    input(type='number' name='menus' placeholder='')
-            div.column
-                if tipo === 'PELUQUERIA'
-                    h3=`Plano ${tipo}: `
-                else if tipo === 'RESTAURANTE'
-                    h3='Publicar un servicio de reservas: '
-                else if tipo === 'VENTAS'
-                    h3='Ingreso de producto para su venta: '
-                    form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
-                        label='Imagen de portada: '
-                        input.inputMiembroMAD(type='file' name='portada' accept="image/*")
-                        br
-                        br
-                        label='Cantidad: '
-                        input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
-                        br
-                        br
-                        label='Tipo de producto:'
-                        select(name="categoria")='Categorias'
-                            option(checked)=''
-                            optgroup(label='Libros')
-                                option='Libros infantiles' 
-                                option='Libros juveniles'
-                                option='Libros de historia'
-                                option='Libros de naturaleza'
-                                option='Libros de economía'
-                                option='Libros escolares'
-                                option='Libros de misterio'
-                            optgroup(label='Juegos')
-                                option='Juegos de mesa'
-                                option='Juegos de calle'
-                                option='Videojuegos'    
-                            optgroup(label='Electrónica e Informática')
-                                option='Consolas'
-                                option='Altavoces'
-                                option='Ratones'
-                                option='Teclados'
-                                option='PCs'
-                                option='MACs'
-                                option='Portátiles'
-                                option='MacBooks'
-                        br
-                        br
-                        label='Título:'
-                        input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
-                        br
-                        br
-                        label='Precio:'
-                        input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
-                        span#euros='€'
-                        br
-                        br
-                        label='Peso (para el envío):'
-                        select(name="peso")
-                            option(checked)=''
-                            option='Hasta 2'
-                            option='Hasta 5'
-                            option='Hasta 7'
-                            option='Hasta 10'
-                            option='Hasta 15'
-                            option='> 15'
-                        span#euros='Kg'
-                        br
-                        br
-                        label='Descripción:'
-                        textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
-                        button#btnIngresarProductoMAD(type='submit')='Ingresar'
         br
     include ./componentes/piepagina.pug

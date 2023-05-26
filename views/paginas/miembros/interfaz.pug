@@ -276,6 +276,25 @@ block body
                     button#btnBajaMiembroMAD(type='submit')='Confirmo'
                 br
                 br
+                h3='Dar de baja a Clientes con su consentimiento: '
+                form.bajaPorMiembros(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-cliente`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    input(type='email' name='email' placeholder='Escribe el email del Cliente....')
+                    input(type='number' name='idcliente' placeholder='Escribe el ID del Cliente....')
+                    button(type='submit')
+                        i.fa-solid.fa-user-minus.fa-2xl
+                br
+                br
+                h3='Dar de baja a Empresas con su consentimiento: '
+                form.bajaPorMiembros(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-empresa`)
+                    input(type='hidden' name='_method' value='DELETE')
+                    input(type='email' name='email' placeholder='Escribe el email de la Empresa....')
+                    input(type='text' name='cif' placeholder='Escribe el CIF de la Empresa....')
+                    br
+                    br
+                    input(type='number' name='idempresa' placeholder='Escribe el ID de la Empresa....')
+                    button(type='submit')
+                        i.fa-solid.fa-user-minus.fa-2xl
                 br
                 br
                 if cantidadQueHay === 1
@@ -284,11 +303,10 @@ block body
                     h3='Productos MAD que hay a la venta: ' + cantidadQueHay + ' productos.'
         div.row
             div.column
-                h3='Productos MAD comprados por los Clientes:'
-                    if totalComprados === 1
-                        span#numProductosComprados=totalComprados + ' producto'
-                    else
-                        span#numProductosComprados=totalComprados + ' productos'
+                if totalComprados === 1
+                    h3='Productos MAD comprados por los Clientes: ' + totalComprados + ' producto.'
+                else
+                    h3='Productos MAD comprados por los Clientes: ' + totalComprados + ' productos.'
                 each compra in productosMadComprados
                     .cuadroProductoCompradoEnInterfaz
                         p=compra.fecha
@@ -298,6 +316,9 @@ block body
                         p=compra.preciototal
                         p='País de la compra: ' + compra.pais
                         p='Región de la compra: ' + compra.region
+                br
+                br
+                h3='Ganancias totales: ' + ganancias + '€'
             div.column
                 if cantidadCarrito === 1
                     h3='Productos MAD en el carrito de compra: ' + cantidadCarrito + ' producto.'

@@ -1,18 +1,17 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { ingresoWhatsAppEmpresadb } = require('../../../modelos/empresas/ingresar/ingresar.js');
+const { borrarLogoEmpresadb } = require('../../../modelos/empresas/eliminar/eliminar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const ingresoWhatsAppEmpresa = (req, res) => {
+const borrarLogoEmpresa = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
-    const whatsapp = req.body.whatsapp;
     //-- Llamada a función.
-    ingresoWhatsAppEmpresadb(id, whatsapp, res);
+    borrarLogoEmpresadb(id, res);
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = ingresoWhatsAppEmpresa;
-//#######################################################################################################//
+module.exports = borrarLogoEmpresa;
+//#######################################################################################################// 

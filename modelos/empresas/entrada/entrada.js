@@ -40,7 +40,7 @@ const registrarEmpresaVerificadadb = async (data, password, res) => {
                 }
             });
             //-- Instrucción para registrarse en la base de datos.
-            let instruccionRegistrarse = "INSERT INTO empresas (id, email, password, marca, nif, tipo) VALUES (?, ?, ?, ?, ?, ?)";
+            let instruccionRegistrarse = "INSERT INTO empresas (id, email, password, marca, nif, tipo, descripcion, instagram, twitter, pagweb, whatsapp, logo) VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL)";
             //-- Configuración del formato de los datos introducidos para registrar en base de datos.
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idEmpresa, data.email, passwordCifrada, data.marca, data.nif, data.tipo]);
             madservicesEmpresadb.query(formatoInstruccionRegistrarse, (error) => {

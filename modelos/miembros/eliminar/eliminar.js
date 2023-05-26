@@ -132,10 +132,126 @@ const borrarArchivosMultimediaMADdb = (id, enumeracion, res) => {
     return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
 }
 
+//-- Creamos la función para Dar de Baja al Cliente por parte de un Miembro MAD.
+const bajaClientePorMiembrodb = (id, email, idcliente, res) => {
+
+    let instruccionConfirmarBajaCliente = "SELECT * FROM clientes";
+    let formatoInstruccionConfirmarBajaCliente = mysql.format(instruccionConfirmarBajaCliente);
+    //-- Establecer la configuración de borrar los datos de la base de datos.
+    madservicesAdmindb.query(formatoInstruccionConfirmarBajaCliente, (error, results) => {
+        if(error) throw error;
+        let confirmacion = false;
+        let idclienteINT = parseInt(idcliente, 10);
+        for(let i=0; i<results.length; i++) {
+            if(email === results[i].email && idclienteINT === results[i].id) {
+                confirmacion = true;
+                i = results.length + 1;
+            }else {
+                confirmacion = false;
+            }
+        }
+        if(confirmacion === true) {
+            //-- Se elimina el cliente y todo lo relacionado con el cliente.
+            let instruccionVerCarrito = "SELECT * FROM carrito WHERE id = ?";
+            let formatoInstruccionVerCarrito = mysql.format(instruccionVerCarrito, [idcliente]);
+            //-- Establecer la configuración de ver los datos de la base de datos.
+            madservicesAdmindb.query(formatoInstruccionVerCarrito, (error, results1) => {
+                if(error) throw error;
+                if(results1.length > 0) {
+                    //-- Si tiene productos en el carrito, se borran.
+                    let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
+                    let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [idcliente]);
+                    //-- Establecer la configuración de borrar los datos de la base de datos.
+                    madservicesAdmindb.query(formatoInstruccionDarseBajaCarrito);
+                }
+            });
+            //-- Si tiene guardada la tarjeta bancaria, también se borra.
+            let instruccionVerTarjetasBank = "SELECT * FROM tarjeta WHERE id = ?";
+            let formatoInstruccionVerTarjetasBank = mysql.format(instruccionVerTarjetasBank, [idcliente]);
+            //-- Establecer la configuración de ver los datos de la base de datos.
+            madservicesAdmindb.query(formatoInstruccionVerTarjetasBank, (error, resultados) => {
+                if(error) throw error;
+                if(resultados.length > 0) {
+                    let instruccionBorrarTarjetasBank = "DELETE FROM tarjeta WHERE id = ?";
+                    let formatoInstruccionBorrarTarjetasBank = mysql.format(instruccionBorrarTarjetasBank, [idcliente]);
+                    //-- Establecer la configuración de borrar los datos de la base de datos.
+                    madservicesAdmindb.query(formatoInstruccionBorrarTarjetasBank);
+                }
+            });
+            //-- Variables usadas para borrar los datos de la base de datos.
+            let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
+            let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [idcliente]);
+            //-- Establecer la configuración de borrar los datos de la base de datos.
+            madservicesAdmindb.query(formatoinstruccionDarseBajaCliente);
+            //-- Mostrar Alerta Emergente.
+            alerta('Cliente dado de baja definitivamente');
+            //-- Redirigir.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Mostrar alerta.
+            alerta('Cliente Erróneo');
+            //-- Redirigir.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }
+    });
+}
+
+//-- Creamos la función para Dar de Baja a la Empresa por parte de un Miembro MAD.
+const bajaEmpresaPorMiembrodb = (id, email, cif, idempresa, res) => {
+
+    let instruccionConfirmarBajaEmpresa = "SELECT * FROM empresas";
+    let formatoInstruccionConfirmarBajaEmpresa = mysql.format(instruccionConfirmarBajaEmpresa);
+    //-- Establecer la configuración de borrar los datos de la base de datos.
+    madservicesAdmindb.query(formatoInstruccionConfirmarBajaEmpresa, (error, results) => {
+        if(error) throw error;
+        let confirmacion = false;
+        let idempresaINT = parseInt(idempresa, 10);
+        for(let i=0; i<results.length; i++) {
+            if(email === results[i].email && idempresaINT === results[i].id && cif === results[i].nif) {
+                confirmacion = true;
+                i = results.length + 1;
+            }else {
+                confirmacion = false;
+            }
+        }
+        if(confirmacion === true) {
+            let instruccionConsultarSuMarketing = 'SELECT * FROM mktingcom WHERE id = ?';
+            //-- Configuración del formato de la instrucción dar de baja.
+            let formatoInstruccionConsultarSuMarketing = mysql.format(instruccionConsultarSuMarketing, [idempresa]);
+            //-- Proceso de dar de baja.
+            madservicesAdmindb.query(formatoInstruccionConsultarSuMarketing, (error, results1) => {
+                if(error) throw error;
+                if(results1.length > 0) {
+                    let instruccionEliminarSuMarketing = 'DELETE FROM mktingcom WHERE id = ?';
+                    //-- Configuración del formato de la instrucción dar de baja.
+                    let formatoInstruccionEliminarSuMarketing = mysql.format(instruccionEliminarSuMarketing, [idempresa]);
+                    //-- Proceso de dar de baja.
+                    madservicesAdmindb.query(formatoInstruccionEliminarSuMarketing);
+                }
+            });
+            let instruccionDarseBajaEmpresa = "DELETE FROM empresas WHERE id = ?";
+            let formatoinstruccionDarseBajaEmpresa = mysql.format(instruccionDarseBajaEmpresa, [idempresa]);
+            //-- Establecer la configuración de borrar los datos de la base de datos.
+            madservicesAdmindb.query(formatoinstruccionDarseBajaEmpresa);
+            //-- Mostrar Alerta Emergente.
+            alerta('Empresa dada de baja definitivamente');
+            //-- Redirigir.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }else {
+            //-- Mostrar alerta.
+            alerta('Empresa Errónea');
+            //-- Redirigir.
+            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        }
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     darseBajaMiembrodb,
     borrarProductoMADdb,
-    borrarArchivosMultimediaMADdb
+    borrarArchivosMultimediaMADdb,
+    bajaClientePorMiembrodb,
+    bajaEmpresaPorMiembrodb
 };
 //#######################################################################################################//

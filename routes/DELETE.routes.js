@@ -85,12 +85,26 @@ const borrarWhatsAppEmpresa = require('../controladores/empresas/eliminar/whatsA
 const borrarInstagramEmpresa = require('../controladores/empresas/eliminar/instagram.js');
 const borrarTwitterEmpresa = require('../controladores/empresas/eliminar/twitter.js');
 const borrarPagWebEmpresa = require('../controladores/empresas/eliminar/pagWeb.js');
+const borrarLogoEmpresa = require('../controladores/empresas/eliminar/logo.js');
 
 rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-descripcion', borrarDescripcionEmpresa);
 rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-url-WhatsApp', borrarWhatsAppEmpresa);
 rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-url-Instagram', borrarInstagramEmpresa);
 rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-url-Twitter', borrarTwitterEmpresa);
 rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-url-PagWeb', borrarPagWebEmpresa);
+rutasDelete.post('/sesion-empresa/:id/interfaz/borrar-logo', borrarLogoEmpresa);
+//#######################################################################################################//
+
+
+
+
+
+//##################### ELIMINACIÓN DEL CLIENTE Y DE LA EMPRESA POR UN MIEMBRO MAD ######################//
+const bajaClientePorMiembro = require('../controladores/miembros/eliminar/clientes.js');
+const bajaEmpresaPorMiembro = require('../controladores/miembros/eliminar/empresas.js');
+
+rutasDelete.post('/sesion-miembro/:id/interfaz/eliminar-cliente', bajaClientePorMiembro);
+rutasDelete.post('/sesion-miembro/:id/interfaz/eliminar-empresa', bajaEmpresaPorMiembro);
 //#######################################################################################################//
 
 
