@@ -994,10 +994,6 @@ canvas {
   height: 40px;
   margin: 20;
 }
-.imgPlano {
-  width: 1000px;
-  height: 600px;
-}
 /*##################################################################################################*/
 /*################################# SECCIÓN INTERFAZ: MIEMBRO MAD ##################################*/
 /*##################################################################################################*/
@@ -1188,6 +1184,26 @@ canvas {
 .filtroRangoPrecio {
   float: left;
   margin-left: 30;
+}
+/*##################################################################################################*/
+/*################################## SECCIÓN PRODUCTOS THE MALL ####################################*/
+/*##################################################################################################*/
+.tarjetaProductosMALL {
+  float: left;
+  width: 1200px;
+  height: 400px;
+  margin-left: 30;
+  transform: perspective(1000px) rotateX(12deg);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  color: white;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/

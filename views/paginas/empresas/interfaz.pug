@@ -185,10 +185,8 @@ block body
             div.column
                 if tipo === 'PELUQUERIA'
                     h3=`Plano ${tipo}: `
-                    img.imgPlano(src='/images/planoPeluqueria.jpg' alt='planoPeluqueria')
                 else if tipo === 'RESTAURANTE'
-                    h3=`Plano ${tipo}: `
-                    img.imgPlano(src='/images/planoRestaurante.jpg' alt='planoRestaurante')
+                    h3=`Publicar un servicio de reservas del ${tipo}: `
                 else if tipo === 'VENTAS'
                     h3='Ingreso de producto para su venta: '
                     form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
