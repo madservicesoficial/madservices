@@ -182,11 +182,17 @@ block body
             div.column
         div.row
             div.column
+                if tipo === 'RESTAURANTE'
+                    h3='Publicar un servicio de menús: '
+                    label='Nombre del servicio a ofertar: '
+                    input(type='text' name='nomserv' placeholder='Introduce el título del servicio que ofreces....')
+                    label='Nº de menús que ofertas: '
+                    input(type='number' name='menus' placeholder='')
             div.column
                 if tipo === 'PELUQUERIA'
                     h3=`Plano ${tipo}: `
                 else if tipo === 'RESTAURANTE'
-                    h3=`Publicar un servicio de reservas del ${tipo}: `
+                    h3='Publicar un servicio de reservas: '
                 else if tipo === 'VENTAS'
                     h3='Ingreso de producto para su venta: '
                     form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
@@ -248,6 +254,5 @@ block body
                         label='Descripción:'
                         textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
                         button#btnIngresarProductoMAD(type='submit')='Ingresar'
-            div.column
         br
     include ./componentes/piepagina.pug
