@@ -197,6 +197,22 @@ rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeraci
 
 
 
+//######################### ACCESO A LAS EMPRESAS DEL CENTRO COMERCIAL MAD #########################//
+const mostrarExpansionMultimarcaClientes = require('../controladores/clientes/mostrar/multimarca.js');
+const mostrarExpansionMultimarcaEmpresas = require('../controladores/empresas/mostrar/expansion.js');
+const mostrarExpansionMultimarca = require('../controladores/general/mostrar/multimarca.js');
+const mostrarExpansionMultimarcaMiembros = require('../controladores/miembros/mostrar/multimarca.js');
+
+rutasGet.get('/sesion-cliente/:id/empieza/themall/expansion:marca', mostrarExpansionMultimarcaClientes);
+rutasGet.get('/sesion-empresa/:id/empieza/expansion:marca', mostrarExpansionMultimarcaEmpresas);
+rutasGet.get('/empieza/themall/expansion:marca', mostrarExpansionMultimarca);
+rutasGet.get('/sesion-miembro/:id/empieza/themall/expansion:marca', mostrarExpansionMultimarcaMiembros);
+//##################################################################################################//
+
+
+
+
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = rutasGet;
 //#######################################################################################################//

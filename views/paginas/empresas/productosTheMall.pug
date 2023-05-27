@@ -21,7 +21,38 @@ block body
                 p='Por producto o servicio:'
                 p='Por precio del producto:'
             div.columnDer
-                div.tarjetaProductosMALL#colorServiciosRestaurante
-                    button(type='submit')='Añadir al carrito'
+                each empresa in empresas
+                    if empresa.tipo === 'RESTAURANTE'
+                        div.tarjetaProductosMALL#colorServiciosRestaurante
+                            h3=empresa.tipo + ': ' + empresa.marca
+                            img(src=`data:image/*;base64,${empresa.logo}`)
+                            br
+                            br
+                            form(method='GET' action=`/sesion-empresa/${id}/empieza/expansion${empresa.marca}`)
+                                button(type='submit')='Acceder'
+                    else if empresa.tipo === 'COMERCIO'
+                        div.tarjetaProductosMALL#colorServiciosComercio
+                            h3=empresa.marca
+                            img(src=`data:image/*;base64,${empresa.logo}`)
+                            br
+                            br
+                            form(method='GET' action=`/sesion-empresa/${id}/empieza/expansion${empresa.marca}`)
+                                button(type='submit')='Acceder'
+                    else if empresa.tipo === 'ACADEMIA'
+                        div.tarjetaProductosMALL#colorServiciosAcademia
+                            h3=empresa.tipo + ': ' + empresa.marca
+                            img(src=`data:image/*;base64,${empresa.logo}`)
+                            br
+                            br
+                            form(method='GET' action=`/sesion-empresa/${id}/empieza/expansion${empresa.marca}`)
+                                button(type='submit')='Acceder'
+                    else if empresa.tipo === 'PELUQUERIA'
+                        div.tarjetaProductosMALL#colorServiciosPeluqueria
+                            h3=empresa.tipo + ': ' + empresa.marca
+                            img(src=`data:image/*;base64,${empresa.logo}`)
+                            br
+                            br
+                            form(method='GET' action=`/sesion-empresa/${id}/empieza/expansion${empresa.marca}`)
+                                button(type='submit')='Acceder'
         br
     include ./componentes/piepagina.pug

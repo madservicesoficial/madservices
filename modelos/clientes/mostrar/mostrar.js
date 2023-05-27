@@ -233,8 +233,41 @@ const mostrarProductosMADclientesdb = (id, res) => {
 //-- Función que muestra los productos Multimarca o The Mall.
 const mostrarProductosTheMallClientedb = (id, res) => {
     
-    //-- Renderizar la Página de The Mall.
-    res.status(201).render('paginas/clientes/productosTheMall', {id: id});
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas);
+    madservicesClientedb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/clientes/productosTheMall',
+        {
+            id: id,
+            empresas: results
+        });
+        return res.end();
+    });
+}
+
+//-- Función que muestra la expansión de los productos Multimarca o The Mall.
+const mostrarExpansionMultimarcaClientesdb = (id, marca, res) => {
+
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas WHERE marca = ?';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas, [marca]);
+    madservicesClientedb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/clientes/expansionMall',
+        {
+            id: id,
+            marca: marca,
+            email: results[0].email,
+            tipo: results[0].tipo,
+            descripcion: results[0].descripcion,
+            instagram: results[0].instagram,
+            twitter: results[0].twitter,
+            pagweb: results[0].pagweb,
+            whatsapp: results[0].whatsapp,
+            logo: results[0].logo
+        });
+        return res.end();
+    });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
@@ -244,6 +277,7 @@ module.exports = {
     mostrarClientedb,
     mostrarExpansionClientesdb,
     mostrarProductosMADclientesdb,
-    mostrarProductosTheMallClientedb
+    mostrarProductosTheMallClientedb,
+    mostrarExpansionMultimarcaClientesdb
 };
 //#######################################################################################################//

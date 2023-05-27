@@ -14,67 +14,68 @@ const mostrarEmpresadb = (id, res) => {
     //-- Establecer la comunicación de consultar ID en la base de datos.
     madservicesEmpresadb.query(formatoInstruccionID, (error, result) => {
         if(error) throw error;
-        //-- Instrucción del ID.
-        let instruccionID2 = 'SELECT * FROM mktingcom WHERE id = ?';
-        //-- Configuración de su formato en mysql.
-        let formatoInstruccionID2 = mysql.format(instruccionID2, [id]);
-        //-- Establecer la comunicación de consultar ID en la base de datos.
-        madservicesEmpresadb.query(formatoInstruccionID2, (error, result2) => {
-            if(error) throw error;
-            res.status(201).render('paginas/empresas/interfaz', 
-            {
-                id: id,
-                email: result[0].email,
-                password: result[0].password,
-                marca: result[0].marca,
-                nif: result[0].nif,
-                tipo: result[0].tipo,
-                descripcion: result2[0].descripcion,
-                instagram: result2[0].instagram,
-                twitter: result2[0].twitter,
-                whatsapp: result2[0].whatsapp,
-                pagweb: result2[0].pagweb
-            });
-            return res.end();
+        res.status(201).render('paginas/empresas/interfaz', 
+        {
+            id: id,
+            email: result[0].email,
+            password: result[0].password,
+            marca: result[0].marca,
+            nif: result[0].nif,
+            tipo: result[0].tipo,
+            descripcion: result[0].descripcion,
+            instagram: result[0].instagram,
+            twitter: result[0].twitter,
+            whatsapp: result[0].whatsapp,
+            pagweb: result[0].pagweb,
+            logo: result[0].logo
         });
+        return res.end();
     });
 }
 
 //-- Función que muestra los productos Multimarca o The Mall.
 const mostrarProductosTheMallEmpresadb = (id, res) => {
     
-    let instruccionConsultarEmpresas = 'SELECT * FROM empresas WHERE id = ?';
-    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas, [id]);
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas);
     madservicesEmpresadb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
         if(error) throw error;
-        let instruccionMarketingEmpresa = 'SELECT * FROM mktingcom WHERE id = ?';
-        let formatoInstruccionMarketingEmpresa = mysql.format(instruccionMarketingEmpresa, [id]);
-        madservicesEmpresadb.query(formatoInstruccionMarketingEmpresa, (error, results1) => {
-            if(error) throw error;
-            if(results.length > 0) {
-                //-- Renderizar la Página de The Mall.
-                res.status(201).render('paginas/empresas/productosTheMall',
-                {
-                    id: id,
-                    email: results[0].email,
-                    marca: results[0].marca,
-                    tipo: results[0].tipo,
-                    descripcion: results1[0].descripcion,
-                    instagram: results1[0].instagram,
-                    pagweb: results1[0].pagweb,
-                    twitter: results1[0].twitter,
-                    whatsapp: results1[0].whatsapp,
-                    logo: results1[0].logo
-                });
-                return res.end();
-            }
+        res.status(201).render('paginas/empresas/productosTheMall',
+        {
+            id: id,
+            empresas: results
         });
+        return res.end();
+    });
+}
+
+const mostrarExpansionMultimarcaEmpresasdb = (id, marca, res) => {
+
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas WHERE marca = ?';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas, [marca]);
+    madservicesEmpresadb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/empresas/expansion',
+        {
+            id: id,
+            marca: marca,
+            email: results[0].email,
+            tipo: results[0].tipo,
+            descripcion: results[0].descripcion,
+            instagram: results[0].instagram,
+            twitter: results[0].twitter,
+            pagweb: results[0].pagweb,
+            whatsapp: results[0].whatsapp,
+            logo: results[0].logo
+        });
+        return res.end();
     });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     mostrarEmpresadb,
-    mostrarProductosTheMallEmpresadb
+    mostrarProductosTheMallEmpresadb,
+    mostrarExpansionMultimarcaEmpresasdb
 };
 //#######################################################################################################//

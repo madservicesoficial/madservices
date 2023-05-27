@@ -180,7 +180,6 @@ block body
                         i.fa-solid.fa-eraser.fa-2xl
         div.row
             div.column
-            div.column
                 h3='Darse de baja de MAD Services: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/darse-baja`)
                     input(type='hidden' name='_method' value='DELETE')
@@ -193,5 +192,7 @@ block body
                     br
                     button(type='submit')='Confirmo'
             div.column
+                h3='Logo de la empresa: '
+                img(src=`data:image/*;base64,${logo}`)
         br
     include ./componentes/piepagina.pug

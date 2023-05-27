@@ -80,14 +80,46 @@ const mostrarProductosMADdb = (res) => {
 //-- Función que muestra los productos Multimarca o The Mall.
 const mostrarProductosTheMalldb = (res) => {
     
-    //-- Renderizar la Página de The Mall.
-    res.status(201).render('paginas/general/productosTheMall');
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas);
+    madservicesClientedb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/general/productosTheMall',
+        {
+            empresas: results
+        });
+        return res.end();
+    });
+}
+
+//-- Función que muestra la expansión de los productos Multimarca o The Mall.
+const mostrarExpansionMultimarcadb = (marca, res) => {
+
+    let instruccionConsultarEmpresas = 'SELECT * FROM empresas WHERE marca = ?';
+    let formatoInstruccionConsultarEmpresas = mysql.format(instruccionConsultarEmpresas, [marca]);
+    madservicesClientedb.query(formatoInstruccionConsultarEmpresas, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/general/expansionMall',
+        {
+            marca: marca,
+            email: results[0].email,
+            tipo: results[0].tipo,
+            descripcion: results[0].descripcion,
+            instagram: results[0].instagram,
+            twitter: results[0].twitter,
+            pagweb: results[0].pagweb,
+            whatsapp: results[0].whatsapp,
+            logo: results[0].logo
+        });
+        return res.end();
+    });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     mostrarExpansiondb,
     mostrarProductosMADdb,
-    mostrarProductosTheMalldb
+    mostrarProductosTheMalldb,
+    mostrarExpansionMultimarcadb
 };
 //#######################################################################################################//

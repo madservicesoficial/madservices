@@ -1,0 +1,76 @@
+//-- Contenido de la Expansión Multimarca del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title=`${id} en la marca ${marca}`
+
+block body
+    include ./componentes/cabecera.pug
+    .interfazExpansionMultimarca
+        br
+        div.row
+            div.column
+                img(src=`data:image/*;base64,${logo}`)
+            div.column
+            if tipo === 'RESTAURANTE'
+                h1=tipo + ': ' + marca
+            else if === 'PELUQUERIA'
+                h1=tipo + ': ' + marca
+            else if === 'COMERCIO'
+                h1=marca
+            else if === 'ACADEMIA'
+                h1=tipo + ': ' + marca
+            br
+            p=descripcion
+            div.column#contactoExpansionMultimarca
+                img(src="/images/whatsapp.png", alt="whatsapp")
+                if whatsapp
+                    span=whatsapp
+                br
+                br
+                img(src="/images/email.png", alt="email")
+                if email 
+                    span=email
+                br
+                br
+                if instagram
+                    a(href=instagram target="_blank")
+                        img(src="/images/instagram.png", alt="instagram")
+                else
+                    img(src="/images/instagram.png", alt="instagram")
+                br
+                br
+                if twitter
+                    a(href=twitter target="_blank")
+                        img(src="/images/twitter.png", alt="twitter")
+                else
+                    img(src="/images/twitter.png", alt="twitter")
+                br
+                br
+                if pagweb
+                    a(href=pagweb target="_blank")
+                        img(src="/images/pageWeb.png", alt="pageWeb")
+                else 
+                    img(src="/images/pageWeb.png", alt="pageWeb")
+        div.row
+            div.column
+                p='Al pulsar conectar, se lleva a cabo el proceso de autorización entre'
+                p='MAD Services y la Empresa para si es un Comercio, registrar el cliente'
+                p='en dicha empresa de forma automática. También podrá haber productos de dicho Comercio'
+                p='en el Centro Comercial MAD.'
+                br
+                p='Para los casos de Academia, Peluquería y Restaurante,'
+                p='desde el Centro Comercial MAD, el cliente podrá reservar en la Peluquería que quiera o'
+                p='en el Restaurante que quiera y, por otro lado, también podrá inscribirse en las clases'
+                p='que oferte una Academia.'
+        div.row
+            div.column
+            div.column
+                form(method='GET' action=`/sesion-cliente/${id}/empieza/themall`)
+                    button(type='submit')='Volver'
+            div.column
+                form(method='POST' action=`/sesion-cliente/${id}/empieza/themall`)
+                    button(type='submit')='Conectar'
+                        a(href=pagweb target="_blank")
+        br
+    include ./componentes/piepagina.pug

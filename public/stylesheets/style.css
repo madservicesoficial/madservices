@@ -1191,8 +1191,8 @@ canvas {
 /*##################################################################################################*/
 .tarjetaProductosMALL {
   float: left;
-  width: 1200px;
-  height: 300px;
+  width: 280px;
+  height: 350px;
   margin-left: 30;
   transform: perspective(1000px) rotateX(12deg);
   box-sizing: border-box;
@@ -1208,9 +1208,27 @@ canvas {
   background-color: #c57979;
   color: black;
 }
+#colorServiciosComercio {
+  background-color: #61df74;
+  color: black;
+}
+#colorServiciosAcademia {
+  background-color: #ccc619;
+  color: black;
+}
+#colorServiciosPeluqueria {
+  background-color: #5641df;
+  color: black;
+}
 .tarjetaProductosMALL img {
-  height: 180px;
+  height: 200px;
   transform: perspective(1000px) rotateX(15deg);
+}
+.tarjetaProductosMALL button {
+  width: 100;
+  height: 35;
+  background-color: black;
+  color: white;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/
@@ -1466,4 +1484,32 @@ i#next {
   border-width: 10px;
   border-radius: 10px;
   transition: all 0.4s ease;
+}
+/*##################################################################################################*/
+/*############################# SECCIÓN EXPANDIR PRODUCTO THE MALL #################################*/
+/*##################################################################################################*/
+.interfazExpansionMultimarca {
+  background-image: url('../images/fondoExpandir.jpg');
+  width: 100%;
+  min-height: 130vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.interfazExpansionMultimarca #contactoExpansionMultimarca {
+  margin-top: 50;
+}
+.interfazExpansionMultimarca #contactoExpansionMultimarca img {
+  width: 45;
+  height: 45;
+}
+.interfazExpansionMultimarca #contactoExpansionMultimarca span {
+  margin-left: 15;
+  position: relative;
+  top: -15;
+}
+.interfazExpansionMultimarca button {
+  width: 100;
+  height: 35;
+  background-color: black;
+  color: white;
 }

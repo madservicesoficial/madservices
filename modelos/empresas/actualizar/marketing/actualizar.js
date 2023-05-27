@@ -31,7 +31,7 @@ const actualizarDescripcionEmpresadb = (id, descripcion, res) => {
             //-- Formato de la instrucción.
             let formatoIinstruccionComprobarDescripcion = mysql.format(instruccionComprobarDescripcion, [id]);
             //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoIinstruccionComprobarDescripcion, (error, results) => {
+            madservicesEmpresadb.query(formatoIinstruccionComprobarDescripcion, (error) => {
                 if(error) throw error;
                 //-- Actualizamos la descripción en base de datos.
                 let instruccionActualizarDescripcion = 'UPDATE empresas SET descripcion = ? WHERE id = ?';
@@ -64,38 +64,24 @@ const actualizarInstagramEmpresadb = (id, instagram, res) => {
             //-- Redirigir a la interfaz de la empresa.
             return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Cte estructura de la URL de instagram.
             const estructuraInstagram = `https://www.instagram.com/${instagram}/`;
-            //-- Comprobamos que no haya instagram en base de datos.
-            let instruccionComprobarInstagram = 'SELECT * FROM mktingcom WHERE id = ?';
+            //-- Comprobamos que no haya descripción en base de datos.
+            let instruccionComprobarInstagram = 'SELECT * FROM empresas WHERE id = ?';
             //-- Formato de la instrucción.
-            let formatoInstruccionComprobarInstagram = mysql.format(instruccionComprobarInstagram, [id]);
+            let formatoIinstruccionComprobarInstagram = mysql.format(instruccionComprobarInstagram, [id]);
             //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoInstruccionComprobarInstagram, (error, results) => {
+            madservicesEmpresadb.query(formatoIinstruccionComprobarInstagram, (error) => {
                 if(error) throw error;
-                if(results.length === 0) {
-                    //-- Ingresamos el instagram en base de datos.
-                    let instruccionIngresarInstagram = 'INSERT INTO mktingcom (id, descripcion, instagram, pagweb, twitter, whatsapp, logo) values (?, NULL, ?, NULL, NULL, NULL)';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionIngresarInstagram = mysql.format(instruccionIngresarInstagram, [id, estructuraInstagram]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionIngresarInstagram);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo instagram introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }else {
-                    //-- Actualizamos el instagram en base de datos.
-                    let instruccionActualizarInstagram = 'UPDATE mktingcom SET instagram = ? WHERE id = ?';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionActualizarInstagram = mysql.format(instruccionActualizarInstagram, [estructuraInstagram, id]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionActualizarInstagram);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo instagram introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }
+                //-- Actualizamos la descripción en base de datos.
+                let instruccionActualizarInstagram = 'UPDATE empresas SET instagram = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarInstagram = mysql.format(instruccionActualizarInstagram, [estructuraInstagram, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarInstagram);
+                //-- Mostrar Alerta Emergente.
+                alerta('Nuevo instagram introducido');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
             });
         }
     }else {
@@ -117,38 +103,23 @@ const actualizarTwitterEmpresadb = (id, twitter, res) => {
             //-- Redirigir a la interfaz de la empresa.
             return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Cte estructura de la URL de twitter.
             const estructuraTwitter = `https://twitter.com/${twitter}`;
-            //-- Comprobamos que no haya twitter en base de datos.
-            let instruccionComprobarTwitter = 'SELECT * FROM mktingcom WHERE id = ?';
+            let instruccionComprobarTwitter = 'SELECT * FROM empresas WHERE id = ?';
             //-- Formato de la instrucción.
-            let formatoInstruccionComprobarTwitter = mysql.format(instruccionComprobarTwitter, [id]);
+            let formatoIinstruccionComprobarTwitter = mysql.format(instruccionComprobarTwitter, [id]);
             //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoInstruccionComprobarTwitter, (error, results) => {
+            madservicesEmpresadb.query(formatoIinstruccionComprobarTwitter, (error) => {
                 if(error) throw error;
-                if(results.length === 0) {
-                    //-- Ingresamos el twitter en base de datos.
-                    let instruccionIngresarTwitter = 'INSERT INTO mktingcom (id, descripcion, instagram, pagweb, twitter, whatsapp, logo) values (?, NULL, NULL, NULL, ?, NULL)';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionIngresarTwitter = mysql.format(instruccionIngresarTwitter, [id, estructuraTwitter]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionIngresarTwitter);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo twitter introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }else {
-                    //-- Actualizamos el twitter en base de datos.
-                    let instruccionActualizarTwitter = 'UPDATE mktingcom SET twitter = ? WHERE id = ?';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionActualizarTwitter = mysql.format(instruccionActualizarTwitter, [estructuraTwitter, id]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionActualizarTwitter);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo twitter introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }
+                //-- Actualizamos la descripción en base de datos.
+                let instruccionActualizarTwitter = 'UPDATE empresas SET twitter = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarTwitter = mysql.format(instruccionActualizarTwitter, [estructuraTwitter, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarTwitter);
+                //-- Mostrar Alerta Emergente.
+                alerta('Nuevo twitter introducido');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
             });
         }
     }else {
@@ -170,36 +141,22 @@ const actualizarWhatsAppEmpresadb = (id, whatsapp, res) => {
             //-- Redirigir a la interfaz de la empresa.
             return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Comprobamos que no haya whatsapp en base de datos.
-            let instruccionComprobarWhatsapp = 'SELECT * FROM mktingcom WHERE id = ?';
+            let instruccionComprobarWhatsApp = 'SELECT * FROM empresas WHERE id = ?';
             //-- Formato de la instrucción.
-            let formatoInstruccionComprobarWhatsapp = mysql.format(instruccionComprobarWhatsapp, [id]);
+            let formatoIinstruccionComprobarWhatsApp = mysql.format(instruccionComprobarWhatsApp, [id]);
             //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoInstruccionComprobarWhatsapp, (error, results) => {
+            madservicesEmpresadb.query(formatoIinstruccionComprobarWhatsApp, (error) => {
                 if(error) throw error;
-                if(results.length === 0) {
-                    //-- Ingresamos el whatsapp en base de datos.
-                    let instruccionIngresarWhatsapp = 'INSERT INTO mktingcom (id, descripcion, instagram, pagweb, twitter, whatsapp, logo) values (?, NULL, NULL, NULL, NULL, ?)';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionIngresarWhatsapp = mysql.format(instruccionIngresarWhatsapp, [id, whatsapp]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionIngresarWhatsapp);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo whatsapp introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }else {
-                    //-- Actualizamos el whatsapp en base de datos.
-                    let instruccionActualizarWhatsapp = 'UPDATE mktingcom SET whatsapp = ? WHERE id = ?';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionActualizarWhatsapp = mysql.format(instruccionActualizarWhatsapp, [whatsapp, id]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionActualizarWhatsapp);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nuevo whatsapp introducido');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }
+                //-- Actualizamos la descripción en base de datos.
+                let instruccionActualizarWhatsApp = 'UPDATE empresas SET whatsapp = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarWhatsApp = mysql.format(instruccionActualizarWhatsApp, [whatsapp, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarWhatsApp);
+                //-- Mostrar Alerta Emergente.
+                alerta('Nuevo nº de teléfono/whatsapp introducido');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
             });
         }
     }else {
@@ -221,36 +178,22 @@ const actualizarPagWebEmpresadb = (id, pagweb, res) => {
             //-- Redirigir a la interfaz de la empresa.
             return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
         }else {
-            //-- Comprobamos que no haya Página Web en base de datos.
-            let instruccionComprobarPagWeb = 'SELECT * FROM mktingcom WHERE id = ?';
+            let instruccionComprobarPagWeb = 'SELECT * FROM empresas WHERE id = ?';
             //-- Formato de la instrucción.
-            let formatoInstruccionComprobarPagWeb = mysql.format(instruccionComprobarPagWeb, [id]);
+            let formatoIinstruccionComprobarPagWeb = mysql.format(instruccionComprobarPagWeb, [id]);
             //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoInstruccionComprobarPagWeb, (error, results) => {
+            madservicesEmpresadb.query(formatoIinstruccionComprobarPagWeb, (error) => {
                 if(error) throw error;
-                if(results.length === 0) {
-                    //-- Ingresamos el whatsapp en base de datos.
-                    let instruccionIngresarPagWeb = 'INSERT INTO mktingcom (id, descripcion, instagram, pagweb, twitter, whatsapp, logo) values (?, NULL, NULL, ?, NULL, NULL)';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionIngresarPagWeb = mysql.format(instruccionIngresarPagWeb, [id, pagweb]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionIngresarPagWeb);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nueva página web introducida');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }else {
-                    //-- Actualizamos la Página Web en base de datos.
-                    let instruccionActualizarPagWeb = 'UPDATE mktingcom SET pagweb = ? WHERE id = ?';
-                    //-- Formato de la instrucción.
-                    let formatoInstruccionActualizarPagWeb = mysql.format(instruccionActualizarPagWeb, [pagweb, id]);
-                    //-- Establecemos la conexión.
-                    madservicesEmpresadb.query(formatoInstruccionActualizarPagWeb);
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Nueva página web introducida');
-                    //-- Redirigir a la interfaz de la empresa.
-                    return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-                }
+                //-- Actualizamos la descripción en base de datos.
+                let instruccionActualizarPagWeb = 'UPDATE empresas SET pagweb = ? WHERE id = ?';
+                //-- Formato de la instrucción.
+                let formatoInstruccionActualizarPagWeb = mysql.format(instruccionActualizarPagWeb, [pagweb, id]);
+                //-- Establecemos la conexión.
+                madservicesEmpresadb.query(formatoInstruccionActualizarPagWeb);
+                //-- Mostrar Alerta Emergente.
+                alerta('Nueva Página Web introducida');
+                //-- Redirigir a la interfaz de la empresa.
+                return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
             });
         }
     }else {
@@ -263,9 +206,9 @@ const actualizarPagWebEmpresadb = (id, pagweb, res) => {
 
 const actualizarLogoEmpresadb = (id, res) => {
 
-    let instruccionConsultarEnumeracion = 'SELECT * FROM mktingcom WHERE id = ?';
+    let instruccionConsultarEnumeracion = 'SELECT * FROM empresas WHERE id = ?';
     let formatoInstruccionConsultarEnumeracion = mysql.format(instruccionConsultarEnumeracion, [id]);
-    madservicesEmpresadb.query(formatoInstruccionConsultarEnumeracion, async (error, results) => {
+    madservicesEmpresadb.query(formatoInstruccionConsultarEnumeracion, async (error) => {
         if(error) throw error;
         const rutaAlDirectorio = path.join(__dirname, '../../../../archivos');
         const readdir = util.promisify(fs.readdir);
@@ -278,22 +221,14 @@ const actualizarLogoEmpresadb = (id, res) => {
         await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
         let imagenBuffer = await readFile(nuevaRuta);
         let imagen = imagenBuffer.toString('base64');
-        if(results.length === 0) {
-            let solicitudInsertarMarketing = 'INSERT INTO mktingcom (id, descripcion, instagram, pagweb, twitter, whatsapp, logo) values (?, NULL, NULL, NULL, NULL, NULL, ?)';
-            let formatoSolicitudInsertarMarketing = mysql.format(solicitudInsertarMarketing, [id, imagen]);
-            madservicesEmpresadb.query(formatoSolicitudInsertarMarketing);
-            //-- Eliminación de los archivos en local.
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
-            await unlink(eliminarArchivo);
-            await unlink(eliminarArchivoEdit);
-        }else {
-            let instruccionActualizarLogo = 'UPDATE mktingcom SET logo = ? WHERE id = ?';
-            //-- Formato de la instrucción.
-            let formatoInstruccionActualizarLogo = mysql.format(instruccionActualizarLogo, [imagen, id]);
-            //-- Establecemos la conexión.
-            madservicesEmpresadb.query(formatoInstruccionActualizarLogo);
-        }
+        let instruccionActualizarLogo = 'UPDATE empresas SET logo = ? WHERE id = ?';
+        let formatoInstruccionActualizarLogo = mysql.format(instruccionActualizarLogo, [imagen, id]);
+        madservicesEmpresadb.query(formatoInstruccionActualizarLogo);
+        //-- Eliminar localmente.
+        let eliminarArchivo = path.join(rutaAlDirectorio, file);
+        let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+        await unlink(eliminarArchivo);
+        await unlink(eliminarArchivoEdit);
         //-- Mostrar Alerta Emergente.
         alerta('Nuevo logo introducido');
         //-- Redirigir a la interfaz de la empresa.

@@ -1,0 +1,53 @@
+//-- Contenido de la Expansión Multimarca del Comercio Electrónico MAD Services.
+extends ../../base.pug
+
+block title
+    title=`${id} en la marca ${marca}`
+
+block body
+    include ./componentes/cabecera.pug
+    .interfazExpansionMultimarca
+        br
+        div.row
+            div.column
+                img(src=`data:image/*;base64,${logo}`)
+            div.column
+                h1=marca
+                br
+                p=descripcion
+            div.column#contactoExpansionMultimarca
+                img(src="/images/whatsapp.png", alt="whatsapp")
+                if whatsapp
+                    span=whatsapp
+                br
+                br
+                img(src="/images/email.png", alt="email")
+                if email 
+                    span=email
+                br
+                br
+                if instagram
+                    a(href=instagram target="_blank")
+                        img(src="/images/instagram.png", alt="instagram")
+                else
+                    img(src="/images/instagram.png", alt="instagram")
+                br
+                br
+                if twitter
+                    a(href=twitter target="_blank")
+                        img(src="/images/twitter.png", alt="twitter")
+                else
+                    img(src="/images/twitter.png", alt="twitter")
+                br
+                br
+                if pagweb
+                    a(href=pagweb target="_blank")
+                        img(src="/images/pageWeb.png", alt="pageWeb")
+                else 
+                    img(src="/images/pageWeb.png", alt="pageWeb")
+        div.row
+            div.column
+                form(method='GET' action=`/sesion-empresa/${id}/empieza`)
+                    button(type='submit')='Volver'
+        br
+    include ./componentes/piepagina.pug
