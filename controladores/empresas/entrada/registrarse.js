@@ -29,6 +29,8 @@ const registroEmpresas = (req, res) => {
         res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Campos vacíos'});
         return res.end();
     }else {
+        console.log(!cifvalidacion.isValidCif(nif));
+        console.log(!cifvalidacion.isValidNif(nif));
         if(password !== confirmPassword) {
             //-- Renderizar y mostrar mensaje.
             res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
@@ -37,7 +39,7 @@ const registroEmpresas = (req, res) => {
             if(marca.length < minLong || marca.length > maxLong2) {
                 res.status(401).render('paginas/empresas/registrarse', {mensaje: 'La marca empresarial es demasiado larga'});
                 return res.end();
-            }else if(!cifvalidacion.isValidCif(nif) || !cifvalidacion.isValidNif(nif)) {
+            }else if((cifvalidacion.isValidCif(nif) === false) && (cifvalidacion.isValidNif(nif) === false)) {
                 res.status(401).render('paginas/empresas/registrarse', {mensaje: 'El CIF/NIF no es oficial'});
                 return res.end();
             }else if(!validacion.isEmail(email)) {

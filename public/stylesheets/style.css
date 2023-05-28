@@ -1205,7 +1205,7 @@ canvas {
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
 #colorServiciosRestaurante {
-  background-color: #c57979;
+  background-color: #fbef07;
   color: black;
 }
 #colorServiciosComercio {
@@ -1213,11 +1213,11 @@ canvas {
   color: black;
 }
 #colorServiciosAcademia {
-  background-color: #ccc619;
+  background-color: #ce0d2a;
   color: black;
 }
 #colorServiciosPeluqueria {
-  background-color: #5641df;
+  background-color: #30cde6;
   color: black;
 }
 .tarjetaProductosMALL img {
@@ -1512,4 +1512,7 @@ i#next {
   height: 35;
   background-color: black;
   color: white;
+}
+#menuRestaurante {
+  width: 400;
 }

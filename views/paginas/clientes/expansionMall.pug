@@ -12,16 +12,16 @@ block body
             div.column
                 img(src=`data:image/*;base64,${logo}`)
             div.column
-            if tipo === 'RESTAURANTE'
-                h1=tipo + ': ' + marca
-            else if === 'PELUQUERIA'
-                h1=tipo + ': ' + marca
-            else if === 'COMERCIO'
-                h1=marca
-            else if === 'ACADEMIA'
-                h1=tipo + ': ' + marca
-            br
-            p=descripcion
+                if tipo === 'RESTAURANTE'
+                    h1=tipo + ': ' + marca
+                else if tipo === 'PELUQUERIA'
+                    h1=tipo + ': ' + marca
+                else if tipo === 'COMERCIO'
+                    h1=marca
+                else if tipo === 'ACADEMIA'
+                    h1=tipo + ': ' + marca
+                br
+                p=descripcion
             div.column#contactoExpansionMultimarca
                 img(src="/images/whatsapp.png", alt="whatsapp")
                 if whatsapp
@@ -53,24 +53,35 @@ block body
                 else 
                     img(src="/images/pageWeb.png", alt="pageWeb")
         div.row
-            div.column
-                p='Al pulsar conectar, se lleva a cabo el proceso de autorización entre'
-                p='MAD Services y la Empresa para si es un Comercio, registrar el cliente'
-                p='en dicha empresa de forma automática. También podrá haber productos de dicho Comercio'
-                p='en el Centro Comercial MAD.'
-                br
-                p='Para los casos de Academia, Peluquería y Restaurante,'
-                p='desde el Centro Comercial MAD, el cliente podrá reservar en la Peluquería que quiera o'
-                p='en el Restaurante que quiera y, por otro lado, también podrá inscribirse en las clases'
-                p='que oferte una Academia.'
+            if tipo === 'COMERCIO'
+                div.column
+                    p='Al pulsar conectar, se lleva a cabo el proceso de autorización entre'
+                    p='MAD Services y el Comercio, registrando al cliente en dicha empresa de forma automática.'
+                    p='También podrá haber productos de dicho Comercio en el Centro Comercial MAD.'
+            else if tipo === 'RESTAURANTE'
+                div.column
+                div.column
+                    h3='Menús ofertados: '
+                div.column
+        div.row
+            if tipo === 'RESTAURANTE'
+                div.column
+                    img#menuRestaurante(src='/images/MenuTunante1.png' alt='MenuTunante1')
+                div.column
+                    img#menuRestaurante(src='/images/MenuTunante2.png' alt='MenuTunante2')
+                div.column
+                    img#menuRestaurante(src='/images/MenuTunante3.png' alt='MenuTunante3')
         div.row
             div.column
             div.column
                 form(method='GET' action=`/sesion-cliente/${id}/empieza/themall`)
                     button(type='submit')='Volver'
             div.column
-                form(method='POST' action=`/sesion-cliente/${id}/empieza/themall`)
-                    button(type='submit')='Conectar'
-                        a(href=pagweb target="_blank")
+                if tipo === 'COMERCIO'
+                    a(href=pagweb target="_blank")
+                        button(type='submit')='Conectar'
+                else
+                    form(method='POST' action=`/sesion-cliente/${id}/empieza/themall/expansion${marca}/reservar`)
+                        button(type='submit')='Reservar'
         br
     include ./componentes/piepagina.pug
