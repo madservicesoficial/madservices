@@ -11,15 +11,21 @@ block body
         header
             img(src='/images/anuncio.png' alt='anuncio')
         div.row
-            div.columnIzq
+            div.columnIzq#posBusquedaMall
                 h3='Búsqueda a medida'
-                p='Por nombre del producto:'
-                    input(type='search' maxlength='50' placeholder='Buscar por título....')
-                    button(type='submit')='Buscar'
                 p='Por tipo de empresa:'
+                select#seleccionTipoEmpresaMall(name="seleccion")
+                    option(checked)=''
+                    option='RESTAURANTE'
+                    option='ACADEMIA'
+                    option='COMERCIO'
+                    option='PELUQUERIA'
                 p='Por nombre de empresa:'
-                p='Por producto o servicio:'
-                p='Por precio del producto:'
+                input#seleccionTipoEmpresaMall(type='text' name='nombre' placeholder='Búsqueda por nombre....')
+                br
+                br
+                form(method='POST' action=`/sesion-empresa/${id}/empieza/buscar`)
+                    button(type='submit')='Buscar'
             div.columnDer
                 each empresa in empresas
                     if empresa.tipo === 'RESTAURANTE'

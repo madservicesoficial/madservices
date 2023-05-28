@@ -84,6 +84,10 @@ const busquedaPorCategoriaEnMiembro = require('../controladores/miembros/buscar/
 const busquedaPorPrecio = require('../controladores/general/buscar/porPrecio.js');
 const busquedaPorPrecioEnCliente = require('../controladores/clientes/buscar/porPrecio.js');
 const busquedaPorPrecioEnMiembro = require('../controladores/miembros/buscar/porPrecio.js');
+const filtroBusqueda = require('');
+const filtroBusquedaCliente = require('../controladores/clientes/buscar/filtroBusqueda.js');
+const filtroBusquedaEmpresa = require('');
+const filtroBusquedaMiembro = require('');
 
 rutasPost.post('/empieza/productosmadservices/busqueda-titulo', busquedaPorTitulo);
 rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnCliente);
@@ -94,6 +98,10 @@ rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-catego
 rutasPost.post('/empieza/productosmadservices/busqueda-precio', busquedaPorPrecio);
 rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnCliente);
 rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnMiembro);
+rutasPost.post('/empieza/themall/buscar', filtroBusqueda);
+rutasPost.post('/sesion-cliente/:id/empieza/themall/buscar', filtroBusquedaCliente);
+rutasPost.post('/sesion-empresa/:id/empieza/buscar', filtroBusquedaEmpresa);
+rutasPost.post('/sesion-miembro/:id/empieza/themall/buscar', filtroBusquedaMiembro);
 //#######################################################################################################//
 
 

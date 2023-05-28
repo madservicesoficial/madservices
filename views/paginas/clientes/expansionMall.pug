@@ -52,36 +52,130 @@ block body
                         img(src="/images/pageWeb.png", alt="pageWeb")
                 else 
                     img(src="/images/pageWeb.png", alt="pageWeb")
-        div.row
-            if tipo === 'COMERCIO'
+        if tipo === 'COMERCIO'
+            div.row
                 div.column
                     p='Al pulsar conectar, se lleva a cabo el proceso de autorización entre'
                     p='MAD Services y el Comercio, registrando al cliente en dicha empresa de forma automática.'
-                    p='También podrá haber productos de dicho Comercio en el Centro Comercial MAD.'
-            else if tipo === 'RESTAURANTE'
+                    p='También podrá haber productos de dicho Comercio para aliviar su stock.'
+            div.row
+                div.column
+                    a(href=pagweb target="_blank")
+                        button(type='submit')='Conectar'
+            div.row
+                div.column
+                div.column
+                    h3='Productos ' + marca
+                div.column
+            div.row
+                    -var i = 0;
+                    while i < 10
+                        div.productoMarcaMall
+                            h3='Producto A'
+                            img(src='/images/productoEjemplo.jpg' alt='productoEjemplo')
+                            h4='Cantidad: N productos'
+                            h4='Precio: K €'
+                            button#btnCarritoComercio(type='submit')='Añadir al carrito'
+                        - i++;
+        else if tipo === 'RESTAURANTE'
+            div.row
                 div.column
                 div.column
                     h3='Menús ofertados: '
                 div.column
-        div.row
-            if tipo === 'RESTAURANTE'
+            div.row
                 div.column
                     img#menuRestaurante(src='/images/MenuTunante1.png' alt='MenuTunante1')
                 div.column
                     img#menuRestaurante(src='/images/MenuTunante2.png' alt='MenuTunante2')
                 div.column
                     img#menuRestaurante(src='/images/MenuTunante3.png' alt='MenuTunante3')
+            div.row
+                div.column
+                div.column
+                    h3='Mesas totales: N mesas (las mesas son entre 1-4 comensales).'
+                div.column
+            div.row
+                div.column
+                    img(src='/images/calendario.jpg' alt='calendario')
+                div.column
+                    h3='Fecha de su reserva: '
+                    br
+                    br
+                    input(type="date" name='fecha')
+                    br
+                    br
+                    input(type='time' name='hora')
+                    br
+                    br
+                    h3='Nº de mesas que quieres: '
+                    br
+                    br
+                    input(type='number' name='mesas')
+            div.row
+                div.column
+                div.column
+                div.column
+                    button#btnReservar(type='submit')='Reservar mesa'
+        else if tipo === 'PELUQUERIA'
+            div.row
+                div.column
+                    h3='Horario del establecimiento:'
+                    p='Lunes: HH:MM a HH:MM'
+                    p='Martes: HH:MM a HH:MM'
+                    p='Miércoles: HH:MM a HH:MM'
+                    p='Jueves: HH:MM a HH:MM'
+                    p='Viernes: HH:MM a HH:MM'
+                    p='Sábado: HH:MM a HH:MM'
+                    p='Domingo: HH:MM a HH:MM'
+                div.column
+                    img(src='/images/HorarioDiario.png' alt='HorarioDiario')
+                div.column
+                    h4='Selecciona fecha: '
+                    input(type='date' name='fecha')
+                    br
+                    h4='Selecciona el tramo horario de tu cita: '
+                    input(type="radio" name='tramo')
+                    label='HH:MM'
+                    br
+                    input(type="radio" name='tramo')
+                    label='HH:MM'
+                    br
+                    input(type="radio" name='tramo')
+                    label='HH:MM'
+                    br
+                    input(type="radio" name='tramo')
+                    label='HH:MM'
+                    br
+                    input(type="radio" name='tramo')
+                    label='HH:MM'
+            div.row
+                div.column
+                div.column
+                div.column
+                    button(type='submit')='Pedir cita'
+        else if tipo === 'ACADEMIA'
+            div.row
+                div.column
+                div.column
+                    h3='Clases ofertadas: '
+                div.column
+            div.row
+                -var i = 0;
+                while i < 10
+                    div.clasesAcademias
+                        h3='Asignatura'
+                        img(src='/images/asignaturasLogo.jpg' alt='asignaturasLogo')
+                        h4='Profesor/a: XXXXXX'
+                        h4='Precio: K €'
+                        h4='Tipo clase: particular o grupal (nº alumnos)'
+                        button(type='submit')='Contratar'
+                    - i++;
         div.row
             div.column
             div.column
                 form(method='GET' action=`/sesion-cliente/${id}/empieza/themall`)
                     button(type='submit')='Volver'
             div.column
-                if tipo === 'COMERCIO'
-                    a(href=pagweb target="_blank")
-                        button(type='submit')='Conectar'
-                else
-                    form(method='POST' action=`/sesion-cliente/${id}/empieza/themall/expansion${marca}/reservar`)
-                        button(type='submit')='Reservar'
         br
     include ./componentes/piepagina.pug

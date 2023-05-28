@@ -1230,6 +1230,14 @@ canvas {
   background-color: black;
   color: white;
 }
+#seleccionTipoEmpresaMall {
+  width: 200;
+  height: 25;
+  border-radius: 10px;
+}
+#posBusquedaMall {
+  max-height: 300;
+}
 /*##################################################################################################*/
 /*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/
 /*##################################################################################################*/
@@ -1515,4 +1523,54 @@ i#next {
 }
 #menuRestaurante {
   width: 400;
+}
+.productoMarcaMall {
+  background-color: #61df74;
+  color: black;
+  width: 280px;
+  height: 400px;
+  margin-left: 15;
+  margin-top: 15;
+  transform: perspective(1000px) rotateX(12deg);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
+}
+.clasesAcademias {
+  background-color: #ce0d2a;
+  color: black;
+  width: 280px;
+  height: 440px;
+  margin-left: 15;
+  margin-top: 15;
+  transform: perspective(1000px) rotateX(12deg);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  place-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
+}
+.productoMarcaMall img {
+  height: 180px;
+  transform: perspective(1000px) rotateX(15deg);
+}
+.clasesAcademias img {
+  height: 180px;
+  transform: perspective(1000px) rotateX(15deg);
+}
+#btnReservar {
+  width: 150;
+  height: 40;
+}
+#btnCarritoComercio {
+  width: 150;
+  height: 35;
 }
