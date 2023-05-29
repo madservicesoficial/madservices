@@ -1,6 +1,9 @@
 {
   "name": "madservices",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=18.15.0"
+  },
   "description": "El E-Commerce de los E-Commerces",
   "public": true,
   "scripts": {
