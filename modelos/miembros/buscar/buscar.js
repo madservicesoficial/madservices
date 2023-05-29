@@ -41,10 +41,37 @@ const busquedaPorPrecioEnMiembrodb = (min, max, res, id) => {
     });
 }
 
+//-- Función que consulta el tipo de empresa elegida.
+const filtroTipoEmpresadb = (id, seleccion, res) => {
+
+    let instruccionConsultaTipoEmpresa = 'SELECT * FROM empresas WHERE tipo = ?';
+    let formatoInstruccionConsultaTipoEmpresa = mysql.format(instruccionConsultaTipoEmpresa, [seleccion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaTipoEmpresa, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosTheMall', { empresas: results, id: id });
+        return res.end();
+    });
+}
+
+//-- Función que consulta el nombre de empresa elegida.
+const filtroNombreEmpresadb = (id, nombre, res) => {
+
+    let incluir = `%${nombre}%`;
+    let instruccionConsultaNombreEmpresa = 'SELECT * FROM empresas WHERE marca LIKE ?';
+    let formatoInstruccionConsultaNombreEmpresa= mysql.format(instruccionConsultaNombreEmpresa, [incluir]);
+    madservicesAdmindb.query(formatoInstruccionConsultaNombreEmpresa, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosTheMall', { empresas: results, id: id });
+        return res.end();
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     busquedaPorTituloEnMiembrodb,
     busquedaPorPrecioEnMiembrodb,
-    busquedaPorCategoriaEnMiembrodb
+    busquedaPorCategoriaEnMiembrodb,
+    filtroTipoEmpresadb,
+    filtroNombreEmpresadb
 };
 //#######################################################################################################//

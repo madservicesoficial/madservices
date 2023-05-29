@@ -1231,12 +1231,13 @@ canvas {
   color: white;
 }
 #seleccionTipoEmpresaMall {
-  width: 200;
+  width: 170;
   height: 25;
   border-radius: 10px;
 }
 #posBusquedaMall {
-  max-height: 300;
+  height: 275;
+  width: 250;
 }
 /*##################################################################################################*/
 /*################################# SECCIÓN CARRITO DE LA COMPRA ###################################*/

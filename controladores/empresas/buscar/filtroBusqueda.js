@@ -1,9 +1,9 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { filtroTipoEmpresadb, filtroNombreEmpresadb } = require('../../../modelos/clientes/buscar/buscar.js');
+const { filtroTipoEmpresadb, filtroNombreEmpresadb } = require('../../../modelos/empresas/buscar/buscar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const filtroBusquedaCliente = (req, res) => {
+const filtroBusquedaEmpresa = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
@@ -12,7 +12,7 @@ const filtroBusquedaCliente = (req, res) => {
     //-- Proceso de validación.
     if((!seleccion && !nombre) || (seleccion && nombre)) {
         //-- Redirigir.
-        return res.redirect(`/sesion-cliente/${id}/empieza/themall`);
+        return res.redirect(`/sesion-empresa/${id}/empieza`);
     }else if(seleccion && !nombre) {
         filtroTipoEmpresadb(id, seleccion, res);
     }else if(!seleccion && nombre) {
@@ -22,5 +22,5 @@ const filtroBusquedaCliente = (req, res) => {
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = filtroBusquedaCliente;
+module.exports = filtroBusquedaEmpresa;
 //#######################################################################################################//

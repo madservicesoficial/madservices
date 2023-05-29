@@ -3,7 +3,7 @@ const { filtroTipoEmpresadb, filtroNombreEmpresadb } = require('../../../modelos
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const filtroBusquedaCliente = (req, res) => {
+const filtroBusquedaMiembro = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
@@ -12,7 +12,7 @@ const filtroBusquedaCliente = (req, res) => {
     //-- Proceso de validación.
     if((!seleccion && !nombre) || (seleccion && nombre)) {
         //-- Redirigir.
-        return res.redirect(`/sesion-cliente/${id}/empieza/themall`);
+        return res.redirect(`/sesion-miembro/${id}/empieza/themall`);
     }else if(seleccion && !nombre) {
         filtroTipoEmpresadb(id, seleccion, res);
     }else if(!seleccion && nombre) {
@@ -22,5 +22,5 @@ const filtroBusquedaCliente = (req, res) => {
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = filtroBusquedaCliente;
+module.exports = filtroBusquedaMiembro;
 //#######################################################################################################//

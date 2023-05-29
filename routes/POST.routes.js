@@ -84,10 +84,10 @@ const busquedaPorCategoriaEnMiembro = require('../controladores/miembros/buscar/
 const busquedaPorPrecio = require('../controladores/general/buscar/porPrecio.js');
 const busquedaPorPrecioEnCliente = require('../controladores/clientes/buscar/porPrecio.js');
 const busquedaPorPrecioEnMiembro = require('../controladores/miembros/buscar/porPrecio.js');
-const filtroBusqueda = require('');
+const filtroBusqueda = require('../controladores/general/buscar/filtroBusqueda.js');
 const filtroBusquedaCliente = require('../controladores/clientes/buscar/filtroBusqueda.js');
-const filtroBusquedaEmpresa = require('');
-const filtroBusquedaMiembro = require('');
+const filtroBusquedaEmpresa = require('../controladores/empresas/buscar/filtroBusqueda.js');
+const filtroBusquedaMiembro = require('../controladores/miembros/buscar/filtroBusqueda.js');
 
 rutasPost.post('/empieza/productosmadservices/busqueda-titulo', busquedaPorTitulo);
 rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnCliente);

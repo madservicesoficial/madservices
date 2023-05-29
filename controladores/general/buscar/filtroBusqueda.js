@@ -1,26 +1,25 @@
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { filtroTipoEmpresadb, filtroNombreEmpresadb } = require('../../../modelos/clientes/buscar/buscar.js');
+const { filtroTipoEmpresadb, filtroNombreEmpresadb } = require('../../../modelos/general/buscar/buscar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const filtroBusquedaCliente = (req, res) => {
+const filtroBusqueda = (req, res) => {
 
     //-- Variables y Ctes.
-    let id = req.params.id;
     const seleccion = req.body.seleccion;
     const nombre = req.body.nombre;
     //-- Proceso de validación.
     if((!seleccion && !nombre) || (seleccion && nombre)) {
         //-- Redirigir.
-        return res.redirect(`/sesion-cliente/${id}/empieza/themall`);
+        return res.redirect('/empieza/themall');
     }else if(seleccion && !nombre) {
-        filtroTipoEmpresadb(id, seleccion, res);
+        filtroTipoEmpresadb(seleccion, res);
     }else if(!seleccion && nombre) {
-        filtroNombreEmpresadb(id, nombre, res);
+        filtroNombreEmpresadb(nombre, res);
     }
 }
 //#######################################################################################################//
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = filtroBusquedaCliente;
+module.exports = filtroBusqueda;
 //#######################################################################################################//

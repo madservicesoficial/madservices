@@ -11,26 +11,26 @@ block body
         header
             img(src='/images/anuncio.png' alt='anuncio')
         div.row
-            div.columnIzq#posBusquedaMall
-                h3='Búsqueda a medida'
-                p='Por tipo de empresa:'
-                select#seleccionTipoEmpresaMall(name="seleccion")
-                    option(checked)=''
-                    option='RESTAURANTE'
-                    option='ACADEMIA'
-                    option='COMERCIO'
-                    option='PELUQUERIA'
-                p='Por nombre de empresa:'
-                input#seleccionTipoEmpresaMall(type='text' name='nombre' placeholder='Búsqueda por nombre....')
-                br
-                br
-                form(method='POST' action=`/sesion-miembro/${id}/empieza/themall/buscar`)
+            form(method='POST' action=`/sesion-miembro/${id}/empieza/themall/buscar`)
+                div.columnIzq#posBusquedaMall
+                    h3='Búsqueda a medida'
+                    p='Por tipo de empresa:'
+                    select#seleccionTipoEmpresaMall(name="seleccion")
+                        option(checked)=''
+                        option#colorServiciosRestaurante='RESTAURANTE'
+                        option#colorServiciosAcademia='ACADEMIA'
+                        option#colorServiciosComercio='COMERCIO'
+                        option#colorServiciosPeluqueria='PELUQUERIA'
+                    p='Por nombre de empresa:'
+                    input#seleccionTipoEmpresaMall(type='text' name='nombre' placeholder='Búsqueda por nombre....')
+                    br
+                    br
                     button(type='submit')='Buscar'
             div.columnDer
                 each empresa in empresas
                     if empresa.tipo === 'RESTAURANTE'
                         div.tarjetaProductosMALL#colorServiciosRestaurante
-                            h3=empresa.tipo + ': ' + empresa.marca
+                            h3=empresa.marca
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
@@ -46,7 +46,7 @@ block body
                                 button(type='submit')='Acceder'
                     else if empresa.tipo === 'ACADEMIA'
                         div.tarjetaProductosMALL#colorServiciosAcademia
-                            h3=empresa.tipo + ': ' + empresa.marca
+                            h3=empresa.marca
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
@@ -54,7 +54,7 @@ block body
                                 button(type='submit')='Acceder'
                     else if empresa.tipo === 'PELUQUERIA'
                         div.tarjetaProductosMALL#colorServiciosPeluqueria
-                            h3=empresa.tipo + ': ' + empresa.marca
+                            h3=empresa.marca
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
