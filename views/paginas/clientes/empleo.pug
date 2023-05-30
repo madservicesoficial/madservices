@@ -41,14 +41,16 @@ block body
             input.cajaRellenoCV#otrosFicheros(type="file" accept=".pdf" multiple)
         br
         br
-        label#tabulacionPerfil='Perfil: '
+        label#tabulacionPerfil='Perfil profesional: '
           span
             select.cajaRellenoCV#especializacionCV(name='especializacion')
-              option(value="value1" selected)='técnico'
-              option(value="value2")='administrativo'
-              option(value="value3")='economista'
-              option(value="value4")='comercial'
-              option(value="value5")='logístico'
+              option(value="value1" checked)
+              option(value="value2")='TÉCNICO'
+              option(value="value3")='ADMINISTRATIVO'
+              option(value="value4")='ECONOMISTA'
+              option(value="value5")='COMERCIAL'
+              option(value="value6")='LOGÍSTICO' 
+              option(value="value7")='CIBERSEGURIDAD'
         br
         br
         label#tabulacionPEmpleo='Población: '
