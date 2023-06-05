@@ -64,17 +64,21 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
     madservicesClientedb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
+        let autenticado = 0;
         if(results.length === 0) {
-            res.status(401).render('paginas/clientes/login', { mensaje: 'Correo electrónico incorrecto' });
+            autenticado = 1;
+            res.status(401).render('paginas/clientes/login', { autenticado: autenticado });
             return res.end();
         }else {
             const miembro = results[0];
             compare(password, miembro.password).then((match) => {
                 if(match) {
+                    autenticado = 2;
                     req.session.miembro = miembro;
+                    res.status(201).render('paginas/clientes/login', { autenticado: autenticado });
                     return res.redirect(`/sesion-cliente/${miembro.id}`);
                 }else {
-                    res.status(401).render('paginas/clientes/login', { mensaje: 'Contraseña incorrecta' });
+                    res.status(401).render('paginas/clientes/login');
                     return res.end();
                 }
             });       

@@ -38,6 +38,7 @@
     "pug": "2.0.0-beta11",
     "serve-favicon": "2.5.0",
     "sharp": "0.32.1",
+    "sweetalert2": "11.7.10",
     "util": "0.12.5",
     "validator": "13.9.0"
   },

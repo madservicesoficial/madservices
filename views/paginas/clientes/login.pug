@@ -3,6 +3,8 @@ extends ../../base.pug
 
 block title
     title='MAD Services: Iniciar Sesión como Cliente'
+block scrpAlert
+    script(src='https://unpkg.com/sweetalert/dist/sweetalert.min.js')
 
 block body
     h1.etiquetaLogin#Cliente='Cliente'
@@ -10,14 +12,21 @@ block body
         h1='INICIAR SESIÓN:'
         img.madservicesLOGO(src='/images/madforclients.png' alt='madforclients')
         //-- Contenido de las alertas.
-        if mensaje
-            p.alerta#enRojo=mensaje
+        p.alerta#enRojo
         form(method='POST' action='/login/cliente')
             label.entradas#espaciadoEtiqueta='E-mail:'
             input.entradas#rellenoLogin(type='email' name='email' placeholder='Correo Electrónico....')
             label.entradas#espaciadoEtiqueta='Contraseña:'
             input.entradas#rellenoLogin(type='password' name='password' placeholder='Contraseña....')
-            button#btnAcceso(type='submit')='Acceder'
+            button#btnAcceso(onclick='autenticado()')='Acceder'
+            script(type='text/javascript').
+                function autenticado() {
+                    swal({
+                        title: 'No autenticado',
+                        text: 'Contraseña incorrecta',
+                        icon: 'error'
+                    });
+                }
         ul.otrosbtnLogin
             li
                 ul
