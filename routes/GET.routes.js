@@ -115,24 +115,14 @@ rutasGet.get('/', (req, res) => { return req.session.destroy(); });
 
 
 
-//######################### ACCESO A ELECCIÓN DE PRODUCTOS MAD O MULTIMARCA ########################//
-rutasGet.get('/empieza', (req,res) => { res.render('paginas/general/entradaMAD'); return res.end(); });
-rutasGet.get('/sesion-cliente/:id/empieza', (req,res) => { let id = req.params.id; res.render('paginas/clientes/entradaMAD', {id: id}); return res.end(); });
-rutasGet.get('/sesion-miembro/:id/empieza', (req,res) => { let id = req.params.id; res.render('paginas/miembros/entradaMAD', {id: id}); return res.end(); });
-//##################################################################################################//
-
-
-
-
-
 //#################################### ACCESO A LOS PRODUCTOS MAD ##################################//
 const mostrarProductosMAD = require('../controladores/general/mostrar/productosMAD.js');
 const mostrarProductosMADclientes = require('../controladores/clientes/mostrar/productosMAD.js');
 const mostrarProductosMADmiembros = require('../controladores/miembros/mostrar/productosMAD.js');
 
-rutasGet.get('/empieza/productosmadservices', mostrarProductosMAD);
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices', mostrarProductosMADclientes);
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices', mostrarProductosMADmiembros);
+rutasGet.get('/productosmadservices', mostrarProductosMAD);
+rutasGet.get('/sesion-cliente/:id/productosmadservices', mostrarProductosMADclientes);
+rutasGet.get('/sesion-miembro/:id/productosmadservices', mostrarProductosMADmiembros);
 //##################################################################################################//
 
 
@@ -145,10 +135,10 @@ const mostrarProductosTheMallCliente = require('../controladores/clientes/mostra
 const mostrarProductosTheMallEmpresa = require('../controladores/empresas/mostrar/productosTheMall.js');
 const mostrarProductosTheMallMiembroMAD = require('../controladores/miembros/mostrar/productosTheMall.js');
 
-rutasGet.get('/empieza/themall', mostrarProductosTheMall);
-rutasGet.get('/sesion-cliente/:id/empieza/themall', mostrarProductosTheMallCliente);
-rutasGet.get('/sesion-empresa/:id/empieza', mostrarProductosTheMallEmpresa);
-rutasGet.get('/sesion-miembro/:id/empieza/themall', mostrarProductosTheMallMiembroMAD);
+rutasGet.get('/themall', mostrarProductosTheMall);
+rutasGet.get('/sesion-cliente/:id/themall', mostrarProductosTheMallCliente);
+rutasGet.get('/sesion-empresa/:id/themall', mostrarProductosTheMallEmpresa);
+rutasGet.get('/sesion-miembro/:id/themall', mostrarProductosTheMallMiembroMAD);
 //##################################################################################################//
 
 
@@ -180,9 +170,9 @@ const mostrarExpansion = require('../controladores/general/mostrar/expansion.js'
 const mostrarExpansionClientes = require('../controladores/clientes/mostrar/expansion.js');
 const mostrarExpansionMiembros = require('../controladores/miembros/mostrar/expansion.js');
 
-rutasGet.get('/empieza/productosmadservices/expandir:enumeracion', mostrarExpansion);
-rutasGet.get('/sesion-cliente/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionClientes);
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion', mostrarExpansionMiembros);
+rutasGet.get('/productosmadservices/expandir:enumeracion', mostrarExpansion);
+rutasGet.get('/sesion-cliente/:id/productosmadservices/expandir:enumeracion', mostrarExpansionClientes);
+rutasGet.get('/sesion-miembro/:id/productosmadservices/expandir:enumeracion', mostrarExpansionMiembros);
 //##################################################################################################//
 
 
@@ -190,7 +180,7 @@ rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumerac
 
 
 //############################## ACCESO A ACTUALIZAR LOS PRODUCTOS MAD #############################//
-rutasGet.get('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion', (req, res) => { let id = req.params.id; let enumeracion = req.params.enumeracion; res.render('paginas/miembros/edicion', {id: id, enumeracion: enumeracion}); return res.end(); });
+rutasGet.get('/sesion-miembro/:id/productosmadservices/edicion:enumeracion', (req, res) => { let id = req.params.id; let enumeracion = req.params.enumeracion; res.render('paginas/miembros/edicion', {id: id, enumeracion: enumeracion}); return res.end(); });
 //##################################################################################################//
 
 
@@ -203,10 +193,10 @@ const mostrarExpansionMultimarcaEmpresas = require('../controladores/empresas/mo
 const mostrarExpansionMultimarca = require('../controladores/general/mostrar/multimarca.js');
 const mostrarExpansionMultimarcaMiembros = require('../controladores/miembros/mostrar/multimarca.js');
 
-rutasGet.get('/sesion-cliente/:id/empieza/themall/expansion:marca', mostrarExpansionMultimarcaClientes);
-rutasGet.get('/sesion-empresa/:id/empieza/expansion:marca', mostrarExpansionMultimarcaEmpresas);
-rutasGet.get('/empieza/themall/expansion:marca', mostrarExpansionMultimarca);
-rutasGet.get('/sesion-miembro/:id/empieza/themall/expansion:marca', mostrarExpansionMultimarcaMiembros);
+rutasGet.get('/sesion-cliente/:id/themall/expansion:marca', mostrarExpansionMultimarcaClientes);
+rutasGet.get('/sesion-empresa/:id/themall/expansion:marca', mostrarExpansionMultimarcaEmpresas);
+rutasGet.get('/themall/expansion:marca', mostrarExpansionMultimarca);
+rutasGet.get('/sesion-miembro/:id/themall/expansion:marca', mostrarExpansionMultimarcaMiembros);
 //##################################################################################################//
 
 

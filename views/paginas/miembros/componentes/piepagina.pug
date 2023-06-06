@@ -1,6 +1,13 @@
 //-- Contenido del Componente Pie de Página Autenticado del Miembro MAD del Comercio Electrónico MAD Services.
 footer
-    div.row
+    div.row#posicionRow1PiePagina
+        div.column
+        div.column
+        div.column
+        div.column
+        div.column
+            p='Nuestras RR.SS: '
+    div.row#posicionRow2PiePagina
         div.column
             button.btnCopyRight &copy; 2020-2030 MAD Services
         div.column
@@ -13,9 +20,7 @@ footer
             form(method='GET' action=`/sesion-miembro/${id}/terminos-condiciones`)
                 button.btnOpciones='Términos y Condiciones'
         div.column
-            div.row='Nuestras RR.SS: '
-                div.column
-                    a(href='https://www.instagram.com/madservicesoficial/' target="_blank")
-                        img.btnIconoRRSSmad(src='/images/instagram.png' alt='instagram')
-                    a(href='https://twitter.com/madservicestick' target="_blank")
-                        img.btnIconoRRSSmad(src='/images/twitter.png' alt='twitter')
+            a(href='https://www.instagram.com/madservicesoficial/' target="_blank")
+                img.btnIconoRRSSmad(src='/images/instagram.png' alt='instagram')
+            a(href='https://twitter.com/madservicestick' target="_blank")
+                img.btnIconoRRSSmad(src='/images/twitter.png' alt='twitter')

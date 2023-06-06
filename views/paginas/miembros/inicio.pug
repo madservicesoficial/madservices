@@ -13,8 +13,15 @@ block body
     div.row
     div.row
       div.column
-        form(method='GET' action=`/sesion-miembro/${id}/empieza`)
-          button.btnCategorias='Entrada MAD'
-    br
-    br
+        h1='Productos MAD'
+        form(method='GET' action=`/sesion-miembro/${id}/productosmadservices`)
+            canvas#marcaMAD
+            img#imgMAD(src='/images/madservices.png' alt='madservices')
+            button.btnCanvas 
+      div.column
+        h1='Resto de marcas'
+        form(method='GET' action=`/sesion-miembro/${id}/themall`)
+            canvas#multiMarca
+            img#imgMulti(src='/images/multimarca.png' alt='multimarca')
+            button.btnCanvas
   include ./componentes/piepagina.pug
