@@ -15,7 +15,7 @@ block body
                 h3='Búsqueda a medida'
                 form(method='POST' action=`/sesion-cliente/${id}/productosmadservices/buscar`)
                     p='Por nombre del producto:'
-                    input(type='text' name='titulo' placeholder='Buscar por título....')
+                    input.camposInputBaja(type='text' name='titulo' placeholder='Buscar por título....')
                     p='Por tipo de producto:'
                     select(name="categoria")='Categorias'
                         option(checked)='Todo'

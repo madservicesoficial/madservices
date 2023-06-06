@@ -8,6 +8,7 @@ const path = require('path');
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
 const { busquedaPorPreciodb, busquedaPorCategoriadb, busquedaPorCategoriaPreciodb, busquedaPorTitulodb,
 busquedaPorTituloPreciodb, busquedaPorCategoriaTitulodb, busquedaPorTodo} = require('../../../modelos/general/buscar/buscar.js');
+const { mostrarProductosMADdb } = require('../../../modelos/general/mostrar/mostrar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -45,8 +46,7 @@ const filtroBusquedaMAD = (req, res) => {
                 icon: path.join(__dirname, '../../../public/images/buscar.png')
             }
         );
-        res.status(201).render('paginas/general/productosmadservices');
-        return res.end();
+        mostrarProductosMADdb(res);
     }else if(!titulo && categoria === 'Todo' && precio !== 'Todos') {
         busquedaPorPreciodb(min, max, res);
     }else if(!titulo && categoria !== 'Todo' && precio === 'Todos') {
