@@ -17,77 +17,78 @@ block body
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-nombre`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Nombre: '
-                    input.entradasNoRadio.inputCliente(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                    input.camposInput(type='text' name='nombre' placeholder='Escribe tu nombre....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-apellidos`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Apellidos: '
-                    input.entradasNoRadio.inputCliente(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                    input.camposInput(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-genero`)
                     input(type='hidden' name='_method' value='PATCH')
-                    label='Género: '
-                    input(type='radio' name='genero' value='Hombre')
-                    label='Hombre'
-                    input(type='radio' name='genero' value='Mujer')
-                    label='Mujer'
-                    input(type='radio' name='genero' value='Otro')
-                    label='Otro'
+                    label.genero(for='genero')='Género: '
+                    span
+                        input(type='radio' name='genero' value='Hombre')
+                        label(for='genero')='Hombre'
+                        input(type='radio' name='genero' value='Mujer')
+                        label(for='genero')='Mujer'
+                        input(type='radio' name='genero' value='Otro')
+                        label(for='genero')='Otro'
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-email`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='E-mail: '
-                    input.entradasNoRadio.inputCliente(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-password`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Antigua contraseña: '
-                    input.entradasNoRadio.inputCliente(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Nueva contraseña: '
-                    input.entradasNoRadio.inputCliente(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Repite la contraseña: '
-                    input.entradasNoRadio.inputCliente(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                    input.camposInput(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/actualizar-localizacion`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='País: '
-                    input.entradasNoRadio.inputCliente(type='text' name='pais' placeholder='Introduce un país válido....')
+                    input.camposInput(type='text' name='pais' placeholder='Introduce un país válido....')
                     br
                     br
                     br
                     label='Código Postal: '
-                    input.entradasNoRadio.inputCliente(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                    input.camposInput(type='number' name='cp' placeholder='Introduce un código postal válido....')
                     br
                     br
                     br
                     label='Región: '
-                    input.entradasNoRadio.inputCliente(type='text' name='region' placeholder='Introduce una región válida....')
+                    input.camposInput(type='text' name='region' placeholder='Introduce una región válida....')
                     br
                     br
                     br
                     label='Población: '
-                    input.entradasNoRadio.inputCliente(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    input.camposInput(type='text' name='poblacion' placeholder='Introduce una población válida....')
                     br
                     br
                     br
                     label='Dirección: '
-                    input.entradasNoRadio.inputCliente(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    input.camposInput(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
             div.column
                 h3='Mi Información: '
-                div.subcolumn2
+                div.subcolumn
                     if id
                         label='El identificador/ID de mi perfil: ' + id
                         br
@@ -110,7 +111,7 @@ block body
                         br
                     if password
                         label='Mi contraseña: '
-                        input(type='text' name='password' value=password readonly)
+                        input.camposInput(type='text' name='password' value=password readonly)
                         br
                         br
                 i.fa-sharp.fa-solid.fa-location-dot.fa-2xl
@@ -124,27 +125,27 @@ block body
                     input(type='checkbox' name='borraCard')
                     label='Borrar Tarjeta'
                     button(type='submit')
-                        i.fa-solid.fa-eraser.fa-2xl#iconoBorrarTarjetaBank
+                        i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-numero`)
                     input(type='hidden' name='_method' value='PATCH')
-                    input.actualizarTarjetaBank(type='number' name='numtarjeta' placeholder='Introduce un nuevo nº de tarjeta....')
+                    input.camposInput(type='number' name='numtarjeta' placeholder='Introduce un nuevo nº de tarjeta....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-validez`)
                     input(type='hidden' name='_method' value='PATCH')
-                    input.actualizarTarjetaBank(type="month" name='validez' placeholder='Introduce una nueva fecha de expiración....')
+                    input.camposInput(type="month" name='validez' placeholder='Introduce una nueva fecha de expiración....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-nombre`)
                     input(type='hidden' name='_method' value='PATCH')
-                    input.actualizarTarjetaBank(type='text' name='namecard' placeholder='Introduce un nuevo nombre....')
+                    input.camposInput(type='text' name='namecard' placeholder='Introduce un nuevo nombre....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/editar-cvv`)
                     input(type='hidden' name='_method' value='PATCH')
-                    input.actualizarTarjetaBank(type='number' name='cvv' placeholder='Introduce un nuevo código CVV....')
+                    input.camposInput(type='number' name='cvv' placeholder='Introduce un nuevo código CVV....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
             div.column
                 div.tarjetaBankPerfil
                     div#caraA
@@ -168,18 +169,18 @@ block body
                     label='Ingresar Tarjeta'
                     br
                     br
-                    input.actualizarTarjetaBank(type='number' name='tarjetab' placeholder='Introduce un nº de tarjeta....')
+                    input.camposInput(type='number' name='tarjetab' placeholder='Introduce un nº de tarjeta....')
                     br
                     br
-                    input.actualizarTarjetaBank(type="month" name='fvalidez' placeholder='Introduce una fecha de expiración....')
+                    input.camposInput(type="month" name='fvalidez' placeholder='Introduce una fecha de expiración....')
                     br
                     br
-                    input.actualizarTarjetaBank(type='text' name='nombrecard' placeholder='Introduce un nombre....')
+                    input.camposInput(type='text' name='nombrecard' placeholder='Introduce un nombre....')
                     br
                     br
-                    input.actualizarTarjetaBank(type='number' name='cvvcod' placeholder='Introduce un código CVV....')
+                    input.camposInput(type='number' name='cvvcod' placeholder='Introduce un código CVV....')
                     button(type='submit')
-                        i.fa-solid.fa-plus.fa-2xl#iconoIngresarTarjetaBank
+                        i.fa-solid.fa-plus.fa-2xl
             div.column
                 h3='Darse de baja de MAD Services: '
                 form(method='POST' action=`/sesion-cliente/${id}/perfil/darse-baja`)

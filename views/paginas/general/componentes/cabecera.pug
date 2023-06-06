@@ -1,18 +1,17 @@
 //-- Contenido del Componente Cabecera del Comercio Electrónico MAD Services.
-div#cabecera
-  ul.nav
-    li
+div.cabecera
+  div.row
+    div.column
       form(method='GET' action='/')
-        button.btnMADServices
-          img.logoMADServices(src='/images/madservices.png' alt='madservices')
-    li.menu
+        button.btnImgLogoMad
+          img(src='/images/madservices.png' alt='madservices')
+    div.column#posicionColumnasCabecera
       form(method='GET' action='/login')
-        button.btnOculto#btnLoginSesion='Iniciar Sesión'
-    li.menu
+        button.btnAutenticar='Iniciar Sesión'
+    div.column#posicionColumnasCabecera
       form(method='GET' action='/registrarse')
-        button.btnOculto#btnsignup='Registrarse'
-    li.menu#despliegue
+        button.btnAutenticar='Registrarse'
+    div.column#posicionCarrito
       form(method='GET' action='/registrarse/cliente')
-        button#btnCarrito
-          i.fa-solid.fa-cart-arrow-down.fa-2xl#iconosCab
-          span.contCarrito
+        button.btnCarrito
+          i.fa-solid.fa-cart-arrow-down.fa-2xl

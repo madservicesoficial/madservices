@@ -1,21 +1,24 @@
 //-- Contenido del Componente Pie de Página del Comercio Electrónico MAD Services.
 footer
-    ul
-        li.organizacionPiePagina &copy; 2020-2030 MAD Services
-        li.organizacionPiePagina#exceptoCopyrightCG
+    div.row
+        div.column
+            button.btnCopyRight &copy; 2020-2030 MAD Services
+        div.column
             form(method='GET' action='/contacto')
-                button.botonesPiePagina#btnContacto='Contacto'
-        li.organizacionPiePagina#exceptoCopyrightCG
+                button.btnTexto='Contacto'
+        div.column
             form(method='GET' action='/conocenos')
-                button.botonesPiePagina#btnConoce='Sobre MAD Services'
-        li.organizacionPiePagina#exceptoCopyrightCG
+                button.btnOpciones='Sobre MAD Services'
+        div.column
             form(method='GET' action='/empleo')
-                button.botonesPiePagina#btnEmpleo='Trabaja con nosotros'
-        li.organizacionPiePagina#exceptoCopyrightCG
+                button.btnOpciones='Trabaja con nosotros'
+        div.column
             form(method='GET' action='/terminos-condiciones')
-                button.botonesPiePagina#btnTermsConds='Términos y Condiciones'
-        li.organizacionPiePagina#exceptoCopyrightCG='Nuestras RR.SS: '
-            a(href='https://www.instagram.com/madservicesoficial/' target="_blank")
-                img.redesSociales(src='/images/instagram.png' alt='instagram')
-            a(href='https://twitter.com/madservicestick' target="_blank")
-                img.redesSociales(src='/images/twitter.png' alt='twitter')
+                button.btnOpciones='Términos y Condiciones'
+        div.column
+            div.row='Nuestras RR.SS: '
+                div.column
+                    a(href='https://www.instagram.com/madservicesoficial/' target="_blank")
+                        img.btnIconoRRSSmad(src='/images/instagram.png' alt='instagram')
+                    a(href='https://twitter.com/madservicestick' target="_blank")
+                        img.btnIconoRRSSmad(src='/images/twitter.png' alt='twitter')

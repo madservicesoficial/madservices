@@ -5,15 +5,15 @@ block title
     title='MAD Services: Elección de Registro'
 
 block body
-    div.pantallaOpcion
-        h1.tituloOpcion='REGISTRARSE COMO:'
-        ul
-            li.botonesEnLinea
-                form(method='GET' action='/registrarse/cliente')
-                    button.btnEleccion#btnCliente='Cliente'
-            li.botonesEnLinea
-                form(method='GET' action='/registrarse/empresa')
-                    button.btnEleccion#btnEmpresa='Empresa'
-            li.botonesEnLinea
-                form(method='GET' action='/registrarse/autorizar')
-                    button.btnEleccion#btnMiembroMAD='Miembro MAD'
+    div.interfazPantallaEleccion
+        h1='REGISTRARSE COMO:'
+        div.row
+        div.row
+        div.row
+        div.row
+            form(method='GET' action='/registrarse/cliente')
+                button.btnAcceso='Cliente'
+            form(method='GET' action='/registrarse/empresa')
+                button.btnAcceso='Empresa'
+            form(method='GET' action='/registrarse/autorizar')
+                button.btnAcceso='Miembro MAD'

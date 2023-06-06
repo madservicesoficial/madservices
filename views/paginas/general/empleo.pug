@@ -6,82 +6,75 @@ block title
 
 block body
   include ./componentes/cabecera.pug
-  div.empleo
-    div.cuadro
-      h1='¡Envíanos tu CV!'
-      img.logoEmpleo(src='/images/empleo.png' alt='empleo')
-      .datosEmpleo
+  div.interfazEmpleo
+    br
+    br
+    div.row
+      div.column
+        h1='¡Envíanos tu CV!'
+        img(src='/images/empleo.png' alt='empleo')
+        br
+        br
         label='Nombre: '
-          span
-            input.cajaRellenoCV#nombreCV(type='text')
+        input.camposInput(type='text' name='nombre' placeholder='Introduce tu nombre....')
         br
         br
         label='Apellidos: '
-          span
-            input.cajaRellenoCV(type='text')
+        input.camposInput(type='text' name='apellidos' placeholder='Introduce tus apellidos....')
         br
         br
         label='Email: '
-          span
-            input.cajaRellenoCV#emailCV(type='email')
+        input.camposInput(type='email' name='email' placeholder='Introduce tu correo electrónico....')
         br
         br
-        label#tabulacionNacimiento='Fecha de nacimiento: '
-          span
-            input.cajaRellenoCV#nacimientoCV(type='date')
+        label='Fecha de nacimiento: '
+        input.camposInput(type='date' name='date')
         br
         br
-        label#tabulacionCV='Curriculum Vitae: '
-          span
-            input.cajaRellenoCV#archivoCV(type="file" accept=".pdf")
+        label='Curriculum Vitae: '
+        input.camposInput(type="file" name='cv' accept=".pdf")
         br
         br
-        label#tabulacionFicheros='Títulos/Certificados: '
-          span
-            input.cajaRellenoCV#otrosFicheros(type="file" accept=".pdf" multiple)
+        label='Títulos/Certificados: '
+        input.camposInput(type="file" name='titulos' accept=".pdf" multiple)
         br
         br
-        label#tabulacionPerfil='Perfil profesional: '
-          span
-            select.cajaRellenoCV#especializacionCV(name='especializacion')
-              option(value="value1" checked)
-              option(value="value2")='TÉCNICO'
-              option(value="value3")='ADMINISTRATIVO'
-              option(value="value4")='ECONOMISTA'
-              option(value="value5")='COMERCIAL'
-              option(value="value6")='LOGÍSTICO' 
-              option(value="value7")='CIBERSEGURIDAD'
+        label='Perfil profesional: '
+        select(name='especializacion')
+          option(checked)=''
+          option='TÉCNICO'
+          option='ADMINISTRATIVO'
+          option='ECONOMISTA'
+          option='COMERCIAL'
+          option='LOGÍSTICO' 
+          option='CIBERSEGURIDAD'
         br
         br
-        label#tabulacionPEmpleo='Población: '
-          span
-            input.cajaRellenoCV#empleoP(type="text")
+        label='Población: '
+        input.camposInput(type="text" name='poblacion' placeholder='Introduce tu población de residencia....')
         br
         br
-        label#tabulacionREmpleo='Región: '
-          span
-            input.cajaRellenoCV#empleoR(type="text")
+        label='Región: '
+        input.camposInput(type="text" name='region' placeholder='Introduce tu región de residencia....')
         br
         br
-        label#tabulacionPaisEmpleo='País: '
-          span
-            input.cajaRellenoCV#empleoPais(type="text")
+        label='País: '
+        input.camposInput(type="text" name='pais' placeholder='Introduce tu país de residencia....')
         br
         br
-        label#tabulacionMEmpleo='Móvil: '
-          span
-            input.cajaRellenoCV#empleoM(type="number")
+        label='Móvil: '
+        input.camposInput(type="number" name='movil' placeholder='Introduce tu número de teléfono....')
         br
         br
-        label#tabulacionAEmpleo='Asunto: '
-          span
-            input.cajaRellenoCV#empleoA(type='text' maxLength='60')
+        label='Asunto: '
+        input.camposInput(type='text' name='asunto' placeholder='Escribe el título para tu carta de presentación....')
         br
         br
         label='Mensaje: '
-          span
-            textarea(rows="30" cols="70")
+        textarea(cols="45" rows="10" name='mensaje' placeholder='Escribe tu carta de presentación....')
         br
         br
-        button#enviarCV(type='submit')='Enviar'
+        button.btnTexto(type='submit')='Enviar'
+    br
+    br
   include ./componentes/piepagina.pug

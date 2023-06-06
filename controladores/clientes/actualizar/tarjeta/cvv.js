@@ -1,6 +1,8 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -18,10 +20,17 @@ const editarCVVTarjetaBank = (req, res) => {
         //-- Llamada a función.
         editarCVVTarjetaBankdb(id, cvv, res);
     }else {
-        //-- Mostrar alerta.
-        alerta('No ha habido cambios en la tarjeta bancaria');
-        //-- Redirigir.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Sin cambios en la tarjeta bancaria',
+                icon: path.join(__dirname, '../../../../public/images/indiferencia.png')
+            }
+        );
+        res.status(304).render('paginas/clientes/perfil', { id: id });
+        return res.end();
     }
 }
 //#######################################################################################################//

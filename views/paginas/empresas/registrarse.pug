@@ -15,7 +15,7 @@ block body
                 br
                 form(method="POST" action='/registrarse/empresa')
                     label='Nombre de la Empresa: '
-                    input.camposRegistro(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+                    input.camposInput(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
                     br
                     br
                     label.genero='Tipo de empresa: '
@@ -28,19 +28,19 @@ block body
                     br
                     br
                     label='Código CIF/NIF: '
-                    input.camposRegistro(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                    input.camposInput(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
                     br
                     br
                     label='E-mail: '
-                    input.camposRegistro(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                     br
                     br
                     label='Nueva contraseña: '
-                    input.camposRegistro(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='password' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     label='Repite contraseña: '
-                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br

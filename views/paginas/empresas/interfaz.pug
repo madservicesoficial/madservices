@@ -48,135 +48,135 @@ block body
                     br
                     if password
                         label='Contraseña: '
-                        input(type='text', name='password', value=password, readonly)
+                        input.camposInput(type='text', name='password', value=password, readonly)
             div.column
                 h3='Iconos Web:'
-                img.imgIcono(src="/images/whatsapp.png", alt="whatsapp")
+                img.btnIconoRRSS(src="/images/whatsapp.png", alt="whatsapp")
                 if whatsapp
                     p#numWhatsapp=whatsapp
                 if instagram
                     a(href=instagram target="_blank")
-                        img.imgIcono(src="/images/instagram.png", alt="instagram")
+                        img.btnIconoRRSS(src="/images/instagram.png", alt="instagram")
                 else
-                    img.imgIcono(src="/images/instagram.png", alt="instagram")
+                    img.btnIconoRRSS(src="/images/instagram.png", alt="instagram")
                 if twitter
                     a(href=twitter target="_blank")
-                        img.imgIcono(src="/images/twitter.png", alt="twitter")
+                        img.btnIconoRRSS(src="/images/twitter.png", alt="twitter")
                 else
-                    img.imgIcono(src="/images/twitter.png", alt="twitter")
+                    img.btnIconoRRSS(src="/images/twitter.png", alt="twitter")
                 if pagweb
                     a(href=pagweb target="_blank")
-                        img.imgIcono(src="/images/pageWeb.png", alt="pageWeb")
+                        img.btnIconoRRSS(src="/images/pageWeb.png", alt="pageWeb")
                 else 
-                    img.imgIcono(src="/images/pageWeb.png", alt="pageWeb")
+                    img.btnIconoRRSS(src="/images/pageWeb.png", alt="pageWeb")
         div.row
             div.column
                 h3='Actualización de los datos de la empresa: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-marca`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Nombre de la Empresa: '
-                    input(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
-                    button(type='submit')
+                    input.camposInput(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-tipo`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Tipo de empresa: '
-                        select(name='tipo')
-                            option(checked)=''
-                            option='RESTAURANTE'
-                            option='ACADEMIA'
-                            option='COMERCIO'
-                            option='PELUQUERIA'
-                    button(type='submit')
+                    select(name='tipo')
+                        option(checked)=''
+                        option='RESTAURANTE'
+                        option='ACADEMIA'
+                        option='COMERCIO'
+                        option='PELUQUERIA'
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-nif`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Código CIF/NIF: '
-                    input(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
-                    button(type='submit')
+                    input.camposInput(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-email`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='E-mail: '
-                    input(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                    button(type='submit')
+                    input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/actualizar-password`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Antigua contraseña: '
-                    input(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Nueva contraseña: '
-                    input(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Repite la contraseña: '
-                    input(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
-                    button(type='submit')
+                    input.camposInput(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
             div.column
                 h3='Añadir descripción: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-descripcion`)
                     textarea(name="descripCo", cols="45", rows="10" placeholder='Introduce una descripción para tu interfaz empresarial....')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-descripcion`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 br
                 br
                 h3='Añadir logo de la empresa (debe ser cuadrado): '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-logo` enctype="multipart/form-data")
                     input(type='file' name='logo' accept='image/png, image/jpg, image/jpeg')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-logo`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
             div.column
                 h3='Añadir URLs de contacto: '
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-WhatsApp`)
                     label='WhatsApp empresarial: '
-                    input(type='number' name='whatsapp' placeholder='Introduce el WhatsApp de la empresa....')
-                    button(type='submit')
+                    input.camposInput(type='number' name='whatsapp' placeholder='Introduce el WhatsApp de la empresa....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-WhatsApp`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Instagram`)
                     label='Usuario Instagram: '
-                    input(type='text' name='urlInstagram' placeholder='Introduce el Usuario de Instagram de la empresa....')
-                    button(type='submit')
+                    input.camposInput(type='text' name='urlInstagram' placeholder='Introduce el Usuario de Instagram de la empresa....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Instagram`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-Twitter`)
                     label='Usuario Twitter: '
                     br
-                    input(type='text' name='urlTwitter' placeholder='Introduce el Usuario de Twitter de la empresa....')
-                    button(type='submit')
+                    input.camposInput(type='text' name='urlTwitter' placeholder='Introduce el Usuario de Twitter de la empresa....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-Twitter`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/add-url-PagWeb`)
                     label='URL Página Web: '
                     br
-                    input(type='text' name='urlPagWeb' placeholder='Introduce la URL de la Web de la empresa....')
-                    button(type='submit')
+                    input.camposInput(type='text' name='urlPagWeb' placeholder='Introduce la URL de la Web de la empresa....')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-floppy-disk.fa-2xl
                 form(method='POST' action=`/sesion-empresa/${id}/interfaz/borrar-url-PagWeb`)
                     input(type='hidden' name='_method' value='DELETE')
-                    button(type='submit')
+                    button.btnIcono(type='submit')
                         i.fa-solid.fa-eraser.fa-2xl
         div.row
             div.column
@@ -190,7 +190,7 @@ block body
                         option='No'
                     br
                     br
-                    button(type='submit')='Confirmo'
+                    button.btnTexto(type='submit')='Confirmo'
             div.column
                 h3='Logo de la empresa: '
                 img(src=`data:image/*;base64,${logo}`)

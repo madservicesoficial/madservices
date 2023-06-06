@@ -5,15 +5,15 @@ block title
     title='MAD Services: Elección de Inicio de Sesión'
 
 block body
-    div.pantallaOpcion
-        h1.tituloOpcion='INICIAR SESIÓN COMO:'
-        ul
-            li.botonesEnLinea
-                form(method='GET' action='/login/cliente')
-                    button.btnEleccion#btnCliente='Cliente'
-            li.botonesEnLinea
-                form(method='GET' action='/login/empresa')
-                    button.btnEleccion#btnEmpresa='Empresa'
-            li.botonesEnLinea
-                form(method='GET' action='/login/autorizar')
-                    button.btnEleccion#btnMiembroMAD='Miembro MAD'
+    div.interfazPantallaEleccion
+        h1='INICIAR SESIÓN COMO:'
+        div.row
+        div.row
+        div.row
+        div.row
+            form(method='GET' action='/login/cliente')
+                button.btnAcceso='Cliente'
+            form(method='GET' action='/login/empresa')
+                button.btnAcceso='Empresa'
+            form(method='GET' action='/login/autorizar')
+                button.btnAcceso='Miembro MAD'

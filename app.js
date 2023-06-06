@@ -17,9 +17,6 @@ var path = require('path');
 //-- Importamos la Tecnología basada en un middleware que analiza el encabezado Cookie y, rellena req.cookies 
 //-- con objeto marcado con los nombres de las cookies.
 var analizadorCookies = require('cookie-parser');
-//-- Importamos la Tecnología basada en un middleware o módulo que controla y registra solicitudes HTTP en producción
-//-- para Node JS, mostrándolas por consola.
-/* var analizadorSolicitudes = require('morgan'); */
 //-- Importamos la Tecnología basada, exclusivamente, en servir el favicon implícito predeterminado.
 //-- Para iconos adicionales específicos del proveedor que requieren Marcado HTML, se requiere middleware adicional para servir los archivos relevantes.
 var analizadorFavicon = require('serve-favicon');
@@ -55,20 +52,19 @@ madservices.use(session({
 //##############################################################################################################//
 
 //##############################################################################################################//
-//-- MIDDLEWARES O SOFTWARES INTERMEDIOS => Para....                                                            
-//-- 1. Analizar y mostrar las solicitudes HTTP => madservices.use(analizadorSolicitudes('dev'));                                                                            
-//-- 2. Trabajar con los ficheros JSON de la conexión.                                                                      
-//-- 3. Analizar los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
+//-- MIDDLEWARES O SOFTWARES INTERMEDIOS => Para....                                                                          
+//-- 1. Trabajar con los ficheros JSON de la conexión.                                                                      
+//-- 2. Analizar los cuerpos codificados en URL que sólo examinan las solicitudes HTTP donde el encabezado Content-Type 
 //-- coincida con la opción de tipo (para el Body y para la Tecnología Express en general).                    
-//-- 4. Trabajar con las Cookies que se encuentran en la conexión.   
-//-- 5. Analizar el Body en formato JSON.
-//-- 6. Analizar el Body y su URL codificada.                                                        
-//-- 7. Analizar el favicon servido implícito predeterminado de MAD Services por parte del servidor.
-//-- 8. Analizar las cabeceras HTTP de cada conexión.
-//-- 9. Analizar el Control de Acceso HTTP de cada conexión.
-//-- 10. Configurar la Protección de Cabeceras HTTP.
-//-- 11. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.
-//-- 12. Poder usar los métodos PATCH y DELETE.                                                                                                                 
+//-- 3. Trabajar con las Cookies que se encuentran en la conexión.   
+//-- 4. Analizar el Body en formato JSON.
+//-- 5. Analizar el Body y su URL codificada.                                                        
+//-- 6. Analizar el favicon servido implícito predeterminado de MAD Services por parte del servidor.
+//-- 7. Analizar las cabeceras HTTP de cada conexión.
+//-- 8. Analizar el Control de Acceso HTTP de cada conexión.
+//-- 9. Configurar la Protección de Cabeceras HTTP.
+//-- 10. Configurar la función que protege las Cabeceras HTTP de malwares y otros peligros informáticos.
+//-- 11. Poder usar los métodos PATCH y DELETE.                                                                                                                 
 madservices.use(servidor.json());
 madservices.use(servidor.urlencoded({ extended: true }));
 madservices.use(analizadorCookies('madserviceskey'));

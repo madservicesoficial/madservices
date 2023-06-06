@@ -7,6 +7,14 @@ block title
 block body
   include ./componentes/cabecera.pug
   div.inicio
-    form(method='GET' action=`/sesion-empresa/${id}/empieza`)
-      button.btnCategorias='Entrada MAD'
+    br
+    br
+    div.row
+    div.row
+    div.row
+      div.column
+        form(method='GET' action=`/sesion-empresa/${id}/empieza`)
+          button.btnCategorias='Entrada MAD'
+    br
+    br
   include ./componentes/piepagina.pug

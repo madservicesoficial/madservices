@@ -30,12 +30,12 @@ block body
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-miembro`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Miembro: '
-                    input.camposRegistro.inputMiembroMAD(type='text' name='miembro' placeholder='Introduce el nombre del Miembro MAD....')
+                    input.camposInput(type='text' name='miembro' placeholder='Introduce el nombre del Miembro MAD....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-departamento`)
                     input(type='hidden' name='_method' value='PATCH')
-                    label='Departamento: '
+                    label.genero='Departamento: '
                     select(name='departamento')
                         option(checked)=''
                         option='DIRECCION'
@@ -46,43 +46,44 @@ block body
                         option='VENTAS'
                         option='ECONOMIA'
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-genero`)
                     input(type='hidden' name='_method' value='PATCH')
-                    label='Género: '
-                    input(type='radio' name='genero' value='Hombre')
-                    label='Hombre'
-                    input(type='radio' name='genero' value='Mujer')
-                    label='Mujer'
-                    input(type='radio' name='genero' value='Otro')
-                    label='Otro'
+                    label.genero='Género: '
+                    span
+                        input(type='radio' name='genero' value='Hombre')
+                        label='Hombre'
+                        input(type='radio' name='genero' value='Mujer')
+                        label='Mujer'
+                        input(type='radio' name='genero' value='Otro')
+                        label='Otro'
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-email`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='E-mail: '
-                    input.entradasNoRadio.inputMiembroMAD(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-password`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='Antigua contraseña: '
-                    input.entradasNoRadio.inputMiembroMAD(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='oldpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Nueva contraseña: '
-                    input.entradasNoRadio.inputMiembroMAD(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='newpassword' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     br
                     label='Repite la contraseña: '
-                    input.entradasNoRadio.inputMiembroMAD(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
+                    input.camposInput(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
                     button(type='submit')
-                        i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
+                        i.fa-solid.fa-square-pen.fa-2xl
             div.column
                 h3='Información del Miembro MAD: '
-                div.subcolumn2
+                div.subcolumn
                     if id
                         label='El identificador/ID oficial: ' + id
                         br
@@ -105,7 +106,7 @@ block body
                         br
                     if password
                         label='Contraseña: '
-                        input(type='text' name='password' value=password readonly)
+                        input.camposInput(type='text' name='password' value=password readonly)
         div.row
             div.column
                 h3='Nº de Clientes MAD:'
@@ -209,14 +210,14 @@ block body
                 h3='Ingreso de producto para su venta: '
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/nuevo-producto` enctype="multipart/form-data")
                     label='Imagen de portada: '
-                    input.inputMiembroMAD(type='file' name='portada' accept="image/*")
+                    input.camposInput(type='file' name='portada' accept="image/*")
                     br
                     br
                     label='Cantidad: '
-                    input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
+                    input.camposInput(type="number" name='cantidad' placeholder='Cantidad de productos....')
                     br
                     br
-                    label='Tipo de producto:'
+                    label.genero='Tipo de producto:'
                     select(name="categoria")='Categorias'
                         option(checked)=''
                         optgroup(label='Libros')
@@ -239,15 +240,15 @@ block body
                     br
                     br
                     label='Título:'
-                    input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
+                    input.camposInput(type="text" name='titulo' placeholder='Ponle un título....')
                     br
                     br
                     label='Precio:'
-                    input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
-                    span#euros='€'
+                    input.camposInput(type="number" step="any" name='precio' placeholder='Precio del producto....')
+                    span='€'
                     br
                     br
-                    label='Peso (para el envío):'
+                    label.genero='Peso (para el envío):'
                     select(name="peso")
                         option(checked)=''
                         option='Hasta 2'
@@ -256,12 +257,12 @@ block body
                         option='Hasta 10'
                         option='Hasta 15'
                         option='> 15'
-                    span#euros='Kg'
+                    span='Kg'
                     br
                     br
                     label='Descripción:'
                     textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')
-                    button#btnIngresarProductoMAD(type='submit')='Ingresar'
+                    button.btnTexto(type='submit')='Ingresar'
             div.column
                 h3='Confirmación de separación de MAD Services: '
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/darse-baja`)
@@ -273,26 +274,26 @@ block body
                         option(checked)=''
                         option='Sí'
                         option='No' 
-                    button#btnBajaMiembroMAD(type='submit')='Confirmo'
+                    button.btnTexto(type='submit')='Confirmo'
                 br
                 br
                 h3='Dar de baja a Clientes con su consentimiento: '
-                form.bajaPorMiembros(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-cliente`)
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-cliente`)
                     input(type='hidden' name='_method' value='DELETE')
-                    input(type='email' name='email' placeholder='Escribe el email del Cliente....')
-                    input(type='number' name='idcliente' placeholder='Escribe el ID del Cliente....')
+                    input.camposInputBaja(type='email' name='email' placeholder='Escribe el email del Cliente....')
+                    input.camposInputBaja(type='number' name='idcliente' placeholder='Escribe el ID del Cliente....')
                     button(type='submit')
                         i.fa-solid.fa-user-minus.fa-2xl
                 br
                 br
                 h3='Dar de baja a Empresas con su consentimiento: '
-                form.bajaPorMiembros(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-empresa`)
+                form(method='POST' action=`/sesion-miembro/${id}/interfaz/eliminar-empresa`)
                     input(type='hidden' name='_method' value='DELETE')
-                    input(type='email' name='email' placeholder='Escribe el email de la Empresa....')
-                    input(type='text' name='cif' placeholder='Escribe el CIF de la Empresa....')
+                    input.camposInputBaja(type='email' name='email' placeholder='Escribe el email de la Empresa....')
+                    input.camposInputBaja(type='text' name='cif' placeholder='Escribe el CIF de la Empresa....')
                     br
                     br
-                    input(type='number' name='idempresa' placeholder='Escribe el ID de la Empresa....')
+                    input.camposInputBaja(type='number' name='idempresa' placeholder='Escribe el ID de la Empresa....')
                     button(type='submit')
                         i.fa-solid.fa-user-minus.fa-2xl
                 br

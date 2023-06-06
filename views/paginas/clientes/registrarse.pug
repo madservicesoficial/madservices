@@ -14,11 +14,11 @@ block body
                 br
                 form(method='POST' action='/registrarse/cliente')
                     label='Nombre: '
-                    input.camposRegistro(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                    input.camposInput(type='text' name='nombre' placeholder='Escribe tu nombre....')
                     br
                     br
                     label='Apellidos: '
-                    input.camposRegistro(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                    input.camposInput(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
                     br
                     br
                     label.genero(for='genero')='Género: '
@@ -32,35 +32,35 @@ block body
                     br
                     br
                     label='E-mail: '
-                    input.camposRegistro(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
                     br
                     br
                     label='Nueva contraseña: '
-                    input.camposRegistro(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                    input.camposInput(type='password' name='password' placeholder='Introduce una contraseña válida....')
                     br
                     br
                     label='Repite contraseña: '
-                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
+                    input.camposInput(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
                     br
                     br
                     label='País: '
-                    input.camposRegistro(type='text' name='pais' placeholder='Introduce un país válido....')
+                    input.camposInput(type='text' name='pais' placeholder='Introduce un país válido....')
                     br
                     br
                     label='Código Postal: '
-                    input.camposRegistro(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                    input.camposInput(type='number' name='cp' placeholder='Introduce un código postal válido....')
                     br
                     br
                     label='Región: '
-                    input.camposRegistro(type='text' name='region' placeholder='Introduce una región válida....')
+                    input.camposInput(type='text' name='region' placeholder='Introduce una región válida....')
                     br
                     br
                     label='Población: '
-                    input.camposRegistro(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    input.camposInput(type='text' name='poblacion' placeholder='Introduce una población válida....')
                     br
                     br
                     label='Dirección: '
-                    input.camposRegistro(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    input.camposInput(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
                     button#btnAltaRegistrarse(type='submit')='Darse de alta'
             div.column
                 img#animacionRegistrarse(src='/gifs/gifClienteRegistrarse.gif' alt='gifClienteRegistrarse')

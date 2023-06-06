@@ -7,6 +7,21 @@ block title
 block body
   include ./componentes/cabecera.pug
   div.inicio
-    form(method='GET' action='/empieza')
-      button.btnCategorias='Entrada MAD'
+    br
+    br
+    div.row
+    div.row
+    div.row
+      div.column
+        h1='Productos MAD'
+        form(method='GET' action='/empieza/productosmadservices')
+            canvas#marcaMAD
+            img#imgMAD(src='/images/madservices.png' alt='madservices')
+            button.btnCanvas 
+      div.column
+        h1='Resto de marcas'
+        form(method='GET' action='/empieza/themall')
+            canvas#multiMarca
+            img#imgMulti(src='/images/multimarca.png' alt='multimarca')
+            button.btnCanvas
   include ./componentes/piepagina.pug
