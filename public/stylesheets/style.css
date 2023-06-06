@@ -722,8 +722,6 @@ canvas {
   background-color: black;
   color: white;
   place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
 .tarjetaProductosMAD img {
