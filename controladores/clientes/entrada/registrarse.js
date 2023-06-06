@@ -10,6 +10,10 @@ const { postcodeValidator } = require('postcode-validator');
 require('../../../config/env.js');
 //-- Importamos la Tecnología para solicitar URLs de Geolocalización.
 const axios = require('axios');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -44,35 +48,85 @@ const registroClientes = async (req, res) => {
     //-- Proceso de validación.
     if(!email || !password || !confirmPassword || !nombre || !apellidos || !genero || !direccion || !poblacion || !region || !pais || !cp) {
         //-- Renderizar y mostrar mensaje.
-        res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Campos vacíos'});
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Campos vacíos',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401).render('paginas/clientes/registrarse');
         return res.end();
     }else {
         if(password !== confirmPassword) {
             //-- Renderizar y mostrar mensaje.
-            res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Contraseña incorrecta',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401).render('paginas/clientes/registrarse');
             return res.end();
         }else {
             if(nombre.length > maxLong) {
                 //-- Renderizar y mostrar mensaje.
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: `El nombre no puede ser más largo de ${maxLong} caracteres`});
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'Nombre muy largo',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/clientes/registrarse');
                 return res.end();
             }else if(apellidos.length > maxLong2) {
                 //-- Renderizar y mostrar mensaje.
-                res.status(401).render('paginas/clientes/registrarse', {mensaje: `Los apellidos no pueden ser más largos de ${maxLong2} caracteres`});
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'Apellidos muy largos',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/clientes/registrarse');
                 return res.end();
             }else if(!validacion.isEmail(email)) {
                 //-- Renderizar y mostrar mensaje.
-                res.status(401).render('paginas/clientes/registrarse', { mensaje: `El Email: ${email} no es válido` });
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'Email no válido',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/clientes/registrarse');
                 return res.end();
             }else if(!validacion.isLength(password, { min: minLong2, max: maxLong2}) || !validacion.matches(password, /[a-z]/)
             || !validacion.matches(password, /[A-Z]/) || !validacion.matches(password, /[0-9]/) ||
             !validacion.matches(password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
                 //-- Renderizar y mostrar mensaje.
-                res.status(401).render('paginas/clientes/registrarse',
-                {
-                    mensaje: `La contraseña debe contener como mínimo ${minLong2} caracteres, letras`,
-                    mensaje2: 'minúsculas y mayúsculas, números y caracteres especiales'
-                });
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `La contraseña debe contener como mínimo ${minLong2} caracteres, letras, minúsculas y mayúsculas, números y caracteres especiales`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/clientes/registrarse');
                 return res.end();
             }else {
                 if(paises.includes(pais) || paisesENG.includes(pais)) {
@@ -104,32 +158,86 @@ const registroClientes = async (req, res) => {
                                         );
                                     }else {
                                         //-- Renderizar y mostrar mensaje.
-                                        res.status(401).render('paginas/clientes/registrarse', {mensaje: `Dirección de ${poblacion} incorrecta`});
+                                        notifier.notify(
+                                            {
+                                                sound: true,
+                                                wait: true,
+                                                title: '¡Atención!',
+                                                message: `Dirección de ${poblacion} incorrecta`,
+                                                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                            }
+                                        );
+                                        res.status(401).render('paginas/clientes/registrarse');
                                         return res.end();
                                     }
                                 }else {
                                     //-- Renderizar y mostrar mensaje.
-                                    res.status(401).render('paginas/clientes/registrarse', {mensaje: `Población de ${region} incorrecta`});
+                                    notifier.notify(
+                                        {
+                                            sound: true,
+                                            wait: true,
+                                            title: '¡Atención!',
+                                            message: `Población de ${region} incorrecta`,
+                                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                        }
+                                    );
+                                    res.status(401).render('paginas/clientes/registrarse');
                                     return res.end();
                                 }
                             }else {
                                 //-- Renderizar y mostrar mensaje.
-                                res.status(401).render('paginas/clientes/registrarse', {mensaje: `Región de ${pais} incorrecta`});
+                                notifier.notify(
+                                    {
+                                        sound: true,
+                                        wait: true,
+                                        title: '¡Atención!',
+                                        message: `Región de ${pais} incorrecta`,
+                                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                    }
+                                );
+                                res.status(401).render('paginas/clientes/registrarse');
                                 return res.end();
                             }
                         }else {
                             //-- Renderizar y mostrar mensaje.
-                            res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal no encontrado'});
+                            notifier.notify(
+                                {
+                                    sound: true,
+                                    wait: true,
+                                    title: '¡Atención!',
+                                    message: 'Código Postal no encontrado',
+                                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                }
+                            );
+                            res.status(401).render('paginas/clientes/registrarse');
                             return res.end();
                         }
                     }else {
                         //-- Renderizar y mostrar mensaje.
-                        res.status(401).render('paginas/clientes/registrarse', {mensaje: 'Código Postal incorrecto'});
+                        notifier.notify(
+                            {
+                                sound: true,
+                                wait: true,
+                                title: '¡Atención!',
+                                message: 'Código Postal incorrecto',
+                                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                            }
+                        );
+                        res.status(401).render('paginas/clientes/registrarse');
                         return res.end();
                     }
                 }else {
                     //-- Renderizar y mostrar mensaje.
-                    res.status(401).render('paginas/clientes/registrarse', {mensaje: 'País incorrecto'});
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: 'País incorrecto',
+                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                        }
+                    );
+                    res.status(401).render('paginas/clientes/registrarse');
                     return res.end();
                 }
             }

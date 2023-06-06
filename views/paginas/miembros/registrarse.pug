@@ -5,22 +5,21 @@ block title
     title='MAD Services: Registrar Miembros MAD'
 
 block body
-    div.fondoRegistrarseMiembroMAD
-        div.registrarse
-            h1='Darse de alta como Miembro MAD:'
-            img.madservicestipologo(src='/images/madservices.png' alt='madservices')
-            //-- Contenido de las alertas.
-            if mensaje
-                p.alerta#enRojo=mensaje
-            if mensaje2
-                p.alerta#enRojo=mensaje2
-            form.formRegistro(method="POST" action='/registrarse/autorizar/miembro')
-                label='Miembro: '
-                input.camposRegistro#posicionNombreMiembro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
+    div.interfazRegistrarse
+        div.row
+        div.row
+            div.column
+                h1='Darse de alta como Miembro MAD:'
+                img.madservicestipologo(src='/images/madservices.png' alt='madservices')
                 br
                 br
-                label='Departamento: '
-                    select.camposRegistro#posTipoDepartamento(name='departamento')
+                form(method="POST" action='/registrarse/autorizar/miembro')
+                    label='Miembro: '
+                    input.camposRegistro(type='text' name='miembro' placeholder='Introduce el nombre del Miembro de MAD Services....')
+                    br
+                    br
+                    label.genero='Departamento: '
+                    select.tipoEmpresa(name='departamento')
                         option(checked)=''
                         option='DIRECCION'
                         option='ADMINISTRACION'
@@ -29,41 +28,44 @@ block body
                         option='RRHH'
                         option='VENTAS'
                         option='ECONOMIA'
-                br
-                br
-                label#etiquetagenero='Género: '
-                    span.genero
+                    br
+                    br
+                    label.genero(for='genero')='Género: '
+                    span
                         input(type='radio' name='genero' value='Hombre')
-                        label='Hombre'
+                        label(for='genero')='Hombre'
                         input(type='radio' name='genero' value='Mujer')
-                        label='Mujer'
+                        label(for='genero')='Mujer'
                         input(type='radio' name='genero' value='Otro')
-                        label='Otro'
-                br
-                br
-                label='E-mail: '
-                input.camposRegistro#posicionEmailCo(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                br
-                br
-                label='Nueva contraseña: '
-                input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                label='Confirmación de la contraseña: '
-                input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                button.posAlta#btnAlta(type='submit')='Darse de alta'
-            ul 
-                li.botonesSalientes
-                    form(method='GET' action='/')
-                        button.dosbtnRegistro
-                            i.fa-solid.fa-house.fa-2xl#iconosRegister
-                li.botonesSalientes
-                    form(method='GET' action='/registrarse')
-                        button.dosbtnRegistro#btnBackRegister
-                            i.fa-solid.fa-circle-left.fa-2xl#iconosRegister
-            ul.otrosbtnLogin
-                li 
-                    form(method='GET' action='/login/autorizar/miembro')
-                        button.btnSinCuenta='¡Ya tengo cuenta!'
+                        label(for='genero')='Otro'
+                    br
+                    br
+                    label='E-mail: '
+                    input.camposRegistro(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    br
+                    br
+                    label='Nueva contraseña: '
+                    input.camposRegistro(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    label='Repite contraseña: '
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    br
+                    button#btnAltaRegistrarse(type='submit')='Darse de alta'
+            div.column
+                div.row
+                div.row
+                    div.column
+                        form(method='GET' action='/registrarse')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-circle-left.fa-2xl
+                    div.column
+                        form(method='GET' action='/login/autorizar/miembro')
+                            button#btnYaCuentaRegistrarse='¡Ya tengo cuenta!'
+                    div.column
+                        form(method='GET' action='/')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-house.fa-2xl

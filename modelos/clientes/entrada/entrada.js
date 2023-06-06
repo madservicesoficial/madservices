@@ -9,8 +9,10 @@ const generarIDrandom = require('../../../controladores/general/generar/IDaleato
 const consultaID = require('../consultar/ID.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 
 //-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
 const registrarClienteVerificadodb = async (data, password, res) => {
@@ -27,7 +29,16 @@ const registrarClienteVerificadodb = async (data, password, res) => {
         const cont = results[0].count;
         const emailExiste = cont > 0;
         if(emailExiste) {
-            res.status(401).render('paginas/clientes/registrarse', { mensaje: 'Correo ya en uso' });
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Correo ya en uso',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401).render('paginas/clientes/registrarse');
             return res.end();
         }else {
             let idCliente = generarIDrandom() * 2;
@@ -45,10 +56,17 @@ const registrarClienteVerificadodb = async (data, password, res) => {
             let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [idCliente, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
             madservicesClientedb.query(formatoInstruccionRegistrarse, (error) => {
                 if(error) throw error;
-                //-- Mostrar Alerta Emergente.
-                alerta('Cliente registrado con éxito');
-                //-- Redirigir a la página principal de la aplicación.
-                return res.redirect('/');
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Registrado!',
+                        message: 'Cliente registrado con éxito',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
+                res.status(201).render('paginas/general/inicio');
+                return res.end();
             });
         }
     });
@@ -64,20 +82,45 @@ const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
     //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
     madservicesClientedb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
-        let autenticado = 0;
         if(results.length === 0) {
-            autenticado = 1;
-            res.status(401).render('paginas/clientes/login', { autenticado: autenticado });
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Correo electrónico incorrecto',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401).render('paginas/clientes/login');
             return res.end();
         }else {
             const miembro = results[0];
             compare(password, miembro.password).then((match) => {
                 if(match) {
-                    autenticado = 2;
                     req.session.miembro = miembro;
-                    res.status(201).render('paginas/clientes/login', { autenticado: autenticado });
-                    return res.redirect(`/sesion-cliente/${miembro.id}`);
+                    const id = miembro.id;
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Autenticado!',
+                            message: 'Cliente autenticado con éxito',
+                            icon: path.join(__dirname, '../../../public/images/correcto.png')
+                        }
+                    );
+                    res.status(201).render('paginas/clientes/inicio', { id: id });
+                    return res.end();
                 }else {
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: 'Contraseña incorrecta',
+                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                        }
+                    );
                     res.status(401).render('paginas/clientes/login');
                     return res.end();
                 }

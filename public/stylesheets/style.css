@@ -1,5 +1,5 @@
 /*##################################################################################################*/
-/*################################# FONDO GENERAL DE MAD SERVICES ##################################*/
+/*################################ FONDO Y GENERAL DE MAD SERVICES #################################*/
 /*##################################################################################################*/
 body {
   width: 100%;
@@ -11,6 +11,25 @@ body {
   text-decoration: none;
   box-sizing: border-box;
   list-style: none;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+.column {
+  flex: 1;
+  margin: 0 1rem;
+}
+/*##################################################################################################*/
+/*###################################### FORMATO DE LOS ICONOS #####################################*/
+/*##################################################################################################*/
+.fa-solid {
+  color: black;
+  position: relative;
+  right: 5px;
 }
 /*##################################################################################################*/
 /*################################# PÁGINA POR RECURSO INEXISTENTE #################################*/
@@ -41,15 +60,6 @@ button {
 }
 button[type=submit] {
   width: 80px;
-}
-input {
-  text-align: left;
-  background-color: white;
-  color: black;
-  border-radius: 10px;
-  border-style: hidden;
-  height: 25px;
-  padding-left: 10px;
 }
 input[type=search] {
   margin: 5px;
@@ -223,20 +233,6 @@ footer {
   height: 20px;
 }
 /*##################################################################################################*/
-/*######################################### CUADRO ALERTAS #########################################*/
-/*##################################################################################################*/
-.alerta {
-  background: white;
-  font-size: large;
-  font-style: bold;
-}
-#enRojo {
-  color: red;
-}
-#enVerde {
-  color: green;
-}
-/*##################################################################################################*/
 /*############################ CUADRO DEL CONTACTO, CONÓCENOS Y EMPLEO #############################*/
 /*##################################################################################################*/
 .cuadro {
@@ -379,7 +375,7 @@ footer {
   background: silver;
   justify-content: center;
   place-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   top: 110px;
   left: 560px;
@@ -459,156 +455,67 @@ footer {
   text-decoration: underline;
 }
 /*##################################################################################################*/
-/*###################################### REGISTRARSE: CLIENTE ######################################*/
+/*###################################### SECCIÓN: REGISTRARSE ######################################*/
 /*##################################################################################################*/
-.fondoRegistrarseCliente {
-  background-image: url(../gifs/gifClienteRegistrarse.gif);
+.interfazRegistrarse {
+  width: 100%;
+  height: 100%;
+  background-color: silver;
+  overflow: hidden;
 }
-#posicionNombre {
-  margin-left: 177px;
+.madservicestipologo {
+  width: 100px;
+  height: 100px;
 }
-#posicionApellidos {
-  margin-left: 170px;
+.camposRegistro {
+  margin-left: 15px;
+  width: 350px;
+  background-color: silver;
+  text-align: left;
+  color: black;
+  border-radius: 10px;
+  border-style: hidden;
+  height: 25px;
+  padding-left: 10px;
 }
-.genero {
-  margin-left: 250px;
-}
-#posicionEmail {
-  margin-left: 185px;
-}
-#posicionPassword {
-  margin-left: 100px;
-}
-#posicionDireccion {
-  margin-left: 165px;
-}
-#posicionPoblacion {
-  margin-left: 163px;
-}
-#posicionRegion {
-  margin-left: 182px;
-}
-#posicionPais {
-  margin-left: 200px;
-}
-#posEtiqCP {
-  position: relative;
-  top: 10;
-}
-#posicionCP {
-  margin-left: 240px;
-  position: relative;
-  bottom: 10;
-}
-/*##################################################################################################*/
-/*###################################### REGISTRARSE: GENERAL ######################################*/
-/*##################################################################################################*/
-.registrarse {
+#animacionRegistrarse {
   box-sizing: border-box;
   align-items: center;
   text-align: center;
   background: silver;
   justify-content: center;
   place-items: center;
-  overflow-x: hidden;
-  width: 50%;
-  height: 100%;
   border-color: burlywood;
-  padding: 40px;
-  padding-bottom: 120px;
-  box-shadow: 14px 14px 20px silver, -14px -14px 20px white;
+  box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
+  margin-top: 100;
 }
-.madservicestipologo {
-  width: 120px;
-  height: 120px;
-}
-.formRegistro {
+.genero {
   position: relative;
-  top: 60px;
-  text-align: left;
-  margin-left: 50px;
-}
-.camposRegistro {
-  margin-left: 15px;
-  width: 350px;
-}
-.botonesSalientes {
-  display: inline-block;
-  margin-top: 80px;
-}
-.dosbtnRegistro {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  background-color: transparent;
-}
-#btnBackRegister {
-  right: 310px;
-}
-.posAlta {
-  position: relative;
-  left: 470px;
-  top: 80px;
-}
-#btnAlta {
-  width: 120px;
-  height: 35px;
-}
-::-webkit-scrollbar {
-  display: none;
-}
-#iconosRegister {
-  color: black;
-  position: relative;
-  right: 5px;
-}
-/*##################################################################################################*/
-/*###################################### REGISTRARSE: EMPRESA ######################################*/
-/*##################################################################################################*/
-.fondoRegistrarseEmpresa {
-  background-image: url(../gifs/gifEmpresaRegistrarse.gif);
-}
-.fondoRegistrarseEmpresa h3 {
-  margin-top: 40;
-}
-#posicionNombreSoc {
-  margin-left: 65px;
+  left: -85;
 }
 .tipoEmpresa {
-  margin-left: 160px;
   border-radius: 10px;
-  width: 200px;
+  width: 150px;
   height: 25px;
+  background-color: silver;
 }
-#posicionCIF {
-  margin-left: 120px;
+#btnRegistrarse {
+  width: 40;
+  height: 40;
+  background-color: transparent;
 }
-#posicionEmailCo {
-  margin-left: 185px;
+#btnAltaRegistrarse {
+  width: 120px;
+  height: 35px;
+  margin-left: 20px;
 }
-#posicionPsswd {
-  margin-left: 100px;
-}
-/*##################################################################################################*/
-/*#################################### REGISTRARSE: Miembro MAD ####################################*/
-/*##################################################################################################*/
-.fondoRegistrarseMiembroMAD {
-  background-color: black;
-}
-#posicionNombreMiembro {
-  margin-left: 165px;
-}
-#miembroMAD {
-  color: white;
-}
-#etiquetagenero {
-  position: relative;
-  bottom: 5;
-}
-#posTipoDepartamento {
-  margin-left: 125;
-  border-radius: 10px;
-  height: 25px;
+#btnYaCuentaRegistrarse {
+  width: 150;
+  height: 20;
+  font-size: medium;
+  margin-left: 15px;
+  background-color: transparent;
+  text-decoration: underline;
 }
 /*##################################################################################################*/
 /*######################################## SECCIÓN CONTACTO ########################################*/
@@ -946,17 +853,6 @@ canvas {
   height: 300px;
   border-style: double;
   border-radius: 7px;
-}
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 5rem;
-  text-align: center;
-}
-.column {
-  flex: 1;
-  margin: 0 1rem;
 }
 .subcolumn {
   text-align: left;

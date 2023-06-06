@@ -5,77 +5,78 @@ block title
     title='MAD Services: Registrarse como Cliente'
 
 block body
-    div.fondoRegistrarseCliente
-        div.registrarse
-            h1='Darse de alta como Cliente:'
-            img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
-            //-- Contenido de las alertas.
-            if mensaje
-                p.alerta#enRojo=mensaje
-            if mensaje2 
-                p.alerta#enRojo=mensaje2
-            form.formRegistro(method='POST' action='/registrarse/cliente')
-                label='Nombre: '
-                input.camposRegistro#posicionNombre(type='text' name='nombre' placeholder='Escribe tu nombre....')
+    div.interfazRegistrarse
+        div.row
+            div.column
+                h1='Darse de alta como Cliente:'
+                img.madservicestipologo(src='/images/madforclients.png' alt='madforclientsLOGO')
                 br
                 br
-                label='Apellidos: '
-                input.camposRegistro#posicionApellidos(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
-                br
-                br
-                label='Género: '
-                    span.genero
-                    input(type='radio' name='genero' value='Hombre')
-                    label='Hombre'
-                    input(type='radio' name='genero' value='Mujer')
-                    label='Mujer'
-                    input(type='radio' name='genero' value='Otro')
-                    label='Otro'
-                br
-                br
-                label='E-mail: '
-                input.camposRegistro#posicionEmail(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                br
-                br
-                label='Nueva contraseña: '
-                input.camposRegistro#posicionPassword(type='password' name='password' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                label='Confirmación de la contraseña: '
-                input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
-                br
-                br
-                label='País: '
-                input.camposRegistro#posicionPais(type='text' name='pais' placeholder='Introduce un país válido....')
-                br
-                br
-                label#posEtiqCP='Código Postal: '
-                input.camposRegistro#posicionCP(type='number' name='cp' placeholder='Introduce un código postal válido....')
-                br
-                br
-                label='Región: '
-                input.camposRegistro#posicionRegion(type='text' name='region' placeholder='Introduce una región válida....')
-                br
-                br
-                label='Población: '
-                input.camposRegistro#posicionPoblacion(type='text' name='poblacion' placeholder='Introduce una población válida....')
-                br
-                br
-                label='Dirección: '
-                input.camposRegistro#posicionDireccion(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
-                br
-                br
-                button.posAlta#btnAlta(type='submit')='Darse de alta'
-            ul 
-                li.botonesSalientes
-                    form(method='GET' action='/')
-                        button.dosbtnRegistro
-                            i.fa-solid.fa-house.fa-2xl#iconosRegister
-                li.botonesSalientes
-                    form(method='GET' action='/registrarse')
-                        button.dosbtnRegistro#btnBackRegister
-                            i.fa-solid.fa-circle-left.fa-2xl#iconosRegister
-            ul.otrosbtnLogin
-                li 
-                    form(method='GET' action='/login/cliente')
-                        button.btnSinCuenta='¡Ya tengo cuenta!'
+                form(method='POST' action='/registrarse/cliente')
+                    label='Nombre: '
+                    input.camposRegistro(type='text' name='nombre' placeholder='Escribe tu nombre....')
+                    br
+                    br
+                    label='Apellidos: '
+                    input.camposRegistro(type='text' name='apellidos' placeholder='Escribe tus dos apellidos....')
+                    br
+                    br
+                    label.genero(for='genero')='Género: '
+                    span
+                        input(type='radio' name='genero' value='Hombre')
+                        label(for='genero')='Hombre'
+                        input(type='radio' name='genero' value='Mujer')
+                        label(for='genero')='Mujer'
+                        input(type='radio' name='genero' value='Otro')
+                        label(for='genero')='Otro'
+                    br
+                    br
+                    label='E-mail: '
+                    input.camposRegistro(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    br
+                    br
+                    label='Nueva contraseña: '
+                    input.camposRegistro(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    label='Repite contraseña: '
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una Contraseña válida....')
+                    br
+                    br
+                    label='País: '
+                    input.camposRegistro(type='text' name='pais' placeholder='Introduce un país válido....')
+                    br
+                    br
+                    label='Código Postal: '
+                    input.camposRegistro(type='number' name='cp' placeholder='Introduce un código postal válido....')
+                    br
+                    br
+                    label='Región: '
+                    input.camposRegistro(type='text' name='region' placeholder='Introduce una región válida....')
+                    br
+                    br
+                    label='Población: '
+                    input.camposRegistro(type='text' name='poblacion' placeholder='Introduce una población válida....')
+                    br
+                    br
+                    label='Dirección: '
+                    input.camposRegistro(type='text' name='direccion' placeholder='Introduce la dirección de un domicilio válido y el nº....')
+                    button#btnAltaRegistrarse(type='submit')='Darse de alta'
+            div.column
+                img#animacionRegistrarse(src='/gifs/gifClienteRegistrarse.gif' alt='gifClienteRegistrarse')
+                div.row
+                    div.column
+                    div.column
+                    div.column
+                div.row
+                    div.column
+                        form(method='GET' action='/registrarse')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-circle-left.fa-2xl
+                    div.column
+                        form(method='GET' action='/login/cliente')
+                            button#btnYaCuentaRegistrarse='¡Ya tengo cuenta!'
+                    div.column
+                        form(method='GET' action='/')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-house.fa-2xl

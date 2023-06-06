@@ -5,54 +5,62 @@ block title
     title='MAD Services: Registrarse como Empresa'
 
 block body
-    div.fondoRegistrarseEmpresa
-        div.registrarse
-            h1='Darse de alta como Empresa:'
-            img.madservicestipologo(src='/images/madforcompanies.png' alt='madforcompaniesLOGO')
-            //-- Contenido de las alertas.
-            if mensaje
-                p.alerta#enRojo=mensaje
-            form.formRegistro(method="POST" action='/registrarse/empresa')
-                label='Nombre de la Empresa: '
-                input.camposRegistro#posicionNombreSoc(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+    div.interfazRegistrarse
+        div.row
+        div.row
+            div.column
+                h1='Darse de alta como Empresa:'
+                img.madservicestipologo(src='/images/madforcompanies.png' alt='madforcompaniesLOGO')
                 br
                 br
-                label='Tipo de empresa: '
+                form(method="POST" action='/registrarse/empresa')
+                    label='Nombre de la Empresa: '
+                    input.camposRegistro(type='text' name='marca' placeholder='Introduce el nombre de la Empresa....')
+                    br
+                    br
+                    label.genero='Tipo de empresa: '
                     select.tipoEmpresa(name='tipo')
                         option(checked)=''
                         option='RESTAURANTE'
                         option='ACADEMIA'
                         option='COMERCIO'
                         option='PELUQUERIA'
-                br
-                br
-                label='Código CIF/NIF: '
-                input.camposRegistro#posicionCIF(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
-                br
-                br
-                label='E-mail: '
-                input.camposRegistro#posicionEmailCo(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                br
-                br
-                label='Nueva contraseña: '
-                input.camposRegistro#posicionPsswd(type='password' name='password' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                label='Confirmación de la contraseña: '
-                input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
-                br
-                br
-                button.posAlta#btnAlta(type='submit')='Darse de alta'
-            ul 
-                li.botonesSalientes
-                    form(method='GET' action='/')
-                        button.dosbtnRegistro
-                            i.fa-solid.fa-house.fa-2xl#iconosRegister
-                li.botonesSalientes
-                    form(method='GET' action='/registrarse')
-                        button.dosbtnRegistro#btnBackRegister
-                            i.fa-solid.fa-circle-left.fa-2xl#iconosRegister
-            ul.otrosbtnLogin
-                li 
-                    form(method='GET' action='/login/empresa')
-                        button.btnSinCuenta='¡Ya tengo cuenta!'
+                    br
+                    br
+                    label='Código CIF/NIF: '
+                    input.camposRegistro(type='text' name='nif' placeholder='Introduce el Código CIF/NIF válido....')
+                    br
+                    br
+                    label='E-mail: '
+                    input.camposRegistro(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
+                    br
+                    br
+                    label='Nueva contraseña: '
+                    input.camposRegistro(type='password' name='password' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    label='Repite contraseña: '
+                    input.camposRegistro(type='password' name='confirmPassword' placeholder='Introduce una contraseña válida....')
+                    br
+                    br
+                    br
+                    br
+                    button#btnAltaRegistrarse(type='submit')='Darse de alta'
+            div.column
+                img#animacionRegistrarse(src='/gifs/gifEmpresaRegistrarse.gif' alt='gifEmpresaRegistrarse')
+                div.row
+                    div.column
+                    div.column
+                    div.column
+                div.row
+                    div.column
+                        form(method='GET' action='/registrarse')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-circle-left.fa-2xl
+                    div.column
+                        form(method='GET' action='/login/empresa')
+                            button#btnYaCuentaRegistrarse='¡Ya tengo cuenta!'
+                    div.column
+                        form(method='GET' action='/')
+                            button#btnRegistrarse
+                                i.fa-solid.fa-house.fa-2xl
