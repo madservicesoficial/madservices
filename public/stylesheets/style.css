@@ -693,12 +693,12 @@ canvas {
   border-radius: 7px;
 }
 .columnIzq {
-  max-height: 1150;
+  max-height: 900;
   margin-top: 15;
   flex: 1;
   border-radius: 7px;
   border-style: groove;
-  background-color: white;
+  background-color: silver;
 }
 .columnIzq p {
   margin-top: 25;
@@ -726,6 +726,7 @@ canvas {
 }
 .tarjetaProductosMAD img {
   height: 180px;
+  max-width: 260;
   transform: perspective(1000px) rotateX(15deg);
 }
 .tarjetaProductosMAD button {
@@ -765,11 +766,6 @@ canvas {
 }
 #iconoExpandirProductoMAD {
   color: white;
-}
-#filtroTipoProducto {
-  border-radius: 10px;
-  height: 25px;
-  width: 150;
 }
 .filtroRangoPrecio {
   float: left;

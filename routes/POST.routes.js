@@ -67,7 +67,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const cargas = multer({ storage: storage });
 rutasPost.post('/sesion-miembro/:id/interfaz/nuevo-producto', upload.single('portada'), ingresoProductosMAD);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion/add-multimedia', cargas.single('multimedia'), ingresarArchivosMultimediaMAD);
+rutasPost.post('/sesion-miembro/:id/productosmadservices/expandir:enumeracion/add-multimedia', cargas.single('multimedia'), ingresarArchivosMultimediaMAD);
 //#######################################################################################################//
 
 
@@ -75,33 +75,21 @@ rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumer
 
 
 //################################ PROCESAMIENTO DEL FILTRO DE BÚSQUEDA #################################//
-const busquedaPorTitulo = require('../controladores/general/buscar/porTitulo.js');
-const busquedaPorTituloEnCliente = require('../controladores/clientes/buscar/porTitulo.js');
-const busquedaPorTituloEnMiembro = require('../controladores/miembros/buscar/porTitulo.js');
-const busquedaPorCategoria = require('../controladores/general/buscar/porCategoria.js');
-const busquedaPorCategoriaEnCliente = require('../controladores/clientes/buscar/porCategoria.js');
-const busquedaPorCategoriaEnMiembro = require('../controladores/miembros/buscar/porCategoria.js');
-const busquedaPorPrecio = require('../controladores/general/buscar/porPrecio.js');
-const busquedaPorPrecioEnCliente = require('../controladores/clientes/buscar/porPrecio.js');
-const busquedaPorPrecioEnMiembro = require('../controladores/miembros/buscar/porPrecio.js');
+const filtroBusquedaMAD = require('../controladores/general/buscar/filtroBusquedamad.js');
+const filtroBusquedaMADCliente = require('../controladores/clientes/buscar/filtroBusquedamad.js');
+const filtroBusquedaMADMiembro = require('../controladores/miembros/buscar/filtroBusquedamad.js');
 const filtroBusqueda = require('../controladores/general/buscar/filtroBusqueda.js');
 const filtroBusquedaCliente = require('../controladores/clientes/buscar/filtroBusqueda.js');
 const filtroBusquedaEmpresa = require('../controladores/empresas/buscar/filtroBusqueda.js');
 const filtroBusquedaMiembro = require('../controladores/miembros/buscar/filtroBusqueda.js');
 
-rutasPost.post('/empieza/productosmadservices/busqueda-titulo', busquedaPorTitulo);
-rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnCliente);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-titulo', busquedaPorTituloEnMiembro);
-rutasPost.post('/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoria);
-rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoriaEnCliente);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-categoria', busquedaPorCategoriaEnMiembro);
-rutasPost.post('/empieza/productosmadservices/busqueda-precio', busquedaPorPrecio);
-rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnCliente);
-rutasPost.post('/sesion-miembro/:id/empieza/productosmadservices/busqueda-precio', busquedaPorPrecioEnMiembro);
-rutasPost.post('/empieza/themall/buscar', filtroBusqueda);
-rutasPost.post('/sesion-cliente/:id/empieza/themall/buscar', filtroBusquedaCliente);
-rutasPost.post('/sesion-empresa/:id/empieza/buscar', filtroBusquedaEmpresa);
-rutasPost.post('/sesion-miembro/:id/empieza/themall/buscar', filtroBusquedaMiembro);
+rutasPost.post('/productosmadservices/buscar', filtroBusquedaMAD);
+rutasPost.post('/sesion-cliente/:id/productosmadservices/buscar', filtroBusquedaMADCliente);
+rutasPost.post('/sesion-miembro/:id/productosmadservices/buscar', filtroBusquedaMADMiembro);
+rutasPost.post('/themall/buscar', filtroBusqueda);
+rutasPost.post('/sesion-cliente/:id/themall/buscar', filtroBusquedaCliente);
+rutasPost.post('/sesion-empresa/:id/themall/buscar', filtroBusquedaEmpresa);
+rutasPost.post('/sesion-miembro/:id/themall/buscar', filtroBusquedaMiembro);
 //#######################################################################################################//
 
 
@@ -111,7 +99,7 @@ rutasPost.post('/sesion-miembro/:id/empieza/themall/buscar', filtroBusquedaMiemb
 //############### PROCESAMIENTO DEL AÑADIDO DE PRODUCTOS MAD AL CARRITO POR EL CLIENTE ##################//
 const ingresoCarrito = require('../controladores/clientes/ingresar/alCarrito.js');
 
-rutasPost.post('/sesion-cliente/:id/empieza/productosmadservices/carrito', ingresoCarrito);
+rutasPost.post('/sesion-cliente/:id/productosmadservices/carrito', ingresoCarrito);
 //#######################################################################################################//
 
 

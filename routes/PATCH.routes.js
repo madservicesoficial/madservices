@@ -86,13 +86,13 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-imagen', upload.single('portada'), actualizarImagen);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-cantidad', actualizarCantidad);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-categoria', actualizarCategoria);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-titulo', actualizarTitulo);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-precio', actualizarPrecio);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-peso', actualizarPeso);
-rutasPatch.post('/sesion-miembro/:id/empieza/productosmadservices/edicion:enumeracion-descripcion', actualizarDescripcion);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-imagen', upload.single('portada'), actualizarImagen);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-cantidad', actualizarCantidad);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-categoria', actualizarCategoria);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-titulo', actualizarTitulo);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-precio', actualizarPrecio);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-peso', actualizarPeso);
+rutasPatch.post('/sesion-miembro/:id/productosmadservices/edicion:enumeracion-descripcion', actualizarDescripcion);
 //#######################################################################################################//
 
 

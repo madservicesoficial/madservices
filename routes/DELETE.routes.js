@@ -42,7 +42,7 @@ rutasDelete.post('/sesion-miembro/:id/interfaz/darse-baja', darseBajaMiembro);
 //######################### ELIMINACIÓN DE LOS PRODUCTOS MAD POR EL MIEMBRO MAD #########################//
 const borrarProductoMAD = require('../controladores/miembros/eliminar/productoMAD.js');
 
-rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/borrar-producto', borrarProductoMAD);
+rutasDelete.post('/sesion-miembro/:id/productosmadservices/borrar-producto', borrarProductoMAD);
 //#######################################################################################################//
 
 
@@ -52,7 +52,7 @@ rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/borrar-produc
 //##################### ELIMINACIÓN DE IMÁGENES DEL PRODUCTO MAD POR EL MIEMBRO MAD #####################//
 const borrarArchivosMultimediaMAD = require('../controladores/miembros/eliminar/archivosMultimediaMAD.js');
 
-rutasDelete.post('/sesion-miembro/:id/empieza/productosmadservices/expandir:enumeracion/borra-multimedia', borrarArchivosMultimediaMAD);
+rutasDelete.post('/sesion-miembro/:id/productosmadservices/expandir:enumeracion/borra-multimedia', borrarArchivosMultimediaMAD);
 //#######################################################################################################//
 
 
