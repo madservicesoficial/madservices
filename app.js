@@ -7,30 +7,11 @@
 
 
 //--##########################################################################################--//
-//--###################################### SUBTECNOLOGÍAS ####################################--//
+//--################################## CREACIÓN DEL SERVIDOR #################################--//
 //--##########################################################################################--//
-var controladorErrores = require('http-errors');
-var servidor = require('express');
-var path = require('path');
-var session = require('express-session');
+const servidor = require('express');
 
-var madservices = servidor();
-madservices.use(servidor.json());
-madservices.use(servidor.urlencoded({ extended: true }));
-//-- Conectando con la interfaz de usuario o front-end.
-madservices.use(servidor.static(path.join(__dirname, 'public')));
-madservices.set('views', path.join(__dirname, 'views'));
-madservices.set('view engine', 'pug');
-//-- Configurando las páginas de Error de la aplicación web.
-madservices.use(function(req, res, next) {
-  next(controladorErrores(404));
-});
-madservices.use(function(err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.status(err.status || 500);
-  res.render('paginas/error');
-});
+const madservices = servidor();
 //############################################################################################--//
 
 
@@ -50,13 +31,18 @@ require('./config/env.js');
 //--##########################################################################################--//
 //--######################################## MIDDLEWARES #####################################--//
 //--##########################################################################################--//
+const controladorErrores = require('http-errors');
+const path = require('path');
+const session = require('express-session');
 const patchdeletemethods = require('method-override');
-var analizadorCookies = require('cookie-parser');
-var analizadorFavicon = require('serve-favicon');
-var analizadorBody = require('body-parser');
-var protectorCabeceras = require('helmet');
-var controlAccesoHTTP = require('cors');
+const analizadorCookies = require('cookie-parser');
+const analizadorFavicon = require('serve-favicon');
+const analizadorBody = require('body-parser');
+const protectorCabeceras = require('helmet');
+const controlAccesoHTTP = require('cors');
 
+madservices.use(servidor.json());
+madservices.use(servidor.urlencoded({ extended: true }));
 madservices.use(analizadorCookies(process.env.COOKIE_SECRET));
 madservices.use(analizadorBody.json());
 madservices.use(analizadorBody.urlencoded({ extended: true }));
@@ -79,6 +65,22 @@ madservices.use(controlAccesoHTTP());
 madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
 madservices.use(patchdeletemethods('_method', { methods: ['POST', 'GET', 'PATCH', 'DELETE'] }));
+
+//-- Configurando las páginas de Error de la aplicación web.
+madservices.use(function(req, res, next) {
+  next(controladorErrores(404));
+});
+madservices.use(function(err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500);
+  res.render('paginas/error');
+});
+
+//-- Conectando con la interfaz de usuario o front-end.
+madservices.use(servidor.static(path.join(__dirname, 'public')));
+madservices.set('views', path.join(__dirname, 'views'));
+madservices.set('view engine', 'pug');
 //############################################################################################--//
 
 
