@@ -29,7 +29,7 @@ require('./config/env.js');
 
 
 //--##########################################################################################--//
-//--######################################## MIDDLEWARES #####################################--//
+//--###################################### SUBTECNOLOGÍAS ####################################--//
 //--##########################################################################################--//
 const controladorErrores = require('http-errors');
 const path = require('path');
@@ -66,21 +66,6 @@ madservices.use(protectorCabeceras());
 madservices.disable('x-powered-by');
 madservices.use(patchdeletemethods('_method', { methods: ['POST', 'GET', 'PATCH', 'DELETE'] }));
 
-//-- Configurando las páginas de Error de la aplicación web.
-madservices.use(function(req, res, next) {
-  next(controladorErrores(404));
-});
-madservices.use(function(err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.status(err.status || 500);
-  res.render('paginas/error');
-});
-
-//-- Conectando con la interfaz de usuario o front-end.
-madservices.use(servidor.static(path.join(__dirname, 'public')));
-madservices.set('views', path.join(__dirname, 'views'));
-madservices.set('view engine', 'pug');
 //############################################################################################--//
 
 
@@ -111,6 +96,27 @@ var rutasPatch = require('./routes/PATCH.routes.js');
 var rutasDelete = require('./routes/DELETE.routes.js');
 
 madservices.use(rutasGet, rutasPost, rutasPatch, rutasDelete);
+//############################################################################################--//
+
+
+
+
+
+//--##########################################################################################--//
+//--################ CONFIGURANDO VISTAS ESTÁTICAS, DISEÑO Y PÁGINAS DE ERROR ################--//
+//--##########################################################################################--//
+madservices.use(servidor.static(path.join(__dirname, 'public')));
+madservices.set('views', path.join(__dirname, 'views'));
+madservices.set('view engine', 'pug');
+madservices.use(function(req, res, next) {
+  next(controladorErrores(404));
+});
+madservices.use(function(err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500);
+  res.render('paginas/error');
+});
 //############################################################################################--//
 
 

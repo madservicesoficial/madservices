@@ -3,11 +3,11 @@
 //#######################################//
 
 //-- Importamos el archivo raíz de configuración de MAD Services =>
-var madservices = require('../app');
+const madservices = require('../app');
 //-- Importamos la depuración del código de MAD Services =>
-var debug = require('debug')('madservices:server');
+const debug = require('debug')('madservices:server');
 //-- Importamos el Módulo HTTP para establecer comunicaciones Cliente-Servidor =>
-var http = require('http');
+const http = require('http');
 //-- Importamos la configuración del entorno ENV para poder usar su información =>
 require('../config/env.js');
 
