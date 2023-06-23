@@ -135,14 +135,14 @@ block body
                             h3=campo.cantidad + ' unidades quedan'
                         h3=campo.precio + '€'
                         div.btnsContainer
-                            form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/borrar-producto`)
+                            form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/borrar-producto`)
                                 input(type='hidden' name='_method' value='DELETE')
                                 button#btnBorrarProductoMAD(type='submit' name='enumeracion' value=campo.enumeracion)
                                     i.fa-solid.fa-eraser.fa-2xl#iconoBorrarProductoMAD
-                            form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${campo.enumeracion}`)
+                            form(method='GET' action=`/sesion-miembro/${id}/productosmadservices/edicion${campo.enumeracion}`)
                                 button#btnEditarProductoMAD(type='submit')
                                     i.fa-solid.fa-square-pen.fa-2xl#iconoBorrarProductoMAD
-                            form(method='GET' action=`/sesion-miembro/${id}/empieza/productosmadservices/expandir${campo.enumeracion}`)
+                            form(method='GET' action=`/sesion-miembro/${id}/productosmadservices/expandir${campo.enumeracion}`)
                                 button#btnExpandirProductoMAD(type='submit')
                                     i.fa-solid.fa-up-right-and-down-left-from-center.fa-lg#iconoExpandirProductoMAD
         br
