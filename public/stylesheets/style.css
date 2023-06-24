@@ -817,6 +817,7 @@ canvas {
   width: 170;
   height: 25;
   border-radius: 10px;
+  background-color: silver;
 }
 #posBusquedaMall {
   height: 275;
