@@ -57,7 +57,7 @@ const actualizarApellidosVerificadosdb = (id, apellidos, res) => {
     //-- Declaración de ctes.
     const maxLong = 96;
     //-- Actualizamos y validamos el campo.
-    if(apellidos) {
+    
         if(apellidos.length > maxLong) {
             //-- Mostrar Alerta Emergente.
             alerta(`Los apellidos no pueden ser más largos de ${maxLong} caracteres`);

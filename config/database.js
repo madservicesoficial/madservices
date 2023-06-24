@@ -32,9 +32,5 @@ const madservicesEmpresadb = mysql.createPool({
 });
 
 //########################################### PUNTO DE UNIÓN ############################################//
-module.exports = {
-    madservicesAdmindb,
-    madservicesClientedb,
-    madservicesEmpresadb
-};
+module.exports = {madservicesAdmindb, madservicesClientedb, madservicesEmpresadb};
 //#######################################################################################################//
