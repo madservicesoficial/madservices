@@ -3,42 +3,29 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
-//-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
-const validarCard = require('card-validator');
 
-//-- Creamos las funciones para actualizar la tarjeta bancaria en el perfil.
-const editarNumTarjetaBankdb = (id, numtarjeta, res) => {
+//-- Crear la función para consultar si hay tarjeta bancaria en base de datos o no.
+const consultarTarjetaBankdb = (id, existenciaTarjBank, callback) => {
 
     let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
     let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
     madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
-            //-- Mostrar alerta.
-            alerta('No hay ninguna tarjeta bancaria en tu perfil');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            existenciaTarjBank = 0;
+            callback(existenciaTarjBank);
         }else {
-            //-- Validamos el nº de tarjeta bancaria.
-            const validacionCard = validarCard.number(numtarjeta);
-            if(!validacionCard.isValid || numtarjeta.length > 18) {
-                //-- Mostrar alerta.
-                alerta(`${numtarjeta} no es un nº de tarjeta bancaria válido`);
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
-            }else {
-                let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET numcard = ? WHERE id = ?';
-                let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [numtarjeta, id]);
-                madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
-                //-- Mostrar alerta.
-                alerta('Nº de tarjeta bancaria actualizado en tu perfil');
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
-            }
+            existenciaTarjBank = 1;
+            callback(existenciaTarjBank);
         }
     });
+}
+//-- Crear la función para editar el nº de la tarjeta bancaria en base de datos.
+const editarNumTarjetaBankdb = (id, numtarjeta) => {
+
+    let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET numcard = ? WHERE id = ?';
+    let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [numtarjeta, id]);
+    madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
 }
 const editarValidezTarjetaBankdb = (id, validez, res) => {
 
@@ -91,37 +78,18 @@ const editarNombreTarjetaBankdb = (id, namecard, res) => {
         }
     });
 }
-const editarCVVTarjetaBankdb = (id, cvv, callback) => {
 
-    let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
-    let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
-    madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
-        if(error) throw error;
-        if(results.length === 0) {
-            callback(existenciaTarjBank);
-        }else {
-            //-- Comprobar que el CVV es válido y actualizarlo.
-            const validacionCVV = validarCard.cvv(cvv);
-            if(!validacionCVV.isValid) {
-                //-- Mostrar alerta.
-                alerta(`${cvv} no es un CVV válido`);
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
-            }else {
-                let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET cvv = ? WHERE id = ?';
-                let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [cvv, id]);
-                madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
-                //-- Mostrar alerta.
-                alerta('CVV de la tarjeta bancaria actualizado en tu perfil');
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
-            }
-        }
-    });
+//-- Crear la función para editar el código CVV de la tarjeta bancaria en base de datos.
+const editarCVVTarjetaBankdb = (id, cvv) => {
+
+    let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET cvv = ? WHERE id = ?';
+    let formatoInstruccionActualizarTarjetaBank = mysql.format(instruccionActualizarTarjetaBank, [cvv, id]);
+    madservicesClientedb.query(formatoInstruccionActualizarTarjetaBank);
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
+    consultarTarjetaBankdb,
     editarNumTarjetaBankdb,
     editarValidezTarjetaBankdb,
     editarNombreTarjetaBankdb,
