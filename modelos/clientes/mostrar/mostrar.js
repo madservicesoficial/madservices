@@ -84,7 +84,7 @@ const mostrarCompraClientedb = (id, res) => {
 }
 
 //-- Creamos la función que muestra los parámetros de la base de datos de los Clientes.
-const mostrarClientedb = (id, res) => {
+const mostrarClientedb = (id, res, codResp) => {
     
     //-- Instrucción del ID.
     let instruccionID = 'SELECT * FROM clientes WHERE id = ?';
@@ -109,7 +109,7 @@ const mostrarClientedb = (id, res) => {
                 madservicesClientedb.query(formatoInstruccionID, (error, salida) => {
                     if(error) throw error;
                     if(resultados.length > 0) {
-                        res.status(201).render('paginas/clientes/perfil', 
+                        res.status(codResp).render('paginas/clientes/perfil', 
                         {
                             id: id,
                             email: tablaCliente.email,
@@ -130,7 +130,7 @@ const mostrarClientedb = (id, res) => {
                         });
                         return res.end();
                     }else {
-                        res.status(201).render('paginas/clientes/perfil', 
+                        res.status(codResp).render('paginas/clientes/perfil', 
                         {
                             id: id,
                             email: tablaCliente.email,

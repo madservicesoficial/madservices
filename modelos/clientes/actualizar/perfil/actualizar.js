@@ -3,8 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../../config/database.js');
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { compare, hash } = require('bcrypt');
 //-- Importamos la Tecnología para validar el país introducido.
 const { getCode, getCountries } = require('country-list-spanish');
 const countries = require('country-list');
@@ -60,7 +58,7 @@ const actualizarEmaildb = (id, email) => {
 }
 
 //-- Creamos la función para consultar la contraseña que había en la base de datos.
-const consultaOldPassworddb = (id, validezOldPassword, oldpassword) => {
+const consultaOldPassworddb = (id, validezOldPassword, oldpassword, callback) => {
 
     //-- Instrucción para consultar contraseña dado el id.
     let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE id = ?';
@@ -73,65 +71,24 @@ const consultaOldPassworddb = (id, validezOldPassword, oldpassword) => {
         compare(oldpassword, passwordEnDatabase).then( async (match) => {
             if(match) {
                 validezOldPassword = true;
+                callback(validezOldPassword);
             }else {
                 validezOldPassword = false;
+                callback(validezOldPassword);
             }
         });
     });
 }
 
 //-- Creamos la función para actualizar el campo password del Cliente de la base de datos de MAD Services.
-const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePassword, res) => {
+const actualizarPasswordVerificadadb = (id, nuevaPasswordCifrada) => {
     
-        //-- Instrucción para consultar contraseña dado el id.
-        let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE id = ?';
-        //-- Configuración del formato para consultar contraseña dado el id.
-        let formatoInstruccionConsultarPassword = mysql.format(instruccionConsultarPassword, [id]);
-        //-- Proceso de consulta de contraseña.
-        madservicesClientedb.query(formatoInstruccionConsultarPassword, (error, results) => {
-            if(error) throw error;
-            
-                
-                    //-- Verificamos que la nueva contraseña introducida es correcta.
-                    if(newpassword === repitePassword) {
-                        //-- Declaramos las ctes.
-                        const minLong = 10;
-                        const maxLong = 96;
-                        if(validacion.isLength(newpassword, { min: minLong, max: maxLong}) && validacion.matches(newpassword, /[a-z]/)
-                        && validacion.matches(newpassword, /[A-Z]/) && validacion.matches(newpassword, /[0-9]/) &&
-                        validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                            //-- Cifrar la nueva contraseña.
-                            const nuevaPasswordCifrada = await hash(newpassword,1);
-                            //-- Instrucción para actualizar en la base de datos.
-                            let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
-                            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                            let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
-                            //-- Proceso de actualización en base de datos.
-                            madservicesClientedb.query(formatoInstruccionActualizarANuevaPassword);
-                            //-- Mostrar Alerta Emergente.
-                            alerta('Nueva contraseña agregada');
-                            // Redirigir al perfil del Cliente.
-                            return res.redirect(`/sesion-cliente/${id}/perfil`);
-                        }else {
-                            //-- Mostrar Alerta Emergente.
-                            alerta(`La contraseña debe contener como mínimo ${minLong} caracteres,\nletras mayúsculas y minúsculas y,\nnúmeros y caracteres especiales`);
-                            // Redirigir al perfil del Cliente.
-                            return res.redirect(`/sesion-cliente/${id}/perfil`);
-                        }
-                    }else {
-                        //-- Mostrar Alerta Emergente.
-                        alerta('Has puesto mal la nueva contraseña');
-                        // Redirigir al perfil del Cliente.
-                        return res.redirect(`/sesion-cliente/${id}/perfil`);
-                    }
-                }else {
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Veo que no conoces la contraseña de tu sesión');
-                    // Redirigir al perfil del Cliente.
-                    return res.redirect(`/sesion-cliente/${id}/perfil`);
-                }
-            });
-        });
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarANuevaPassword = mysql.format(instruccionActualizarANuevaPassword, [nuevaPasswordCifrada, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarANuevaPassword);
 }
 
 //-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
@@ -227,6 +184,7 @@ module.exports = {
     actualizarApellidosdb,
     actualizarGenerodb,
     actualizarEmaildb,
+    consultaOldPassworddb,
     actualizarPasswordVerificadadb,
     actualizarLocalizacionVerificadadb
 };
