@@ -15,7 +15,7 @@ const { mostrarClientedb } = require('../../../../modelos/clientes/mostrar/mostr
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const actualizarPasswordCliente = async (req, res) => {
+const actualizarPasswordCliente = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
@@ -33,7 +33,7 @@ const actualizarPasswordCliente = async (req, res) => {
         consultaOldPassworddb
         (
             id, validezOldPassword, oldpassword,
-            (validezOldPassword) => {
+            async (validezOldPassword) => {
                 if(validezOldPassword === false) {
                     //-- Renderizar y mostrar mensaje.
                     notifier.notify(
