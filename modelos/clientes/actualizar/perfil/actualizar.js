@@ -20,67 +20,25 @@ const axios = require('axios');
 require('../../../../config/env.js');
 
 //-- Creamos la función para actualizar el campo nombre del Cliente de la base de datos de MAD Services.
-const actualizarNombreVerificadodb = (id, nombre, res) => {
+const actualizarNombredb = (id, nombre) => {
 
-    //-- Declaración de ctes.
-    const maxLong = 48;
-    //-- Actualizamos y validamos el campo.
-    if(nombre) {
-        if(nombre.length > maxLong) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`El nombre no puede ser más largo de ${maxLong} caracteres`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [nombre, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarNombre);
-            //-- Mostrar Alerta Emergente.
-            alerta(`El nombre del cliente ha cambiado a: ${nombre}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('El nombre del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarNombre = 'UPDATE clientes SET nombre = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarNombre = mysql.format(instruccionActualizarNombre, [nombre, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarNombre);
 }
 
 //-- Creamos la función para actualizar el campo apellidos del Cliente de la base de datos de MAD Services.
-const actualizarApellidosVerificadosdb = (id, apellidos, res) => {
-
-    //-- Declaración de ctes.
-    const maxLong = 96;
-    //-- Actualizamos y validamos el campo.
+const actualizarApellidosdb = (id, apellidos) => {
     
-        if(apellidos.length > maxLong) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`Los apellidos no pueden ser más largos de ${maxLong} caracteres`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [apellidos, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarApellidos);
-            //-- Mostrar Alerta Emergente.
-            alerta(`Los apellidos del cliente han cambiado a: ${apellidos}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('Los apellidos del cliente no han cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarApellidos = 'UPDATE clientes SET apellidos = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarApellidos = mysql.format(instruccionActualizarApellidos, [apellidos, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarApellidos);
 }
 
 //-- Creamos la función para actualizar el campo género del Cliente de la base de datos de MAD Services.
@@ -289,8 +247,8 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
-    actualizarNombreVerificadodb,
-    actualizarApellidosVerificadosdb,
+    actualizarNombredb,
+    actualizarApellidosdb,
     actualizarGeneroVerificadodb,
     actualizarEmailVerificadodb,
     actualizarPasswordVerificadadb,
