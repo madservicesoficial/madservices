@@ -3,10 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
-//-- Importamos la Tecnología para validar datos enviados por el cliente.
-const validacion = require("validator");
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
 //-- Importamos la Tecnología para validar el país introducido.
@@ -42,64 +38,51 @@ const actualizarApellidosdb = (id, apellidos) => {
 }
 
 //-- Creamos la función para actualizar el campo género del Cliente de la base de datos de MAD Services.
-const actualizarGeneroVerificadodb = (id, genero, res) => {
+const actualizarGenerodb = (id, genero) => {
 
-    //-- Actualizamos y validamos el campo.
-    if(genero) {
-        //-- Instrucción para actualizar en la base de datos.
-        let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
-        //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-        let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [genero, id]);
-        //-- Proceso de actualización en base de datos.
-        madservicesClientedb.query(formatoInstruccionActualizarGenero);
-        //-- Mostrar Alerta Emergente.
-        alerta(`El género del cliente ha cambiado a: ${genero}`);
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('El género del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarGenero = 'UPDATE clientes SET genero = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarGenero = mysql.format(instruccionActualizarGenero, [genero, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarGenero);
 }
 
 //-- Creamos la función para actualizar el campo email del Cliente de la base de datos de MAD Services.
-const actualizarEmailVerificadodb = (id, email, res) => {
+const actualizarEmaildb = (id, email) => {
 
-    //-- Actualizamos y validamos el campo.
-    if(email) {
-        if(!validacion.isEmail(email)) {
-            //-- Mostrar Alerta Emergente.
-            alerta(`${email} es un email no válido`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            //-- Instrucción para actualizar en la base de datos.
-            let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
-            //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-            let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [email, id]);
-            //-- Proceso de actualización en base de datos.
-            madservicesClientedb.query(formatoInstruccionActualizarEmail);
-            //-- Mostrar Alerta Emergente.
-            alerta(`El email del cliente ha cambiado a: ${email}`);
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('El email del cliente no ha cambiado');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarEmail = 'UPDATE clientes SET email = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [email, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarEmail);
+}
+
+//-- Creamos la función para consultar la contraseña que había en la base de datos.
+const consultaOldPassworddb = (id, validezOldPassword, oldpassword) => {
+
+    //-- Instrucción para consultar contraseña dado el id.
+    let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE id = ?';
+    //-- Configuración del formato para consultar contraseña dado el id.
+    let formatoInstruccionConsultarPassword = mysql.format(instruccionConsultarPassword, [id]);
+    //-- Proceso de consulta de contraseña.
+    madservicesClientedb.query(formatoInstruccionConsultarPassword, (error, results) => {
+        if(error) throw error;
+        const passwordEnDatabase = results[0].password;
+        compare(oldpassword, passwordEnDatabase).then( async (match) => {
+            if(match) {
+                validezOldPassword = true;
+            }else {
+                validezOldPassword = false;
+            }
+        });
+    });
 }
 
 //-- Creamos la función para actualizar el campo password del Cliente de la base de datos de MAD Services.
 const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePassword, res) => {
     
-    //-- Actualizamos y validamos el campo.
-    if(oldpassword && newpassword && repitePassword) {
-        //-- Verificamos que la contraseña de la base de datos es la misma que la antigua introducida.
         //-- Instrucción para consultar contraseña dado el id.
         let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE id = ?';
         //-- Configuración del formato para consultar contraseña dado el id.
@@ -107,9 +90,8 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
         //-- Proceso de consulta de contraseña.
         madservicesClientedb.query(formatoInstruccionConsultarPassword, (error, results) => {
             if(error) throw error;
-            const passwordEnDatabase = results[0].password;
-            compare(oldpassword, passwordEnDatabase).then( async (match) => {
-                if(match) {
+            
+                
                     //-- Verificamos que la nueva contraseña introducida es correcta.
                     if(newpassword === repitePassword) {
                         //-- Declaramos las ctes.
@@ -150,12 +132,6 @@ const actualizarPasswordVerificadadb = (id, oldpassword, newpassword, repitePass
                 }
             });
         });
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('Requisitos para actualizar la contraseña:\nCompletar los tres campos');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
 }
 
 //-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
@@ -249,8 +225,8 @@ const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacio
 module.exports = {
     actualizarNombredb,
     actualizarApellidosdb,
-    actualizarGeneroVerificadodb,
-    actualizarEmailVerificadodb,
+    actualizarGenerodb,
+    actualizarEmaildb,
     actualizarPasswordVerificadadb,
     actualizarLocalizacionVerificadadb
 };
