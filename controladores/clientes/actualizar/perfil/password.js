@@ -5,13 +5,10 @@ const notifier = require('node-notifier');
 const path = require('path');
 //-- Importamos la Tecnología para validar datos enviados por el cliente.
 const validacion = require("validator");
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { compare, hash } = require('bcrypt');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
 const { actualizarPassworddb, consultaOldPassworddb } = require('../../../../modelos/clientes/actualizar/perfil/actualizar.js');
-const { mostrarClientedb } = require('../../../../modelos/clientes/mostrar/mostrar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -26,14 +23,13 @@ const actualizarPasswordCliente = (req, res) => {
     let validezOldPassword = true;
     const minLong = 10;
     const maxLong = 96;
-    /* actualizarPassworddb(id, oldpassword, newpassword, repitePassword); */
-    //-- Llamada a función.
+    //-- Proceso de validación.
     if(oldpassword && newpassword && repitePassword) {
         //-- Llamada a función.
         consultaOldPassworddb
         (
             id, validezOldPassword, oldpassword,
-            async (validezOldPassword) => {
+            (validezOldPassword) => {
                 if(validezOldPassword === false) {
                     //-- Renderizar y mostrar mensaje.
                     notifier.notify(
@@ -46,17 +42,17 @@ const actualizarPasswordCliente = (req, res) => {
                         }
                     );
                     codResp = 401;
-                    mostrarClientedb(id, res, codResp);
+                    res.status(codResp);
+                    res.redirect(`/sesion-cliente/${id}/perfil`);
+                    return res.end();
                 }else {
                     if(newpassword === repitePassword) {
                         if(validacion.isLength(newpassword, { min: minLong, max: maxLong}) && 
                         validacion.matches(newpassword, /[a-z]/) && validacion.matches(newpassword, /[A-Z]/) &&
                         validacion.matches(newpassword, /[0-9]/) &&
                         validacion.matches(newpassword, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                            //-- Cifrar la nueva contraseña.
-                            const nuevaPasswordCifrada = await hash(newpassword,1);
                             //-- Llamada a función.
-                            actualizarPassworddb(id, nuevaPasswordCifrada);
+                            actualizarPassworddb(id, newpassword);
                             //-- Renderizar y mostrar mensaje.
                             notifier.notify(
                                 {
@@ -68,7 +64,9 @@ const actualizarPasswordCliente = (req, res) => {
                                 }
                             );
                             codResp = 201;
-                            mostrarClientedb(id, res, codResp);
+                            res.status(codResp);
+                            res.redirect(`/sesion-cliente/${id}/perfil`);
+                            return res.end();
                         }else {
                             //-- Renderizar y mostrar mensaje.
                             notifier.notify(
@@ -81,7 +79,9 @@ const actualizarPasswordCliente = (req, res) => {
                                 }
                             );
                             codResp = 401;
-                            mostrarClientedb(id, res, codResp);
+                            res.status(codResp);
+                            res.redirect(`/sesion-cliente/${id}/perfil`);
+                            return res.end();
                         }
                     }else {
                         //-- Renderizar y mostrar mensaje.
@@ -95,7 +95,9 @@ const actualizarPasswordCliente = (req, res) => {
                             }
                         );
                         codResp = 401;
-                        mostrarClientedb(id, res, codResp);
+                        res.status(codResp);
+                        res.redirect(`/sesion-cliente/${id}/perfil`);
+                        return res.end();
                     }
                 }
             }
@@ -112,7 +114,9 @@ const actualizarPasswordCliente = (req, res) => {
             }
         );
         codResp = 304;
-        mostrarClientedb(id, res, codResp);
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
+        return res.end();
     }
 }
 //#######################################################################################################//

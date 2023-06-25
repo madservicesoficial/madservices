@@ -3,15 +3,8 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../../config/database.js');
-//-- Importamos la Tecnología para validar el país introducido.
-const { getCode, getCountries } = require('country-list-spanish');
-const countries = require('country-list');
-//-- Importamos la Tecnología para validar el Código Postal introducido.
-const { postcodeValidator } = require('postcode-validator');
-//-- Importamos la Tecnología para solicitar URLs de Geolocalización.
-const axios = require('axios');
-//-- Importamos la configuración del entorno ENV para poder usar su información.
-require('../../../../config/env.js');
+//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+const { compare, hash } = require('bcrypt');
 
 //-- Creamos la función para actualizar el campo nombre del Cliente de la base de datos de MAD Services.
 const actualizarNombredb = (id, nombre) => {
@@ -81,8 +74,10 @@ const consultaOldPassworddb = (id, validezOldPassword, oldpassword, callback) =>
 }
 
 //-- Creamos la función para actualizar el campo password del Cliente de la base de datos de MAD Services.
-const actualizarPasswordVerificadadb = (id, nuevaPasswordCifrada) => {
+const actualizarPassworddb = async (id, newpassword) => {
     
+    //-- Cifrar la nueva contraseña.
+    const nuevaPasswordCifrada = await hash(newpassword,1);
     //-- Instrucción para actualizar en la base de datos.
     let instruccionActualizarANuevaPassword = 'UPDATE clientes SET password = ? WHERE id = ?';
     //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
@@ -92,90 +87,14 @@ const actualizarPasswordVerificadadb = (id, nuevaPasswordCifrada) => {
 }
 
 //-- Creamos la función para actualizar la localización del Cliente de la base de datos de MAD Services.
-const actualizarLocalizacionVerificadadb = async (id, pais, cp, region, poblacion, direccion, res) => {
-
-    //-- Declaración de la lista de países existentes en el mundo.
-    const paises = getCountries();
-    const paisesENG = countries.getNames();
-    //-- Proceso de verificación de la localización.
-    if(pais && cp && region && poblacion && direccion) {
-        if(paises.includes(pais) || paisesENG.includes(pais)) {
-            //-- Obtenemos el código del país.
-            let codigoPais = getCode(pais);
-            let countryCode = countries.getCode(pais);
-            if(codigoPais === undefined) {
-                codigoPais = countryCode;
-            }
-            if(postcodeValidator(cp, codigoPais)) {
-                //-- Enviamos una solicitud HTTP a la API de Geonames.
-                const response = await axios.get('http://api.geonames.org/postalCodeLookupJSON', {
-                    params: {
-                        postalcode: cp,
-                        country: codigoPais,
-                        username: process.env.USUARIO_DE_GEONAMES,
-                        password: process.env.MYSQL_PASSWORD_CLIENTE
-                    },
-                });
-                const lugar = response.data.postalcodes[0];
-                if(lugar || typeof lugar !== 'undefined') {
-                    if(region === lugar.adminName1 || region === lugar.adminName2) {
-                        if(poblacion === lugar.adminName3 || poblacion === lugar.placeName) {
-                            const minLong = 5;
-                            const maxLong = 48;
-                            if(direccion.length >= minLong && direccion.length <= maxLong) {
-                                //-- Actualizamos la localización del Cliente en la base de datos de MAD Services.
-                                //-- Instrucción para actualizar en la base de datos.
-                                let instruccionActualizarDireccion = 'UPDATE clientes SET direccion = ?, poblacion = ?, region = ?, pais = ?, cp = ? WHERE id = ?';
-                                //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
-                                let formatoInstruccionActualizarDireccion = mysql.format(instruccionActualizarDireccion, [direccion, poblacion, region, pais, cp, id]);
-                                //-- Proceso de actualización en base de datos.
-                                madservicesClientedb.query(formatoInstruccionActualizarDireccion);
-                                //-- Mostrar Alerta Emergente.
-                                alerta('Localización del Cliente actualizada');
-                                // Redirigir al perfil del Cliente.
-                                return res.redirect(`/sesion-cliente/${id}/perfil`);
-                            }else {
-                                //-- Mostrar Alerta Emergente.
-                                alerta(`Dirección de ${poblacion} incorrecta`);
-                                // Redirigir al perfil del Cliente.
-                                return res.redirect(`/sesion-cliente/${id}/perfil`);
-                            }
-                        }else {
-                            //-- Mostrar Alerta Emergente.
-                            alerta(`Población de ${region} incorrecta`);
-                            // Redirigir al perfil del Cliente.
-                            return res.redirect(`/sesion-cliente/${id}/perfil`);
-                        }
-                    }else {
-                        //-- Mostrar Alerta Emergente.
-                        alerta(`Región de ${pais} incorrecta`);
-                        // Redirigir al perfil del Cliente.
-                        return res.redirect(`/sesion-cliente/${id}/perfil`);
-                    }
-                }else {
-                    //-- Mostrar Alerta Emergente.
-                    alerta('Código Postal no encontrado');
-                    // Redirigir al perfil del Cliente.
-                    return res.redirect(`/sesion-cliente/${id}/perfil`);
-                }
-            }else {
-                //-- Mostrar Alerta Emergente.
-                alerta('Código Postal incorrecto');
-                // Redirigir al perfil del Cliente.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
-            }
-        }else {
-            //-- Mostrar Alerta Emergente.
-            alerta('País incorrecto');
-            // Redirigir al perfil del Cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
-    }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('No puedes dejar campos vacíos\nY debes saber que:\nEl orden de localización importa\n1º País\n2º CP\n3º Región\n4º Población\n5º Dirección');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    }
+const actualizarLocalizaciondb = (id, pais, cp, region, poblacion, direccion) => {
+                         
+    //-- Instrucción para actualizar en la base de datos.
+    let instruccionActualizarLocalizacion = 'UPDATE clientes SET direccion = ?, poblacion = ?, region = ?, pais = ?, cp = ? WHERE id = ?';
+    //-- Configuración del formato de los datos introducidos para actualizar en base de datos.
+    let formatoInstruccionActualizarLocalizacion = mysql.format(instruccionActualizarLocalizacion, [direccion, poblacion, region, pais, cp, id]);
+    //-- Proceso de actualización en base de datos.
+    madservicesClientedb.query(formatoInstruccionActualizarLocalizacion);
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
@@ -185,7 +104,7 @@ module.exports = {
     actualizarGenerodb,
     actualizarEmaildb,
     consultaOldPassworddb,
-    actualizarPasswordVerificadadb,
-    actualizarLocalizacionVerificadadb
+    actualizarPassworddb,
+    actualizarLocalizaciondb
 };
 //#######################################################################################################//

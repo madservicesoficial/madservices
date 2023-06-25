@@ -15,21 +15,28 @@ const editarCVVTarjetaBank = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const cvv = req.body.cvv;
+    let existenciaTarjBank = 0;
     //-- Proceso de validación.
     if(cvv) {
         //-- Llamada a función.
-        editarCVVTarjetaBankdb(id, cvv, res);
+        editarCVVTarjetaBankdb
+        (
+            id, cvv, existenciaTarjBank,
+        );
     }else {
+        //-- Renderizar y mostrar mensaje.
         notifier.notify(
             {
                 sound: true,
                 wait: true,
-                title: '¡Atención!',
-                message: 'Sin cambios en la tarjeta bancaria',
-                icon: path.join(__dirname, '../../../../public/images/indiferencia.png')
+                title: '¡Sin cambios!',
+                message: 'Código CVV de la tarjeta bancaria no actualizado',
+                icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        res.status(304).render('paginas/clientes/perfil', { id: id });
+        codResp = 304;
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }
 }

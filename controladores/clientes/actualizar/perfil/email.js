@@ -17,7 +17,8 @@ const actualizarEmailCliente = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const email = req.body.email;
-    //-- Llamada a función.
+    let codResp = 1;
+    //-- Proceso de validación.
     if(email) {
         if(!validacion.isEmail(email)) {
             //-- Renderizar y mostrar mensaje.
@@ -27,10 +28,12 @@ const actualizarEmailCliente = (req, res) => {
                     wait: true,
                     title: '¡Atención!',
                     message: `${email} es un correo electrónico no válido`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                 }
             );
-            res.status(401).render('paginas/clientes/perfil');
+            codResp = 401;
+            res.status(codResp);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }else {
             actualizarEmaildb(id, email);
@@ -41,10 +44,12 @@ const actualizarEmailCliente = (req, res) => {
                     wait: true,
                     title: '¡Actualizado!',
                     message: 'El correo electrónico se ha actualizado',
-                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
                 }
             );
-            res.status(201).render('paginas/clientes/perfil');
+            codResp = 201;
+            res.status(codResp);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }
     }else {
@@ -55,10 +60,12 @@ const actualizarEmailCliente = (req, res) => {
                 wait: true,
                 title: '¡Sin cambios!',
                 message: 'Correo electrónico no actualizado',
-                icon: path.join(__dirname, '../../../public/images/NotModified.png')
+                icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        res.status(304).render('paginas/clientes/perfil');
+        codResp = 304;
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }
 }

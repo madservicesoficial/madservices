@@ -15,9 +15,8 @@ const actualizarGeneroCliente = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const genero = req.body.genero;
-    //-- Llamada a función.
-    actualizarGeneroVerificadodb(id, genero, res);
-    //-- Llamada a función.
+    let codResp = 1;
+    //-- Proceso de validación.
     if(genero) {
         actualizarGenerodb(id, genero);
         //-- Renderizar y mostrar mensaje.
@@ -27,10 +26,12 @@ const actualizarGeneroCliente = (req, res) => {
                 wait: true,
                 title: '¡Actualizado!',
                 message: 'El género se ha actualizado',
-                icon: path.join(__dirname, '../../../public/images/correcto.png')
+                icon: path.join(__dirname, '../../../../public/images/correcto.png')
             }
         );
-        res.status(201).render('paginas/clientes/perfil');
+        codResp = 201;
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }else {
         //-- Renderizar y mostrar mensaje.
@@ -40,10 +41,12 @@ const actualizarGeneroCliente = (req, res) => {
                 wait: true,
                 title: '¡Sin cambios!',
                 message: 'Género no actualizado',
-                icon: path.join(__dirname, '../../../public/images/NotModified.png')
+                icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        res.status(304).render('paginas/clientes/perfil');
+        codResp = 304;
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }
 }

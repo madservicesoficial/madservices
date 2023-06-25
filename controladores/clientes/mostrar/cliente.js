@@ -7,8 +7,9 @@ const mostrarCliente = (req, res) => {
 
     //-- Variables y Ctes.
     let id = req.params.id;
+    const codResp = 201;
     //-- Llamada a función.
-    mostrarClientedb(id, res);
+    mostrarClientedb(id, res, codResp);
 }
 //#######################################################################################################//
 

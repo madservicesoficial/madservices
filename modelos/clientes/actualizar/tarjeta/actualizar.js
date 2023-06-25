@@ -91,17 +91,14 @@ const editarNombreTarjetaBankdb = (id, namecard, res) => {
         }
     });
 }
-const editarCVVTarjetaBankdb = (id, cvv, res) => {
+const editarCVVTarjetaBankdb = (id, cvv, callback) => {
 
     let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
     let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
     madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
         if(error) throw error;
         if(results.length === 0) {
-            //-- Mostrar alerta.
-            alerta('No hay ninguna tarjeta bancaria en tu perfil');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            callback(existenciaTarjBank);
         }else {
             //-- Comprobar que el CVV es válido y actualizarlo.
             const validacionCVV = validarCard.cvv(cvv);

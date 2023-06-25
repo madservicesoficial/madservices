@@ -16,7 +16,8 @@ const actualizarNombre = (req, res) => {
     let id = req.params.id;
     const nombre = req.body.nombre;
     const maxLong = 48;
-    //-- Llamada a función.
+    let codResp = 1;
+    //-- Proceso de validación.
     if(nombre) {
         if(nombre.length > maxLong) {
             //-- Renderizar y mostrar mensaje.
@@ -26,10 +27,12 @@ const actualizarNombre = (req, res) => {
                     wait: true,
                     title: '¡Atención!',
                     message: `Nombre más largo de ${maxLong} caracteres`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                 }
             );
-            res.status(401).render('paginas/clientes/perfil');
+            codResp = 401;
+            res.status(codResp);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }else {
             actualizarNombredb(id, nombre);
@@ -40,10 +43,12 @@ const actualizarNombre = (req, res) => {
                     wait: true,
                     title: '¡Actualizado!',
                     message: 'El nombre se ha actualizado',
-                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
                 }
             );
-            res.status(201).render('paginas/clientes/perfil');
+            codResp = 201;
+            res.status(codResp);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }
     }else {
@@ -54,10 +59,12 @@ const actualizarNombre = (req, res) => {
                 wait: true,
                 title: '¡Sin cambios!',
                 message: 'Nombre no actualizado',
-                icon: path.join(__dirname, '../../../public/images/NotModified.png')
+                icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        res.status(304).render('paginas/clientes/perfil');
+        codResp = 304;
+        res.status(codResp);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }
 }
