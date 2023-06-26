@@ -34,6 +34,7 @@ const actualizarLocalizacion = async (req, res) => {
     let countryCode = countries.getCode(pais);
     const minLong = 5;
     const maxLong = 48;
+    let codResp = 1;
     //-- Proceso de validación.
     if(pais && cp && region && poblacion && direccion) {
         if(paises.includes(pais) || paisesENG.includes(pais)) {

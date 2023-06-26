@@ -3,10 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../config/database.js');
-//-- Importamos la Tecnología para sacar la alerta/notificación.
-const notifier = require('node-notifier');
-//-- Importamos la Tecnología para encaminar a archivo a usar.
-const path = require('path');
 
 //-- Función que consulta el título metido en la base de datos.
 const busquedaPorTitulodb = (titulo, res, id) => {
@@ -52,15 +48,6 @@ const busquedaPorCategoriaPreciodb = (categoria, min, max, res, id) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por categoría y precio',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id });
         return res.end();
     });
@@ -74,15 +61,6 @@ const busquedaPorTituloPreciodb = (titulo, min, max, res, id) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título y precio',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id });
         return res.end();
     });
@@ -96,15 +74,6 @@ const busquedaPorCategoriaTitulodb = (titulo, categoria, res, id) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [categoria, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título y categoría',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id });
         return res.end();
     });
@@ -118,15 +87,6 @@ const busquedaPorTodo = (titulo, categoria, min, max, res, id) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título, precio y categoría',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/clientes/productosmadservices', { cartaProducto: results, id: id });
         return res.end();
     });
@@ -157,6 +117,18 @@ const filtroNombreEmpresadb = (id, nombre, res) => {
     });
 }
 
+const filtroNombreTipoEmpresadb = (id, nombre, seleccion, res) => {
+
+    let incluir = `%${nombre}%`;
+    let instruccionConsultaEmpresa = 'SELECT * FROM empresas WHERE marca LIKE ? AND tipo = ?';
+    let formatoInstruccionConsultaEmpresa= mysql.format(instruccionConsultaEmpresa, [incluir, seleccion]);
+    madservicesClientedb.query(formatoInstruccionConsultaEmpresa, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/clientes/productosTheMall', { empresas: results, id: id });
+        return res.end();
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     busquedaPorTitulodb,
@@ -167,6 +139,7 @@ module.exports = {
     busquedaPorCategoriaTitulodb,
     busquedaPorTodo,
     filtroTipoEmpresadb,
-    filtroNombreEmpresadb
+    filtroNombreEmpresadb,
+    filtroNombreTipoEmpresadb
 };
 //#######################################################################################################//

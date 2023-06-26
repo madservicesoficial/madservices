@@ -14,32 +14,46 @@ const notifier = require('node-notifier');
 //-- Importamos la Tecnología para encaminar a archivo a usar.
 const path = require('path');
 
-//-- Creamos la función para registrarse como Cliente, con verificación de correo electrónico, en la base de datos de MAD Services.
-const registrarClienteVerificadodb = async (data, password, res) => {
+//-- Creamos la función que comprueba el ID de la base de datos para no repetir.
+function consultaID(idCliente) {
 
-    //-- Configuramos el sistema para cifrar la contraseña metida.
-    const passwordCifrada = await hash(password, 1);
-    //-- Instrucción para consultar Email en la base de datos.
+    //-- Instrucción para no repetir ID.
+    let instruccionID = 'SELECT COUNT(*) AS count FROM clientes WHERE id = ?';
+    //-- Configuración de su formato en mysql.
+    let formatoInstruccionID = mysql.format(instruccionID, idCliente);
+    //-- Establecer la comunicación de consultar ID en la base de datos.
+    madservicesClientedb.query(formatoInstruccionID, (error, result) => {
+        if(error) throw error;
+        const valor = result[0].count;
+        callback(valor > 0);
+    });
+}
+
+//-- Creamos la función para consultar el email en el registro de clientes en la base de datos de MAD Services.
+const consultarEmailClientesEnRegistrodb = (email, callback) => {
+
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
-    //-- Configuración del formato de los datos introducidos para consultar Email en base de datos.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    madservicesClientedb.query(formatoInstruccionConsultar, (error, results) => {
+        if(error) throw error;
+        const cont = results[0].count;
+        const emailExiste = cont > 0;
+        callback(emailExiste);
+    });
+}
+
+//-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
+const registroClientesdb = async (data, password, res) => {
+
+    const passwordCifrada = await hash(password, 1);
+    let instruccionConsultar = 'SELECT COUNT(*) AS count FROM clientes WHERE email = ?';
     let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
-    //-- Establecer la comunicación de consultar Email en la base de datos.
     madservicesClientedb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
         const cont = results[0].count;
         const emailExiste = cont > 0;
         if(emailExiste) {
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: 'Correo ya en uso',
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401).render('paginas/clientes/registrarse');
-            return res.end();
+            
         }else {
             let idCliente = generarIDrandom() * 2;
             consultaID(idCliente, (idExiste) => {
@@ -72,66 +86,38 @@ const registrarClienteVerificadodb = async (data, password, res) => {
     });
 }
 
-//-- Creamos la función para iniciar sesión como Cliente, con verificación de correo electrónico y contraseña, en la base de datos de MAD Services.
-const iniciarSesionClienteVerificadodb = (email, password, req, res) => {
+//-- Creamos la función para consultar el email del cliente en la base de datos de MAD Services.
+const consultarEmailClientesdb = (email, callback) => {
 
-    //-- Instrucción para consultar en la base de datos.
     let instruccionConsultarEmail = 'SELECT * FROM clientes WHERE email = ?';
-    //-- Configuración del formato de los datos introducidos para iniciar sesión y consultar en base de datos.
     let formatoInstruccionConsultarEmail = mysql.format(instruccionConsultarEmail, [email]);
-    //-- Establecer la comunicación para consultar el email y la contraseña en la base de datos.
     madservicesClientedb.query(formatoInstruccionConsultarEmail, (error, results) => {
         if(error) throw error;
-        if(results.length === 0) {
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: 'Correo electrónico incorrecto',
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401).render('paginas/clientes/login');
-            return res.end();
-        }else {
-            const miembro = results[0];
-            compare(password, miembro.password).then((match) => {
-                if(match) {
-                    req.session.miembro = miembro;
-                    const id = miembro.id;
-                    notifier.notify(
-                        {
-                            sound: true,
-                            wait: true,
-                            title: '¡Autenticado!',
-                            message: 'Cliente autenticado con éxito',
-                            icon: path.join(__dirname, '../../../public/images/correcto.png')
-                        }
-                    );
-                    res.status(201).render('paginas/clientes/inicio', { id: id });
-                    return res.end();
-                }else {
-                    notifier.notify(
-                        {
-                            sound: true,
-                            wait: true,
-                            title: '¡Atención!',
-                            message: 'Contraseña incorrecta',
-                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                        }
-                    );
-                    res.status(401).render('paginas/clientes/login');
-                    return res.end();
-                }
-            });       
-        }
+        let hayEmail = results.length;
+        callback(hayEmail);
+    });
+}
+
+//-- Creamos la función para consultar la contraseña del cliente en la base de datos de MAD Services.
+const iniciarSesionClientesdb = (email, password, callback) => {
+
+    let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE email = ?';
+    let formatoInstruccionConsultarPassword = mysql.format(instruccionConsultarPassword, [email]);
+    madservicesClientedb.query(formatoInstruccionConsultarPassword, (error, results) => {
+        if(error) throw error;
+        const miembro = results[0];
+        compare(password, miembro.password).then((match) => {
+            callback(match);
+        });
     });
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
-    registrarClienteVerificadodb,
-    iniciarSesionClienteVerificadodb
+    consultaID,
+    consultarEmailClientesEnRegistrodb,
+    registroClientesdb,
+    consultarEmailClientesdb,
+    iniciarSesionClientesdb
 };
 //#######################################################################################################//

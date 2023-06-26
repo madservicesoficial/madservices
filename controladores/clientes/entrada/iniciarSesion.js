@@ -6,7 +6,7 @@ const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { iniciarSesionClienteVerificadodb } = require('../../../modelos/clientes/entrada/entrada.js');
+const { consultarEmailClientesdb, iniciarSesionClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -31,7 +31,61 @@ const iniciarSesionClientes = (req, res) => {
         return res.end();
     }else {
         //-- Llamada a función.
-        iniciarSesionClienteVerificadodb(email, password, req, res);
+        consultarEmailClientesdb
+        (
+            email,
+            (hayEmail) => {
+                if(hayEmail === 0) {
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: 'Correo electrónico incorrecto',
+                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                        }
+                    );
+                    res.status(401).render('paginas/clientes/login');
+                    return res.end();
+                }else {
+                    //-- Llamada a función.
+                    iniciarSesionClientesdb
+                    (
+                        email, password,
+                        (match) => {
+                            if(match) {
+                                req.session.miembro = miembro;
+                                const id = miembro.id;
+                                notifier.notify(
+                                    {
+                                        sound: true,
+                                        wait: true,
+                                        title: '¡Autenticado!',
+                                        message: 'Cliente autenticado con éxito',
+                                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                    }
+                                );
+                                res.status(201).render('paginas/clientes/inicio', { id: id });
+                                return res.end();
+                            }else {
+                                notifier.notify(
+                                    {
+                                        sound: true,
+                                        wait: true,
+                                        title: '¡Atención!',
+                                        message: 'Contraseña incorrecta',
+                                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                    }
+                                );
+                                res.status(401).render('paginas/clientes/login');
+                                return res.end();
+                            }
+                        }
+                    );
+                }
+            }
+        );
+        iniciarSesionClientesdb(req, res);
     }
 }
 //#######################################################################################################//

@@ -3,68 +3,45 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 
 //-- Creamos la función para Dar de Baja al Cliente de la base de datos de MAD Services.
-const darseBajaClientedb = (id, dileAdios, req, res) => {
-    //-- Caso 1: dejar en blanco la confirmación.
-    if(!dileAdios) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Debes confirmar si quieres o no darte de baja');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    //-- Caso 2: pulsar que no quieres darte de baja.
-    }else if(dileAdios === 'No') {
-        //-- Mostrar Alerta Emergente.
-        alerta('Gracias por no querer darte de baja');
-        // Redirigir al perfil del Cliente.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
-    //-- Caso 3: pulsar que sí quieres darte de baja.
-    }else if(dileAdios === 'Sí') {
-        //-- Si tiene productos en el carrito, también se borran.
-        let instruccionVerCarrito = "SELECT * FROM carrito WHERE id = ?";
-        let formatoInstruccionVerCarrito = mysql.format(instruccionVerCarrito, [id]);
-        //-- Establecer la configuración de ver los datos de la base de datos.
-        madservicesClientedb.query(formatoInstruccionVerCarrito, (error, results) => {
-            if(error) throw error;
-            if(results.length > 0) {
-                //-- Si tiene productos en el carrito, se borran.
-                let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
-                let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [id]);
-                //-- Establecer la configuración de borrar los datos de la base de datos.
-                madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
-            }
-        });
-        //-- Si tiene guardada la tarjeta bancaria, también se borra.
-        let instruccionVerTarjetasBank = "SELECT * FROM tarjeta WHERE id = ?";
-        let formatoInstruccionVerTarjetasBank = mysql.format(instruccionVerTarjetasBank, [id]);
-        //-- Establecer la configuración de ver los datos de la base de datos.
-        madservicesClientedb.query(formatoInstruccionVerTarjetasBank, (error, resultados) => {
-            if(error) throw error;
-            if(resultados.length > 0) {
-                let instruccionBorrarTarjetasBank = "DELETE FROM tarjeta WHERE id = ?";
-                let formatoInstruccionBorrarTarjetasBank = mysql.format(instruccionBorrarTarjetasBank, [id]);
-                //-- Establecer la configuración de borrar los datos de la base de datos.
-                madservicesClientedb.query(formatoInstruccionBorrarTarjetasBank);
-            }
-        });
-        //-- Variables usadas para borrar los datos de la base de datos.
-        let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
-        let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
-        //-- Establecer la configuración de borrar los datos de la base de datos.
-        madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
-        //-- Destruir la sesión.
-        req.session.destroy();
-        //-- Mostrar Alerta Emergente.
-        alerta('Cliente dado de baja definitivamente');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect('/');
-    }
+const darseBajaClientedb = (id) => {
+    //-- Si tiene productos en el carrito, también se borran.
+    let instruccionVerCarrito = "SELECT * FROM carrito WHERE id = ?";
+    let formatoInstruccionVerCarrito = mysql.format(instruccionVerCarrito, [id]);
+    //-- Establecer la configuración de ver los datos de la base de datos.
+    madservicesClientedb.query(formatoInstruccionVerCarrito, (error, results) => {
+        if(error) throw error;
+        if(results.length > 0) {
+            //-- Si tiene productos en el carrito, se borran.
+            let instruccionDarseBajaCarrito = "DELETE FROM carrito WHERE id = ?";
+            let formatoInstruccionDarseBajaCarrito = mysql.format(instruccionDarseBajaCarrito, [id]);
+            //-- Establecer la configuración de borrar los datos de la base de datos.
+            madservicesClientedb.query(formatoInstruccionDarseBajaCarrito);
+        }
+    });
+    //-- Si tiene guardada la tarjeta bancaria, también se borra.
+    let instruccionVerTarjetasBank = "SELECT * FROM tarjeta WHERE id = ?";
+    let formatoInstruccionVerTarjetasBank = mysql.format(instruccionVerTarjetasBank, [id]);
+    //-- Establecer la configuración de ver los datos de la base de datos.
+    madservicesClientedb.query(formatoInstruccionVerTarjetasBank, (error, resultados) => {
+        if(error) throw error;
+        if(resultados.length > 0) {
+            let instruccionBorrarTarjetasBank = "DELETE FROM tarjeta WHERE id = ?";
+            let formatoInstruccionBorrarTarjetasBank = mysql.format(instruccionBorrarTarjetasBank, [id]);
+            //-- Establecer la configuración de borrar los datos de la base de datos.
+            madservicesClientedb.query(formatoInstruccionBorrarTarjetasBank);
+        }
+    });
+    //-- Variables usadas para borrar los datos de la base de datos.
+    let instruccionDarseBajaCliente = "DELETE FROM clientes WHERE id = ?";
+    let formatoinstruccionDarseBajaCliente = mysql.format(instruccionDarseBajaCliente, [id]);
+    //-- Establecer la configuración de borrar los datos de la base de datos.
+    madservicesClientedb.query(formatoinstruccionDarseBajaCliente);
 }
 
 //-- Creamos la función para quitar el producto del carrito de la compra de la base de datos y de la web de MAD Services.
-const quitarProductosdb = (id, titulo, res) => {
+const quitarProductosdb = (id, titulo, callback) => {
 
     let instruccionConsultarCantidadCarrito = 'SELECT * FROM carrito WHERE id = ? AND titulo = ?';
     let formatoInstruccionConsultarCantidadCarrito = mysql.format(instruccionConsultarCantidadCarrito, [id, titulo]);
@@ -76,10 +53,6 @@ const quitarProductosdb = (id, titulo, res) => {
             let instruccionEliminarDelCarrito = 'DELETE FROM carrito WHERE id = ? AND titulo = ?';
             let formatoInstruccionEliminarDelCarrito = mysql.format(instruccionEliminarDelCarrito, [id, titulo]);
             madservicesClientedb.query(formatoInstruccionEliminarDelCarrito);
-            //-- Mostrar Alerta Emergente.
-            alerta(`${titulo} eliminado del carrito`);
-            // Redirigir a la página de productos MAD.
-            return res.redirect(`/sesion-cliente/${id}/carrito`);
         }else {
             //-- Convertimos cantidad a entero para operarlo.
             const cantidadINT = parseInt(cantidad, 10);
@@ -94,43 +67,37 @@ const quitarProductosdb = (id, titulo, res) => {
                 let instruccionActualizarProductoCarrito = 'UPDATE carrito SET cantidad = ?, precio = ? WHERE titulo = ? AND id = ?';
                 let formatoInstruccionActualizarProductoCarrito = mysql.format(instruccionActualizarProductoCarrito, [cantidadINT-1, precioTotal, titulo, id]);
                 madservicesClientedb.query(formatoInstruccionActualizarProductoCarrito);
-                //-- Mostrar Alerta Emergente.
-                alerta(`Hemos quitado un producto de los ${cantidadINT} que había en ${titulo}`);
-                // Redirigir a la página de productos MAD.
-                return res.redirect(`/sesion-cliente/${id}/carrito`);
             });
         }
+        callback(cantidad);
     });
 }
 
-//-- Creamos la función para borrar la tarjeta bancaria del perfil.
-const borrarTarjetaBankdb = (id, res) => {
+//-- Creamos la función para consultar la tarjeta bancaria del perfil.
+const consultaTarjetaBankdb = (id, callback) => {
 
     let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
     let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
     madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
         if(error) throw error;
-        if(results.length === 0) {
-            //-- Mostrar alerta.
-            alerta('No hay ninguna tarjeta bancaria en tu perfil');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }else {
-            let instruccionBorrarTarjetaBank = 'DELETE FROM tarjeta WHERE id = ?';
-            let formatoInstruccionBorrarTarjetaBank = mysql.format(instruccionBorrarTarjetaBank, [id]);
-            madservicesClientedb.query(formatoInstruccionBorrarTarjetaBank);
-            //-- Mostrar alerta.
-            alerta('Tarjeta bancaria borrada de tu perfil');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
-        }
+        let hayTarjeta = results.length;
+        callback(hayTarjeta);
     });
+}
+
+//-- Creamos la función para borrar la tarjeta bancaria del perfil.
+const borrarTarjetaBankdb = (id) => {
+
+    let instruccionBorrarTarjetaBank = 'DELETE FROM tarjeta WHERE id = ?';
+    let formatoInstruccionBorrarTarjetaBank = mysql.format(instruccionBorrarTarjetaBank, [id]);
+    madservicesClientedb.query(formatoInstruccionBorrarTarjetaBank);
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     darseBajaClientedb,
     quitarProductosdb,
+    consultaTarjetaBankdb,
     borrarTarjetaBankdb
 };
 //#######################################################################################################//

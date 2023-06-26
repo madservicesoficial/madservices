@@ -18,6 +18,7 @@ const editarNumTarjetaBank = (req, res) => {
     let id = req.params.id;
     const numtarjeta = req.body.numtarjeta;
     let existenciaTarjBank = 0;
+    let codResp = 1;
     //-- Proceso de validación.
     if(numtarjeta) {
         //-- Llamada a función.

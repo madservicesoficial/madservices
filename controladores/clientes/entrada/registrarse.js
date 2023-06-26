@@ -17,7 +17,8 @@ const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { registrarClienteVerificadodb } = require('../../../modelos/clientes/entrada/entrada.js');
+const { consultaID, consultarEmailClientesEnRegistrodb, registroClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
+const { generarIDrandom } = require('');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -122,7 +123,7 @@ const registroClientes = async (req, res) => {
                         sound: true,
                         wait: true,
                         title: '¡Atención!',
-                        message: `La contraseña debe contener como mínimo ${minLong2} caracteres, letras, minúsculas y mayúsculas, números y caracteres especiales`,
+                        message: `La contraseña debe contener como mínimo ${minLong2} caracteres, minúsculas, mayúsculas, números y caracteres especiales`,
                         icon: path.join(__dirname, '../../../public/images/incorrecto.png')
                     }
                 );
@@ -149,7 +150,28 @@ const registroClientes = async (req, res) => {
                                 if(poblacion === lugar.adminName3 || poblacion === lugar.placeName) {
                                     if(direccion.length >= minDir && direccion.length <= maxDir) {
                                         //-- Llamada a función.
-                                        registrarClienteVerificadodb
+                                        consultarEmailClientesEnRegistrodb
+                                        (
+                                            email,
+                                            (emailExiste) => {
+                                                if(emailExiste) {
+                                                    notifier.notify(
+                                                        {
+                                                            sound: true,
+                                                            wait: true,
+                                                            title: '¡Atención!',
+                                                            message: 'Correo ya en uso',
+                                                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                                        }
+                                                    );
+                                                    res.status(401).render('paginas/clientes/registrarse');
+                                                    return res.end();
+                                                }else {
+
+                                                }
+                                            }
+                                        );
+                                        registroClientesdb
                                         (
                                             {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
                                             region: region, pais: pais, cp: cp, genero: genero},
