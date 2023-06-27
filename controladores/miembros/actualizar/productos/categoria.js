@@ -1,6 +1,8 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -17,12 +19,34 @@ const actualizarCategoria = (req, res) => {
     //-- Proceso de validación.
     if(categoria) {
         //-- Llamada a función.
-        actualizarCategoriadb(id, enumeracion, categoria, res);
+        actualizarCategoriadb(enumeracion, categoria);
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Actualizado!',
+                message: 'Categoria actualizada con éxito',
+                icon: path.join(__dirname, '../../../../public/images/correcto.png')
+            }
+        );
+        res.status(201);
+        res.redirect(`/sesion-miembro/${id}/productosmadservices`);
+        return res.end();
     }else {
-        //-- Mostrar alerta.
-        alerta('Categoria no actualizada');
-        //-- Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Sin cambios!',
+                message: 'Categoria no actualizada',
+                icon: path.join(__dirname, '../../../../public/images/NotModified.png')
+            }
+        );
+        res.status(304);
+        res.redirect(`/sesion-miembro/${id}/productosmadservices`);
+        return res.end();
     }
 }
 //#######################################################################################################//

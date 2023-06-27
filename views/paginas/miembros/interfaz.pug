@@ -31,7 +31,7 @@ block body
                     input(type='hidden' name='_method' value='PATCH')
                     label='Miembro: '
                     input.camposInput(type='text' name='miembro' placeholder='Introduce el nombre del Miembro MAD....')
-                    button(type='submit')
+                    button.btnEdicionMiembroEnInterfaz(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-departamento`)
                     input(type='hidden' name='_method' value='PATCH')
@@ -45,7 +45,7 @@ block body
                         option='RRHH'
                         option='VENTAS'
                         option='ECONOMIA'
-                    button(type='submit')
+                    button.btnEdicionMiembroEnInterfaz(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-genero`)
                     input(type='hidden' name='_method' value='PATCH')
@@ -57,13 +57,13 @@ block body
                         label='Mujer'
                         input(type='radio' name='genero' value='Otro')
                         label='Otro'
-                    button(type='submit')
+                    button.btnEdicionMiembroEnInterfaz(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-email`)
                     input(type='hidden' name='_method' value='PATCH')
                     label='E-mail: '
                     input.camposInput(type='email' name='email' placeholder='Introduce un correo electrónico válido....')
-                    button(type='submit')
+                    button.btnEdicionMiembroEnInterfaz(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
                 form(method='POST' action=`/sesion-miembro/${id}/interfaz/actualizar-password`)
                     input(type='hidden' name='_method' value='PATCH')
@@ -79,7 +79,7 @@ block body
                     br
                     label='Repite la contraseña: '
                     input.camposInput(type='password' name='repitePassword' placeholder='Introduce una Contraseña válida....')
-                    button(type='submit')
+                    button.btnEdicionMiembroEnInterfaz(type='submit')
                         i.fa-solid.fa-square-pen.fa-2xl
             div.column
                 h3='Información del Miembro MAD: '
@@ -282,7 +282,7 @@ block body
                     input(type='hidden' name='_method' value='DELETE')
                     input.camposInputBaja(type='email' name='email' placeholder='Escribe el email del Cliente....')
                     input.camposInputBaja(type='number' name='idcliente' placeholder='Escribe el ID del Cliente....')
-                    button(type='submit')
+                    button.btnDarBajaOtrosEnInterfazMiembro(type='submit')
                         i.fa-solid.fa-user-minus.fa-2xl
                 br
                 br
@@ -294,7 +294,7 @@ block body
                     br
                     br
                     input.camposInputBaja(type='number' name='idempresa' placeholder='Escribe el ID de la Empresa....')
-                    button(type='submit')
+                    button.btnDarBajaOtrosEnInterfazMiembro(type='submit')
                         i.fa-solid.fa-user-minus.fa-2xl
                 br
                 br

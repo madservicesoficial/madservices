@@ -5,8 +5,6 @@ block title
     title='Autorización para Miembros MAD'
 
 block body
-    if msjError
-        p.alertaAuth#enRojo=msjError
     form.formularioAuthMiembroMAD(method='POST' action='/login/autorizar')
         label='Contraseña MAD:'
         br

@@ -3,8 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesAdmindb} = require('../../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 //-- Importamos la Tecnología para leer ficheros.
 const fs = require('fs');
 //-- Importamos la Tecnología para seguir la ruta a los archivos locales.
@@ -15,103 +13,47 @@ const sharp = require('sharp');
 const util = require('util');
 
 //-- Creamos la función para actualizar la cantidad del producto MAD en la base de datos de MAD Services.
-const actualizarCantidaddb = (id, enumeracion, cantidad, res) => {
-    //-- Declaración de ctes.
-    const CANTIDAD_MIN = 1;
-    if(cantidad < CANTIDAD_MIN) {
-        //-- Mostrar Alerta Emergente.
-        alerta(`No tiene sentido la cantidad ${cantidad}`);
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }else {
-        //-- Actualizamos la cantidad del producto MAD en base de datos.
-        let instruccionActualizarCantidad = 'UPDATE productos SET cantidad = ? WHERE enumeracion = ?';
-        let formatoInstruccionActualizarCantidad = mysql.format(instruccionActualizarCantidad, [cantidad, enumeracion]);
-        madservicesAdmindb.query(formatoInstruccionActualizarCantidad);
-        //-- Mostrar Alerta Emergente.
-        alerta('Cantidad actualizada con éxito');
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }
+const actualizarCantidaddb = (enumeracion, cantidad) => {
+
+    let instruccionActualizarCantidad = 'UPDATE productos SET cantidad = ? WHERE enumeracion = ?';
+    let formatoInstruccionActualizarCantidad = mysql.format(instruccionActualizarCantidad, [cantidad, enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionActualizarCantidad);
 }
 
 //-- Creamos la función para actualizar las categorias del producto MAD en la base de datos de MAD Services.
-const actualizarCategoriadb = (id, enumeracion, categoria, res) => {
-    //-- Actualizamos las categorias del producto MAD en base de datos.
+const actualizarCategoriadb = (enumeracion, categoria) => {
+
     let instruccionActualizarCategoria = 'UPDATE productos SET producto = ? WHERE enumeracion = ?';
     let formatoInstruccionActualizarCategoria = mysql.format(instruccionActualizarCategoria, [categoria, enumeracion]);
     madservicesAdmindb.query(formatoInstruccionActualizarCategoria);
-    //-- Mostrar Alerta Emergente.
-    alerta('Categoria actualizada con éxito');
-    // Redirigir.
-    return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
 }
 
 //-- Creamos la función para actualizar la descripción del producto MAD en la base de datos de MAD Services.
-const actualizarDescripciondb = (id, enumeracion, descripcion, res) => {
-    //-- Declaración de ctes.
-    const LONG_DESCRIPCION = 998;
-    if(descripcion.length > LONG_DESCRIPCION) {
-        //-- Mostrar Alerta Emergente.
-        alerta(`La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`);
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }else {
-        //-- Actualizamos las categorias del producto MAD en base de datos.
-        let instruccionActualizarDescripcion = 'UPDATE productos SET descripcion = ? WHERE enumeracion = ?';
-        let formatoInstruccionActualizarDescripcion = mysql.format(instruccionActualizarDescripcion, [descripcion, enumeracion]);
-        madservicesAdmindb.query(formatoInstruccionActualizarDescripcion);
-        //-- Mostrar Alerta Emergente.
-        alerta('Descripción actualizada con éxito');
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }
+const actualizarDescripciondb = (enumeracion, descripcion) => {
+
+    let instruccionActualizarDescripcion = 'UPDATE productos SET descripcion = ? WHERE enumeracion = ?';
+    let formatoInstruccionActualizarDescripcion = mysql.format(instruccionActualizarDescripcion, [descripcion, enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionActualizarDescripcion);
 }
 
 //-- Creamos la función para actualizar el precio del producto MAD en la base de datos de MAD Services.
-const actualizarPreciodb = (id, enumeracion, precio, res) => {
-    //-- Declaración de ctes.
-    const COSTE_NULO = 1.0;
-    if(precio < COSTE_NULO) {
-        //-- Mostrar Alerta Emergente.
-        alerta(`No puedes vender por debajo de ${COSTE_NULO}€`);
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }else {
-        //-- Actualizamos el precio del producto MAD en base de datos.
-        let instruccionActualizarPrecio = 'UPDATE productos SET precio = ? WHERE enumeracion = ?';
-        let formatoInstruccionActualizarPrecio = mysql.format(instruccionActualizarPrecio, [precio, enumeracion]);
-        madservicesAdmindb.query(formatoInstruccionActualizarPrecio);
-        //-- Mostrar Alerta Emergente.
-        alerta('Precio actualizado con éxito');
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }
+const actualizarPreciodb = (enumeracion, precio) => {
+
+    let instruccionActualizarPrecio = 'UPDATE productos SET precio = ? WHERE enumeracion = ?';
+    let formatoInstruccionActualizarPrecio = mysql.format(instruccionActualizarPrecio, [precio, enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionActualizarPrecio);
 }
 
 //-- Creamos la función para actualizar el título del producto MAD en la base de datos de MAD Services.
-const actualizarTitulodb = (id, enumeracion, titulo, res) => {
-    //-- Declaración de ctes.
-    const LONG_TITULO = 98;
-    if(titulo.length > LONG_TITULO) {
-        //-- Mostrar Alerta Emergente.
-        alerta(`El título no puede tener más de ${LONG_TITULO} caracteres`);
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }else {
-        //-- Actualizamos el título del producto MAD en base de datos.
-        let instruccionActualizarTitulo = 'UPDATE productos SET titulo = ? WHERE enumeracion = ?';
-        let formatoInstruccionActualizarTitulo = mysql.format(instruccionActualizarTitulo, [titulo, enumeracion]);
-        madservicesAdmindb.query(formatoInstruccionActualizarTitulo);
-        //-- Mostrar Alerta Emergente.
-        alerta('Título actualizado con éxito');
-        // Redirigir.
-        return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
-    }
+const actualizarTitulodb = (enumeracion, titulo) => {
+
+    let instruccionActualizarTitulo = 'UPDATE productos SET titulo = ? WHERE enumeracion = ?';
+    let formatoInstruccionActualizarTitulo = mysql.format(instruccionActualizarTitulo, [titulo, enumeracion]);
+    madservicesAdmindb.query(formatoInstruccionActualizarTitulo);
 }
 
 //-- Creamos la función para actualizar la imagen de portada del producto MAD en la base de datos de MAD Services.
-const actualizarImagendb = async (id, enumeracion, res) => {
+const actualizarImagendb = async (enumeracion) => {
     //-- Ruta al directorio de las imágenes almacenadas localmente.
     const rutaAlDirectorio = path.join(__dirname, '../../../../archivos');
     //-- Fichero asíncrono leer directorio.
@@ -144,22 +86,14 @@ const actualizarImagendb = async (id, enumeracion, res) => {
     let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
     await unlink(eliminarArchivo);
     await unlink(eliminarArchivoEdit);
-    //-- Mostrar Alerta Emergente.
-    alerta('Imagen actualizada con éxito');
-    // Redirigir.
-    return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
 }
 
 //-- Creamos la función para actualizar el peso del producto MAD en la base de datos de MAD Services.
-const actualizarPesodb = (id, enumeracion, peso, res) => {
-    //-- Actualizamos el peso del producto MAD en base de datos.
+const actualizarPesodb = (enumeracion, peso) => {
+
     let instruccionActualizarPeso = 'UPDATE productos SET peso = ? WHERE enumeracion = ?';
     let formatoInstruccionActualizarPeso = mysql.format(instruccionActualizarPeso, [peso, enumeracion]);
     madservicesAdmindb.query(formatoInstruccionActualizarPeso);
-    //-- Mostrar Alerta Emergente.
-    alerta('Peso actualizado con éxito');
-    // Redirigir.
-    return res.redirect(`/sesion-miembro/${id}/empieza/productosmadservices`);
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//

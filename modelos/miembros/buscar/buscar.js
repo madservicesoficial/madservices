@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const {madservicesAdmindb} = require('../../../config/database.js');
 
 //-- Función que consulta el título metido en la base de datos.
-const busquedaPorTituloEnMiembrodb = (titulo, res, id) => {
+const busquedaPorTitulodb = (titulo, res, id) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE titulo LIKE ?';
@@ -18,7 +18,7 @@ const busquedaPorTituloEnMiembrodb = (titulo, res, id) => {
 }
 
 //-- Función que consulta la categoria metida en la base de datos.
-const busquedaPorCategoriaEnMiembrodb = (categoria, res, id) => {
+const busquedaPorCategoriadb = (categoria, res, id) => {
 
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE producto = ?';
     let formatoInstruccionConsultaTitulo = mysql.format(instruccionConsultaTitulo, [categoria]);
@@ -30,13 +30,64 @@ const busquedaPorCategoriaEnMiembrodb = (categoria, res, id) => {
 }
 
 //-- Función que consulta el precio metido en la base de datos.
-const busquedaPorPrecioEnMiembrodb = (min, max, res, id) => {
+const busquedaPorPreciodb = (min, max, res, id) => {
     
     let instruccionConsultaTitulo = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ?';
     let formatoInstruccionConsultaTitulo = mysql.format(instruccionConsultaTitulo, [min, max]);
     madservicesAdmindb.query(formatoInstruccionConsultaTitulo, (error, results) => {
         if(error) throw error;
         res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id});
+        return res.end();
+    });
+}
+
+//-- Función que consulta el precio y la categoria metida en la base de datos.
+const busquedaPorCategoriaPreciodb = (categoria, min, max, res, id) => {
+
+    let instruccionConsulta = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ? AND producto = ?';
+    let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria]);
+    madservicesAdmindb.query(formatoInstruccionConsulta, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id });
+        return res.end();
+    });
+}
+
+//-- Función que consulta el precio y el título metido en la base de datos.
+const busquedaPorTituloPreciodb = (titulo, min, max, res, id) => {
+
+    let incluir = `%${titulo}%`;
+    let instruccionConsulta = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ? AND titulo LIKE ?';
+    let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, incluir]);
+    madservicesAdmindb.query(formatoInstruccionConsulta, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id });
+        return res.end();
+    });
+}
+
+//-- Función que consulta la categoria y el título metido en la base de datos.
+const busquedaPorCategoriaTitulodb = (categoria, titulo, res, id) => {
+
+    let incluir = `%${titulo}%`;
+    let instruccionConsulta = 'SELECT * FROM productos WHERE producto = ? AND titulo LIKE ?';
+    let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [categoria, incluir]);
+    madservicesAdmindb.query(formatoInstruccionConsulta, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id });
+        return res.end();
+    });
+}
+
+//-- Función que consulta la categoria y el título metido en la base de datos.
+const busquedaPorTodo = (categoria, titulo, min, max, res, id) => {
+
+    let incluir = `%${titulo}%`;
+    let instruccionConsulta = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ? AND producto = ? AND titulo LIKE ?';
+    let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria, incluir]);
+    madservicesAdmindb.query(formatoInstruccionConsulta, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosmadservices', { cartaProducto: results, id: id });
         return res.end();
     });
 }
@@ -66,12 +117,30 @@ const filtroNombreEmpresadb = (id, nombre, res) => {
     });
 }
 
+//-- Función que consulta el nombre de empresa elegida.
+const filtroNombreTipoEmpresadb = (id, seleccion, nombre, res) => {
+
+    let incluir = `%${nombre}%`;
+    let instruccionConsultaNombreEmpresa = 'SELECT * FROM empresas WHERE marca LIKE ? AND tipo = ?';
+    let formatoInstruccionConsultaNombreEmpresa= mysql.format(instruccionConsultaNombreEmpresa, [incluir, seleccion]);
+    madservicesAdmindb.query(formatoInstruccionConsultaNombreEmpresa, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/miembros/productosTheMall', { empresas: results, id: id });
+        return res.end();
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
-    busquedaPorTituloEnMiembrodb,
-    busquedaPorPrecioEnMiembrodb,
-    busquedaPorCategoriaEnMiembrodb,
+    busquedaPorTitulodb,
+    busquedaPorPreciodb,
+    busquedaPorCategoriadb,
+    busquedaPorCategoriaPreciodb,
+    busquedaPorTituloPreciodb,
+    busquedaPorCategoriaTitulodb,
+    busquedaPorTodo,
     filtroTipoEmpresadb,
-    filtroNombreEmpresadb
+    filtroNombreEmpresadb,
+    filtroNombreTipoEmpresadb
 };
 //#######################################################################################################//

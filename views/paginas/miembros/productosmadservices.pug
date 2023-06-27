@@ -13,13 +13,11 @@ block body
         div.row
             div.columnIzq
                 h3='Búsqueda a medida'
-                p='Por nombre del producto:'
-                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-titulo`)
-                    input(type='text' name='titulo' placeholder='Buscar por título....')
-                    button(type='submit')='Buscar'
-                p='Por tipo de producto:'
-                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-categoria`)
-                    select#filtroTipoProducto(name="categoria")='Categorias'
+                form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/buscar`)
+                    p='Por nombre del producto:'
+                    input.camposInputBaja(type='text' name='titulo' placeholder='Buscar por título....')
+                    p='Por tipo de producto:'
+                    select(name="categoria")='Categorias'
                         option(checked)='Todo'
                         optgroup(label='Libros')
                             option='Libros infantiles' 
@@ -38,92 +36,90 @@ block body
                             option='Videojuegos'    
                         optgroup(label='Electrónica e Informática')
                             option='Consolas'
-                    button(type='submit')='Buscar'
-                p='Por precio del producto:'
-                form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/busqueda-precio`)
+                    p='Por precio del producto:'
                     .filtroRangoPrecio
-                        input(type="radio" name="busquedaPorPrecio" value='Todos' checked)
+                        input(type="radio" name="precio" value='Todos' checked)
                         label='Todos los precios'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='0')
+                        input(type="radio" name="precio" value='0')
                         label='0 a 10€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='10')
+                        input(type="radio" name="precio" value='10')
                         label='10 a 20€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='20')
+                        input(type="radio" name="precio" value='20')
                         label='20 a 30€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='30')
+                        input(type="radio" name="precio" value='30')
                         label='30 a 40€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='40')
+                        input(type="radio" name="precio" value='40')
                         label='40 a 50€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='50')
+                        input(type="radio" name="precio" value='50')
                         label='50 a 60€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='60')
+                        input(type="radio" name="precio" value='60')
                         label='60 a 70€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='70')
+                        input(type="radio" name="precio" value='70')
                         label='70 a 80€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='80')
+                        input(type="radio" name="precio" value='80')
                         label='80 a 90€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='90')
+                        input(type="radio" name="precio" value='90')
                         label='90 a 100€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='100')
+                        input(type="radio" name="precio" value='100')
                         label='100 a 125€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='125')
+                        input(type="radio" name="precio" value='125')
                         label='125 a 150€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='150')
+                        input(type="radio" name="precio" value='150')
                         label='150 a 175€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='175')
+                        input(type="radio" name="precio" value='175')
                         label='175 a 200€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='200')
+                        input(type="radio" name="precio" value='200')
                         label='200 a 250€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='250')
+                        input(type="radio" name="precio" value='250')
                         label='250 a 300€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='300')
+                        input(type="radio" name="precio" value='300')
                         label='300 a 350€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='350')
+                        input(type="radio" name="precio" value='350')
                         label='350 a 400€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='400')
+                        input(type="radio" name="precio" value='400')
                         label='400 a 450€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='450')
+                        input(type="radio" name="precio" value='450')
                         label='450 a 500€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='500')
+                        input(type="radio" name="precio" value='500')
                         label='500 a 600€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='600')
+                        input(type="radio" name="precio" value='600')
                         label='600 a 700€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='700')
+                        input(type="radio" name="precio" value='700')
                         label='700 a 800€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='800')
+                        input(type="radio" name="precio" value='800')
                         label='800 a 900€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='900')
+                        input(type="radio" name="precio" value='900')
                         label='900 a 1000€'
                         br
-                        input(type="radio" name="busquedaPorPrecio" value='1000')
+                        input(type="radio" name="precio" value='1000')
                         label='> 1000€'
                         br
-                    button(type='submit')='Buscar'
+                    button.btnTexto#posBtnBuscarMAD(type='submit')='Buscar'
             div.columnDer
                 each campo in cartaProducto
                     div.tarjetaProductosMAD

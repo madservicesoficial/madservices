@@ -5,8 +5,6 @@ const mysql = require('mysql2');
 const {madservicesEmpresadb} = require('../../../config/database.js');
 //-- Importamos la Tecnología para cifrar y verificar las contraseñas.
 const { compare, hash } = require('bcrypt');
-//-- Importamos la función que comprueba que no se repita el ID aleatorio.
-const consultaID = require('../consultar/ID.js');
 
 //-- Creamos la función que comprueba el ID de la base de datos para no repetir.
 const consultaID = (idEmpresa, callback) => {

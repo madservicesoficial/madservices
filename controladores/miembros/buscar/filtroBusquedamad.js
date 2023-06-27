@@ -6,8 +6,9 @@ const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { busquedaPorPreciodb, busquedaPorCategoriadb, busquedaPorCategoriaPreciodb, busquedaPorTitulodb,
-busquedaPorTituloPreciodb, busquedaPorCategoriaTitulodb, busquedaPorTodo} = require('../../../modelos/clientes/buscar/buscar.js');
+const { busquedaPorTitulodb, busquedaPorCategoriadb, busquedaPorPreciodb, busquedaPorCategoriaPreciodb,
+busquedaPorTituloPreciodb, busquedaPorCategoriaTitulodb, busquedaPorTodo} = require('../../../modelos/miembros/buscar/buscar.js');
+const { mostrarProductosMADmiembrosdb } = require('../../../modelos/miembros/mostrar/mostrar.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -46,21 +47,83 @@ const filtroBusquedaMADMiembro = (req, res) => {
                 icon: path.join(__dirname, '../../../public/images/buscar.png')
             }
         );
-        res.status(201).render('paginas/clientes/productosmadservices', { id: id });
-        return res.end();
+        mostrarProductosMADmiembrosdb(id, res);
     }else if(!titulo && categoria === 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD entre ${min}€ y ${max}€`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorPreciodb(min, max, res, id);
     }else if(!titulo && categoria !== 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por la categoria de ${categoria}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriadb(categoria, res, id);
     }else if(!titulo && categoria !== 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por la categoria de ${categoria} entre ${min}€ y ${max}€`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriaPreciodb(categoria, min, max, res, id);
     }else if(titulo && categoria === 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por el título de ${titulo}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTitulodb(titulo, res, id);
     }else if(titulo && categoria === 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por el título de ${titulo} entre ${min}€ y ${max}€`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTituloPreciodb(titulo, min, max, res, id);
     }else if(titulo && categoria !== 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por el título de ${titulo} y la categoria de ${categoria}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriaTitulodb(categoria, titulo, res, id);
     }else if(titulo && categoria !== 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Buscando productos MAD por el título de ${titulo}, la categoria de ${categoria} y entre ${min}€ y ${max}€`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTodo(categoria, titulo, min, max, res, id);
     }
 }

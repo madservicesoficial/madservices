@@ -1,14 +1,12 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología para leer ficheros.
 const fs = require('fs');
-//-- Importamos la Tecnología para seguir la ruta a los archivos locales.
+//-- Importamos la Tecnología para seguir la ruta a los archivos locales y para encaminar a archivo a usar.
 const path = require('path');
 //-- Importamos la Tecnología para leer de forma asíncrona.
 const util = require('util');
 //-- Importamos la Tecnología para sacar la alerta/notificación.
 const notifier = require('node-notifier');
-//-- Importamos la Tecnología para encaminar a archivo a usar.
-const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//

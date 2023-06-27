@@ -675,6 +675,16 @@ canvas {
 .cuadroProductoCompradoEnInterfaz img {
   width: 80;
 }
+.btnEdicionMiembroEnInterfaz {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+}
+.btnDarBajaOtrosEnInterfazMiembro {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+}
 /*##################################################################################################*/
 /*##################################### SECCIÓN PRODUCTOS MAD ######################################*/
 /*##################################################################################################*/
