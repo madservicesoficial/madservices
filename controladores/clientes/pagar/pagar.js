@@ -1,6 +1,8 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
 const validarCard = require('card-validator');
 //#######################################################################################################//
@@ -31,26 +33,58 @@ const compraPagada = async (req, res) => {
             nombreTarjeta = await adquirirNombredb(id);
         }
         if(!numTarjeta || !expiracion || !cvv) {
-            //-- Mostrar alerta.
-            alerta('Campos vacíos');
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Campos vacíos',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+            return res.end();
         }else {
             if(nombreTarjeta > 148) {
-                //-- Mostrar alerta.
-                alerta(`${nombreTarjeta} demasiado largo`);
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `${nombreTarjeta} demasiado largo`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                return res.end();
             }else if(!validacionCard.isValid || numTarjeta.length > 18) {
-                //-- Mostrar alerta.
-                alerta(`${numTarjeta} es un nº de tarjeta bancaria inválido`);
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `${numTarjeta} es un número de tarjeta bancaria inválido`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                return res.end();
             }else if(!validacionCVV.isValid) {
-                //-- Mostrar alerta.
-                alerta(`${cvv} es un código CVV inválido`);
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `${cvv} es un código CVV inválido`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                return res.end();
             }else {
                 if(guardarTarjeta) {
                     //-- Llamada a función.

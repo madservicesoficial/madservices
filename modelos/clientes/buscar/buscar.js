@@ -67,7 +67,7 @@ const busquedaPorTituloPreciodb = (titulo, min, max, res, id) => {
 }
 
 //-- Función que consulta la categoria y el título metido en la base de datos.
-const busquedaPorCategoriaTitulodb = (titulo, categoria, res, id) => {
+const busquedaPorCategoriaTitulodb = (categoria, titulo, res, id) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsulta = 'SELECT * FROM productos WHERE producto = ? AND titulo LIKE ?';
@@ -80,7 +80,7 @@ const busquedaPorCategoriaTitulodb = (titulo, categoria, res, id) => {
 }
 
 //-- Función que consulta la categoria y el título metido en la base de datos.
-const busquedaPorTodo = (titulo, categoria, min, max, res, id) => {
+const busquedaPorTodo = (categoria, titulo, min, max, res, id) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsulta = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ? AND producto = ? AND titulo LIKE ?';

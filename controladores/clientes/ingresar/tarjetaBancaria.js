@@ -1,12 +1,14 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //-- Importamos la Tecnología para validar datos de la tarjeta bancaria del cliente.
 const validarCard = require('card-validator');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { ingresarTarjetaBankdb } = require('../../../modelos/clientes/ingresar/ingresar.js');
+const { consultarTarjetaBankdb, ingresarTarjetaBankdb } = require('../../../modelos/clientes/ingresar/ingresar.js');
 const { adquirirNombredb } = require('../../../modelos/clientes/guardar/guardar.js');
 //#######################################################################################################//
 
@@ -23,41 +25,115 @@ const ingresarTarjetaBank = async (req, res) => {
     const newExpiracion = validez + '-01';
     const validacionCard = validarCard.number(numtarjeta);
     const validacionCVV = validarCard.cvv(cvv);
-    //-- Proceso de validación.
+    //-- Función extra.
     if(!namecard) {
         namecard = await adquirirNombredb(id);
     }
+    //-- Proceso de validación.
     if(!numtarjeta || !validez || !cvv) {
-        //-- Mostrar alerta.
-        alerta('Campos vacíos');
-        //-- Redirigir.
-        return res.redirect(`/sesion-cliente/${id}/perfil`);
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Campos vacíos',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401);
+        res.redirect(`/sesion-cliente/${id}/perfil`);
+        return res.end();
     }else {
         if(namecard > 148) {
-            //-- Mostrar alerta.
-            alerta(`${namecard} demasiado largo`);
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: `${namecard} demasiado largo`,
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
+            return res.end();
         }else if(!validacionCard.isValid || numtarjeta.length > 18) {
-            //-- Mostrar alerta.
-            alerta(`${numtarjeta} es un nº de tarjeta bancaria inválido`);
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: `${numtarjeta} es un número de tarjeta bancaria inválido`,
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
+            return res.end();
         }else if(!validacionCVV.isValid) {
-            //-- Mostrar alerta.
-            alerta(`${cvv} es un código CVV inválido`);
-            //-- Redirigir.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: `${cvv} es un código CVV inválido`,
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
+            return res.end();
         }else {
-            //-- Proceso de ingresar la tarjeta bancaria.
             if(ingresaCard) {
                 //-- Llamada a función.
-                ingresarTarjetaBankdb(id, numtarjeta, newExpiracion, namecard, cvv, res);
+                consultarTarjetaBankdb
+                (
+                    id,
+                    (salida) => {
+                        if(salida === 0) {
+                            //-- Llamada a función.
+                            ingresarTarjetaBankdb(id, numtarjeta, newExpiracion, namecard, cvv);
+                            notifier.notify(
+                                {
+                                    sound: true,
+                                    wait: true,
+                                    title: '¡Ingresado!',
+                                    message: 'Tarjeta bancaria ingresada',
+                                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                }
+                            );
+                            res.status(201);
+                            res.redirect(`/sesion-cliente/${id}/perfil`);
+                            return res.end();
+                        }else {
+                            notifier.notify(
+                                {
+                                    sound: true,
+                                    wait: true,
+                                    title: '¡Atención!',
+                                    message: 'Ya ingresaste una tarjeta bancaria en tu perfil',
+                                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                }
+                            );
+                            res.status(401);
+                            res.redirect(`/sesion-cliente/${id}/perfil`);
+                            return res.end();
+                        }
+                    }
+                );
             }else {
-                //-- Mostrar alerta.
-                alerta('Sin pulsar el cuadro, no hay ingreso de la tarjeta bancaria');
-                //-- Redirigir.
-                return res.redirect(`/sesion-cliente/${id}/perfil`);
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'Sin pulsar el cuadro, no hay ingreso de la tarjeta bancaria',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-cliente/${id}/perfil`);
+                return res.end();
             }
         }
     }

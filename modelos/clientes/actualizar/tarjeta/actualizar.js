@@ -5,22 +5,17 @@ const mysql = require('mysql2');
 const {madservicesClientedb} = require('../../../../config/database.js');
 
 //-- Crear la función para consultar si hay tarjeta bancaria en base de datos o no.
-const consultarTarjetaBankdb = (id, existenciaTarjBank, callback) => {
+const consultarTarjetaBankdb = (id, callback) => {
 
     let instruccionVerTarjetaBank = 'SELECT * FROM tarjeta WHERE id = ?';
     let formatoInstruccionVerTarjetaBank = mysql.format(instruccionVerTarjetaBank, [id]);
     madservicesClientedb.query(formatoInstruccionVerTarjetaBank, (error, results) => {
         if(error) throw error;
-        if(results.length === 0) {
-            existenciaTarjBank = 0;
-            callback(existenciaTarjBank);
-        }else {
-            existenciaTarjBank = 1;
-            callback(existenciaTarjBank);
-        }
+        callback(results.length);
     });
 }
-//-- Crear la función para editar el nº de la tarjeta bancaria en base de datos.
+
+//-- Crear la función para editar todos los campos de una tarjeta bancaria en base de datos.
 const editarNumTarjetaBankdb = (id, numtarjeta) => {
 
     let instruccionActualizarTarjetaBank = 'UPDATE tarjeta SET numcard = ? WHERE id = ?';

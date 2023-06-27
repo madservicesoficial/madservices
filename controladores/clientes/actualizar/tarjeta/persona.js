@@ -15,16 +15,28 @@ const editarNombreTarjetaBank = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const namecard = req.body.namecard;
-    let existenciaTarjBank = 0;
-    let codResp = 1;
     //-- Proceso de validación.
     if(namecard) {
         //-- Llamada a función.
         consultarTarjetaBankdb
         (
-            id, existenciaTarjBank,
+            id,
             (existenciaTarjBank) => {
-                if(existenciaTarjBank === 1) {
+                if(existenciaTarjBank === 0) {
+                    //-- Renderizar y mostrar mensaje.
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: 'No hay tarjeta bancaria a actualizar',
+                            icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
+                        }
+                    );
+                    res.status(401);
+                    res.redirect(`/sesion-cliente/${id}/perfil`);
+                    return res.end();
+                }else {
                     if(namecard.length > 25) {
                         //-- Renderizar y mostrar mensaje.
                         notifier.notify(
@@ -36,8 +48,7 @@ const editarNombreTarjetaBank = (req, res) => {
                                 icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                             }
                         );
-                        codResp = 401;
-                        res.status(codResp);
+                        res.status(401);
                         res.redirect(`/sesion-cliente/${id}/perfil`);
                         return res.end();
                     }else {
@@ -53,26 +64,10 @@ const editarNombreTarjetaBank = (req, res) => {
                                 icon: path.join(__dirname, '../../../../public/images/correcto.png')
                             }
                         );
-                        codResp = 201;
-                        res.status(codResp);
+                        res.status(201);
                         res.redirect(`/sesion-cliente/${id}/perfil`);
                         return res.end();
                     }
-                }else {
-                    //-- Renderizar y mostrar mensaje.
-                    notifier.notify(
-                        {
-                            sound: true,
-                            wait: true,
-                            title: '¡Atención!',
-                            message: 'No hay tarjeta bancaria a actualizar',
-                            icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
-                        }
-                    );
-                    codResp = 401;
-                    res.status(codResp);
-                    res.redirect(`/sesion-cliente/${id}/perfil`);
-                    return res.end();
                 }
             }
         );
@@ -87,8 +82,7 @@ const editarNombreTarjetaBank = (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }

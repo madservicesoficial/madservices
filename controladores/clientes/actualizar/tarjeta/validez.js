@@ -15,16 +15,28 @@ const editarValidezTarjetaBank = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const validez = req.body.validez;
-    let existenciaTarjBank = 0;
-    let codResp = 1;
     //-- Proceso de validación.
     if(validez) {
         //-- Llamada a función.
         consultarTarjetaBankdb
         (
-            id, existenciaTarjBank,
+            id,
             (existenciaTarjBank) => {
-                if(existenciaTarjBank === 1) {
+                if(existenciaTarjBank === 0) {
+                    //-- Renderizar y mostrar mensaje.
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: 'No hay tarjeta bancaria a actualizar',
+                            icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
+                        }
+                    );
+                    res.status(401);
+                    res.redirect(`/sesion-cliente/${id}/perfil`);
+                    return res.end();
+                }else {
                     const newExpiracion = validez + '-01';
                     //-- Llamada a función.
                     editarValidezTarjetaBankdb(id, newExpiracion);
@@ -38,23 +50,7 @@ const editarValidezTarjetaBank = (req, res) => {
                             icon: path.join(__dirname, '../../../../public/images/correcto.png')
                         }
                     );
-                    codResp = 201;
-                    res.status(codResp);
-                    res.redirect(`/sesion-cliente/${id}/perfil`);
-                    return res.end();
-                }else {
-                    //-- Renderizar y mostrar mensaje.
-                    notifier.notify(
-                        {
-                            sound: true,
-                            wait: true,
-                            title: '¡Atención!',
-                            message: 'No hay tarjeta bancaria a actualizar',
-                            icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
-                        }
-                    );
-                    codResp = 401;
-                    res.status(codResp);
+                    res.status(201);
                     res.redirect(`/sesion-cliente/${id}/perfil`);
                     return res.end();
                 }
@@ -71,8 +67,7 @@ const editarValidezTarjetaBank = (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }

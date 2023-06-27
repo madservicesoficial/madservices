@@ -34,7 +34,6 @@ const actualizarLocalizacion = async (req, res) => {
     let countryCode = countries.getCode(pais);
     const minLong = 5;
     const maxLong = 48;
-    let codResp = 1;
     //-- Proceso de validación.
     if(pais && cp && region && poblacion && direccion) {
         if(paises.includes(pais) || paisesENG.includes(pais)) {
@@ -68,8 +67,7 @@ const actualizarLocalizacion = async (req, res) => {
                                         icon: path.join(__dirname, '../../../../public/images/correcto.png')
                                     }
                                 );
-                                codResp = 201;
-                                res.status(codResp);
+                                res.status(201);
                                 res.redirect(`/sesion-cliente/${id}/perfil`);
                                 return res.end();
                             }else {
@@ -83,8 +81,7 @@ const actualizarLocalizacion = async (req, res) => {
                                         icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                                     }
                                 );
-                                codResp = 401;
-                                res.status(codResp);
+                                res.status(401);
                                 res.redirect(`/sesion-cliente/${id}/perfil`);
                                 return res.end();
                             }
@@ -99,8 +96,7 @@ const actualizarLocalizacion = async (req, res) => {
                                     icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                                 }
                             );
-                            codResp = 401;
-                            res.status(codResp);
+                            res.status(401);
                             res.redirect(`/sesion-cliente/${id}/perfil`);
                             return res.end();
                         }
@@ -115,8 +111,7 @@ const actualizarLocalizacion = async (req, res) => {
                                 icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                             }
                         );
-                        codResp = 401;
-                        res.status(codResp);
+                        res.status(401);
                         res.redirect(`/sesion-cliente/${id}/perfil`);
                         return res.end();
                     }
@@ -131,8 +126,7 @@ const actualizarLocalizacion = async (req, res) => {
                             icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                         }
                     );
-                    codResp = 401;
-                    res.status(codResp);
+                    res.status(401);
                     res.redirect(`/sesion-cliente/${id}/perfil`);
                     return res.end();
                 }
@@ -147,8 +141,7 @@ const actualizarLocalizacion = async (req, res) => {
                         icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                     }
                 );
-                codResp = 401;
-                res.status(codResp);
+                res.status(401);
                 res.redirect(`/sesion-cliente/${id}/perfil`);
                 return res.end();
             }
@@ -163,8 +156,7 @@ const actualizarLocalizacion = async (req, res) => {
                     icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                 }
             );
-            codResp = 401;
-            res.status(codResp);
+            res.status(401);
             res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }
@@ -179,8 +171,7 @@ const actualizarLocalizacion = async (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }

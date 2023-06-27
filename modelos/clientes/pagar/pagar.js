@@ -3,10 +3,12 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 //-- Importamos la Tecnología para sacar la hora de Madrid con la fecha.
 const { DateTime } = require('luxon');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 
 //-- Creamos la función para borrar el carrito según el ID del cliente que está comprando.
 const borrarCarritoSegunIDdb = (id) => {
@@ -100,15 +102,23 @@ const confirmacionCompradb = (id, cont, res) => {
     let formatoInstruccionConsultarProductoComprado = mysql.format(instruccionConsultarProductoComprado, [id]);
     madservicesClientedb.query(formatoInstruccionConsultarProductoComprado, (error, results) => {
         if(error) throw error;
-        if (cont >= results.length) {
+        if(cont >= results.length) {
             //-- Proceso de operaciones de la compra con alerta de éxito y redirección.
             operacionCompradb(id);
             //-- Borrar el carrito según el ID cliente que ha comprado.
             borrarCarritoSegunIDdb(id);
-            //-- Mostrar alerta de que el producto o productos han sido comprados con éxito.
-            alerta('¡Compra realizada con éxito!');
-            //-- Redirigir al perfil del cliente.
-            return res.redirect(`/sesion-cliente/${id}/perfil`);
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Hecho!',
+                    message: '¡Compra realizada con éxito!',
+                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                }
+            );
+            res.status(201);
+            res.redirect(`/sesion-cliente/${id}/perfil`);
+            return res.end();
         }else {
             let instruccionSacar = 'SELECT * FROM productos WHERE titulo = ?';
             let formatoInstruccionSacar = mysql.format(instruccionSacar, [results[cont].titulo]);
@@ -120,10 +130,18 @@ const confirmacionCompradb = (id, cont, res) => {
                     cont = cont + 1;
                     confirmacionCompradb(id, cont, res);
                 }else {
-                    //-- Mostrar alerta.
-                    alerta(`Tienes en el carrito más productos de ${results[cont].titulo} de los que hay para comprar`);
-                    //-- Redirigir.
-                    return res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                    notifier.notify(
+                        {
+                            sound: true,
+                            wait: true,
+                            title: '¡Atención!',
+                            message: `Tienes en el carrito más productos de ${results[cont].titulo} de los que hay para comprar`,
+                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                        }
+                    );
+                    res.status(401);
+                    res.redirect(`/sesion-cliente/${id}/carrito/comprar`);
+                    return res.end();
                 }
             });
         }

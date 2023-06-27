@@ -33,8 +33,7 @@ const borrarTarjetaBank = (req, res) => {
                             icon: path.join(__dirname, '../../../public/images/incorrecto.png')
                         }
                     );
-                    codResp = 401;
-                    res.status(codResp);
+                    res.status(401);
                     res.redirect(`/sesion-cliente/${id}/perfil`);
                     return res.end();
                 }else {
@@ -50,8 +49,7 @@ const borrarTarjetaBank = (req, res) => {
                             icon: path.join(__dirname, '../../../public/images/correcto.png')
                         }
                     );
-                    codResp = 201;
-                    res.status(codResp);
+                    res.status(201);
                     res.redirect(`/sesion-cliente/${id}/perfil`);
                     return res.end();
                 }
@@ -68,8 +66,7 @@ const borrarTarjetaBank = (req, res) => {
                 icon: path.join(__dirname, '../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }

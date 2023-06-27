@@ -31,8 +31,7 @@ const quitarProductos = (req, res) => {
                         icon: path.join(__dirname, '../../../public/images/correcto.png')
                     }
                 );
-                codResp = 201;
-                res.status(codResp);
+                res.status(201);
                 res.redirect(`/sesion-cliente/${id}/carrito`);
                 return res.end();
             }else {
@@ -46,8 +45,7 @@ const quitarProductos = (req, res) => {
                         icon: path.join(__dirname, '../../../public/images/correcto.png')
                     }
                 );
-                codResp = 201;
-                res.status(codResp);
+                res.status(201);
                 res.redirect(`/sesion-cliente/${id}/carrito`);
                 return res.end();
             }

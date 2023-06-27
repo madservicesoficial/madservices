@@ -6,7 +6,7 @@ const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { consultarEmailClientesdb, iniciarSesionClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
+const { consultarEmailClientesdb, consultarPasswordClientesdb, iniciarSesionClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -49,24 +49,31 @@ const iniciarSesionClientes = (req, res) => {
                     return res.end();
                 }else {
                     //-- Llamada a función.
-                    iniciarSesionClientesdb
+                    consultarPasswordClientesdb
                     (
                         email, password,
                         (match) => {
                             if(match) {
-                                req.session.miembro = miembro;
-                                const id = miembro.id;
-                                notifier.notify(
-                                    {
-                                        sound: true,
-                                        wait: true,
-                                        title: '¡Autenticado!',
-                                        message: 'Cliente autenticado con éxito',
-                                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                iniciarSesionClientesdb
+                                (
+                                    email,
+                                    (miembro) => {
+                                        req.session.miembro = miembro;
+                                        const id = miembro.id;
+                                        notifier.notify(
+                                            {
+                                                sound: true,
+                                                wait: true,
+                                                title: '¡Autenticado!',
+                                                message: 'Cliente autenticado con éxito',
+                                                icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                            }
+                                        );
+                                        res.status(201);
+                                        res.redirect(`/sesion-cliente/${id}`);
+                                        return res.end();
                                     }
                                 );
-                                res.status(201).render('paginas/clientes/inicio', { id: id });
-                                return res.end();
                             }else {
                                 notifier.notify(
                                     {
@@ -85,7 +92,6 @@ const iniciarSesionClientes = (req, res) => {
                 }
             }
         );
-        iniciarSesionClientesdb(req, res);
     }
 }
 //#######################################################################################################//

@@ -15,7 +15,6 @@ const actualizarGeneroCliente = (req, res) => {
     //-- Variables y Ctes.
     let id = req.params.id;
     const genero = req.body.genero;
-    let codResp = 1;
     //-- Proceso de validación.
     if(genero) {
         actualizarGenerodb(id, genero);
@@ -29,8 +28,7 @@ const actualizarGeneroCliente = (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/correcto.png')
             }
         );
-        codResp = 201;
-        res.status(codResp);
+        res.status(201);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }else {
@@ -44,8 +42,7 @@ const actualizarGeneroCliente = (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }

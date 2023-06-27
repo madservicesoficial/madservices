@@ -18,7 +18,8 @@ const path = require('path');
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
 const { consultaID, consultarEmailClientesEnRegistrodb, registroClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
-const { generarIDrandom } = require('');
+//-- Importamos la función que genera el ID aleatoriamente.
+const generarIDrandom = require('../../../controladores/general/generar/IDaleatorio.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -167,16 +168,39 @@ const registroClientes = async (req, res) => {
                                                     res.status(401).render('paginas/clientes/registrarse');
                                                     return res.end();
                                                 }else {
-
+                                                    let idCliente = generarIDrandom() * 2;
+                                                    consultaID
+                                                    (
+                                                        idCliente,
+                                                        (idExiste) => {
+                                                            while(idExiste) {
+                                                                idCliente = generarIDrandom() * 2;
+                                                                consultaID(idCliente, (idExiste) => {
+                                                                    idExiste = idExiste;
+                                                                });
+                                                            }
+                                                        }
+                                                    );
+                                                    registroClientesdb
+                                                    (
+                                                        {id: idCliente, email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
+                                                        region: region, pais: pais, cp: cp, genero: genero},
+                                                        password
+                                                    );
+                                                    notifier.notify(
+                                                        {
+                                                            sound: true,
+                                                            wait: true,
+                                                            title: '¡Registrado!',
+                                                            message: 'Cliente registrado con éxito',
+                                                            icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                                        }
+                                                    );
+                                                    res.status(201);
+                                                    res.redirect('/');
+                                                    return res.end();
                                                 }
                                             }
-                                        );
-                                        registroClientesdb
-                                        (
-                                            {email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
-                                            region: region, pais: pais, cp: cp, genero: genero},
-                                            password,
-                                            res
                                         );
                                     }else {
                                         //-- Renderizar y mostrar mensaje.

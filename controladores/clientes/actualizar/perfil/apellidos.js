@@ -16,7 +16,6 @@ const actualizarApellidos = (req, res) => {
     let id = req.params.id;
     const apellidos = req.body.apellidos;
     const maxLong = 96;
-    let codResp = 1;
     //-- Proceso de validación.
     if(apellidos) {
         if(apellidos.length > maxLong) {
@@ -30,8 +29,7 @@ const actualizarApellidos = (req, res) => {
                     icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
                 }
             );
-            codResp = 401;
-            res.status(codResp);
+            res.status(401);
             res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }else {
@@ -46,8 +44,7 @@ const actualizarApellidos = (req, res) => {
                     icon: path.join(__dirname, '../../../../public/images/correcto.png')
                 }
             );
-            codResp = 201;
-            res.status(codResp);
+            res.status(201);
             res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }
@@ -62,8 +59,7 @@ const actualizarApellidos = (req, res) => {
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );
-        codResp = 304;
-        res.status(codResp);
+        res.status(304);
         res.redirect(`/sesion-cliente/${id}/perfil`);
         return res.end();
     }
