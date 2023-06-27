@@ -48,18 +48,81 @@ const filtroBusquedaMAD = (req, res) => {
         );
         mostrarProductosMADdb(res);
     }else if(!titulo && categoria === 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por precio',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorPreciodb(min, max, res);
     }else if(!titulo && categoria !== 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por categoría',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriadb(categoria, res);
     }else if(!titulo && categoria !== 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por categoría y precio',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriaPreciodb(categoria, min, max, res);
     }else if(titulo && categoria === 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por título',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTitulodb(titulo, res);
     }else if(titulo && categoria === 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por título y precio',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTituloPreciodb(titulo, min, max, res);
     }else if(titulo && categoria !== 'Todo' && precio === 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por título y categoría',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorCategoriaTitulodb(categoria, titulo, res);
     }else if(titulo && categoria !== 'Todo' && precio !== 'Todos') {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Por título, precio y categoría',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         busquedaPorTodo(categoria, titulo, min, max, res);
     }
 }

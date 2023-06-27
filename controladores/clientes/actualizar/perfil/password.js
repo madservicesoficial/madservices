@@ -103,7 +103,7 @@ const actualizarPasswordCliente = (req, res) => {
                 sound: true,
                 wait: true,
                 title: '¡Sin cambios!',
-                message: 'Contraseña no actualizada',
+                message: 'Requisito para actualizar la contraseña: Completar los tres campos',
                 icon: path.join(__dirname, '../../../../public/images/NotModified.png')
             }
         );

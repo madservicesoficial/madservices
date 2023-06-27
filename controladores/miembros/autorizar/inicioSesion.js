@@ -1,3 +1,10 @@
+//######################################### TECNOLOGÍAS USADAS ##########################################//
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
+//#######################################################################################################//
+
 //###################################### ENTORNO DE VARIABLES ENV #######################################//
 require('../../../config/env.js');
 //#######################################################################################################//
@@ -9,15 +16,44 @@ const autorizacionInicioSesionMiembros = (req, res) => {
     const password = req.body.password;
     //-- Proceso de validación.
     if(password === process.env.MYSQL_PASSWORD_ADMIN) {
-        //-- Redirigir.
-        return res.status(201).redirect('/login/autorizar/miembro');
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Acceso confirmado!',
+                message: 'La contraseña se ha escrito correctamente',
+                icon: path.join(__dirname, '../../../public/images/correcto.png')
+            }
+        );
+        res.status(201);
+        res.redirect('/login/autorizar/miembro');
+        return res.end();
     }else if(!password) {
         //-- Renderizar y mostrar mensaje.
-        res.status(401).render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Campo vacío'});
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Acceso denegado!',
+                message: 'Campo vacío',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401).render('paginas/miembros/autorizacionInicioSesion');
         return res.end();
     }else {
         //-- Renderizar y mostrar mensaje.
-        res.status(401).render('paginas/miembros/autorizacionInicioSesion', {msjError: 'Contraseña incorrecta'});
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Acceso denegado!',
+                message: 'Contraseña incorrecta',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401).render('paginas/miembros/autorizacionInicioSesion');
         return res.end();
     }
 }

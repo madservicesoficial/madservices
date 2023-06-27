@@ -3,10 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../config/database.js');
-//-- Importamos la Tecnología para sacar la alerta/notificación.
-const notifier = require('node-notifier');
-//-- Importamos la Tecnología para encaminar a archivo a usar.
-const path = require('path');
 
 //-- Función que consulta el título metido en la base de datos.
 const busquedaPorTitulodb = (titulo, res) => {
@@ -16,15 +12,6 @@ const busquedaPorTitulodb = (titulo, res) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
@@ -37,15 +24,6 @@ const busquedaPorCategoriadb = (categoria, res) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [categoria]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por categoría',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
@@ -58,15 +36,6 @@ const busquedaPorPreciodb = (min, max, res) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por precio',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
@@ -79,15 +48,6 @@ const busquedaPorCategoriaPreciodb = (categoria, min, max, res) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por categoría y precio',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
@@ -101,59 +61,32 @@ const busquedaPorTituloPreciodb = (titulo, min, max, res) => {
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título y precio',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
 }
 
 //-- Función que consulta la categoria y el título metido en la base de datos.
-const busquedaPorCategoriaTitulodb = (titulo, categoria, res) => {
+const busquedaPorCategoriaTitulodb = (categoria, titulo, res) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsulta = 'SELECT * FROM productos WHERE producto = ? AND titulo LIKE ?';
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [categoria, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título y categoría',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });
 }
 
 //-- Función que consulta la categoria y el título metido en la base de datos.
-const busquedaPorTodo = (titulo, categoria, min, max, res) => {
+const busquedaPorTodo = (categoria, titulo, min, max, res) => {
 
     let incluir = `%${titulo}%`;
     let instruccionConsulta = 'SELECT * FROM productos WHERE precio BETWEEN ? AND ? AND producto = ? AND titulo LIKE ?';
     let formatoInstruccionConsulta = mysql.format(instruccionConsulta, [min, max, categoria, incluir]);
     madservicesClientedb.query(formatoInstruccionConsulta, (error, results) => {
         if(error) throw error;
-        notifier.notify(
-            {
-                sound: true,
-                wait: true,
-                title: '¡Búsqueda!',
-                message: 'Por título, precio y categoría',
-                icon: path.join(__dirname, '../../../public/images/buscar.png')
-            }
-        );
         res.status(201).render('paginas/general/productosmadservices', { cartaProducto: results});
         return res.end();
     });

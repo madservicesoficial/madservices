@@ -64,7 +64,7 @@ const iniciarSesionClientes = (req, res) => {
                                             {
                                                 sound: true,
                                                 wait: true,
-                                                title: '¡Autenticado!',
+                                                title: '¡Sesión iniciada!',
                                                 message: 'Cliente autenticado con éxito',
                                                 icon: path.join(__dirname, '../../../public/images/correcto.png')
                                             }

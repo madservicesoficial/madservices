@@ -12,7 +12,7 @@ const path = require('path');
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
 const { consultaID, consultarEmailEnRegistroEmpresasdb, registroEmpresasdb } = require('../../../modelos/empresas/entrada/entrada.js');
 //-- Importamos la función que genera el ID aleatoriamente.
-const generarIDrandom = require('../../../controladores/general/generar/IDaleatorio.js');
+const generarIDrandom = require('../../general/generar/IDaleatorio.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//

@@ -18,12 +18,48 @@ const filtroBusqueda = (req, res) => {
     const nombre = req.body.nombre;
     //-- Proceso de validación.
     if(!seleccion && !nombre) {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: 'Todo el Centro Comercial',
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         mostrarProductosTheMalldb(res);
     }else if(seleccion && !nombre) {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Por empresa tipo ${seleccion}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         filtroTipoEmpresadb(seleccion, res);
     }else if(!seleccion && nombre) {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Por la empresa de ${nombre}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         filtroNombreEmpresadb(nombre, res);
     }else if(seleccion && nombre) {
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Búsqueda!',
+                message: `Por la empresa de ${nombre} de tipo ${seleccion}`,
+                icon: path.join(__dirname, '../../../public/images/buscar.png')
+            }
+        );
         filtroTotalEmpresadb(seleccion, nombre, res);
     }
 }
