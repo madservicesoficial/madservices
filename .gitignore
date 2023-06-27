@@ -4,6 +4,3 @@
 # Dependencias ignoradas.
 node_modules
 .env
-
-# Archivos excluídos.
-/public/gifs/portadaMADservices.gif
