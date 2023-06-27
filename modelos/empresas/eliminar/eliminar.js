@@ -3,197 +3,143 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesEmpresadb} = require('../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 
 //-- Creamos la función para Dar de Baja a la Empresa de la base de datos de MAD Services.
-const darseBajaEmpresadb = (id, confirmarOpcion, req, res) => {
-    //-- Caso 1: dejar en blanco la confirmación.
-    if(!confirmarOpcion) {
-        //-- Mostrar Alerta Emergente.
-        alerta('Debes confirmar si quieres o no darte de baja');
-        // Redirigir a la interfaz de la Empresa.
-        return res.redirect(`/sesion-empresa/${id}/interfaz`);
-    //-- Caso 2: pulsar que no quieres darte de baja.
-    }else if(confirmarOpcion === 'No') {
-        //-- Mostrar Alerta Emergente.
-        alerta('Gracias por no querer darte de baja');
-        // Redirigir a la interfaz de la Empresa.
-        return res.redirect(`/sesion-empresa/${id}/interfaz`);
-    //-- Caso 3: pulsar que sí quieres darte de baja.
-    }else if(confirmarOpcion === 'Sí') {
-        //-- Instrucción para dar de baja.
-        let instruccionDarDeBajaEmpresa = 'DELETE FROM empresas WHERE id = ?';
-        //-- Configuración del formato de la instrucción dar de baja.
-        let formatoinstruccionDarDeBajaEmpresa = mysql.format(instruccionDarDeBajaEmpresa, [id]);
-        //-- Proceso de dar de baja.
-        madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
-        //-- Destruir sesión.
-        req.session.destroy();
-        //-- Mostrar Alerta Emergente.
-        alerta('Empresa dada de baja definitivamente');
-        // Redirigir a la página principal de la aplicación.
-        return res.redirect('/');
-    }
+const darseBajaEmpresadb = (id) => {
+
+    let instruccionDarDeBajaEmpresa = 'DELETE FROM empresas WHERE id = ?';
+    let formatoinstruccionDarDeBajaEmpresa = mysql.format(instruccionDarDeBajaEmpresa, [id]);
+    madservicesEmpresadb.query(formatoinstruccionDarDeBajaEmpresa);
 }
 
-//-- Creamos las funciones para borrar en la interfaz de empresa.
-const borrarDescripcionEmpresadb = (id, res) => {
+//-- Creamos la función para consultar la descripción de la interfaz de empresa.
+const consultarDescripcionEmpresadb = (id, callback) => {
 
-    //-- Consultar si hay descripción para poder borrarla.
     let instruccionConsultaDescripcion = 'SELECT * FROM empresas WHERE id = ?';
     let formatoInstruccionConsultaDescripcion = mysql.format(instruccionConsultaDescripcion, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaDescripcion, (error, results) => {
         if(error) throw error;
-        if(results[0].descripcion === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            //-- Proceso para borrar la descripción.
-            let instruccionBorrarDescripcion = 'UPDATE empresas SET descripcion = NULL WHERE id = ?';
-            let formatoInstruccionBorrarDescripcion = mysql.format(instruccionBorrarDescripcion, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarDescripcion);
-            //-- Mostrar Alerta Emergente.
-            alerta('Descripción borrada con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
+        callback(results[0].descripcion);
     });
 }
 
-const borrarInstagramEmpresadb = (id, res) => {
+//-- Creamos la función para borrar la descripción de la interfaz de empresa.
+const borrarDescripcionEmpresadb = (id) => {
+
+    let instruccionBorrarDescripcion = 'UPDATE empresas SET descripcion = NULL WHERE id = ?';
+    let formatoInstruccionBorrarDescripcion = mysql.format(instruccionBorrarDescripcion, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarDescripcion);
+}
+
+//-- Creamos la función para consultar el instagram de la interfaz de empresa.
+const consultarInstagramEmpresadb = (id, callback) => {
     
-    //-- Consultar si hay instagram para poder borrarlo.
     let instruccionConsultaInstagram = 'SELECT * FROM empresas WHERE id = ?';
     let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
     madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
         if(error) throw error;
-        if(results[0].instagram === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            //-- Proceso para borrar el instagram.
-            let instruccionBorrarInstagram = 'UPDATE empresas SET instagram = NULL WHERE id = ?';
-            let formatoInstruccionBorrarInstagram = mysql.format(instruccionBorrarInstagram, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarInstagram);
-            //-- Mostrar Alerta Emergente.
-            alerta('Instagram borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
+        callback(results[0].instagram);
     });
 }
 
-const borrarPagWebEmpresadb = (id, res) => {
+//-- Creamos la función para borrar el instagram de la interfaz de empresa.
+const borrarInstagramEmpresadb = (id) => {
+
+    let instruccionBorrarInstagram = 'UPDATE empresas SET instagram = NULL WHERE id = ?';
+    let formatoInstruccionBorrarInstagram = mysql.format(instruccionBorrarInstagram, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarInstagram);
+}
+
+//-- Creamos la función para consultar la Página Web de la interfaz de empresa.
+const consultarPagWebEmpresadb = (id, callback) => {
     
-    //-- Consultar si hay página web para poder borrarla.
-    let instruccionConsultaPagWeb = 'SELECT * FROM empresas WHERE id = ?';
-    let formatoInstruccionConsultaPagWeb = mysql.format(instruccionConsultaPagWeb, [id]);
-    madservicesEmpresadb.query(formatoInstruccionConsultaPagWeb, (error, results) => {
+    let instruccionConsultaInstagram = 'SELECT * FROM empresas WHERE id = ?';
+    let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
         if(error) throw error;
-        if(results[0].pagweb === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            //-- Proceso para borrar el instagram.
-            let instruccionBorrarPagWeb = 'UPDATE empresas SET pagweb = NULL WHERE id = ?';
-            let formatoInstruccionBorrarPagWeb = mysql.format(instruccionBorrarPagWeb, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarPagWeb);
-            //-- Mostrar Alerta Emergente.
-            alerta('Página Web borrada con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
+        callback(results[0].pagweb);
     });
 }
 
-const borrarTwitterEmpresadb = (id, res) => {
+//-- Creamos la función para borrar la Página Web de la interfaz de empresa.
+const borrarPagWebEmpresadb = (id) => {
     
-    //-- Consultar si hay twitter para poder borrarlo.
-    let instruccionConsultaTwitter = 'SELECT * FROM empresas WHERE id = ?';
-    let formatoInstruccionConsultaTwitter = mysql.format(instruccionConsultaTwitter, [id]);
-    madservicesEmpresadb.query(formatoInstruccionConsultaTwitter, (error, results) => {
-        if(error) throw error;
-        if(results[0].twitter === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            //-- Proceso para borrar el instagram.
-            let instruccionBorrarTwitter = 'UPDATE empresas SET twitter = NULL WHERE id = ?';
-            let formatoInstruccionBorrarTwitter = mysql.format(instruccionBorrarTwitter, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarTwitter);
-            //-- Mostrar Alerta Emergente.
-            alerta('Twitter borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
-    });
+    let instruccionBorrarPagWeb = 'UPDATE empresas SET pagweb = NULL WHERE id = ?';
+    let formatoInstruccionBorrarPagWeb = mysql.format(instruccionBorrarPagWeb, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarPagWeb);
 }
 
-const borrarWhatsAppEmpresadb = (id, res) => {
+//-- Creamos la función para consultar el twitter de la interfaz de empresa.
+const consultarTwitterEmpresadb = (id, callback) => {
     
-    //-- Consultar si hay whatsapp para poder borrarlo.
-    let instruccionConsultaWhatsApp = 'SELECT * FROM empresas WHERE id = ?';
-    let formatoInstruccionConsultaWhatsApp = mysql.format(instruccionConsultaWhatsApp, [id]);
-    madservicesEmpresadb.query(formatoInstruccionConsultaWhatsApp, (error, results) => {
+    let instruccionConsultaInstagram = 'SELECT * FROM empresas WHERE id = ?';
+    let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
         if(error) throw error;
-        if(results[0].whatsapp === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            //-- Proceso para borrar el instagram.
-            let instruccionBorrarWhatsApp = 'UPDATE empresas SET whatsapp = NULL WHERE id = ?';
-            let formatoInstruccionBorrarWhatsApp = mysql.format(instruccionBorrarWhatsApp, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarWhatsApp);
-            //-- Mostrar Alerta Emergente.
-            alerta('WhatsApp borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
+        callback(results[0].twitter);
     });
 }
 
-const borrarLogoEmpresadb = (id, res) => {
+//-- Creamos la función para borrar el twitter de la interfaz de empresa.
+const borrarTwitterEmpresadb = (id) => {
+    
+    let instruccionBorrarTwitter = 'UPDATE empresas SET twitter = NULL WHERE id = ?';
+    let formatoInstruccionBorrarTwitter = mysql.format(instruccionBorrarTwitter, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarTwitter);
+}
 
-    let instruccionConsultarLogo = 'SELECT * FROM empresas WHERE id = ?';
-    let formatoInstruccionConsultarLogo = mysql.format(instruccionConsultarLogo, [id]);
-    madservicesEmpresadb.query(formatoInstruccionConsultarLogo, (error, results) => {
+//-- Creamos la función para consultar el whatsapp de la interfaz de empresa.
+const consultarWhatsAppEmpresadb = (id, callback) => {
+    
+    let instruccionConsultaInstagram = 'SELECT * FROM empresas WHERE id = ?';
+    let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
         if(error) throw error;
-        if(results[0].logo === null) {
-            //-- Mostrar Alerta Emergente.
-            alerta('No se puede borrar lo que no existe');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(401).redirect(`/sesion-empresa/${id}/interfaz`);
-        }else {
-            let instruccionBorrarLogo = 'UPDATE empresas SET logo = NULL WHERE id = ?';
-            let formatoInstruccionBorrarLogo = mysql.format(instruccionBorrarLogo, [id]);
-            madservicesEmpresadb.query(formatoInstruccionBorrarLogo);
-            //-- Mostrar Alerta Emergente.
-            alerta('Logo borrado con éxito');
-            //-- Redirigir a la interfaz de la empresa.
-            return res.status(201).redirect(`/sesion-empresa/${id}/interfaz`);
-        }
+        callback(results[0].whatsapp);
     });
+}
+
+//-- Creamos la función para borrar el whatsapp de la interfaz de empresa.
+const borrarWhatsAppEmpresadb = (id) => {
+    
+    let instruccionBorrarWhatsApp = 'UPDATE empresas SET whatsapp = NULL WHERE id = ?';
+    let formatoInstruccionBorrarWhatsApp = mysql.format(instruccionBorrarWhatsApp, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarWhatsApp);
+}
+
+//-- Creamos la función para consultar el logo de la interfaz de empresa.
+const consultarLogoEmpresadb = (id, callback) => {
+    
+    let instruccionConsultaInstagram = 'SELECT * FROM empresas WHERE id = ?';
+    let formatoInstruccionConsultaInstagram = mysql.format(instruccionConsultaInstagram, [id]);
+    madservicesEmpresadb.query(formatoInstruccionConsultaInstagram, (error, results) => {
+        if(error) throw error;
+        callback(results[0].logo);
+    });
+}
+
+//-- Creamos la función para borrar el logo de la interfaz de empresa.
+const borrarLogoEmpresadb = (id) => {
+
+    let instruccionBorrarLogo = 'UPDATE empresas SET logo = NULL WHERE id = ?';
+    let formatoInstruccionBorrarLogo = mysql.format(instruccionBorrarLogo, [id]);
+    madservicesEmpresadb.query(formatoInstruccionBorrarLogo);
 }
 
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     darseBajaEmpresadb,
+    consultarDescripcionEmpresadb,
     borrarDescripcionEmpresadb,
+    consultarInstagramEmpresadb,
     borrarInstagramEmpresadb,
+    consultarPagWebEmpresadb,
     borrarPagWebEmpresadb,
+    consultarTwitterEmpresadb,
     borrarTwitterEmpresadb,
+    consultarWhatsAppEmpresadb,
     borrarWhatsAppEmpresadb,
+    consultarLogoEmpresadb,
     borrarLogoEmpresadb
 };
 //#######################################################################################################//

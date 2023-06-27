@@ -3,10 +3,16 @@
 const validacion = require("validator");
 //-- Importamos la Tecnología para validar el CIF/NIF introducido.
 const cifvalidacion = require('nif-dni-nie-cif-validation');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
+//-- Importamos la Tecnología para encaminar a archivo a usar.
+const path = require('path');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { registrarEmpresaVerificadadb } = require('../../../modelos/empresas/entrada/entrada.js');
+const { consultaID, consultarEmailEnRegistroEmpresasdb, registroEmpresasdb } = require('../../../modelos/empresas/entrada/entrada.js');
+//-- Importamos la función que genera el ID aleatoriamente.
+const generarIDrandom = require('../../../controladores/general/generar/IDaleatorio.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -19,48 +25,144 @@ const registroEmpresas = (req, res) => {
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     const tipo = req.body.tipo;
-    const minLong = 3;
-    const minLong2 = 4 * minLong - 2;
+    const minLong = 10;
     const maxLong = 98;
     const maxLong2 = 50 + maxLong;
     //-- Proceso de validación.
     if(!email || !password || !confirmPassword || !marca || !nif || !tipo) {
         //-- Renderizar y mostrar mensaje.
-        res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Campos vacíos'});
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Campos vacíos',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401).render('paginas/empresas/registrarse');
         return res.end();
     }else {
-        console.log(!cifvalidacion.isValidCif(nif));
-        console.log(!cifvalidacion.isValidNif(nif));
         if(password !== confirmPassword) {
             //-- Renderizar y mostrar mensaje.
-            res.status(401).render('paginas/empresas/registrarse', {mensaje: 'Introduce la misma contraseña en ambos campos'});
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Introduce la misma contraseña en ambos campos',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401).render('paginas/empresas/registrarse');
             return res.end();
         }else {
-            if(marca.length < minLong || marca.length > maxLong2) {
-                res.status(401).render('paginas/empresas/registrarse', {mensaje: 'La marca empresarial es demasiado larga'});
+            if(marca.length > maxLong2) {
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'La marca empresarial es demasiado larga',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/empresas/registrarse');
                 return res.end();
             }else if((cifvalidacion.isValidCif(nif) === false) && (cifvalidacion.isValidNif(nif) === false)) {
-                res.status(401).render('paginas/empresas/registrarse', {mensaje: 'El CIF/NIF no es oficial'});
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'El CIF/NIF no es oficial',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/empresas/registrarse');
                 return res.end();
             }else if(!validacion.isEmail(email)) {
-                res.status(401).render('paginas/empresas/registrarse', { mensaje: `El Email: ${email} no es válido`});
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `El correo electrónico: ${email} no es válido`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/empresas/registrarse');
                 return res.end();
-            }else if(!validacion.isLength(password, { min: minLong2, max: maxLong}) && !validacion.matches(password, /[a-z]/)
+            }else if(!validacion.isLength(password, { min: minLong, max: maxLong}) && !validacion.matches(password, /[a-z]/)
             && !validacion.matches(password, /[A-Z]/) && !validacion.matches(password, /[0-9]/) &&
             !validacion.matches(password, /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-                res.status(401).render('paginas/empresas/registrarse', 
-                {
-                    mensaje: `La contraseña debe contener como mínimo ${minLong2} caracteres, letras`,
-                    mensaje2: 'minúsculas y mayúsculas, números y caracteres especiales'
-                });
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `La contraseña debe contener como mínimo ${minLong} caracteres, minúsculas, mayúsculas, números y caracteres especiales`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401).render('paginas/empresas/registrarse');
                 return res.end();
             }else {
                 //-- Llamada a función.
-                registrarEmpresaVerificadadb
+                consultarEmailEnRegistroEmpresasdb
                 (
-                    {email: email, marca: marca, nif: nif, tipo: tipo},
-                    password,
-                    res
+                    email,
+                    (emailExiste) => {
+                        if(emailExiste) {
+                            //-- Renderizar y mostrar mensaje.
+                            notifier.notify(
+                                {
+                                    sound: true,
+                                    wait: true,
+                                    title: '¡Atención!',
+                                    message: 'Correo ya en uso',
+                                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                }
+                            );
+                            res.status(401).render('paginas/empresas/registrarse');
+                            return res.end();
+                        }else {
+                            let idEmpresa = generarIDrandom() * 3;
+                            //-- Llamada a función.
+                            consultaID
+                            (
+                                idEmpresa,
+                                (idExiste) => {
+                                    while(idExiste) {
+                                        idEmpresa = generarIDrandom() * 3;
+                                        //-- Llamada a función.
+                                        consultaID(idEmpresa, (idExiste) => {
+                                            idExiste = idExiste;
+                                        });
+                                    }
+                                }
+                            );
+                            //-- Llamada a función.
+                            registroEmpresasdb({id: idEmpresa, email: email, marca: marca, nif: nif, tipo: tipo}, password);
+                            //-- Renderizar y mostrar mensaje.
+                            notifier.notify(
+                                {
+                                    sound: true,
+                                    wait: true,
+                                    title: '¡Registrado!',
+                                    message: 'Empresa registrada con éxito',
+                                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
+                                }
+                            );
+                            res.status(201);
+                            res.redirect('/');
+                            return res.end();
+                        }
+                    }
                 );
             }
         }

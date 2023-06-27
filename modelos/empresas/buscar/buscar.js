@@ -29,9 +29,23 @@ const filtroNombreEmpresadb = (id, nombre, res) => {
     });
 }
 
+//-- Función que consulta el nombre y el tipo de empresa elegida.
+const filtroNombreTipoEmpresadb = (id, nombre, seleccion, res) => {
+
+    let incluir = `%${nombre}%`;
+    let instruccionConsultaEmpresa = 'SELECT * FROM empresas WHERE marca LIKE ? AND tipo = ?';
+    let formatoInstruccionConsultaEmpresa= mysql.format(instruccionConsultaEmpresa, [incluir, seleccion]);
+    madservicesEmpresadb.query(formatoInstruccionConsultaEmpresa, (error, results) => {
+        if(error) throw error;
+        res.status(201).render('paginas/empresas/productosTheMall', { empresas: results, id: id });
+        return res.end();
+    });
+}
+
 //########################################### PUNTO DE UNIÓN ############################################//
 module.exports = {
     filtroTipoEmpresadb,
-    filtroNombreEmpresadb
+    filtroNombreEmpresadb,
+    filtroNombreTipoEmpresadb
 };
 //#######################################################################################################//
