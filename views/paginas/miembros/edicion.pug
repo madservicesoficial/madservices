@@ -7,19 +7,19 @@ block title
 block body
     h1#tituloEdicionProductoMAD=`Edición del Producto MAD ${enumeracion}: `
     .interfazEdicionProductoMAD
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-imagen` enctype="multipart/form-data")
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-imagen` enctype="multipart/form-data")
             input(type='hidden' name='_method' value='PATCH')
             label='Imagen de portada: '
             input.inputMiembroMAD(type='file' name='portada' accept="image/*")
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-cantidad`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-cantidad`)
             input(type='hidden' name='_method' value='PATCH')
             label='Cantidad: '
             input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-categoria`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-categoria`)
             input(type='hidden' name='_method' value='PATCH')
             label='Tipo de producto:'
             select(name="categoria")='Categorias'
@@ -47,20 +47,20 @@ block body
                     option='MacBooks'
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-titulo`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-titulo`)
             input(type='hidden' name='_method' value='PATCH')
             label='Título:'
             input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-precio`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-precio`)
             input(type='hidden' name='_method' value='PATCH')
             label='Precio:'
             input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
             span#euros='€'
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-peso`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-peso`)
             input(type='hidden' name='_method' value='PATCH')
             label='Peso (para el envío):'
             select(name="peso")
@@ -74,7 +74,7 @@ block body
             span#euros='Kg'
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
-        form(method='POST' action=`/sesion-miembro/${id}/empieza/productosmadservices/edicion${enumeracion}-descripcion`)
+        form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-descripcion`)
             input(type='hidden' name='_method' value='PATCH')
             label='Descripción:'
             textarea(rows="10" cols="50" name='descripcion' placeholder='Describe el producto....')

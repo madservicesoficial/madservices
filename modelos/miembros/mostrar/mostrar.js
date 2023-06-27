@@ -143,6 +143,11 @@ const mostrarMiembrodb = (id, res) => {
                                 let cantidadInt = parseInt(salida6[h].cantidad, 10);
                                 cantidadQueHay = cantidadQueHay + cantidadInt;
                             }
+                            let totalComprados = 0;
+                            for(let z=0; z<result.length; z++) {
+                                let auxiliarCant = parseInt(result[z].cantidades, 10);
+                                totalComprados = totalComprados + auxiliarCant;
+                            }
                             res.status(201).render('paginas/miembros/interfaz',
                             {
                                 id: id,
@@ -152,7 +157,7 @@ const mostrarMiembrodb = (id, res) => {
                                 departamento: salida3[0].departamento,
                                 genero: salida3[0].genero,
                                 productosMadComprados: result,
-                                totalComprados: result.length,
+                                totalComprados: totalComprados,
                                 ganancias: ganancias,
                                 numHombres: sumaH,
                                 numMujeres: sumaM,

@@ -3,8 +3,6 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesClientedb} = require('../../../config/database.js');
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
-const { compare, hash } = require('bcrypt');
 
 //-- Creamos la función que comprueba el ID de la base de datos para no repetir.
 function consultaID(idCliente, callback) {
@@ -35,9 +33,8 @@ const consultarEmailClientesEnRegistrodb = (email, callback) => {
 }
 
 //-- Creamos la función para registrarse como Cliente en la base de datos de MAD Services.
-const registroClientesdb = async (data, password) => {
+const registroClientesdb = (data, passwordCifrada) => {
 
-    const passwordCifrada = await hash(password, 1);
     let instruccionRegistrarse = "INSERT INTO clientes (id, email, password, nombre, apellidos, direccion, poblacion, region, pais, cp, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     let formatoInstruccionRegistrarse = mysql.format(instruccionRegistrarse, [data.id, data.email, passwordCifrada, data.nombre, data.apellidos, data.direccion, data.poblacion, data.region, data.pais, data.cp, data.genero]);
     madservicesClientedb.query(formatoInstruccionRegistrarse);
@@ -52,20 +49,6 @@ const consultarEmailClientesdb = (email, callback) => {
         if(error) throw error;
         let hayEmail = results.length;
         callback(hayEmail);
-    });
-}
-
-//-- Creamos la función para consultar la contraseña del cliente en la base de datos de MAD Services.
-const consultarPasswordClientesdb = (email, password, callback) => {
-
-    let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE email = ?';
-    let formatoInstruccionConsultarPassword = mysql.format(instruccionConsultarPassword, [email]);
-    madservicesClientedb.query(formatoInstruccionConsultarPassword, (error, results) => {
-        if(error) throw error;
-        const miembro = results[0];
-        compare(password, miembro.password).then((match) => {
-            callback(match);
-        });
     });
 }
 
@@ -87,7 +70,6 @@ module.exports = {
     consultarEmailClientesEnRegistrodb,
     registroClientesdb,
     consultarEmailClientesdb,
-    consultarPasswordClientesdb,
     iniciarSesionClientesdb
 };
 //#######################################################################################################//

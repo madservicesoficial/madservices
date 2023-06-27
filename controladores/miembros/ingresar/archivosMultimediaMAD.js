@@ -1,12 +1,12 @@
 //######################################### TECNOLOGÍAS USADAS ##########################################//
 //-- Importamos la Tecnología para leer ficheros.
 const fs = require('fs');
-//-- Importamos la Tecnología para seguir la ruta a los archivos locales.
+//-- Importamos la Tecnología para seguir la ruta a los archivos locales y para encaminar a archivo a usar.
 const path = require('path');
 //-- Importamos la Tecnología para leer de forma asíncrona.
 const util = require('util');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -26,10 +26,19 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
     const file = files[0];
     //-- Proceso de validación.
     if(typeof file !== 'string') {
-        //-- Mostrar alerta.
-        alerta('Ningun archivo subido');
-        //-- Redirigir.
-        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Ningun archivo subido',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401);
+        res.redirect(`/sesion-miembro/${id}/productosmadservices/expandir${enumeracion}`);
+        return res.end();
     }else {
         let fullFile = path.parse(file);
         let extension = fullFile.ext;
@@ -40,10 +49,19 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
             //-- Eliminar localmente.
             let eliminarArchivo = path.join(rutaAlDirectorio, file);
             await unlink(eliminarArchivo);
-            //-- Mostrar alerta.
-            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG');
-            //-- Redirigir.
-            return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
+            //-- Renderizar y mostrar mensaje.
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Formato de imagen incorrecto por ser: PNG, JPG o JPEG',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-miembro/${id}/productosmadservices/expandir${enumeracion}`);
+            return res.end();
         }
     }
 }

@@ -3,16 +3,16 @@
 const mysql = require('mysql2');
 //-- Importamos la conexión con la base de datos poder establecer diferentes operaciones con ella.
 const {madservicesAdmindb} = require('../../../config/database.js');
-//-- Importamos la Tecnología que crea los cuadros de alertas emergentes.
-const alerta = require('alert');
 //-- Importamos la Tecnología para leer ficheros.
 const fs = require('fs');
-//-- Importamos la Tecnología para seguir la ruta a los archivos locales.
+//-- Importamos la Tecnología para seguir la ruta a los archivos locales y para encaminar a archivo a usar.
 const path = require('path');
 //-- Importamos la Tecnología para redimensionar las imágenes cargadas en local.
 const sharp = require('sharp');
 //-- Importamos la Tecnología para leer de forma asíncrona.
 const util = require('util');
+//-- Importamos la Tecnología para sacar la alerta/notificación.
+const notifier = require('node-notifier');
 
 //-- Creamos la función para ingresar los productos MAD en la base de datos de MAD Services.
 const ingresarProductosMADdb = async (id, data, res) => {
@@ -65,25 +65,51 @@ const ingresarProductosMADdb = async (id, data, res) => {
             let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
             await unlink(eliminarArchivo);
             await unlink(eliminarArchivoEdit);
-
-            //-- Mostrar Alerta Emergente.
-            alerta('Producto ingresado con éxito');
-            // Redirigir a la página de la interfaz del Miembro MAD.
-            return res.redirect(`/sesion-miembro/${id}/interfaz`);
+            //-- Renderizar y mostrar mensaje.
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Ingresado!',
+                    message: 'Producto ingresado con éxito',
+                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                }
+            );
+            res.status(201);
+            res.redirect(`/sesion-miembro/${id}/interfaz`);
+            return res.end();
         }else {
             //-- Eliminar localmente.
             let eliminarArchivo = path.join(rutaAlDirectorio, file);
             await unlink(eliminarArchivo);
-            //-- Mostrar alerta.
-            alerta('Formato de imagen incorrecto\nFormatos permitidos: PNG, JPG, JPEG, MP4');
-            //-- Redirigir.
-            return res.status(201).redirect(`/sesion-miembro/${id}/interfaz`);
+            //-- Renderizar y mostrar mensaje.
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Formato de imagen incorrecto por ser: PNG, JPG o JPEG',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
+            );
+            res.status(401);
+            res.redirect(`/sesion-miembro/${id}/interfaz`);
+            return res.end();
         }
     }else {
-        //-- Mostrar Alerta Emergente.
-        alerta('Debes introducir una imagen de portada');
-        // Redirigir a la página de la interfaz del Miembro MAD.
-        return res.redirect(`/sesion-miembro/${id}/interfaz`);
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Atención!',
+                message: 'Debes introducir una imagen de portada',
+                icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+            }
+        );
+        res.status(401);
+        res.redirect(`/sesion-miembro/${id}/interfaz`);
+        return res.end();
     }
 }
 
@@ -114,8 +140,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
             let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
             await unlink(eliminarArchivo);
             await unlink(eliminarArchivoEdit);
-            //-- Mostrar alerta.
-            alerta(`Imagen 2 introducida`);
+            //-- Renderizar y mostrar mensaje.
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Ingresado!',
+                    message: 'Imagen 2 introducida',
+                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                }
+            );
         }else {
             let solicitudActualizar = 'UPDATE multimedia SET';
             let solicitudVariable;
@@ -129,8 +163,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Imagen 3 introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Imagen 3 introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].filetres === null) {
                 solicitudVariable = solicitudActualizar + ' filetres = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -140,8 +182,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Imagen 4 introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Imagen 4 introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].filecuatro === null) {
                 solicitudVariable = solicitudActualizar + ' filecuatro = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -151,8 +201,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Imagen 5 introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Imagen 5 introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].filecinco === null) {
                 solicitudVariable = solicitudActualizar + ' filecinco = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -162,8 +220,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Imagen 6 introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Imagen 6 introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].fileseis === null) {
                 solicitudVariable = solicitudActualizar + ' fileseis = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -173,8 +239,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Imagen 7 introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Imagen 7 introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].filesiete === null) {
                 solicitudVariable = solicitudActualizar + ' filesiete = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -184,8 +258,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Antepenúltima imagen introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Antepenúltima imagen introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].fileocho === null) {
                 solicitudVariable = solicitudActualizar + ' fileocho = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -195,8 +277,16 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Penúltima imagen introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Penúltima imagen introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else if(results[0].filenueve === null) {
                 solicitudVariable = solicitudActualizar + ' filenueve = ? ' + solicitudFinal;
                 let formatoSolicitudActualizar = mysql.format(solicitudVariable, [imagen, enumeracion]);
@@ -206,15 +296,32 @@ const ingresarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
                 await unlink(eliminarArchivo);
                 await unlink(eliminarArchivoEdit);
-                //-- Mostrar alerta.
-                alerta(`Última imagen introducida`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Ingresado!',
+                        message: 'Última imagen introducida',
+                        icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    }
+                );
             }else {
-                //-- Mostrar alerta.
-                alerta(`No puedes introducir más imágenes`);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: 'No puedes introducir más imágenes',
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
             }
         }
         //-- Redirigir.
-        return res.status(201).redirect(`/sesion-miembro/${id}/empieza/productosmadservices/expandir${enumeracion}`);
+        res.redirect(`/sesion-miembro/${id}/productosmadservices/expandir${enumeracion}`);
+        return res.end();
     });
 }
 

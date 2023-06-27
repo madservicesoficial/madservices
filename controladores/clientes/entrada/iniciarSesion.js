@@ -3,10 +3,12 @@
 const notifier = require('node-notifier');
 //-- Importamos la Tecnología para encaminar a archivo a usar.
 const path = require('path');
+//-- Importamos la Tecnología para verificar las contraseñas.
+const { compare } = require('bcrypt');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
-const { consultarEmailClientesdb, consultarPasswordClientesdb, iniciarSesionClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
+const { consultarEmailClientesdb, iniciarSesionClientesdb } = require('../../../modelos/clientes/entrada/entrada.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
@@ -49,44 +51,40 @@ const iniciarSesionClientes = (req, res) => {
                     return res.end();
                 }else {
                     //-- Llamada a función.
-                    consultarPasswordClientesdb
+                    iniciarSesionClientesdb
                     (
-                        email, password,
-                        (match) => {
-                            if(match) {
-                                iniciarSesionClientesdb
-                                (
-                                    email,
-                                    (miembro) => {
-                                        req.session.miembro = miembro;
-                                        const id = miembro.id;
-                                        notifier.notify(
-                                            {
-                                                sound: true,
-                                                wait: true,
-                                                title: '¡Sesión iniciada!',
-                                                message: 'Cliente autenticado con éxito',
-                                                icon: path.join(__dirname, '../../../public/images/correcto.png')
-                                            }
-                                        );
-                                        res.status(201);
-                                        res.redirect(`/sesion-cliente/${id}`);
-                                        return res.end();
-                                    }
-                                );
-                            }else {
-                                notifier.notify(
-                                    {
-                                        sound: true,
-                                        wait: true,
-                                        title: '¡Atención!',
-                                        message: 'Contraseña incorrecta',
-                                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                                    }
-                                );
-                                res.status(401).render('paginas/clientes/login');
-                                return res.end();
-                            }
+                        email,
+                        (miembro) => {
+                            compare(password, miembro.password).then((match) => {
+                                if(match) {
+                                    req.session.miembro = miembro;
+                                    const id = miembro.id;
+                                    notifier.notify(
+                                        {
+                                            sound: true,
+                                            wait: true,
+                                            title: '¡Sesión iniciada!',
+                                            message: 'Cliente autenticado con éxito',
+                                            icon: path.join(__dirname, '../../../public/images/correcto.png')
+                                        }
+                                    );
+                                    res.status(201);
+                                    res.redirect(`/sesion-cliente/${id}`);
+                                    return res.end();
+                                }else {
+                                    notifier.notify(
+                                        {
+                                            sound: true,
+                                            wait: true,
+                                            title: '¡Atención!',
+                                            message: 'Contraseña incorrecta',
+                                            icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                                        }
+                                    );
+                                    res.status(401).render('paginas/clientes/login');
+                                    return res.end();
+                                }
+                            });
                         }
                     );
                 }

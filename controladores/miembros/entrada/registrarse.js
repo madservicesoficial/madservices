@@ -5,7 +5,7 @@ const validacion = require("validator");
 const notifier = require('node-notifier');
 //-- Importamos la Tecnología para encaminar a archivo a usar.
 const path = require('path');
-//-- Importamos la Tecnología para cifrar y verificar las contraseñas.
+//-- Importamos la Tecnología para cifrar las contraseñas.
 const { hash } = require('bcrypt');
 //#######################################################################################################//
 
@@ -99,6 +99,7 @@ const registroMiembros = async (req, res) => {
                 res.status(401).render('paginas/miembros/registrarse');
                 return res.end();
             }else {
+                const passwordCifrada = await hash(password, 1);
                 //-- Llamada a función.
                 consultarEmailEnRegistroMiembrosdb
                 (
@@ -131,7 +132,6 @@ const registroMiembros = async (req, res) => {
                                     }
                                 }
                             );
-                            const passwordCifrada = await hash(password, 1);
                             registroMiembrosdb
                             (
                                 {id: idMiembro, miembro: miembro, departamento: departamento, genero: genero, email: email},

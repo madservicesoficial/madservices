@@ -7,6 +7,8 @@ const cifvalidacion = require('nif-dni-nie-cif-validation');
 const notifier = require('node-notifier');
 //-- Importamos la Tecnología para encaminar a archivo a usar.
 const path = require('path');
+//-- Importamos la Tecnología para cifrar las contraseñas.
+const { hash } = require('bcrypt');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -16,7 +18,7 @@ const generarIDrandom = require('../../general/generar/IDaleatorio.js');
 //#######################################################################################################//
 
 //############################################# DESARROLLO ##############################################//
-const registroEmpresas = (req, res) => {
+const registroEmpresas = async (req, res) => {
 
     //-- Variables y Ctes.
     const marca = req.body.marca;
@@ -112,6 +114,7 @@ const registroEmpresas = (req, res) => {
                 res.status(401).render('paginas/empresas/registrarse');
                 return res.end();
             }else {
+                const passwordCifrada = await hash(password, 1);
                 //-- Llamada a función.
                 consultarEmailEnRegistroEmpresasdb
                 (
@@ -147,7 +150,7 @@ const registroEmpresas = (req, res) => {
                                 }
                             );
                             //-- Llamada a función.
-                            registroEmpresasdb({id: idEmpresa, email: email, marca: marca, nif: nif, tipo: tipo}, password);
+                            registroEmpresasdb({id: idEmpresa, email: email, marca: marca, nif: nif, tipo: tipo}, passwordCifrada);
                             //-- Renderizar y mostrar mensaje.
                             notifier.notify(
                                 {

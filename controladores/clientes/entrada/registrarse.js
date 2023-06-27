@@ -14,6 +14,8 @@ const axios = require('axios');
 const notifier = require('node-notifier');
 //-- Importamos la Tecnología para encaminar a archivo a usar.
 const path = require('path');
+//-- Importamos la Tecnología para cifrar las contraseñas.
+const { hash } = require('bcrypt');
 //#######################################################################################################//
 
 //##################################### FUNCIONES EN BASE DE DATOS ######################################//
@@ -150,6 +152,7 @@ const registroClientes = async (req, res) => {
                             if(region === lugar.adminName1 || region === lugar.adminName2) {
                                 if(poblacion === lugar.adminName3 || poblacion === lugar.placeName) {
                                     if(direccion.length >= minDir && direccion.length <= maxDir) {
+                                        const passwordCifrada = await hash(password, 1);
                                         //-- Llamada a función.
                                         consultarEmailClientesEnRegistrodb
                                         (
@@ -185,7 +188,7 @@ const registroClientes = async (req, res) => {
                                                     (
                                                         {id: idCliente, email: email, nombre: nombre, apellidos: apellidos, direccion: direccion, poblacion: poblacion,
                                                         region: region, pais: pais, cp: cp, genero: genero},
-                                                        password
+                                                        passwordCifrada
                                                     );
                                                     notifier.notify(
                                                         {

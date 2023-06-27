@@ -247,6 +247,13 @@ canvas {
   height: 400;
   background-color: transparent;
 }
+.btnCanvasEmpresas {
+  position: relative;
+  right: 420;
+  width: 400;
+  height: 400;
+  background-color: transparent;
+}
 #imgMAD {
   display: none;
 }

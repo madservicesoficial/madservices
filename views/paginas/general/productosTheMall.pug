@@ -34,7 +34,7 @@ block body
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
-                            form(method='GET' action=`/empieza/themall/expansion${empresa.marca}`)
+                            form(method='GET' action=`/themall/expansion${empresa.marca}`)
                                 button(type='submit')='Acceder'
                     else if empresa.tipo === 'COMERCIO'
                         div.tarjetaProductosMALL#colorServiciosComercio
@@ -42,7 +42,7 @@ block body
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
-                            form(method='GET' action=`/empieza/themall/expansion${empresa.marca}`)
+                            form(method='GET' action=`/themall/expansion${empresa.marca}`)
                                 button(type='submit')='Acceder'
                     else if empresa.tipo === 'ACADEMIA'
                         div.tarjetaProductosMALL#colorServiciosAcademia
@@ -50,7 +50,7 @@ block body
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
-                            form(method='GET' action=`/empieza/themall/expansion${empresa.marca}`)
+                            form(method='GET' action=`/themall/expansion${empresa.marca}`)
                                 button(type='submit')='Acceder'
                     else if empresa.tipo === 'PELUQUERIA'
                         div.tarjetaProductosMALL#colorServiciosPeluqueria
@@ -58,7 +58,7 @@ block body
                             img(src=`data:image/*;base64,${empresa.logo}`)
                             br
                             br
-                            form(method='GET' action=`/empieza/themall/expansion${empresa.marca}`)
+                            form(method='GET' action=`/themall/expansion${empresa.marca}`)
                                 button(type='submit')='Acceder'
         br
     include ./componentes/piepagina.pug
