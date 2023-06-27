@@ -19,7 +19,6 @@ const actualizarPasswordCliente = (req, res) => {
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
     const repitePassword = req.body.repitePassword;
-    let validezOldPassword = true;
     const minLong = 10;
     const maxLong = 96;
     //-- Proceso de validación.
@@ -27,7 +26,7 @@ const actualizarPasswordCliente = (req, res) => {
         //-- Llamada a función.
         consultaOldPassworddb
         (
-            id, validezOldPassword, oldpassword,
+            id, oldpassword,
             (validezOldPassword) => {
                 if(validezOldPassword === false) {
                     //-- Renderizar y mostrar mensaje.

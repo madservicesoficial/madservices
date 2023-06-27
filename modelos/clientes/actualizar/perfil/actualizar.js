@@ -51,7 +51,7 @@ const actualizarEmaildb = (id, email) => {
 }
 
 //-- Creamos la función para consultar la contraseña que había en la base de datos.
-const consultaOldPassworddb = (id, validezOldPassword, oldpassword, callback) => {
+const consultaOldPassworddb = (id, oldpassword, callback) => {
 
     //-- Instrucción para consultar contraseña dado el id.
     let instruccionConsultarPassword = 'SELECT * FROM clientes WHERE id = ?';
@@ -62,13 +62,7 @@ const consultaOldPassworddb = (id, validezOldPassword, oldpassword, callback) =>
         if(error) throw error;
         const passwordEnDatabase = results[0].password;
         compare(oldpassword, passwordEnDatabase).then( async (match) => {
-            if(match) {
-                validezOldPassword = true;
-                callback(validezOldPassword);
-            }else {
-                validezOldPassword = false;
-                callback(validezOldPassword);
-            }
+            callback(match);
         });
     });
 }
