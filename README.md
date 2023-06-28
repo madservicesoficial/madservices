@@ -1,8 +1,4 @@
-# MAD Services
-
-<br>
-
-## El E-Commerce de los E-Commerces
+# Plataforma de Comercio online MAD Services
 
 <br>
 
