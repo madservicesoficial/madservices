@@ -10,16 +10,13 @@
 
 <br>
 
-¿Nunca has pensado qué fácil sería englobar todas tus tiendas favoritas (de ocio, complementos, ropa, servicios, electrónica...), en el mismo sitio web y en VR (Realidad Virtual)? Poder comprar productos de dichas tiendas a través de MAD Services (como Cliente); incluso, conocer otras tiendas que no conocías y, hasta darte de alta como Empresa y vender tus productos o servicios a otros Clientes.
-
-¡Increible! ¿Verdad? Toda una Revolución de la 3º década del s. XXI. Un nuevo modelo de negocio que competirá con otros, porque la base de toda actividad empresarial sana, es la competencia leal.
-
-Así que, gracias por prestarme atención y bienvenido a MAD Services.
+El Trabajo de Fin de Grado consiste en la programación de una aplicación web de un Marketplace, que es una Plataforma de Comercio o Centro Comercial online, desarrollado en un entorno de tiempo de ejecución de 2D (Dos-Dimensiones) en su primera versión, que sirve para conectar, unificar y dar a conocer las empresas registradas, pudiendo incorporar los productos y/o servicios que quieran. También funciona como una empresa más de Comercio Electrónico, vendiendo sus productos propios.
+<br>
+<br>
+Este proyecto se irá desarrollando para tenerlo en 3D (Tres-Dimensiones) y RV (Realidad Virtual) en futuras versiones.
 
 <br>
 
-Firmado.
-<br>
-CEO de MAD Services.
+Atentamente.
 <br>
 Alejandro Fernández Pérez.
