@@ -3,10 +3,6 @@
 var servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
 var rutasGet = servidor.Router();
-//-- Importamos la Tecnología para sacar la alerta/notificación.
-const notifier = require('node-notifier');
-//-- Importamos la Tecnología para encaminar a archivo a usar.
-const path = require('path');
 //##################################################################################################//
 
 
@@ -112,18 +108,7 @@ rutasGet.get('/sesion-miembro/:id/interfaz', mostrarMiembro);
 
 
 //########################################## CERRAR SESIÓN #########################################//
-rutasGet.get('/', (req, res) => {
-    req.session.destroy();
-    notifier.notify(
-        {
-            sound: true,
-            wait: true,
-            title: '¡Sesión cerrada!',
-            message: '¡Hasta pronto!',
-            icon: path.join(__dirname, '../public/images/correcto.png')
-        }
-    );
-});
+rutasGet.get('/', (req, res) => {return req.session.destroy();});
 //##################################################################################################//
 
 
