@@ -24,8 +24,8 @@ var madservicesServer = http.createServer(madservices);
 
 //-- Escuchando en el Puerto de Aplicación establecido, en todas las interfaces de red =>
 //-- ########################################## --//
-madservicesServer.listen(process.env.PUERTO, process.env.DIR_IP, () => {
-  console.log(`Servidor de MAD Services escuchando en: http://${process.env.DIR_IP}:${process.env.PUERTO}/`);
+madservicesServer.listen(process.env.PUERTO, () => {
+  console.log(`Servidor de MAD Services escuchando en: http://${process.env.MYSQL_HOST}:${process.env.PUERTO}/`);
 });
 madservicesServer.on('error', onError);
 madservicesServer.on('listening', onListening);
