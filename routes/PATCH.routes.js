@@ -1,8 +1,8 @@
 //############################ PARTE GENERAL DE LAS RUTAS DE ACTUALIZACIÓN ##############################//
 //-- Importamos la Tecnología Express para crear el servidor de MAD Services basado en Express.
-var servidor = require('express');
+const servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
-var rutasPatch = servidor.Router();
+const rutasPatch = servidor.Router();
 //-- Importamos la Tecnología para almacenar las imágenes introducidas.
 const multer = require('multer');
 //#######################################################################################################//

@@ -1,25 +1,25 @@
 //#######################################//
-//-- DEPENDENCIAS DE MÓDULO DE NODE JS --//
+//-- RAÍZ DEL PROYECTO DE MAD SERVICES --//
 //#######################################//
 
 //-- Importamos el archivo raíz de configuración de MAD Services =>
-const madservices = require('../app');
+const madservices = require('./app.js');
 //-- Importamos la depuración del código de MAD Services =>
 const debug = require('debug')('madservices:server');
 //-- Importamos el Módulo HTTP para establecer comunicaciones Cliente-Servidor =>
 const http = require('http');
 //-- Importamos la configuración del entorno ENV para poder usar su información =>
-require('../config/env.js');
+require('./config/env.js');
 
 //-- Obtener el Puerto de Aplicación del Entorno ENV y almacenarlo en nuestro Servidor MAD Services =>
 //-- ########################################## --//
-var puerto = normalizePort(process.env.PUERTO);
+const puerto = normalizePort(process.env.PUERTO);
 madservices.set('port', puerto);
 //-- ########################################## --//
 
 //-- Creamos el Servidor HTTP para establecer comunicaciones Cliente-Servidor =>
 //-- ################################################## --//
-var madservicesServer = http.createServer(madservices);
+const madservicesServer = http.createServer(madservices);
 //-- ################################################## --//
 
 //-- Escuchando en el Puerto de Aplicación establecido, en todas las interfaces de red =>

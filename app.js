@@ -90,10 +90,10 @@ madservices.use(session({
 //--##########################################################################################--//
 //--################################## CONEXIÓN CON LAS RUTAS ################################--//
 //--##########################################################################################--//
-var rutasGet = require('./routes/GET.routes.js');
-var rutasPost = require('./routes/POST.routes.js');
-var rutasPatch = require('./routes/PATCH.routes.js');
-var rutasDelete = require('./routes/DELETE.routes.js');
+const rutasGet = require('./routes/GET.routes.js');
+const rutasPost = require('./routes/POST.routes.js');
+const rutasPatch = require('./routes/PATCH.routes.js');
+const rutasDelete = require('./routes/DELETE.routes.js');
 
 madservices.use(rutasGet, rutasPost, rutasPatch, rutasDelete);
 //############################################################################################--//

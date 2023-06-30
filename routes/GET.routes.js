@@ -1,8 +1,8 @@
 //############################## PARTE GENERAL DE LAS RUTAS DE ACCESO ##############################//
 //-- Importamos la Tecnología Express para crear el servidor de MAD Services basado en Express.
-var servidor = require('express');
+const servidor = require('express');
 //-- Importamos el Componente de Express que enrruta las paginas de MAD Services.
-var rutasGet = servidor.Router();
+const rutasGet = servidor.Router();
 //##################################################################################################//
 
 
