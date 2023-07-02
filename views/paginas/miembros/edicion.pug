@@ -10,13 +10,13 @@ block body
         form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-imagen` enctype="multipart/form-data")
             input(type='hidden' name='_method' value='PATCH')
             label='Imagen de portada: '
-            input.inputMiembroMAD(type='file' name='portada' accept="image/*")
+            input(type='file' name='portada' accept="image/*")
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
         form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-cantidad`)
             input(type='hidden' name='_method' value='PATCH')
             label='Cantidad: '
-            input.inputMiembroMAD(type="number" name='cantidad' placeholder='Cantidad de productos....')
+            input.camposInput(type="number" name='cantidad' placeholder='Cantidad de productos....')
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
         form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-categoria`)
@@ -50,13 +50,13 @@ block body
         form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-titulo`)
             input(type='hidden' name='_method' value='PATCH')
             label='Título:'
-            input.inputMiembroMAD(type="text" name='titulo' placeholder='Ponle un título....')
+            input.camposInput(type="text" name='titulo' placeholder='Ponle un título....')
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar
         form(method='POST' action=`/sesion-miembro/${id}/productosmadservices/edicion${enumeracion}-precio`)
             input(type='hidden' name='_method' value='PATCH')
             label='Precio:'
-            input.inputMiembroMAD(type="number" step="any" name='precio' placeholder='Precio del producto....')
+            input.camposInput(type="number" step="any" name='precio' placeholder='Precio del producto....')
             span#euros='€'
             button(type='submit')
                 i.fa-solid.fa-square-pen.fa-2xl#iconosActualizar

@@ -24,7 +24,7 @@ const ingresoProductosMAD = async (req, res) => {
     const precio = req.body.precio;
     const peso = req.body.peso;
     const descripcion = req.body.descripcion;
-    const LONG_TITULO = 98;
+    const LONG_TITULO = 60;
     const LONG_DESCRIPCION = 998;
     const CANTIDAD_MIN = 1;
     const COSTE_NULO = 1.0;

@@ -133,6 +133,10 @@ button {
   background-color: transparent;
   color: white;
 }
+.btnAutorizado {
+  width: 125px;
+  height: 25px;
+}
 .camposInput {
   margin-left: 15px;
   width: 350px;
@@ -152,6 +156,11 @@ button {
   color: black;
   border-radius: 10px;
   border-style: hidden;
+  height: 25px;
+  padding-left: 10px;
+}
+.entradasAutorizadas {
+  border-radius: 10px;
   height: 25px;
   padding-left: 10px;
 }
@@ -950,7 +959,7 @@ canvas {
 .interfazEdicionProductoMAD {
   float: center;
   width: 800px;
-  height: 500px;
+  height: 800px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -961,7 +970,6 @@ canvas {
   border-radius: 20px;
   border-color: burlywood;
   overflow-x: hidden;
-  overflow-y: scroll;
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
   margin-left: 350;
   margin-top: 75;

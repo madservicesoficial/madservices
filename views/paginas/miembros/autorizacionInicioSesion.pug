@@ -8,8 +8,8 @@ block body
     form.formularioAuthMiembroMAD(method='POST' action='/login/autorizar')
         label='Contraseña MAD:'
         br
-        input(type="password" name='password' placeholder='Escribe la contraseña MAD....')
-        button='Acceso MAD'
+        input.entradasAutorizadas(type="password" name='password' placeholder='Escribe la contraseña MAD....')
+        button.btnAutorizado='Acceso MAD'
     form.formularioBtn1MiembroMAD(method='GET' action='/')
         button
             i.fa-solid.fa-house.fa-2xl#iconosAuth

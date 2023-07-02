@@ -16,7 +16,7 @@ const actualizarTitulo = (req, res) => {
     let id = req.params.id;
     let enumeracion = req.params.enumeracion;
     const titulo = req.body.titulo;
-    const LONG_TITULO = 98;
+    const LONG_TITULO = 60;
     //-- Proceso de validación.
     if(titulo) {
         if(titulo.length > LONG_TITULO) {
