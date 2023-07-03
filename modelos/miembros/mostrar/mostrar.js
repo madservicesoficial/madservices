@@ -144,79 +144,87 @@ const mostrarMiembrodb = (id, res) => {
                                     //-- Establecer la comunicación con los Productos MAD de la base de datos.
                                     madservicesAdmindb.query(formatoInstruccionID, (error, salida9) => {
                                         if(error) throw error;
-                                        let mostrarSalida9;
-                                        if(salida9.length > 0) {
-                                            mostrarSalida9 = salida9;
-                                        }
-                                        let sumaH = 0;
-                                        let sumaM = 0;
-                                        let sumaO = 0;
-                                        for(let j=0; j<salida1.length; j++) {
-                                            if(salida1[j].genero === 'Hombre') {
-                                                sumaH = sumaH + 1;
-                                            }else if(salida1[j].genero === 'Mujer') {
-                                                sumaM = sumaM + 1;
-                                            }else {
-                                                sumaO = sumaO + 1;
+                                        //-- Instrucción del ID.
+                                        let instruccionID = 'SELECT * FROM miembros WHERE id = ?';
+                                        //-- Configuración de su formato en mysql.
+                                        let formatoInstruccionID = mysql.format(instruccionID, [id]);
+                                        //-- Establecer la comunicación con los Productos MAD de la base de datos.
+                                        madservicesAdmindb.query(formatoInstruccionID, (error, salida10) => {
+                                            if(error) throw error;
+                                            let mostrarSalida9;
+                                            if(salida9.length > 0) {
+                                                mostrarSalida9 = salida9;
                                             }
-                                        }
-                                        let numTotalCarrito = 0;
-                                        let cantidadCarrito = 0;
-                                        for(let m=0; m<salida5.length; m++) {
-                                            numTotalCarrito = parseInt(salida5[m].total_cantidad, 10);
-                                            cantidadCarrito = cantidadCarrito + numTotalCarrito;
-                                        }
-                                        let ganancias = 0;
-                                        for(let n=0; n<result.length; n++) {
-                                            let preciototalInt = parseInt(result[n].preciototal, 10);
-                                            ganancias = ganancias + preciototalInt;
-                                        }
-                                        let cantidadQueHay = 0;
-                                        for(let h=0; h<salida6.length; h++) {
-                                            let cantidadInt = parseInt(salida6[h].cantidad, 10);
-                                            cantidadQueHay = cantidadQueHay + cantidadInt;
-                                        }
-                                        let totalComprados = 0;
-                                        for(let z=0; z<result.length; z++) {
-                                            let auxiliarCant = parseInt(result[z].cantidades, 10);
-                                            totalComprados = totalComprados + auxiliarCant;
-                                        }
-                                        res.status(201).render('paginas/miembros/interfaz',
-                                        {
-                                            id: id,
-                                            email: salida3[0].email,
-                                            password: salida3[0].password,
-                                            miembro: salida3[0].miembro,
-                                            departamento: salida3[0].departamento,
-                                            genero: salida3[0].genero,
-                                            productosMadComprados: result,
-                                            totalComprados: totalComprados,
-                                            ganancias: ganancias,
-                                            numHombres: sumaH,
-                                            numMujeres: sumaM,
-                                            numOtros: sumaO,
-                                            cardH: cardH,
-                                            cardM: cardM,
-                                            cardO: cardO,
-                                            sumaRest: sumaRest,
-                                            sumaAca: sumaAca,
-                                            sumaCom: sumaCom,
-                                            sumaPeluq: sumaPeluq,
-                                            numMiembrosDireccion: miembrosDireccion,
-                                            numMiembrosAdministracion: miembrosAdministracion,
-                                            numMiembrosCiberseguridad: miembrosCiberseguridad,
-                                            numMiembrosIngenieria: miembrosIngenieria,
-                                            numMiembrosRRHH: miembrosRRHH,
-                                            numMiembrosVentas: miembrosVentas,
-                                            numMiembrosEconomia: miembrosEconomia,
-                                            fullCarrito: salida5,
-                                            cantidadCarrito: cantidadCarrito,
-                                            cantidadQueHay: cantidadQueHay,
-                                            totalEmailClientes: mostrarSalida7,
-                                            totalEmailEmpresas: mostrarSalida8,
-                                            totalEmailMiembros: mostrarSalida9
+                                            let sumaH = 0;
+                                            let sumaM = 0;
+                                            let sumaO = 0;
+                                            for(let j=0; j<salida1.length; j++) {
+                                                if(salida1[j].genero === 'Hombre') {
+                                                    sumaH = sumaH + 1;
+                                                }else if(salida1[j].genero === 'Mujer') {
+                                                    sumaM = sumaM + 1;
+                                                }else {
+                                                    sumaO = sumaO + 1;
+                                                }
+                                            }
+                                            let numTotalCarrito = 0;
+                                            let cantidadCarrito = 0;
+                                            for(let m=0; m<salida5.length; m++) {
+                                                numTotalCarrito = parseInt(salida5[m].total_cantidad, 10);
+                                                cantidadCarrito = cantidadCarrito + numTotalCarrito;
+                                            }
+                                            let ganancias = 0;
+                                            for(let n=0; n<result.length; n++) {
+                                                let preciototalInt = parseInt(result[n].preciototal, 10);
+                                                ganancias = ganancias + preciototalInt;
+                                            }
+                                            let cantidadQueHay = 0;
+                                            for(let h=0; h<salida6.length; h++) {
+                                                let cantidadInt = parseInt(salida6[h].cantidad, 10);
+                                                cantidadQueHay = cantidadQueHay + cantidadInt;
+                                            }
+                                            let totalComprados = 0;
+                                            for(let z=0; z<result.length; z++) {
+                                                let auxiliarCant = parseInt(result[z].cantidades, 10);
+                                                totalComprados = totalComprados + auxiliarCant;
+                                            }
+                                            res.status(201).render('paginas/miembros/interfaz',
+                                            {
+                                                id: id,
+                                                email: salida10[0].email,
+                                                password: salida10[0].password,
+                                                miembro: salida10[0].miembro,
+                                                departamento: salida10[0].departamento,
+                                                genero: salida10[0].genero,
+                                                productosMadComprados: result,
+                                                totalComprados: totalComprados,
+                                                ganancias: ganancias,
+                                                numHombres: sumaH,
+                                                numMujeres: sumaM,
+                                                numOtros: sumaO,
+                                                cardH: cardH,
+                                                cardM: cardM,
+                                                cardO: cardO,
+                                                sumaRest: sumaRest,
+                                                sumaAca: sumaAca,
+                                                sumaCom: sumaCom,
+                                                sumaPeluq: sumaPeluq,
+                                                numMiembrosDireccion: miembrosDireccion,
+                                                numMiembrosAdministracion: miembrosAdministracion,
+                                                numMiembrosCiberseguridad: miembrosCiberseguridad,
+                                                numMiembrosIngenieria: miembrosIngenieria,
+                                                numMiembrosRRHH: miembrosRRHH,
+                                                numMiembrosVentas: miembrosVentas,
+                                                numMiembrosEconomia: miembrosEconomia,
+                                                fullCarrito: salida5,
+                                                cantidadCarrito: cantidadCarrito,
+                                                cantidadQueHay: cantidadQueHay,
+                                                totalEmailClientes: mostrarSalida7,
+                                                totalEmailEmpresas: mostrarSalida8,
+                                                totalEmailMiembros: mostrarSalida9
+                                            });
+                                            return res.end();
                                         });
-                                        return res.end();
                                     });
                                 });
                             });
