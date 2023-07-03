@@ -158,7 +158,7 @@ const registroEmpresas = async (req, res) => {
                                     wait: true,
                                     title: '¡Registrado!',
                                     message: 'Empresa registrada con éxito',
-                                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
+                                    icon: path.join(__dirname, '../../../public/images/correcto.png')
                                 }
                             );
                             res.status(201);

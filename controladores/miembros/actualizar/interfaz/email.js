@@ -35,20 +35,41 @@ const actualizarEmail = (req, res) => {
             return res.end();
         }else {
             //-- Llamada a función.
-            actualizarEmaildb(id, email);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Actualizado!',
-                    message: `El correo electrónico del miembro MAD ha cambiado a: ${email}`,
-                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
+            actualizarEmaildb
+            (
+                id, email,
+                (emailEnDB) => {
+                    if(emailEnDB === 0) {
+                        //-- Renderizar y mostrar mensaje.
+                        notifier.notify(
+                            {
+                                sound: true,
+                                wait: true,
+                                title: '¡Actualizado!',
+                                message: `El correo electrónico del miembro MAD ha cambiado a: ${email}`,
+                                icon: path.join(__dirname, '../../../../public/images/correcto.png')
+                            }
+                        );
+                        res.status(201);
+                        res.redirect(`/sesion-miembro/${id}/interfaz`);
+                        return res.end();
+                    }else {
+                        //-- Renderizar y mostrar mensaje.
+                        notifier.notify(
+                            {
+                                sound: true,
+                                wait: true,
+                                title: '¡Atención!',
+                                message: `${email} es un correo electrónico existente`,
+                                icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
+                            }
+                        );
+                        res.status(401);
+                        res.redirect(`/sesion-miembro/${id}/interfaz`);
+                        return res.end();
+                    }
                 }
             );
-            res.status(201);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
         }
     }else {
         //-- Renderizar y mostrar mensaje.

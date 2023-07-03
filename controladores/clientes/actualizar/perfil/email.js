@@ -34,20 +34,41 @@ const actualizarEmailCliente = (req, res) => {
             res.redirect(`/sesion-cliente/${id}/perfil`);
             return res.end();
         }else {
-            actualizarEmaildb(id, email);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Actualizado!',
-                    message: 'El correo electrónico se ha actualizado',
-                    icon: path.join(__dirname, '../../../../public/images/correcto.png')
+            actualizarEmaildb
+            (
+                id, email,
+                (emailEnDB) => {
+                    if(emailEnDB === 0) {
+                        //-- Renderizar y mostrar mensaje.
+                        notifier.notify(
+                            {
+                                sound: true,
+                                wait: true,
+                                title: '¡Actualizado!',
+                                message: 'El correo electrónico se ha actualizado',
+                                icon: path.join(__dirname, '../../../../public/images/correcto.png')
+                            }
+                        );
+                        res.status(201);
+                        res.redirect(`/sesion-cliente/${id}/perfil`);
+                        return res.end();
+                    }else {
+                        //-- Renderizar y mostrar mensaje.
+                        notifier.notify(
+                            {
+                                sound: true,
+                                wait: true,
+                                title: '¡Atención!',
+                                message: `${email} es un correo electrónico existente`,
+                                icon: path.join(__dirname, '../../../../public/images/incorrecto.png')
+                            }
+                        );
+                        res.status(401);
+                        res.redirect(`/sesion-cliente/${id}/perfil`);
+                        return res.end();
+                    }
                 }
             );
-            res.status(201);
-            res.redirect(`/sesion-cliente/${id}/perfil`);
-            return res.end();
         }
     }else {
         //-- Renderizar y mostrar mensaje.

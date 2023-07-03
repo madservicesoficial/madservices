@@ -31,11 +31,21 @@ const actualizarCIFdb = (id, nif) => {
 }
 
 //-- Creamos la función para actualizar el campo email de la Empresa de la base de datos de MAD Services.
-const actualizarEmaildb = (id, email) => {
+const actualizarEmaildb = (id, email, callback) => {
 
-    let instruccionActualizarEmail = 'UPDATE empresas SET email = ? WHERE id = ?';
-    let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [email, id]);
-    madservicesEmpresadb.query(formatoInstruccionActualizarEmail);
+    //-- Instrucción para consultar contraseña dado el id.
+    let instruccionConsultar = 'SELECT * FROM empresas WHERE email = ?';
+    //-- Configuración del formato para consultar contraseña dado el id.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    madservicesEmpresadb.query(formatoInstruccionConsultar, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            let instruccionActualizarEmail = 'UPDATE empresas SET email = ? WHERE id = ?';
+            let formatoInstruccionActualizarEmail = mysql.format(instruccionActualizarEmail, [email, id]);
+            madservicesEmpresadb.query(formatoInstruccionActualizarEmail);
+        }
+        callback(results.length);
+    });
 }
 
 //-- Creamos la función para comprobar el campo de la vieja contraseña de la Empresa de la base de datos de MAD Services.

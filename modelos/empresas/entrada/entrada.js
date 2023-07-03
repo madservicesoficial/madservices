@@ -20,7 +20,7 @@ const consultaID = (idEmpresa, callback) => {
 const consultarEmailEnRegistroEmpresasdb = (email, callback) => {
 
     let instruccionConsultar = 'SELECT COUNT(*) AS count FROM empresas WHERE email = ?';
-    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [data.email]);
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
     madservicesEmpresadb.query(formatoInstruccionConsultar, (error, results) => {
         if(error) throw error;
         const cont = results[0].count;

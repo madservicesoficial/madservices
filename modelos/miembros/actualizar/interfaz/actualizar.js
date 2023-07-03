@@ -31,11 +31,21 @@ const actualizarGenerodb = (id, genero) => {
 }
 
 //-- Creamos la función para actualizar el campo email del Miembro MAD de la base de datos de MAD Services.
-const actualizarEmaildb = (id, email) => {
+const actualizarEmaildb = (id, email, callback) => {
 
-    let instruccionActualizar = 'UPDATE miembros SET email = ? WHERE id = ?';
-    let formatoInstruccionActualizar = mysql.format(instruccionActualizar, [email, id]);
-    madservicesAdmindb.query(formatoInstruccionActualizar);
+    //-- Instrucción para consultar contraseña dado el id.
+    let instruccionConsultar = 'SELECT * FROM miembros WHERE email = ?';
+    //-- Configuración del formato para consultar contraseña dado el id.
+    let formatoInstruccionConsultar = mysql.format(instruccionConsultar, [email]);
+    madservicesEmpresadb.query(formatoInstruccionConsultar, (error, results) => {
+        if(error) throw error;
+        if(results.length === 0) {
+            let instruccionActualizar = 'UPDATE miembros SET email = ? WHERE id = ?';
+            let formatoInstruccionActualizar = mysql.format(instruccionActualizar, [email, id]);
+            madservicesAdmindb.query(formatoInstruccionActualizar);
+        }
+        callback(results.length);
+    });
 }
 
 //-- Creamos la función para comprobar la antigua contraseña del Miembro MAD de la base de datos de MAD Services.
