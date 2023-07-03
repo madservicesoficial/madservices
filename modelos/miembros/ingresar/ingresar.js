@@ -40,70 +40,53 @@ const ingresarProductosMADdb = async (id, data, res) => {
     //-- Ruta donde está el archivo metido localmente.
     const files = await readdir(rutaAlDirectorio);
     const file = files[0];
+    let fullFile = path.parse(file);
+    let extension = fullFile.ext;
+    if(extension === '.png' || extension === '.jpg' || extension === '.jpeg') {
+        //-- Ruta del fichero completa metido localmente.
+        let rutaAlArchivo = path.join(rutaAlDirectorio, file);
+        //-- Ruta del fichero redimensionado metido localmente.
+        let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
+        //-- Redimensión de la imagen de portada y almacenamiento localmente.
+        await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
+        //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
+        let imagenBuffer = await readFile(nuevaRuta);
+        //-- Almacenamiento de imagen de buffer en base64.
+        let imagen = imagenBuffer.toString('base64');
+        //-- Instrucción para ingresar productos.
+        let instruccionIngresaProductos = 'INSERT INTO productos (portada, cantidad, producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        //-- Establecimiento de la conexión con base de datos.
+        madservicesAdmindb.query(instruccionIngresaProductos, [imagen, data.cantidad, data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
 
-    if(typeof file === 'string') {
-        let fullFile = path.parse(file);
-        let extension = fullFile.ext;
-        if(extension === '.png' || extension === '.jpg' || extension === '.jpeg' || extension === '.mp4') {
-            //-- Ruta del fichero completa metido localmente.
-            let rutaAlArchivo = path.join(rutaAlDirectorio, file);
-            //-- Ruta del fichero redimensionado metido localmente.
-            let nuevaRuta = path.join(rutaAlDirectorio, 'edit' + file);
-            //-- Redimensión de la imagen de portada y almacenamiento localmente.
-            await sharp(rutaAlArchivo).resize(260).toFile(nuevaRuta);
-            //-- Almacenamiento de imagen redimensionada localmente en imagen de buffer.
-            let imagenBuffer = await readFile(nuevaRuta);
-            //-- Almacenamiento de imagen de buffer en base64.
-            let imagen = imagenBuffer.toString('base64');
-            //-- Instrucción para ingresar productos.
-            let instruccionIngresaProductos = 'INSERT INTO productos (portada, cantidad, producto, titulo, precio, peso, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)';
-            //-- Establecimiento de la conexión con base de datos.
-            madservicesAdmindb.query(instruccionIngresaProductos, [imagen, data.cantidad, data.categoria, data.titulo, data.precio, data.peso, data.descripcion]);
-
-            //-- Eliminación de las imágenes locales.
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
-            await unlink(eliminarArchivo);
-            await unlink(eliminarArchivoEdit);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Ingresado!',
-                    message: 'Producto ingresado con éxito',
-                    icon: path.join(__dirname, '../../../public/images/correcto.png')
-                }
-            );
-            res.status(201);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
-        }else {
-            //-- Eliminar localmente.
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            await unlink(eliminarArchivo);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: 'Formato de imagen incorrecto por no ser: PNG, JPG o JPEG',
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
-        }
+        //-- Eliminación de las imágenes locales.
+        let eliminarArchivo = path.join(rutaAlDirectorio, file);
+        let eliminarArchivoEdit = path.join(rutaAlDirectorio, 'edit' + file);
+        await unlink(eliminarArchivo);
+        await unlink(eliminarArchivoEdit);
+        //-- Renderizar y mostrar mensaje.
+        notifier.notify(
+            {
+                sound: true,
+                wait: true,
+                title: '¡Ingresado!',
+                message: 'Producto ingresado con éxito',
+                icon: path.join(__dirname, '../../../public/images/correcto.png')
+            }
+        );
+        res.status(201);
+        res.redirect(`/sesion-miembro/${id}/interfaz`);
+        return res.end();
     }else {
+        //-- Eliminar localmente.
+        let eliminarArchivo = path.join(rutaAlDirectorio, file);
+        await unlink(eliminarArchivo);
         //-- Renderizar y mostrar mensaje.
         notifier.notify(
             {
                 sound: true,
                 wait: true,
                 title: '¡Atención!',
-                message: 'Debes introducir una imagen de portada',
+                message: 'Formato de imagen incorrecto por no ser: PNG, JPG o JPEG',
                 icon: path.join(__dirname, '../../../public/images/incorrecto.png')
             }
         );

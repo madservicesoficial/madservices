@@ -348,16 +348,17 @@ block body
                                 td=producto.total_cantidad + ' unidades'
                                     span
                                 td=producto.total_precio + '€'
-        div.row
-            div.column
-                h3='Correos electrónicos de los clientes registrados:'
+                br
+                h3='Correos electrónicos de los clientes registrados con su ID:'
                 each emailEnClientes in totalEmailClientes
-                    p=emailEnClientes
-                //-- h3='Correos electrónicos de las empresas registradas:'
-                //--each emailEnEmpresas in totalEmailEmpresas
-                    p=emailEnEmpresas
-                //--h3='Correos electrónicos de los miembros MAD registrados:'
-                //--each emailEnMiembros in totalEmailMiembros
-                    p=emailEnMiembros
+                    p=emailEnClientes.email + ' con ID = ' + emailEnClientes.id
+                br
+                h3='Correos electrónicos de las empresas registradas con su ID:'
+                each emailEnEmpresas in totalEmailEmpresas
+                    p=emailEnEmpresas.email + ' con ID = ' + emailEnEmpresas.id
+                br
+                h3='Correos electrónicos de los miembros MAD registrados con su ID:'
+                each emailEnMiembros in totalEmailMiembros
+                    p=emailEnMiembros.email + ' con ID = ' + emailEnMiembros.id
         br
     include ./componentes/piepagina.pug

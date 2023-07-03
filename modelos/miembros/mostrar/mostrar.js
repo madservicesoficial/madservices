@@ -116,42 +116,36 @@ const mostrarMiembrodb = (id, res) => {
                         madservicesAdmindb.query(formatoInstruccionID, (error, salida6) => {
                             if(error) throw error;
                             //-- Instrucción del ID.
-                            let instruccionID = 'SELECT email FROM clientes';
+                            let instruccionID = 'SELECT email, id FROM clientes';
                             //-- Configuración de su formato en mysql.
                             let formatoInstruccionID = mysql.format(instruccionID);
                             //-- Establecer la comunicación con los Productos MAD de la base de datos.
                             madservicesAdmindb.query(formatoInstruccionID, (error, salida7) => {
                                 if(error) throw error;
                                 let mostrarSalida7;
-                                if(salida7.length === 0) {
-                                    mostrarSalida7 = 'No hay correos electrónicos'
-                                }else {
+                                if(salida7.length > 0) {
                                     mostrarSalida7 = salida7;
                                 }
                                 //-- Instrucción del ID.
-                                let instruccionID = 'SELECT email FROM empresas';
+                                let instruccionID = 'SELECT email, id FROM empresas';
                                 //-- Configuración de su formato en mysql.
                                 let formatoInstruccionID = mysql.format(instruccionID);
                                 //-- Establecer la comunicación con los Productos MAD de la base de datos.
                                 madservicesAdmindb.query(formatoInstruccionID, (error, salida8) => {
                                     if(error) throw error;
                                     let mostrarSalida8;
-                                    if(salida8.length === 0) {
-                                        mostrarSalida8 = 'No hay correos electrónicos'
-                                    }else {
+                                    if(salida8.length > 0) {
                                         mostrarSalida8 = salida8;
                                     }
                                     //-- Instrucción del ID.
-                                    let instruccionID = 'SELECT email FROM miembros';
+                                    let instruccionID = 'SELECT email, id FROM miembros';
                                     //-- Configuración de su formato en mysql.
                                     let formatoInstruccionID = mysql.format(instruccionID);
                                     //-- Establecer la comunicación con los Productos MAD de la base de datos.
                                     madservicesAdmindb.query(formatoInstruccionID, (error, salida9) => {
                                         if(error) throw error;
                                         let mostrarSalida9;
-                                        if(salida9.length === 0) {
-                                            mostrarSalida9 = 'No hay correos electrónicos'
-                                        }else {
+                                        if(salida9.length > 0) {
                                             mostrarSalida9 = salida9;
                                         }
                                         let sumaH = 0;

@@ -53,78 +53,94 @@ const ingresoProductosMAD = async (req, res) => {
         res.redirect(`/sesion-miembro/${id}/interfaz`);
         return res.end();
     }else {
-        if(titulo.length > LONG_TITULO) {
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            await unlink(eliminarArchivo);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: `El título no puede tener más de ${LONG_TITULO} caracteres`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
-        }else if(descripcion.length > LONG_DESCRIPCION) {
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            await unlink(eliminarArchivo);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: `La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
-        }else if(cantidad < CANTIDAD_MIN) {
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            await unlink(eliminarArchivo);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: `No tiene sentido la cantidad ${cantidad}`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
-        }else if(precio < COSTE_NULO) {
-            let eliminarArchivo = path.join(rutaAlDirectorio, file);
-            await unlink(eliminarArchivo);
-            //-- Renderizar y mostrar mensaje.
-            notifier.notify(
-                {
-                    sound: true,
-                    wait: true,
-                    title: '¡Atención!',
-                    message: `No puedes vender por debajo de ${COSTE_NULO}€`,
-                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
-                }
-            );
-            res.status(401);
-            res.redirect(`/sesion-miembro/${id}/interfaz`);
-            return res.end();
+        if(typeof file === 'string') {
+            if(titulo.length > LONG_TITULO) {
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                await unlink(eliminarArchivo);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `El título no puede tener más de ${LONG_TITULO} caracteres`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-miembro/${id}/interfaz`);
+                return res.end();
+            }else if(descripcion.length > LONG_DESCRIPCION) {
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                await unlink(eliminarArchivo);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `La descripción no puede tener más de ${LONG_DESCRIPCION} caracteres`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-miembro/${id}/interfaz`);
+                return res.end();
+            }else if(cantidad < CANTIDAD_MIN) {
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                await unlink(eliminarArchivo);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `No tiene sentido la cantidad ${cantidad}`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-miembro/${id}/interfaz`);
+                return res.end();
+            }else if(precio < COSTE_NULO) {
+                let eliminarArchivo = path.join(rutaAlDirectorio, file);
+                await unlink(eliminarArchivo);
+                //-- Renderizar y mostrar mensaje.
+                notifier.notify(
+                    {
+                        sound: true,
+                        wait: true,
+                        title: '¡Atención!',
+                        message: `No puedes vender por debajo de ${COSTE_NULO}€`,
+                        icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                    }
+                );
+                res.status(401);
+                res.redirect(`/sesion-miembro/${id}/interfaz`);
+                return res.end();
+            }else {
+                //-- Llamamos a la función.
+                ingresarProductosMADdb
+                (
+                    id,
+                    {cantidad: cantidad, categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
+                    res
+                );
+            }
         }else {
-            //-- Llamamos a la función.
-            ingresarProductosMADdb
-            (
-                id,
-                {cantidad: cantidad, categoria: categoria, titulo: titulo, precio: precio, peso: peso, descripcion: descripcion},
-                res
+            //-- Renderizar y mostrar mensaje.
+            notifier.notify(
+                {
+                    sound: true,
+                    wait: true,
+                    title: '¡Atención!',
+                    message: 'Debes introducir una imagen de portada',
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
+                }
             );
+            res.status(401);
+            res.redirect(`/sesion-miembro/${id}/interfaz`);
+            return res.end();
         }
     }
 }
