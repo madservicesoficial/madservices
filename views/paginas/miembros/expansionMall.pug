@@ -53,8 +53,6 @@ block body
                     p='También podrá haber productos de dicho Comercio para aliviar su stock.'
             div.row
                 div.column
-                    a(href=pagweb target="_blank")
-                        button(type='submit')='Conectar'
             div.row
                 div.column
                 div.column
@@ -68,7 +66,6 @@ block body
                             img(src='/images/productoEjemplo.jpg' alt='productoEjemplo')
                             h4='Cantidad: N productos'
                             h4='Precio: K €'
-                            button#btnCarritoComercio(type='submit')='Añadir al carrito'
                         - i++;
         else if tipo === 'RESTAURANTE'
             div.row
@@ -109,7 +106,6 @@ block body
                 div.column
                 div.column
                 div.column
-                    button#btnReservar(type='submit')='Reservar mesa'
         else if tipo === 'PELUQUERIA'
             div.row
                 div.column
@@ -146,7 +142,6 @@ block body
                 div.column
                 div.column
                 div.column
-                    button(type='submit')='Pedir cita'
         else if tipo === 'ACADEMIA'
             div.row
                 div.column
@@ -162,7 +157,6 @@ block body
                         h4='Profesor/a: XXXXXX'
                         h4='Precio: K €'
                         h4='Tipo clase: particular o grupal (nº alumnos)'
-                        button(type='submit')='Contratar'
                     - i++;
         div.row
             div.column

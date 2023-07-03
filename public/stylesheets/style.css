@@ -1118,8 +1118,7 @@ i#next {
   background-image: url('../images/fondoExpandir.jpg');
   width: 100%;
   min-height: 130vh;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
 }
 .interfazExpansionMultimarca #contactoExpansionMultimarca {
   margin-top: 50;
@@ -1155,8 +1154,7 @@ i#next {
   justify-content: center;
   text-align: center;
   place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
 .clasesAcademias {
@@ -1172,8 +1170,7 @@ i#next {
   justify-content: center;
   text-align: center;
   place-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   box-shadow: 14px 14px 20px gold, -14px -14px 20px white;
 }
 .productoMarcaMall img {
