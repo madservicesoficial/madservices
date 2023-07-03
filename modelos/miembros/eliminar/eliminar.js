@@ -73,9 +73,9 @@ const borrarArchivosMultimediaMADdb = (id, enumeracion, res) => {
                 {
                     sound: true,
                     wait: true,
-                    title: '¡Quitando imágenes!',
+                    title: '¡Error al eliminar!',
                     message: 'Sólo queda por borrar la imagen de portada o la 1',
-                    icon: path.join(__dirname, '../../../public/images/correcto.png')
+                    icon: path.join(__dirname, '../../../public/images/incorrecto.png')
                 }
             );
         }else {

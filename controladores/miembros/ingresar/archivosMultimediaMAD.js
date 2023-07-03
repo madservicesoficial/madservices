@@ -55,7 +55,7 @@ const ingresarArchivosMultimediaMAD = async (req, res) => {
                     sound: true,
                     wait: true,
                     title: '¡Atención!',
-                    message: 'Formato de imagen incorrecto por ser: PNG, JPG o JPEG',
+                    message: 'Formato de imagen incorrecto por no ser: PNG, JPG o JPEG',
                     icon: path.join(__dirname, '../../../public/images/incorrecto.png')
                 }
             );
